@@ -57,6 +57,14 @@ flutter:
     - assets/images/food1.png
     - assets/images/food2.png
     - assets/images/background.png
+    - assets/images/apple_login.svg
+    - assets/images/facebook_login.svg
+    - assets/images/google_login.svg
+    - assets/images/bottom_bar_search.svg
+    - assets/images/bottom_bar_home.svg
+    - assets/images/bottom_bar_shopping_bag.svg
+    - assets/images/bottom_bar_profile.svg
+
     
  
     

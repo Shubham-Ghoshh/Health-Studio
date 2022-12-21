@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/ui/widgets/home_page_widgets';
 
@@ -43,36 +44,32 @@ class _HomePageState extends State<HomePage> {
           currentIndex: _currentIndex,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home_outlined,
-                size: 30,
+              icon: SvgPicture.asset(
+                "assets/images/bottom_bar_home.svg",
                 color:
                     _currentIndex == 0 ? const Color(0xffE84C4F) : Colors.black,
               ),
               label: "Home",
             ),
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.shopping_bag_outlined,
-                size: 30,
+              icon: SvgPicture.asset(
+                "assets/images/bottom_bar_shopping_bag.svg",
                 color:
                     _currentIndex == 1 ? const Color(0xffE84C4F) : Colors.black,
               ),
               label: "Cart",
             ),
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.search_outlined,
-                size: 30,
+              icon: SvgPicture.asset(
+                "assets/images/bottom_bar_search.svg",
                 color:
                     _currentIndex == 2 ? const Color(0xffE84C4F) : Colors.black,
               ),
               label: "Search",
             ),
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.person_outline,
-                size: 30,
+              icon: SvgPicture.asset(
+                "assets/images/bottom_bar_profile.svg",
                 color:
                     _currentIndex == 3 ? const Color(0xffE84C4F) : Colors.black,
               ),

@@ -5,6 +5,12 @@ EdgeInsets edgeInsets0 = const EdgeInsets.all(0);
 SizedBox sizedBoxHeight6 = SizedBox(
   height: 6.h,
 );
+SizedBox sizedBoxHeight10 = SizedBox(
+  height: 10.h,
+);
+SizedBox sizedBoxHeight40 = SizedBox(
+  height: 40.h,
+);
 SizedBox sizedBoxHeight25 = SizedBox(
   height: 25.h,
 );
