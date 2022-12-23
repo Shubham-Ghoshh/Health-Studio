@@ -38,11 +38,14 @@ class SplashScreen extends StatelessWidget {
                         children: [
                           Expanded(
                               child: SplashButton(
-                                  onTap: () {},
+                                  onTap: () {
+
+                                  },
                                   buttontitle: 'English',
                                   imagepath:
                                       'assets/images/englishbuttonlogo.png',
-                                  buttonColor: splashbuttonColor1)),
+                                  buttonColor: splashbuttonColor1)
+                              ),
                           sizedBoxWidth12,
                           Expanded(
                               child: SplashButton(
@@ -50,7 +53,8 @@ class SplashScreen extends StatelessWidget {
                             buttontitle: 'عربي',
                             imagepath: 'assets/images/arabicbtnlogo.png',
                             buttonColor: splashbuttonColor2,
-                          )),
+                          )
+                        ),
                         ],
                       ),
                     ),

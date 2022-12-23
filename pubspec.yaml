@@ -19,10 +19,18 @@ dependencies:
   flutter_screenutil: ^5.6.0
   device_preview: ^1.1.0
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  # The following package is integrated to add App Logo
+  flutter_launcher_icons: ^0.11.0
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/healthapplogo.png"
+
 
 flutter:
   uses-material-design: true
