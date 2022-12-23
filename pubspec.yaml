@@ -1,74 +1,43 @@
 name: health_studio_user
 description: A new Flutter project.
-
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
-
 version: 1.0.0+1
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
 
-
 dependencies:
   flutter:
     sdk: flutter
-
-
-
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-
   # The following package is added to implement State Management
   get: ^4.6.5
-
-
+  flutter_screenutil: ^5.6.0
   # The following package allows you to view the app in different device types
-  device_preview: 1.0.0
-
-  # The following package is integrated to display SVG Images
-  flutter_screenutil: ^5.5.3+2
-
+  device_preview: ^1.1.0
   # The following package is to use carousel slider feature
   carousel_slider: ^4.1.1
-
   # The following package is to use SVG images
   flutter_svg: ^1.1.6
-
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
  
   flutter_lints: ^2.0.0
-
+  # The following package is integrated to add App Logo
+  flutter_launcher_icons: ^0.11.0
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/healthapplogo.png"
 
 flutter:
-
   uses-material-design: true
-
-  
   assets:
-    
-    - assets/images/health_studio_logo.png
-    - assets/images/settings_icon.png
-    - assets/images/feature1.png
-    - assets/images/feature2.png
-    - assets/images/food1.png
-    - assets/images/food2.png
-    - assets/images/background.png
-    - assets/images/apple_login.svg
-    - assets/images/facebook_login.svg
-    - assets/images/google_login.svg
-    - assets/images/bottom_bar_search.svg
-    - assets/images/bottom_bar_home.svg
-    - assets/images/bottom_bar_shopping_bag.svg
-    - assets/images/bottom_bar_profile.svg
-
-    
- 
-    
-
+  - assets/images/
 
   fonts:
     - family: Poppins
