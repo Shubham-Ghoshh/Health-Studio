@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
       useInheritedMediaQuery: true,
       title: 'Health Studio',
       home:  SplashScreen(),
+    
     );
   }
 }

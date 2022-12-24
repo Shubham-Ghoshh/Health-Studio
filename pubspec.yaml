@@ -29,7 +29,9 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/images/healthapplogo.png"
+  image_path: "assets/images/healthapplogoo.png"
+  # adaptive_icon_background: "#C8102E"
+  # adaptive_icon_foreground: "#FFFFFF"
 
 
 flutter:
