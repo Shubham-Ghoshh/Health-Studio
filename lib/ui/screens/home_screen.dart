@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:health_studio_user/utils/spacing.dart';
-import 'package:health_studio_user/ui/widgets/home_page_widgets';
+import 'package:health_studio_user/ui/widgets/home_page_widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

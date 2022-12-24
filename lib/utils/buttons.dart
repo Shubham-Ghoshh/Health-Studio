@@ -8,13 +8,16 @@ class LoginButton extends StatelessWidget {
   const LoginButton({
     Key? key,
     required this.onTap,
+    required this.enabled,
   }) : super(key: key);
 
-  final void Function() onTap;
+  final Function() onTap;
+  final bool enabled;
   @override
   Widget build(BuildContext context) {
+    print(enabled);
     return GestureDetector(
-      onTap: onTap,
+      onTap: enabled ? onTap : null,
       child: Padding(
         padding: EdgeInsets.only(
           top: .03.sh,
@@ -24,7 +27,9 @@ class LoginButton extends StatelessWidget {
         child: Center(
           child: Container(
             decoration: BoxDecoration(
-              color: const Color(0xffFAAF4A),
+              color: enabled
+                  ? loginButtonColor
+                  : loginButtonColor.withOpacity(0.5),
               borderRadius: BorderRadius.circular(6),
             ),
             height: 70,
@@ -157,31 +162,34 @@ class SplashButton extends StatelessWidget {
   final Color buttonColor;
   @override
   Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-          color: buttonColor,
-          border: Border.all(
-            width: 2.w,
-            color: whiteColor,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+          decoration: BoxDecoration(
+            color: buttonColor,
+            border: Border.all(
+              width: 2.w,
+              color: whiteColor,
+            ),
+            borderRadius: const BorderRadius.all(Radius.circular(5)),
           ),
-          borderRadius: const BorderRadius.all(Radius.circular(5)),
-        ),
-        height: 52.h,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 14),
-          child: Row(
-            children: [
-              Image.asset(imagepath),
-              sizedBoxWidth12,
-              Text(
-                buttontitle,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(color: whiteColor),
-              )
-            ],
-          ),
-        ));
+          height: 52.h,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 14),
+            child: Row(
+              children: [
+                Image.asset(imagepath),
+                sizedBoxWidth12,
+                Text(
+                  buttontitle,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(color: whiteColor),
+                )
+              ],
+            ),
+          )),
+    );
   }
 }

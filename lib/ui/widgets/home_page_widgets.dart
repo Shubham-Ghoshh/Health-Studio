@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class FoodMenuItem extends StatelessWidget {
-  FoodMenuItem({
+  const FoodMenuItem({
     required this.foodImage,
     required this.foodName,
     Key? key,
   }) : super(key: key);
-  String foodImage;
-  String foodName;
+
+  final String foodImage;
+  final String foodName;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -74,7 +76,6 @@ class _CalenderDayDateState extends State<CalenderDayDate> {
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
       child: GestureDetector(
-        
         onTap: () {
           setState(() {
             click = !click;

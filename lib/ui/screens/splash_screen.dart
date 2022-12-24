@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:health_studio_user/ui/screens/authentication/login_screen.dart';
+import 'package:health_studio_user/ui/screens/home_screen.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
@@ -39,13 +41,12 @@ class SplashScreen extends StatelessWidget {
                           Expanded(
                               child: SplashButton(
                                   onTap: () {
-
+                                    Get.to(() => const HomePage());
                                   },
                                   buttontitle: 'English',
                                   imagepath:
                                       'assets/images/englishbuttonlogo.png',
-                                  buttonColor: splashbuttonColor1)
-                              ),
+                                  buttonColor: splashbuttonColor1)),
                           sizedBoxWidth12,
                           Expanded(
                               child: SplashButton(
@@ -53,8 +54,7 @@ class SplashScreen extends StatelessWidget {
                             buttontitle: 'عربي',
                             imagepath: 'assets/images/arabicbtnlogo.png',
                             buttonColor: splashbuttonColor2,
-                          )
-                        ),
+                          )),
                         ],
                       ),
                     ),
@@ -66,13 +66,19 @@ class SplashScreen extends StatelessWidget {
                                 .textTheme
                                 .bodyText1!
                                 .copyWith(color: whiteColor)),
-                        Text('Login Now',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1!
-                                .copyWith(
-                                    decoration: TextDecoration.underline,
-                                    color: whiteColor))
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(() => const LoginPage());
+                          },
+                          child: Text(
+                            'Login Now',
+                            style:
+                                Theme.of(context).textTheme.bodyText1!.copyWith(
+                                      decoration: TextDecoration.underline,
+                                      color: whiteColor,
+                                    ),
+                          ),
+                        )
                       ],
                     ),
                     sizedBoxHeight10,
