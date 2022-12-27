@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:health_studio_user/utils/colors.dart';
+import 'package:health_studio_user/ui/screens/food_detail_screen.dart';
+import 'package:get/get.dart';
 
 class FoodMenuItem extends StatelessWidget {
   const FoodMenuItem({
@@ -17,7 +19,9 @@ class FoodMenuItem extends StatelessWidget {
     return Column(
       children: [
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Get.to(() => const FoodDetailPage());
+          },
           child: Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: SizedBox(
