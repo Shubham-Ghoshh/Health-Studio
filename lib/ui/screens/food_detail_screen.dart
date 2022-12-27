@@ -81,17 +81,17 @@ class _FoodDetailPageState extends State<FoodDetailPage> {
                 children: [
                   sizedBoxHeight6,
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(
-                            right: 12.0, bottom: 14, left: 2),
+                        padding: const EdgeInsets.only(bottom: 20),
                         child: IconButton(
                           onPressed: () {
                             Get.back();
                           },
                           icon: const Icon(
                             Icons.arrow_back,
-                            size: 32,
+                            size: 30,
                             color: Colors.white,
                           ),
                         ),
