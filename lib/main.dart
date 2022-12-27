@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/ui/screens/splash_screen.dart';
+import 'package:health_studio_user/utils/constants.dart';
+import 'package:health_studio_user/utils/theme.dart';
 
 void main() {
-  
   runApp(
     DevicePreview(
       // enabled: !kReleaseMode,
-      enabled: true, 
+      enabled: true,
       builder: (context) => ScreenUtilInit(
         designSize: const Size(360, 690),
         minTextAdapt: true,
@@ -27,11 +28,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
-      debugShowCheckedModeBanner: false,
+    return GetMaterialApp(
+      navigatorKey: navigatorKey,
+      theme: themeData(),
       useInheritedMediaQuery: true,
+      builder: DevicePreview.appBuilder,
+      debugShowCheckedModeBanner: false,
       title: 'Health Studio',
-      home:  SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }
