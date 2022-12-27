@@ -1,6 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:health_studio_user/core/controllers/home_controller.dart';
+import 'package:health_studio_user/core/models/bottom_nav_item.dart';
+import 'package:health_studio_user/ui/widgets/date.dart';
+import 'package:health_studio_user/utils/colors.dart';
+import 'package:health_studio_user/utils/formatters.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/ui/widgets/home_page_widgets.dart';
 
@@ -38,228 +44,259 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-          showSelectedLabels: false,
-          currentIndex: _currentIndex,
-          items: [
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                "assets/images/bottom_bar_home.svg",
-                color:
-                    _currentIndex == 0 ? const Color(0xffE84C4F) : Colors.black,
-              ),
-              label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                "assets/images/bottom_bar_shopping_bag.svg",
-                color:
-                    _currentIndex == 1 ? const Color(0xffE84C4F) : Colors.black,
-              ),
-              label: "Cart",
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                "assets/images/bottom_bar_search.svg",
-                color:
-                    _currentIndex == 2 ? const Color(0xffE84C4F) : Colors.black,
-              ),
-              label: "Search",
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                "assets/images/bottom_bar_profile.svg",
-                color:
-                    _currentIndex == 3 ? const Color(0xffE84C4F) : Colors.black,
-              ),
-              label: "Profile",
-            ),
-          ],
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          }),
-      backgroundColor: Colors.blueAccent.shade400,
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/background.png"),
-            fit: BoxFit.fill,
-          ),
-        ),
-        child: SingleChildScrollView(
-          child: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 0.01.sw),
-              child: Column(
-                children: [
-                  sizedBoxHeight6,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 270,
-                        height: 75,
-                        child:
-                            Image.asset("assets/images/health_studio_logo.png"),
-                      ),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 22.0),
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color(0xffE84C4F),
-                              ),
-                              child: IconButton(
-                                onPressed: () {},
-                                icon: Padding(
-                                  padding: const EdgeInsets.all(0.25),
-                                  child: SizedBox(
-                                    height: 24,
-                                    width: 25,
-                                    child: Image.asset(
-                                        "assets/images/settings_icon.png"),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          sizedBoxwidth8,
-                        ],
-                      ),
-                    ],
+    return GetBuilder<HomeController>(
+        init: HomeController(),
+        builder: (homeController) {
+          return Scaffold(
+            bottomNavigationBar: BottomNavigationBar(
+                showSelectedLabels: false,
+                backgroundColor: Colors.red,
+                selectedItemColor: activeIconColor,
+                currentIndex: _currentIndex,
+                items: [
+                  BottomNavItem(
+                    label: "Home",
+                    iconPath: "assets/images/bottom_bar_home.svg",
                   ),
-                  sizedBoxHeight25,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Column(
-                      children: [
-                        const Text(
-                          "Select your meal and enjoy our delicious and healthy food.",
-                          style: TextStyle(
-                            color: Color(0xffFFFDFD),
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "Poppins",
-                            fontSize: 20,
-                          ),
+                  BottomNavItem(
+                    label: "Cart",
+                    iconPath: "assets/images/bottom_bar_shopping_bag.svg",
+                  ),
+                  BottomNavItem(
+                    label: "Search",
+                    iconPath: "assets/images/bottom_bar_search.svg",
+                  ),
+                  BottomNavItem(
+                    label: "Profile",
+                    iconPath: "assets/images/bottom_bar_profile.svg",
+                  ),
+                ]
+                    .map(
+                      (e) => BottomNavigationBarItem(
+                        activeIcon: SvgPicture.asset(
+                          e.iconPath,
+                          color: activeIconColor,
                         ),
-                        sizedBoxHeight35,
-                      ],
-                    ),
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        featuresPlanItem("feature1",
-                            "Active Training Weight Gain Meal Plan"),
-                        featuresPlanItem("feature2", "Lifestyle / Weight Loss"),
-                        featuresPlanItem("feature1",
-                            "Active Training Weight Gain Meal Plan"),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        icon: SvgPicture.asset(
+                          e.iconPath,
+                          color: Colors.black,
+                        ),
+                        label: e.label,
+                      ),
+                    )
+                    .toList(),
+                onTap: (index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                }),
+            body: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/background.png"),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              child: SingleChildScrollView(
+                child: SafeArea(
+                  child: Padding(
+                    padding: edgeInsets8,
                     child: Column(
                       children: [
+                        sizedBoxHeight6,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              "Our Delicious Menu",
-                              style: TextStyle(
-                                color: Color(0xffFFFDFD),
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "Poppins",
-                                fontSize: 27,
-                              ),
+                            SizedBox(
+                              width: 270,
+                              height: 75,
+                              child: Image.asset(
+                                  "assets/images/health_studio_logo.png"),
                             ),
-                            GestureDetector(
-                              onTap: () {},
-                              child: const Text(
-                                "See All",
-                                style: TextStyle(
-                                  shadows: <Shadow>[
-                                    Shadow(
-                                      offset: Offset(2.0, 5.0),
-                                      blurRadius: 5.0,
-                                      color: Color.fromARGB(126, 0, 0, 0),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 22.0),
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color(0xffE84C4F),
                                     ),
-                                  ],
-                                  color: Color(0xffF1773E),
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: "Poppins",
-                                  fontSize: 16,
+                                    child: IconButton(
+                                      onPressed: () {},
+                                      icon: Padding(
+                                        padding: const EdgeInsets.all(0.25),
+                                        child: SizedBox(
+                                          height: 24,
+                                          width: 25,
+                                          child: Image.asset(
+                                              "assets/images/settings_icon.png"),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                sizedBoxwidth8,
+                              ],
                             ),
                           ],
                         ),
-                        sizedBoxHeight20,
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 3.0),
-                          child: Text(
-                            "Here are the list of our preview of the menu we are having",
-                            style: TextStyle(
-                              color: Color(0xffFFFDFD),
-                              fontWeight: FontWeight.w500,
-                              fontFamily: "Poppins",
-                              fontSize: 20,
+                        sizedBoxHeight25,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Column(
+                            children: [
+                              const Text(
+                                "Select your meal and enjoy our delicious and healthy food.",
+                                style: TextStyle(
+                                  color: Color(0xffFFFDFD),
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: "Poppins",
+                                  fontSize: 20,
+                                ),
+                              ),
+                              sizedBoxHeight35,
+                            ],
+                          ),
+                        ),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                              children: homeController.plans
+                                  .asMap()
+                                  .map((index, plan) => MapEntry(
+                                      featuresPlanItem(plan.image, plan.titleEn,
+                                          "assets/images/feature$index.png"),
+                                      index))
+                                  .keys
+                                  .toList()),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text(
+                                    "Our Delicious Menu",
+                                    style: TextStyle(
+                                      color: Color(0xffFFFDFD),
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: "Poppins",
+                                      fontSize: 27,
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {},
+                                    child: const Text(
+                                      "See All",
+                                      style: TextStyle(
+                                        shadows: <Shadow>[
+                                          Shadow(
+                                            offset: Offset(2.0, 5.0),
+                                            blurRadius: 5.0,
+                                            color: Color.fromARGB(126, 0, 0, 0),
+                                          ),
+                                        ],
+                                        color: Color(0xffF1773E),
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: "Poppins",
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              sizedBoxHeight20,
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 3.0),
+                                child: Text(
+                                  "Here are the list of our preview of the menu we are having",
+                                  style: TextStyle(
+                                    color: Color(0xffFFFDFD),
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: "Poppins",
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                              sizedBoxHeight20,
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 77.5,
+                          // width: 0.7.sw,
+                          child: ListView(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            children: List.generate(
+                              28,
+                              (index) {
+                                DateTime date =
+                                    DateTime.now().add(Duration(days: index));
+                                return dateWidget(
+                                    context,
+                                    getWeekday(date.weekday),
+                                    date.day.toString(),
+                                    homeController.selectedDate.day == date.day,
+                                    () {
+                                  homeController.selectDate(date);
+                                });
+                              },
                             ),
                           ),
                         ),
-                        sizedBoxHeight20,
+                        // SizedBox(
+                        //   height: 77.5,
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.only(right: 8.0, left: 6),
+                        //     child: ListView.builder(
+                        //       scrollDirection: Axis.horizontal,
+                        //       itemCount: days.length,
+                        //       itemBuilder: (context, index) {
+                        //         return CalenderDayDate(
+                        //           day: days[index],
+                        //           date: dates[index].toString(),
+                        //         );
+                        //       },
+                        //     ),
+                        //   ),
+                        // ),
+                        sizedBoxHeight35,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0),
+                          child: SizedBox(
+                            height: 350,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: homeController.menu.length,
+                              itemBuilder: (context, index) {
+                                return FoodMenuItem(
+                                  foodName: homeController.menu[index].titleEn,
+                                  foodImage: homeController.menu[index].image,
+                                );
+                              },
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 77.5,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0, left: 6),
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: days.length,
-                        itemBuilder: (context, index) {
-                          return CalenderDayDate(
-                            day: days[index],
-                            date: dates[index].toString(),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                  sizedBoxHeight35,
-                  Padding(
-                    padding: const EdgeInsets.only(left: 6.0),
-                    child: SizedBox(
-                      height: 350,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: foodMenu.length,
-                        itemBuilder: (context, index) {
-                          return FoodMenuItem(
-                            foodName: foodMenu[index],
-                            foodImage: foodImagesName[index],
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
-          ),
-        ),
-      ),
-    );
+          );
+        });
   }
 
-  Column featuresPlanItem(String imageName, String featureDescription) {
+  Column featuresPlanItem(
+    String imageName,
+    String featureDescription,
+    String placeholderImage,
+  ) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -278,7 +315,19 @@ class _HomePageState extends State<HomePage> {
               child: SizedBox(
                 height: 35,
                 width: 36,
-                child: Image.asset("assets/images/$imageName.png"),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: CachedNetworkImage(
+                    imageUrl: imageName,
+                    height: 180,
+                    width: 195,
+                    fit: BoxFit.fitWidth,
+                    placeholder: (context, url) =>
+                        Image.asset(placeholderImage),
+                    errorWidget: (context, url, error) =>
+                        Image.asset(placeholderImage),
+                  ),
+                ),
               ),
             ),
           ),

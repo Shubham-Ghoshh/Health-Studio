@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:health_studio_user/utils/colors.dart';
 
 class FoodMenuItem extends StatelessWidget {
   const FoodMenuItem({
@@ -21,7 +23,26 @@ class FoodMenuItem extends StatelessWidget {
             child: SizedBox(
               height: 280,
               width: 185,
-              child: Image.asset("assets/images/$foodImage.png"),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: CachedNetworkImage(
+                    imageUrl: foodImage,
+                    height: 280,
+                    width: 185,
+                    fit: BoxFit.fitWidth,
+                    placeholder: (context, url) => const Center(
+                      child: CircularProgressIndicator(
+                        color: activeDateBgColor,
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => Container(
+                      height: 280,
+                      decoration: BoxDecoration(
+                          color: whiteColor,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: const Icon(Icons.error),
+                    ),
+                  )),
             ),
           ),
         ),

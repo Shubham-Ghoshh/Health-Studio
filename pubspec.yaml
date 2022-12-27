@@ -1,7 +1,7 @@
 name: health_studio_user
 description: A new Flutter project.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 3.0.0+3
+version: 3.0.0+4
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
@@ -21,8 +21,10 @@ dependencies:
   carousel_slider: ^4.1.1
   # The following package is to use SVG images
   flutter_svg: ^1.1.6
-    # The following package is integrated to make network calls
+  # The following package is integrated to make network calls
   dio: ^4.0.6
+  # The following package is integrated to cache the network images for faster loading
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:

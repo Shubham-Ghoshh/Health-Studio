@@ -15,17 +15,17 @@ abstract class Utility {
               width: double.infinity,
               height: Get.mediaQuery.size.height,
               child: Stack(
-                children: [
+                children: const [
                   Opacity(
                     opacity: 0.1,
                     child: ModalBarrier(
                       dismissible: false,
-                      color: splashthemeColor,
+                      color: activeDateBgColor,
                     ),
                   ),
                   Center(
                     child: CircularProgressIndicator(
-                      color: splashthemeColor,
+                      color: activeDateBgColor,
                     ),
                   )
                 ],

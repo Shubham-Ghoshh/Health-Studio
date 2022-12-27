@@ -15,7 +15,6 @@ class LoginButton extends StatelessWidget {
   final bool enabled;
   @override
   Widget build(BuildContext context) {
-    print(enabled);
     return GestureDetector(
       onTap: enabled ? onTap : null,
       child: Padding(

@@ -4,6 +4,7 @@ import 'package:health_studio_user/utils/colors.dart';
 
 ThemeData themeData() {
   return ThemeData(
+    fontFamily: "Poppins",
     textTheme: TextTheme(
       bodyText1: TextStyle(
           fontSize: 13.sp, color: whiteColor, fontWeight: FontWeight.w700),
@@ -14,13 +15,11 @@ ThemeData themeData() {
       contentPadding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
       hintStyle: const TextStyle(
         color: Color.fromARGB(183, 10, 9, 9),
-        fontFamily: "Poppins",
         fontSize: 17,
         fontWeight: FontWeight.w400,
       ),
       border: InputBorder.none,
       errorStyle: TextStyle(
-        fontFamily: "Poppins",
         color: whiteColor,
         fontSize: 13.sp,
         fontWeight: FontWeight.w400,
