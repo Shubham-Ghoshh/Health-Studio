@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:health_studio_user/utils/spacing.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FoodDetailCard extends StatelessWidget {
   const FoodDetailCard({
@@ -17,7 +18,9 @@ class FoodDetailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 360,
+      //adding margin causes overflow
+      // width: 360,
+      margin: EdgeInsets.symmetric(horizontal: 16.w),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -102,7 +105,7 @@ class NutritionContent extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 12.0, right: 19, left: 18),
+          padding: const EdgeInsets.only(top: 12, right: 8, left: 8),
           child: SizedBox(
             height: 45,
             width: 45,
@@ -111,20 +114,20 @@ class NutritionContent extends StatelessWidget {
         ),
         Text(
           nutritionContent,
-          style: const TextStyle(
-            color: Color(0xff2A7891),
+          style: TextStyle(
+            color: const Color(0xff2A7891),
             fontWeight: FontWeight.w700,
             fontFamily: "Poppins",
-            fontSize: 27,
+            fontSize: 18.sp,
           ),
         ),
         Text(
           nutritionName,
-          style: const TextStyle(
-            color: Color(0xff2A7891),
+          style: TextStyle(
+            color: const Color(0xff2A7891),
             fontWeight: FontWeight.w400,
             fontFamily: "Poppins",
-            fontSize: 16,
+            fontSize: 14.sp,
           ),
         ),
       ],

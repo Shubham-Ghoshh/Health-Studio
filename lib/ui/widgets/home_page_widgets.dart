@@ -29,22 +29,25 @@ class FoodMenuItem extends StatelessWidget {
               width: 185,
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: CachedNetworkImage(
-                    imageUrl: foodImage,
-                    height: 280,
-                    width: 185,
-                    fit: BoxFit.fitWidth,
-                    placeholder: (context, url) => const Center(
-                      child: CircularProgressIndicator(
-                        color: activeDateBgColor,
-                      ),
-                    ),
-                    errorWidget: (context, url, error) => Container(
+                  child: Hero(
+                    tag: "food-image-$foodImage",
+                    child: CachedNetworkImage(
+                      imageUrl: foodImage,
                       height: 280,
-                      decoration: BoxDecoration(
-                          color: whiteColor,
-                          borderRadius: BorderRadius.circular(8)),
-                      child: const Icon(Icons.error),
+                      width: 185,
+                      fit: BoxFit.fitWidth,
+                      placeholder: (context, url) => const Center(
+                        child: CircularProgressIndicator(
+                          color: activeDateBgColor,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Container(
+                        height: 280,
+                        decoration: BoxDecoration(
+                            color: whiteColor,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: const Icon(Icons.error),
+                      ),
                     ),
                   )),
             ),
