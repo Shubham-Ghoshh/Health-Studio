@@ -111,7 +111,6 @@ class _HomePageState extends State<HomePage> {
                                 style: TextStyle(
                                   color: Color(0xffFFFDFD),
                                   fontWeight: FontWeight.w500,
-                                  fontFamily: "Poppins",
                                   fontSize: 20,
                                 ),
                               ),
@@ -144,7 +143,6 @@ class _HomePageState extends State<HomePage> {
                                     style: TextStyle(
                                       color: Color(0xffFFFDFD),
                                       fontWeight: FontWeight.w700,
-                                      fontFamily: "Poppins",
                                       fontSize: 27,
                                     ),
                                   ),
@@ -162,7 +160,6 @@ class _HomePageState extends State<HomePage> {
                                         ],
                                         color: Color(0xffF1773E),
                                         fontWeight: FontWeight.w700,
-                                        fontFamily: "Poppins",
                                         fontSize: 16,
                                       ),
                                     ),
@@ -177,7 +174,6 @@ class _HomePageState extends State<HomePage> {
                                   style: TextStyle(
                                     color: Color(0xffFFFDFD),
                                     fontWeight: FontWeight.w500,
-                                    fontFamily: "Poppins",
                                     fontSize: 20,
                                   ),
                                 ),
@@ -303,7 +299,6 @@ class _HomePageState extends State<HomePage> {
               style: const TextStyle(
                 color: Color(0xffFFFDFD),
                 fontWeight: FontWeight.w500,
-                fontFamily: "Poppins",
                 fontSize: 16,
               ),
             ),
