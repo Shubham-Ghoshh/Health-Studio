@@ -30,8 +30,6 @@ class _HomePageState extends State<HomePage> {
   ];
   List<int> dates = [1, 2, 3, 4, 5, 6, 7];
 
-  int _currentIndex = 0;
-
   List<String> foodMenu = [
     "Fruit Salad Mix",
     "Chicken Biryani",

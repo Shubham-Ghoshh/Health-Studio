@@ -38,7 +38,6 @@ class FoodDetailCard extends StatelessWidget {
                   style: const TextStyle(
                     color: Color(0xffFAAF4A),
                     fontWeight: FontWeight.w700,
-                    fontFamily: "Poppins",
                     fontSize: 21,
                   ),
                 ),
@@ -49,7 +48,6 @@ class FoodDetailCard extends StatelessWidget {
                     style: const TextStyle(
                       color: Color(0xff0A0909),
                       fontWeight: FontWeight.w400,
-                      fontFamily: "Poppins",
                       fontSize: 17,
                     ),
                   ),
@@ -60,7 +58,6 @@ class FoodDetailCard extends StatelessWidget {
                     decoration: TextDecoration.underline,
                     color: Color(0xff2A7891),
                     fontWeight: FontWeight.w700,
-                    fontFamily: "Poppins",
                     fontSize: 13,
                   ),
                 ),
@@ -117,7 +114,6 @@ class NutritionContent extends StatelessWidget {
           style: TextStyle(
             color: const Color(0xff2A7891),
             fontWeight: FontWeight.w700,
-            fontFamily: "Poppins",
             fontSize: 18.sp,
           ),
         ),
@@ -126,7 +122,6 @@ class NutritionContent extends StatelessWidget {
           style: TextStyle(
             color: const Color(0xff2A7891),
             fontWeight: FontWeight.w400,
-            fontFamily: "Poppins",
             fontSize: 14.sp,
           ),
         ),

@@ -101,7 +101,7 @@ class _FoodDetailPageState extends State<FoodDetailPage> {
                         child: SizedBox(
                           height: 75,
                           child: Hero(
-                            tag: "food-image-",
+                            tag: "food-image",
                             child: Image.asset(
                               "assets/images/health_studio_logo.png",
                             ),
