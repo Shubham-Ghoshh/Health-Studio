@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
 import 'package:health_studio_user/core/models/bottom_nav_item.dart';
+import 'package:health_studio_user/ui/screens/plan_screen.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/ui/widgets/date.dart';
 import 'package:health_studio_user/utils/colors.dart';
@@ -55,7 +58,8 @@ class _HomePageState extends State<HomePage> {
                   fit: BoxFit.fill,
                 ),
               ),
-              child: SingleChildScrollView(
+              child: 
+              SingleChildScrollView(
                 child: SafeArea(
                   child: Padding(
                     padding: edgeInsets8,
@@ -255,7 +259,9 @@ class _HomePageState extends State<HomePage> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         GestureDetector(
-          onTap: (() {}),
+          onTap: (() {
+            Get.to(PlanScreen());
+          }),
           child: Container(
             height: 180,
             width: 195,
