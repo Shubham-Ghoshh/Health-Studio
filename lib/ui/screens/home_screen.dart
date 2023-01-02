@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
 import 'package:health_studio_user/core/models/bottom_nav_item.dart';
+import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/ui/widgets/date.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/formatters.dart';
@@ -29,8 +30,6 @@ class _HomePageState extends State<HomePage> {
   ];
   List<int> dates = [1, 2, 3, 4, 5, 6, 7];
 
-  int _currentIndex = 0;
-
   List<String> foodMenu = [
     "Fruit Salad Mix",
     "Chicken Biryani",
@@ -48,48 +47,7 @@ class _HomePageState extends State<HomePage> {
         init: HomeController(),
         builder: (homeController) {
           return Scaffold(
-            bottomNavigationBar: BottomNavigationBar(
-                showSelectedLabels: false,
-                backgroundColor: Colors.red,
-                selectedItemColor: activeIconColor,
-                currentIndex: _currentIndex,
-                items: [
-                  BottomNavItem(
-                    label: "Home",
-                    iconPath: "assets/images/bottom_bar_home.svg",
-                  ),
-                  BottomNavItem(
-                    label: "Cart",
-                    iconPath: "assets/images/bottom_bar_shopping_bag.svg",
-                  ),
-                  BottomNavItem(
-                    label: "Search",
-                    iconPath: "assets/images/bottom_bar_search.svg",
-                  ),
-                  BottomNavItem(
-                    label: "Profile",
-                    iconPath: "assets/images/bottom_bar_profile.svg",
-                  ),
-                ]
-                    .map(
-                      (e) => BottomNavigationBarItem(
-                        activeIcon: SvgPicture.asset(
-                          e.iconPath,
-                          color: activeIconColor,
-                        ),
-                        icon: SvgPicture.asset(
-                          e.iconPath,
-                          color: Colors.black,
-                        ),
-                        label: e.label,
-                      ),
-                    )
-                    .toList(),
-                onTap: (index) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                }),
+            bottomNavigationBar: bottomNavigationBar(),
             body: Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(
@@ -151,7 +109,6 @@ class _HomePageState extends State<HomePage> {
                                 style: TextStyle(
                                   color: Color(0xffFFFDFD),
                                   fontWeight: FontWeight.w500,
-                                  fontFamily: "Poppins",
                                   fontSize: 20,
                                 ),
                               ),
@@ -184,7 +141,6 @@ class _HomePageState extends State<HomePage> {
                                     style: TextStyle(
                                       color: Color(0xffFFFDFD),
                                       fontWeight: FontWeight.w700,
-                                      fontFamily: "Poppins",
                                       fontSize: 27,
                                     ),
                                   ),
@@ -202,7 +158,6 @@ class _HomePageState extends State<HomePage> {
                                         ],
                                         color: Color(0xffF1773E),
                                         fontWeight: FontWeight.w700,
-                                        fontFamily: "Poppins",
                                         fontSize: 16,
                                       ),
                                     ),
@@ -217,7 +172,6 @@ class _HomePageState extends State<HomePage> {
                                   style: TextStyle(
                                     color: Color(0xffFFFDFD),
                                     fontWeight: FontWeight.w500,
-                                    fontFamily: "Poppins",
                                     fontSize: 20,
                                   ),
                                 ),
@@ -343,7 +297,6 @@ class _HomePageState extends State<HomePage> {
               style: const TextStyle(
                 color: Color(0xffFFFDFD),
                 fontWeight: FontWeight.w500,
-                fontFamily: "Poppins",
                 fontSize: 16,
               ),
             ),

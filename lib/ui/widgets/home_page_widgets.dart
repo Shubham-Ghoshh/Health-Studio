@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:health_studio_user/utils/colors.dart';
+import 'package:health_studio_user/ui/screens/food_detail_screen.dart';
+import 'package:get/get.dart';
 
 class FoodMenuItem extends StatelessWidget {
   const FoodMenuItem({
@@ -17,7 +19,9 @@ class FoodMenuItem extends StatelessWidget {
     return Column(
       children: [
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Get.to(() => const FoodDetailPage());
+          },
           child: Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: SizedBox(
@@ -25,22 +29,25 @@ class FoodMenuItem extends StatelessWidget {
               width: 185,
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: CachedNetworkImage(
-                    imageUrl: foodImage,
-                    height: 280,
-                    width: 185,
-                    fit: BoxFit.fitWidth,
-                    placeholder: (context, url) => const Center(
-                      child: CircularProgressIndicator(
-                        color: activeDateBgColor,
-                      ),
-                    ),
-                    errorWidget: (context, url, error) => Container(
+                  child: Hero(
+                    tag: "food-image-$foodImage",
+                    child: CachedNetworkImage(
+                      imageUrl: foodImage,
                       height: 280,
-                      decoration: BoxDecoration(
-                          color: whiteColor,
-                          borderRadius: BorderRadius.circular(8)),
-                      child: const Icon(Icons.error),
+                      width: 185,
+                      fit: BoxFit.fitWidth,
+                      placeholder: (context, url) => const Center(
+                        child: CircularProgressIndicator(
+                          color: activeDateBgColor,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Container(
+                        height: 280,
+                        decoration: BoxDecoration(
+                            color: whiteColor,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: const Icon(Icons.error),
+                      ),
                     ),
                   )),
             ),
