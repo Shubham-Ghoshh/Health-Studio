@@ -22,3 +22,5 @@ const dividercolor = Color(0xffD9D9D9);
 const customcolor = Color(0xff010101);
 const settingsBackground = Color(0xffE84C4F);
 const itemsbackground = Color(0xffC19C7D);
+
+const blacktextcolor = Color(0xff000000);
