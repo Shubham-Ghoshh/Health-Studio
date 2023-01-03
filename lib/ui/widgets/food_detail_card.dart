@@ -18,8 +18,6 @@ class FoodDetailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //adding margin causes overflow
-      // width: 360,
       margin: EdgeInsets.symmetric(horizontal: 16.w),
       decoration: BoxDecoration(
         color: Colors.white,

@@ -26,6 +26,7 @@ dependencies:
   # The following package is integrated to cache the network images for faster loading
   cached_network_image: ^3.2.3
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

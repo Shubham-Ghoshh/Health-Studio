@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/ui/widgets/food_detail_card.dart';
 
@@ -11,54 +12,11 @@ class FoodDetailPage extends StatefulWidget {
   State<FoodDetailPage> createState() => _FoodDetailPageState();
 }
 
-int _currentIndex = 0;
-
 class _FoodDetailPageState extends State<FoodDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-          showSelectedLabels: false,
-          currentIndex: _currentIndex,
-          items: [
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                "assets/images/bottom_bar_home.svg",
-                color:
-                    _currentIndex == 0 ? const Color(0xffE84C4F) : Colors.black,
-              ),
-              label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                "assets/images/bottom_bar_shopping_bag.svg",
-                color:
-                    _currentIndex == 1 ? const Color(0xffE84C4F) : Colors.black,
-              ),
-              label: "Cart",
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                "assets/images/bottom_bar_search.svg",
-                color:
-                    _currentIndex == 2 ? const Color(0xffE84C4F) : Colors.black,
-              ),
-              label: "Search",
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                "assets/images/bottom_bar_profile.svg",
-                color:
-                    _currentIndex == 3 ? const Color(0xffE84C4F) : Colors.black,
-              ),
-              label: "Profile",
-            ),
-          ],
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          }),
+      bottomNavigationBar: bottomNavigationBar(),
       backgroundColor: Colors.blueAccent.shade400,
       body: Stack(
         children: [
