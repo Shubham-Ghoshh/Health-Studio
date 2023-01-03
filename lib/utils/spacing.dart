@@ -48,6 +48,7 @@ SizedBox sizedBoxWidth25 = SizedBox(
 );
 EdgeInsets edgeInsets8 = const EdgeInsets.all(8);
 EdgeInsets edgeInsets16 = const EdgeInsets.all(16);
+
 EdgeInsets edgeInsetsleft16 = const EdgeInsets.only(left: 16);
 EdgeInsets edgeInsets22 = const EdgeInsets.fromLTRB(22, 0, 22, 0);
 EdgeInsets edgeInsetsTop51 = const EdgeInsets.only(top: 51);
