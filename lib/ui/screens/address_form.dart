@@ -68,11 +68,7 @@ class AddressForm extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 14),
                     child: TextFormField(
                       cursorColor: Colors.black,
-                      style: TextStyle(
-                        color: textfieldcolor,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
+                      style: Theme.of(context).textTheme.headline1,
                       decoration: InputDecoration(
                         contentPadding: edgeInsets16,
                         hintText: 'Enter your address name',
@@ -84,11 +80,7 @@ class AddressForm extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 14),
                     child: TextFormField(
                       cursorColor: Colors.black,
-                      style: TextStyle(
-                        color: textfieldcolor,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
+                      style: Theme.of(context).textTheme.headline1,
                       decoration: InputDecoration(
                         contentPadding: edgeInsets16,
                         hintText: 'Enter your block number',
@@ -100,11 +92,7 @@ class AddressForm extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 14),
                     child: TextFormField(
                       cursorColor: Colors.black,
-                      style: TextStyle(
-                        color: textfieldcolor,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
+                      style: Theme.of(context).textTheme.headline1,
                       decoration: InputDecoration(
                         contentPadding: edgeInsets16,
                         hintText: 'Enter your street number',
@@ -116,11 +104,7 @@ class AddressForm extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 14),
                     child: TextFormField(
                       cursorColor: Colors.black,
-                      style: TextStyle(
-                        color: textfieldcolor,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
+                      style: Theme.of(context).textTheme.headline1,
                       decoration: InputDecoration(
                         hintText: 'Enter your house / building number',
                         contentPadding: edgeInsets16,
@@ -132,11 +116,7 @@ class AddressForm extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 14),
                     child: TextFormField(
                       cursorColor: Colors.black,
-                      style: TextStyle(
-                        color: textfieldcolor,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
+                      style: Theme.of(context).textTheme.headline1,
                       decoration: InputDecoration(
                         hintText: 'Enter PACI number (Optional)',
                         contentPadding: edgeInsets16,
@@ -148,11 +128,7 @@ class AddressForm extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 14),
                     child: TextFormField(
                       cursorColor: Colors.black,
-                      style: TextStyle(
-                        color: textfieldcolor,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
+                      style: Theme.of(context).textTheme.headline1,
                       decoration: InputDecoration(
                         hintText: 'Enter floor number (Optional)',
                         contentPadding: edgeInsets16,
@@ -164,11 +140,7 @@ class AddressForm extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 14),
                     child: TextFormField(
                       cursorColor: Colors.black,
-                      style: TextStyle(
-                        color: textfieldcolor,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
+                      style: Theme.of(context).textTheme.headline1,
                       decoration: InputDecoration(
                         contentPadding: edgeInsets16,
                         hintText: 'Enter avenue (Optional)',
@@ -180,11 +152,7 @@ class AddressForm extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 14),
                     child: TextFormField(
                       cursorColor: Colors.black,
-                      style: TextStyle(
-                        color: textfieldcolor,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
+                      style: Theme.of(context).textTheme.headline1,
                       decoration: InputDecoration(
                         // suffixIcon: Container(
                         //   color: Colors.red,
@@ -205,15 +173,10 @@ class AddressForm extends StatelessWidget {
                     child: TextFormField(
                       cursorColor: Colors.black,
                       maxLines: 5,
-                      style: TextStyle(
-                        color: textfieldcolor,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      // maxLength: 5,
+                      style: Theme.of(context).textTheme.headline1,
                       decoration: InputDecoration(
                         contentPadding: edgeInsets16,
-                        hintText: 'Enter avenue (Optional)',
+                        hintText: 'Detail Address (Optional)',
                       ),
                     ),
                   ),
