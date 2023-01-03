@@ -5,14 +5,18 @@ import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 
 class LoginButton extends StatelessWidget {
-  const LoginButton({
+  LoginButton({
     Key? key,
     required this.onTap,
     required this.enabled,
+    required this.title,
+     required this.height,
   }) : super(key: key);
 
   final Function() onTap;
   final bool enabled;
+  final String title;
+  double height;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -31,12 +35,12 @@ class LoginButton extends StatelessWidget {
                   : loginButtonColor.withOpacity(0.5),
               borderRadius: BorderRadius.circular(6),
             ),
-            height: 70,
-            child: const Center(
+            height: height,
+            child: Center(
               child: Text(
-                "LOGIN",
+                title,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xffFFFEFE),
                   fontFamily: "Poppins",
                   fontWeight: FontWeight.w700,
