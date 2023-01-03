@@ -192,3 +192,34 @@ class SplashButton extends StatelessWidget {
     );
   }
 }
+
+
+
+  GestureDetector payNowButton() {
+    return GestureDetector(
+      onTap: () {},
+      child: Padding(
+        padding:
+            const EdgeInsets.only(left: 16.0, right: 16, top: 8, bottom: 18),
+        child: Container(
+          width: 380.w,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: const Color(0xffFAAF4A),
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Center(
+            child: Text(
+              "Pay Now",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+                fontSize: 18.sp,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }

@@ -9,6 +9,7 @@ import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
+import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:intl/intl.dart';
 
 class ConfirmationPage extends StatefulWidget {
@@ -168,8 +169,20 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                           ),
                         ),
                         sizedBoxHeight6,
-                        subscriptionDate('01/01/2023',
-                            dateController.subsciptionEndDateController),
+                        TextFormField(
+                          readOnly: true,
+                          cursorColor: Colors.black,
+                          style: const TextStyle(
+                            color: Color(0xff0A0909),
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          decoration: const InputDecoration(
+                            hintText: "01/01/2023",
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 18, vertical: 16),
+                          ),
+                        ),
                         sizedBoxHeight10,
                         Text(
                           "Add Promo Code",
@@ -288,6 +301,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
         init: DateController(),
         builder: (controller) {
           return TextFormField(
+            readOnly: true,
             controller: dateController,
             onTap: () async {
               DateTime? pickedDate = await showDatePicker(
@@ -295,6 +309,11 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                 initialDate: DateTime.now(),
                 firstDate: DateTime.now(),
                 lastDate: DateTime(2100),
+                builder: (context, child) => Theme(
+                    data: Theme.of(context).copyWith(
+                        colorScheme: const ColorScheme.light(
+                            primary: Color(0xffFAAF4A))),
+                    child: child!),
               );
               if (pickedDate != null) {
                 String formattedDate =
