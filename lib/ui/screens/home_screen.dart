@@ -58,8 +58,7 @@ class _HomePageState extends State<HomePage> {
                   fit: BoxFit.fill,
                 ),
               ),
-              child: 
-              SingleChildScrollView(
+              child: SingleChildScrollView(
                 child: SafeArea(
                   child: Padding(
                     padding: edgeInsets8,
@@ -207,22 +206,6 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        // SizedBox(
-                        //   height: 77.5,
-                        //   child: Padding(
-                        //     padding: const EdgeInsets.only(right: 8.0, left: 6),
-                        //     child: ListView.builder(
-                        //       scrollDirection: Axis.horizontal,
-                        //       itemCount: days.length,
-                        //       itemBuilder: (context, index) {
-                        //         return CalenderDayDate(
-                        //           day: days[index],
-                        //           date: dates[index].toString(),
-                        //         );
-                        //       },
-                        //     ),
-                        //   ),
-                        // ),
                         sizedBoxHeight35,
                         Padding(
                           padding: const EdgeInsets.only(left: 6.0),
@@ -233,8 +216,7 @@ class _HomePageState extends State<HomePage> {
                               itemCount: homeController.menu.length,
                               itemBuilder: (context, index) {
                                 return FoodMenuItem(
-                                  foodName: homeController.menu[index].titleEn,
-                                  foodImage: homeController.menu[index].image,
+                                  menu: homeController.menu[index],
                                 );
                               },
                             ),

@@ -93,7 +93,7 @@ class NutritionContent extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final String image;
+  final Widget image;
   final String nutritionContent;
   final String nutritionName;
 
@@ -106,7 +106,7 @@ class NutritionContent extends StatelessWidget {
           child: SizedBox(
             height: 45,
             width: 45,
-            child: SvgPicture.asset("assets/images/$image.svg"),
+            child: image,
           ),
         ),
         Text(
