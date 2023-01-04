@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:health_studio_user/ui/screens/address_form.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
@@ -21,7 +22,9 @@ class _AddressState extends State<Address> {
     return Scaffold(
       bottomNavigationBar: bottomNavigationBar(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Get.to(AddressForm());
+        },
         backgroundColor: whiteColor,
         child: const Icon(
           Icons.add,

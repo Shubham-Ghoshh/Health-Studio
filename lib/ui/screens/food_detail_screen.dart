@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/core/controllers/menu_controller.dart';
+
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/ui/widgets/food_detail_card.dart';
 
@@ -12,11 +14,10 @@ class FoodDetailPage extends StatefulWidget {
   State<FoodDetailPage> createState() => _FoodDetailPageState();
 }
 
-int _currentIndex = 0;
-
 class _FoodDetailPageState extends State<FoodDetailPage> {
   @override
   Widget build(BuildContext context) {
+
     return GetBuilder<MenuController>(builder: (menuController) {
       return Scaffold(
         bottomNavigationBar: BottomNavigationBar(
