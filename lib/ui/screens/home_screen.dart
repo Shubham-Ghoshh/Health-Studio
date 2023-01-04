@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
+import 'package:health_studio_user/core/controllers/plan_controller.dart';
 import 'package:health_studio_user/core/models/bottom_nav_item.dart';
+import 'package:health_studio_user/core/models/plan.dart';
 import 'package:health_studio_user/ui/screens/plan_screen.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/ui/widgets/date.dart';
@@ -125,9 +127,7 @@ class _HomePageState extends State<HomePage> {
                               children: homeController.plans
                                   .asMap()
                                   .map((index, plan) => MapEntry(
-                                      featuresPlanItem(plan.image, plan.titleEn,
-                                          "assets/images/feature$index.png"),
-                                      index))
+                                      featuresPlanItem(plan, index), index))
                                   .keys
                                   .toList()),
                         ),
@@ -233,16 +233,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   Column featuresPlanItem(
-    String imageName,
-    String featureDescription,
-    String placeholderImage,
+    Plan plan,
+    int index,
   ) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         GestureDetector(
           onTap: (() {
-            Get.to(PlanScreen());
+            Get.put(PlanController()).getPackages(plan);
           }),
           child: Container(
             height: 180,
@@ -260,14 +259,14 @@ class _HomePageState extends State<HomePage> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: CachedNetworkImage(
-                    imageUrl: imageName,
+                    imageUrl: plan.image,
                     height: 180,
                     width: 195,
                     fit: BoxFit.fitWidth,
                     placeholder: (context, url) =>
-                        Image.asset(placeholderImage),
+                        Image.asset("assets/images/feature$index.png"),
                     errorWidget: (context, url, error) =>
-                        Image.asset(placeholderImage),
+                        Image.asset("assets/images/feature$index.png"),
                   ),
                 ),
               ),
@@ -280,7 +279,7 @@ class _HomePageState extends State<HomePage> {
             width: 180,
             height: 90,
             child: Text(
-              featureDescription,
+              plan.titleEn,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Color(0xffFFFDFD),
