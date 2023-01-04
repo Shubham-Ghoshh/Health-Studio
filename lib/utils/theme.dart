@@ -8,6 +8,11 @@ ThemeData themeData() {
     textTheme: TextTheme(
       bodyText1: TextStyle(
           fontSize: 13.sp, color: whiteColor, fontWeight: FontWeight.w700),
+      headline1: TextStyle(
+        color: textfieldcolor,
+        fontSize: 15.sp,
+        fontWeight: FontWeight.w400,
+      ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,

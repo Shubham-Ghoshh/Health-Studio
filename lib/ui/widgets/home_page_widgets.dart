@@ -1,18 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:health_studio_user/core/controllers/menu_controller.dart';
+import 'package:health_studio_user/core/models/menu.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/ui/screens/food_detail_screen.dart';
 import 'package:get/get.dart';
 
 class FoodMenuItem extends StatelessWidget {
   const FoodMenuItem({
-    required this.foodImage,
-    required this.foodName,
+    required this.menu,
     Key? key,
   }) : super(key: key);
 
-  final String foodImage;
-  final String foodName;
+  final Menu menu;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class FoodMenuItem extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            Get.to(() => const FoodDetailPage());
+            Get.put(MenuController()).getMenuDetail(menu);
           },
           child: Padding(
             padding: const EdgeInsets.only(right: 16.0),
@@ -30,9 +30,9 @@ class FoodMenuItem extends StatelessWidget {
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Hero(
-                    tag: "food-image-$foodImage",
+                    tag: "food-image-${menu.image}",
                     child: CachedNetworkImage(
-                      imageUrl: foodImage,
+                      imageUrl: menu.image,
                       height: 280,
                       width: 185,
                       fit: BoxFit.fitWidth,
@@ -59,7 +59,7 @@ class FoodMenuItem extends StatelessWidget {
             width: 195,
             height: 20,
             child: Text(
-              foodName,
+              menu.titleEn,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Color(0xffFFFDFD),

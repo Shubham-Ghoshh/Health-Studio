@@ -2,8 +2,6 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:health_studio_user/ui/screens/confirmation_screen.dart';
-import 'package:health_studio_user/ui/screens/food_detail_screen.dart';
 import 'package:health_studio_user/ui/screens/splash_screen.dart';
 import 'package:health_studio_user/utils/constants.dart';
 import 'package:health_studio_user/utils/theme.dart';
@@ -36,7 +34,7 @@ class MyApp extends StatelessWidget {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       title: 'Health Studio',
-      home: const ConfirmationPage(),
+      home: const SplashScreen(),
     );
   }
 }
