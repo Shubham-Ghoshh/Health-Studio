@@ -9,7 +9,6 @@ import 'package:health_studio_user/utils/theme.dart';
 void main() {
   runApp(
     DevicePreview(
-      // enabled: !kReleaseMode,
       enabled: true,
       builder: (context) => ScreenUtilInit(
         designSize: const Size(360, 690),
