@@ -145,6 +145,8 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         sizedBoxHeight10,
                         LoginButton(
+                          height: 70.h,
+                          title: 'LOGIN',
                           enabled: authController.isValid,
                           onTap: () {
                             authController.login();

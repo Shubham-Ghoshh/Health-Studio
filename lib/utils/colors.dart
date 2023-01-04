@@ -24,3 +24,4 @@ const settingsBackground = Color(0xffE84C4F);
 const itemsbackground = Color(0xffC19C7D);
 
 const blacktextcolor = Color(0xff000000);
+const textfieldcolor = Color(0xff0A0909);
