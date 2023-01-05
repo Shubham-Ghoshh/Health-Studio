@@ -29,7 +29,6 @@ class PlanController extends GetxController {
   }
 
   void selectVariant(String id, int value) {
-    print("ONTAP");
     int index = packages.indexWhere((element) => element.id == id);
     packages[index == -1 ? 0 : index].selected = value;
     update();

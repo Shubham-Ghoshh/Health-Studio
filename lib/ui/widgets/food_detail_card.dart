@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

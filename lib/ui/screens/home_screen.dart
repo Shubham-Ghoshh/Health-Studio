@@ -1,17 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
-import 'package:health_studio_user/core/models/bottom_nav_item.dart';
 import 'package:health_studio_user/core/models/plan.dart';
-import 'package:health_studio_user/ui/screens/plan_screen.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/ui/widgets/date.dart';
-import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/formatters.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/ui/widgets/home_page_widgets.dart';

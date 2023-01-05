@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/ui/screens/address_form.dart';
+import 'package:health_studio_user/ui/screens/confirmation_screen.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
+import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 
@@ -15,7 +17,8 @@ class Address extends StatefulWidget {
 }
 
 class _AddressState extends State<Address> {
-  bool isVisible = false;
+  bool home = true;
+  bool office = false;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,7 @@ class _AddressState extends State<Address> {
       bottomNavigationBar: bottomNavigationBar(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(AddressForm());
+          Get.to(() => const AddressForm());
         },
         backgroundColor: whiteColor,
         child: const Icon(
@@ -41,7 +44,7 @@ class _AddressState extends State<Address> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            sizedBoxHeight10,
+            sizedBoxHeight35,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -78,21 +81,36 @@ class _AddressState extends State<Address> {
             GestureDetector(
               onTap: () {
                 setState(() {
-                  isVisible = !(isVisible);
+                  home = !(home);
+                  office = false;
                 });
               },
-              child: addressContainer(
-                'Home',
-              ),
+              child: addressContainer('Home', home),
             ),
-            addressContainer('Office'),
+            GestureDetector(
+                onTap: () {
+                  setState(() {
+                    office = !(office);
+                    home = false;
+                  });
+                },
+                child: addressContainer('Office', office)),
+            LoginButton(
+              width: 150,
+              onTap: () {
+                Get.to(() => const ConfirmationPage());
+              },
+              enabled: !(!home && !office),
+              title: "Next",
+              height: 50,
+            )
           ],
         ),
       ),
     );
   }
 
-  Widget addressContainer(String title) {
+  Widget addressContainer(String title, bool isVisible) {
     return Column(
       children: [
         Padding(

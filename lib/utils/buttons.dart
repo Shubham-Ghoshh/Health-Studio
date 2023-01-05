@@ -10,13 +10,15 @@ class LoginButton extends StatelessWidget {
     required this.onTap,
     required this.enabled,
     required this.title,
-     required this.height,
+    required this.height,
+    this.width = double.infinity,
   }) : super(key: key);
 
   final Function() onTap;
   final bool enabled;
   final String title;
   double height;
+  double width;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -36,6 +38,7 @@ class LoginButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(6),
             ),
             height: height,
+            width: width,
             child: Center(
               child: Text(
                 title,
@@ -197,33 +200,30 @@ class SplashButton extends StatelessWidget {
   }
 }
 
-
-
-  GestureDetector payNowButton() {
-    return GestureDetector(
-      onTap: () {},
-      child: Padding(
-        padding:
-            const EdgeInsets.only(left: 16.0, right: 16, top: 8, bottom: 18),
-        child: Container(
-          width: 380.w,
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: const Color(0xffFAAF4A),
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Center(
-            child: Text(
-              "Pay Now",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: 18.sp,
-              ),
+GestureDetector payNowButton() {
+  return GestureDetector(
+    onTap: () {},
+    child: Padding(
+      padding: const EdgeInsets.only(left: 16.0, right: 16, top: 8, bottom: 18),
+      child: Container(
+        width: 380.w,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: const Color(0xffFAAF4A),
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Center(
+          child: Text(
+            "Pay Now",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+              fontSize: 18.sp,
             ),
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}

@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
 import 'package:health_studio_user/core/models/plan.dart';
 import 'package:health_studio_user/ui/screens/address_screen.dart';
-import 'package:health_studio_user/ui/widgets/customBottomNavBar.dart';
+import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 
@@ -22,7 +21,7 @@ class _PlanScreenState extends State<PlanScreen> {
   Widget build(BuildContext context) {
     return GetBuilder<PlanController>(builder: (planController) {
       return Scaffold(
-          bottomNavigationBar: const CustomBottomAppBar(),
+          bottomNavigationBar: bottomNavigationBar(),
           body: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -542,7 +541,7 @@ class _PlanScreenState extends State<PlanScreen> {
                             ),
                           ),
                           sizedBoxHeight10,
-                          const mealWidget(),
+                          const MealWidget(),
                         ],
                       ),
                     ),
@@ -564,7 +563,7 @@ class _PlanScreenState extends State<PlanScreen> {
                   color: dividercolor,
                   thickness: 1,
                 ),
-                const pricingRow(),
+                const PricingRow(),
                 sizedBoxHeight6,
                 sizedBoxHeight10,
                 sizedBoxHeight16,
@@ -594,8 +593,8 @@ class _PlanScreenState extends State<PlanScreen> {
   }
 }
 
-class mealWidget extends StatelessWidget {
-  const mealWidget({
+class MealWidget extends StatelessWidget {
+  const MealWidget({
     Key? key,
   }) : super(key: key);
 
@@ -714,8 +713,8 @@ class mealWidget extends StatelessWidget {
   }
 }
 
-class pricingRow extends StatelessWidget {
-  const pricingRow({
+class PricingRow extends StatelessWidget {
+  const PricingRow({
     Key? key,
   }) : super(key: key);
 
