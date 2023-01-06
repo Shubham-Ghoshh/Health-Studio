@@ -52,3 +52,9 @@ EdgeInsets edgeInsets16 = const EdgeInsets.all(16);
 EdgeInsets edgeInsetsleft16 = const EdgeInsets.only(left: 16);
 EdgeInsets edgeInsets22 = const EdgeInsets.fromLTRB(22, 0, 22, 0);
 EdgeInsets edgeInsetsTop51 = const EdgeInsets.only(top: 51);
+
+divider() {
+  return const Divider(
+    color: Color.fromARGB(153, 255, 255, 255),
+  );
+}

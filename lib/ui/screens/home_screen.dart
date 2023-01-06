@@ -1,9 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:health_studio_user/core/models/bottom_nav_item.dart';
+import 'package:health_studio_user/ui/screens/setting_screen.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
 import 'package:health_studio_user/core/models/plan.dart';
+
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/ui/widgets/date.dart';
 import 'package:health_studio_user/utils/formatters.dart';
@@ -74,13 +79,14 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Row(
                               children: [
+
                                 Container(
                                   decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: Color(0xffE84C4F),
                                   ),
                                   child: IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {Get.to(() => const SettingPage());},
                                     icon: Padding(
                                       padding: const EdgeInsets.all(0.25),
                                       child: SizedBox(
@@ -88,6 +94,7 @@ class _HomePageState extends State<HomePage> {
                                         width: 25,
                                         child: Image.asset(
                                             "assets/images/settings_icon.png"),
+
                                       ),
                                     ),
                                   ),
