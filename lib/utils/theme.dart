@@ -7,7 +7,25 @@ ThemeData themeData() {
     fontFamily: "Poppins",
     textTheme: TextTheme(
       bodyText1: TextStyle(
-          fontSize: 13.sp, color: whiteColor, fontWeight: FontWeight.w700),
+        fontSize: 13.sp,
+        color: whiteColor,
+        fontWeight: FontWeight.w700,
+      ),
+      bodyText2: TextStyle(
+        fontSize: 14.sp,
+        color: whiteColor,
+        fontWeight: FontWeight.w500,
+      ),
+      headline1: TextStyle(
+        color: textfieldcolor,
+        fontSize: 15.sp,
+        fontWeight: FontWeight.w400,
+      ),
+      headline2: TextStyle(
+        color: textfieldcolor,
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+      ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,

@@ -9,8 +9,8 @@ Widget dateWidget(BuildContext context, String weekday, String day,
     child: GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 75,
-        width: 85,
+        height: 63,
+        width: 63,
         decoration: BoxDecoration(
           color: selected == true ? activeDateBgColor : whiteColor,
           borderRadius: BorderRadius.circular(10),

@@ -9,6 +9,10 @@ SizedBox sizedBoxHeight8 = SizedBox(
   height: 8.h,
 );
 
+SizedBox sizedBoxHeight14 = SizedBox(
+  height: 14.h,
+);
+
 SizedBox sizedBoxHeight10 = SizedBox(
   height: 10.h,
 );
@@ -39,8 +43,14 @@ SizedBox sizedBoxWidth12 = SizedBox(
   width: 12.w,
 );
 
+SizedBox sizedBoxWidth25 = SizedBox(
+  width: 25.w,
+);
 EdgeInsets edgeInsets8 = const EdgeInsets.all(8);
 EdgeInsets edgeInsets16 = const EdgeInsets.all(16);
+
+EdgeInsets edgeInsetsleft16 = const EdgeInsets.only(left: 16);
+EdgeInsets edgeInsets22 = const EdgeInsets.fromLTRB(22, 0, 22, 0);
 EdgeInsets edgeInsetsTop51 = const EdgeInsets.only(top: 51);
 
 divider() {

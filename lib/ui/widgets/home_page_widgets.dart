@@ -1,38 +1,38 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:health_studio_user/core/controllers/menu_controller.dart';
+import 'package:health_studio_user/core/models/menu.dart';
 import 'package:health_studio_user/utils/colors.dart';
-import 'package:health_studio_user/ui/screens/food_detail_screen.dart';
 import 'package:get/get.dart';
 
 class FoodMenuItem extends StatelessWidget {
   const FoodMenuItem({
-    required this.foodImage,
-    required this.foodName,
+    required this.menu,
     Key? key,
   }) : super(key: key);
 
-  final String foodImage;
-  final String foodName;
+  final Menu menu;
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
           onTap: () {
-            Get.to(() => const FoodDetailPage());
+            Get.put(MenuController()).getMenuDetail(menu);
           },
           child: Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: SizedBox(
               height: 280,
-              width: 185,
+              width: 180,
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Hero(
-                    tag: "food-image-$foodImage",
+                    tag: "food-image-${menu.image}",
                     child: CachedNetworkImage(
-                      imageUrl: foodImage,
+                      imageUrl: menu.image,
                       height: 280,
                       width: 185,
                       fit: BoxFit.fitWidth,
@@ -56,16 +56,15 @@ class FoodMenuItem extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.5),
           child: SizedBox(
-            width: 195,
-            height: 30,
+            width: 150,
+            height: 20,
             child: Text(
-              foodName,
+              menu.titleEn,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Color(0xffFFFDFD),
-                fontWeight: FontWeight.w600,
-                fontFamily: "Poppins",
-                fontSize: 17,
+                fontWeight: FontWeight.w500,
+                fontSize: 16,
               ),
             ),
           ),

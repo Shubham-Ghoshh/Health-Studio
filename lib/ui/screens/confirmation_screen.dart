@@ -5,11 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/date_controller.dart';
+import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
-import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:intl/intl.dart';
 
 class ConfirmationPage extends StatefulWidget {
@@ -41,34 +41,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
             child: SafeArea(
               child: Column(
                 children: [
-                  sizedBoxHeight6,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: IconButton(
-                          onPressed: () {
-                            Get.back();
-                          },
-                          icon: const Icon(
-                            Icons.arrow_back,
-                            size: 30,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Center(
-                        child: SizedBox(
-                          height: 75,
-                          child: Image.asset(
-                            "assets/images/health_studio_logo.png",
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  sizedBoxHeight16,
+                  appBar(),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
@@ -139,7 +112,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                                     style: TextStyle(
                                       color: splashthemeColor,
                                       fontWeight: FontWeight.w500,
-                                      fontSize: 20.sp,
+                                      fontSize: 18,
                                     ),
                                   ),
                                 ),

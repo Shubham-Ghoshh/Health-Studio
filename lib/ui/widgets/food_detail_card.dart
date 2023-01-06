@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -91,7 +90,7 @@ class NutritionContent extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final String image;
+  final Widget image;
   final String nutritionContent;
   final String nutritionName;
 
@@ -104,7 +103,7 @@ class NutritionContent extends StatelessWidget {
           child: SizedBox(
             height: 45,
             width: 45,
-            child: SvgPicture.asset("assets/images/$image.svg"),
+            child: image,
           ),
         ),
         Text(
