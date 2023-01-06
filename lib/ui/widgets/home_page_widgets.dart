@@ -57,7 +57,7 @@ class FoodMenuItem extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 12.5),
           child: SizedBox(
             width: 195,
-            height: 20,
+            height: 30,
             child: Text(
               foodName,
               textAlign: TextAlign.center,

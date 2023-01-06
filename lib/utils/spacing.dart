@@ -42,3 +42,9 @@ SizedBox sizedBoxWidth12 = SizedBox(
 EdgeInsets edgeInsets8 = const EdgeInsets.all(8);
 EdgeInsets edgeInsets16 = const EdgeInsets.all(16);
 EdgeInsets edgeInsetsTop51 = const EdgeInsets.only(top: 51);
+
+divider() {
+  return const Divider(
+    color: Color.fromARGB(153, 255, 255, 255),
+  );
+}
