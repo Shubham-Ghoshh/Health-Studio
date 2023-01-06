@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:health_studio_user/core/controllers/auth_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
 import 'package:health_studio_user/core/models/plan.dart';
 import 'package:health_studio_user/ui/screens/address_screen.dart';
+import 'package:health_studio_user/ui/screens/authentication/login_screen.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
@@ -455,7 +457,16 @@ class _PlanScreenState extends State<PlanScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => const Address());
+                    Get.find<AuthController>().isLoggedIn
+                        ? Get.to(() => const Address())
+                        : Get.to(() => LoginPage(
+                              onSuccess: () {
+                                Get.back();
+                                Get.to(
+                                  () => const Address(),
+                                );
+                              },
+                            ));
                   },
                   child: Container(
                     padding: edgeInsets16.copyWith(top: 8, bottom: 8),
@@ -463,7 +474,9 @@ class _PlanScreenState extends State<PlanScreen> {
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(color: whiteColor)),
                     child: Text(
-                      "Order Now",
+                      Get.find<AuthController>().isLoggedIn
+                          ? "Order Now"
+                          : "Login to Order",
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                   ),

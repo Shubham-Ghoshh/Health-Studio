@@ -27,7 +27,7 @@ class AuthController extends GetxController {
     update();
   }
 
-  void login() async {
+  void login({Function()? onSuccess}) async {
     Utility.showLoadingDialog();
     Map<String, dynamic> body = {
       "mobile": mobile,
@@ -40,7 +40,7 @@ class AuthController extends GetxController {
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString("auth_key", response["details"]?[0]?["auth_key"]);
-      Get.offAll(() => const HomePage());
+      onSuccess == null ? Get.offAll(() => const HomePage()) : onSuccess();
     }
   }
 }

@@ -5,14 +5,9 @@ import 'package:health_studio_user/core/controllers/auth_controller.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
-
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
+class LoginPage extends StatelessWidget {
+  final Function()? onSuccess;
+  const LoginPage({super.key, this.onSuccess});
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AuthController>(
@@ -144,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                           title: 'LOGIN',
                           enabled: authController.isValid,
                           onTap: () {
-                            authController.login();
+                            authController.login(onSuccess: onSuccess);
                           },
                         ),
                         sizedBoxHeight16,
