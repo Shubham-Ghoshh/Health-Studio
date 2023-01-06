@@ -10,6 +10,22 @@ class AuthController extends GetxController {
   String? password;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isValid = false;
+  bool isLoggedIn = false;
+
+  @override
+  void onInit() {
+    super.onInit();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      checkLogin();
+    });
+  }
+
+  void checkLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? authKey = prefs.getString("auth_key");
+    isLoggedIn = authKey != null;
+    update();
+  }
 
   void login() async {
     Utility.showLoadingDialog();

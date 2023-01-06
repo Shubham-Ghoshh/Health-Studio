@@ -33,7 +33,7 @@ ThemeData themeData() {
       contentPadding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
       hintStyle: const TextStyle(
         color: Color.fromARGB(183, 10, 9, 9),
-        fontSize: 17,
+        fontSize: 15,
         fontWeight: FontWeight.w400,
       ),
       border: InputBorder.none,

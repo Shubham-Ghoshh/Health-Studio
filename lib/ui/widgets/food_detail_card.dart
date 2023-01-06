@@ -17,64 +17,57 @@ class FoodDetailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: edgeInsets16,
       margin: EdgeInsets.symmetric(horizontal: 16.w),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                sizedBoxHeight10,
-                Text(
-                  foodName,
-                  style: const TextStyle(
-                    color: Color(0xffFAAF4A),
-                    fontWeight: FontWeight.w700,
-                    fontSize: 21,
-                  ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                foodName,
+                style: const TextStyle(
+                  color: Color(0xffFAAF4A),
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 2.0, bottom: 14),
-                  child: Text(
-                    foodDescription,
-                    style: const TextStyle(
-                      color: Color(0xff0A0909),
-                      fontWeight: FontWeight.w400,
-                      fontSize: 17,
-                    ),
-                  ),
+              ),
+              Text(
+                foodDescription,
+                style: const TextStyle(
+                  color: Color(0xff0A0909),
+                  fontWeight: FontWeight.w300,
+                  fontSize: 14,
                 ),
-                const Text(
-                  "Diet Reference",
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: Color(0xff2A7891),
-                    fontWeight: FontWeight.w700,
-                    fontSize: 13,
-                  ),
+              ),
+              const Text(
+                "Diet Reference",
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  color: Color(0xff2A7891),
+                  fontWeight: FontWeight.w700,
+                  fontSize: 10,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           const Divider(
-            color: Colors.black,
+            color: Color(0xFFD9D9D9),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: nutritionContent,
-                ),
-                sizedBoxHeight10
-              ],
-            ),
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: nutritionContent,
+              ),
+              sizedBoxHeight10
+            ],
           )
         ],
       ),

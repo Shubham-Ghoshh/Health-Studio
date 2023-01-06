@@ -36,14 +36,22 @@ Widget bottomNavigationBar() {
           ]
               .map(
                 (e) => BottomNavigationBarItem(
-                  activeIcon: Icon(
-                    e.iconData,
+                  activeIcon: SvgPicture.asset(
+                    e.iconPath,
                     color: activeIconColor,
                   ),
-                  icon: Icon(
-                    e.iconData,
+                  // activeIcon: Icon(
+                  //   e.iconData,
+                  //   color: activeIconColor,
+                  // ),
+                  icon: SvgPicture.asset(
+                    e.iconPath,
                     color: Colors.black,
                   ),
+                  // icon: Icon(
+                  //   e.iconData,
+                  //   color: Colors.black,
+                  // ),
                   label: e.label,
                 ),
               )

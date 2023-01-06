@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                SingleChildScrollView(
+                SafeArea(
                   child: Form(
                     key: authController.formKey,
                     onChanged: () {
@@ -42,7 +42,6 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        sizedBoxHeight10,
                         Center(
                           child: SizedBox(
                             height: 75,
@@ -51,18 +50,17 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        sizedBoxHeight25,
+                        sizedBoxHeight16,
                         const Text(
                           "Welcome ,\nGlad to see you !",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Color(0xffFFFDFD),
                             fontWeight: FontWeight.w600,
-                            fontFamily: "Poppins",
-                            fontSize: 30,
+                            fontSize: 28,
                           ),
                         ),
-                        sizedBoxHeight25,
+                        sizedBoxHeight16,
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 18),
                           child: TextFormField(
@@ -82,9 +80,8 @@ class _LoginPageState extends State<LoginPage> {
                             keyboardType: TextInputType.number,
                             cursorColor: Colors.black,
                             style: const TextStyle(
-                              fontFamily: "Poppins",
                               color: Color(0xff0A0909),
-                              fontSize: 17,
+                              fontSize: 15,
                               fontWeight: FontWeight.w400,
                             ),
                             decoration: const InputDecoration(
@@ -92,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        sizedBoxHeight16,
+                        sizedBoxHeight6,
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 18),
                           child: TextFormField(
@@ -113,8 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                             obscureText: true,
                             style: const TextStyle(
                               color: Color(0xff0A0909),
-                              fontFamily: "Poppins",
-                              fontSize: 17,
+                              fontSize: 15,
                               fontWeight: FontWeight.w400,
                             ),
                             decoration: const InputDecoration(
@@ -133,9 +129,8 @@ class _LoginPageState extends State<LoginPage> {
                               child: const Text(
                                 "Forgot Password?",
                                 style: TextStyle(
-                                  fontFamily: "Poppins",
                                   color: Colors.white,
-                                  fontSize: 17,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -143,9 +138,9 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        sizedBoxHeight10,
+                        sizedBoxHeight6,
                         LoginButton(
-                          height: 70.h,
+                          height: 52,
                           title: 'LOGIN',
                           enabled: authController.isValid,
                           onTap: () {
@@ -159,8 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(
                             color: Color(0xffFFFDFD),
                             fontWeight: FontWeight.w400,
-                            fontFamily: "Poppins",
-                            fontSize: 17,
+                            fontSize: 14,
                           ),
                         ),
                         sizedBoxHeight6,
@@ -178,7 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ],
                         ),
-                        sizedBoxHeight52,
+                        const Spacer(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -188,7 +182,6 @@ class _LoginPageState extends State<LoginPage> {
                               style: TextStyle(
                                 color: Color(0xffFFFDFD),
                                 fontWeight: FontWeight.w400,
-                                fontFamily: "Poppins",
                                 fontSize: 17,
                               ),
                             ),
@@ -201,14 +194,12 @@ class _LoginPageState extends State<LoginPage> {
                                   decoration: TextDecoration.underline,
                                   color: Color(0xffFFFDFD),
                                   fontWeight: FontWeight.w400,
-                                  fontFamily: "Poppins",
                                   fontSize: 17,
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        sizedBoxHeight16,
                       ],
                     ),
                   ),

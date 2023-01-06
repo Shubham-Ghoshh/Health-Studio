@@ -47,7 +47,7 @@ class LoginButton extends StatelessWidget {
                   color: Color(0xffFFFEFE),
                   fontFamily: "Poppins",
                   fontWeight: FontWeight.w700,
-                  fontSize: 19,
+                  fontSize: 16,
                 ),
               ),
             ),
@@ -75,8 +75,8 @@ class AppleLoginButton extends StatelessWidget {
             color: Colors.white,
             shape: BoxShape.circle,
           ),
-          height: 55,
-          width: 60,
+          height: 45,
+          width: 45,
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: SvgPicture.asset(
@@ -107,8 +107,8 @@ class FacebookLoginButton extends StatelessWidget {
             color: Colors.white,
             shape: BoxShape.circle,
           ),
-          height: 55,
-          width: 60,
+          height: 45,
+          width: 45,
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: SvgPicture.asset(
@@ -139,8 +139,8 @@ class GoogleLoginButton extends StatelessWidget {
             color: Colors.white,
             shape: BoxShape.circle,
           ),
-          height: 55,
-          width: 60,
+          height: 45,
+          width: 45,
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: SvgPicture.asset(

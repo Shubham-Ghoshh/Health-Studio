@@ -1,9 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/core/controllers/menu_controller.dart';
+import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/ui/widgets/food_detail_card.dart';
 
@@ -33,8 +36,25 @@ class _FoodDetailPageState extends State<FoodDetailPage> {
             ),
             Align(
               alignment: Alignment.bottomCenter,
-              child: Image.asset(
-                  "assets/images/food_detail_bottom_background.png"),
+              child: CachedNetworkImage(
+                imageUrl: menuController.menuDetail!.menu.image,
+                height: 0.42.sh,
+                width: 1.sw,
+                fit: BoxFit.fitWidth,
+                placeholder: (context, url) => const Center(
+                  child: CircularProgressIndicator(
+                    color: activeDateBgColor,
+                  ),
+                ),
+                errorWidget: (context, url, error) => Container(
+                  height: 0.45.sh,
+                  width: 1.sw,
+                  decoration: BoxDecoration(
+                      color: whiteColor,
+                      borderRadius: BorderRadius.circular(8)),
+                  child: const Icon(Icons.error),
+                ),
+              ),
             ),
             SingleChildScrollView(
               child: SafeArea(
@@ -43,7 +63,7 @@ class _FoodDetailPageState extends State<FoodDetailPage> {
                   children: [
                     sizedBoxHeight6,
                     appBar(),
-                    sizedBoxHeight25,
+                    sizedBoxHeight16,
                     Center(
                       child: FoodDetailCard(
                         nutritionContent: menuController.menuDetail!.attribute
@@ -56,24 +76,6 @@ class _FoodDetailPageState extends State<FoodDetailPage> {
                               ),
                             )
                             .toList(),
-                        //  const [
-                        //   NutritionContent(
-                        //       image: "calorie_icon",
-                        //       nutritionContent: "250",
-                        //       nutritionName: "Calorie"),
-                        //   NutritionContent(
-                        //       image: "protein_icon",
-                        //       nutritionContent: "24",
-                        //       nutritionName: "Protein"),
-                        //   NutritionContent(
-                        //       image: "fat_icon",
-                        //       nutritionContent: "10",
-                        //       nutritionName: "Fat"),
-                        //   NutritionContent(
-                        //       image: "carbs_icon",
-                        //       nutritionContent: "29",
-                        //       nutritionName: "Carbs"),
-                        // ],
                         foodName: menuController.menuDetail!.menu.titleEn,
                         foodDescription:
                             menuController.menuDetail!.menu.descriptionEn,

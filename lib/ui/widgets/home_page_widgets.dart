@@ -25,17 +25,17 @@ class FoodMenuItem extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: SizedBox(
-              height: 280,
-              width: 180,
+              // height: 280,
+              // width: 180,
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Hero(
                     tag: "food-image-${menu.image}",
                     child: CachedNetworkImage(
                       imageUrl: menu.image,
-                      height: 280,
-                      width: 185,
-                      fit: BoxFit.fitWidth,
+                      height: 228,
+                      width: 150,
+                      fit: BoxFit.cover,
                       placeholder: (context, url) => const Center(
                         child: CircularProgressIndicator(
                           color: activeDateBgColor,

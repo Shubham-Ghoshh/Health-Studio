@@ -435,7 +435,7 @@ class _PlanScreenState extends State<PlanScreen> {
           Container(
             padding: edgeInsets8.copyWith(left: 16.w, right: 16.w),
             margin: edgeInsets16.copyWith(top: 0, bottom: 0),
-            height: 42.h,
+            // height: 42.h,
             // width: 207.w,
             decoration: BoxDecoration(
               color: loginButtonColor,
@@ -458,7 +458,7 @@ class _PlanScreenState extends State<PlanScreen> {
                     Get.to(() => const Address());
                   },
                   child: Container(
-                    padding: edgeInsets8,
+                    padding: edgeInsets16.copyWith(top: 8, bottom: 8),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(color: whiteColor)),
