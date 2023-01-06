@@ -21,6 +21,11 @@ ThemeData themeData() {
         fontSize: 15.sp,
         fontWeight: FontWeight.w400,
       ),
+      headline2: TextStyle(
+        color: textfieldcolor,
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+      ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,

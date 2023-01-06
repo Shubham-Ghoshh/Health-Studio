@@ -57,38 +57,37 @@ class _HomePageState extends State<HomePage> {
               child: SingleChildScrollView(
                 child: SafeArea(
                   child: Padding(
-                    padding: edgeInsets8,
+                    padding: edgeInsets16.copyWith(top: 0),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         sizedBoxHeight6,
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: 270,
-                              height: 75,
+                              width: 242,
+                              // height: 57,
                               child: Image.asset(
                                   "assets/images/health_studio_logo.png"),
                             ),
                             Row(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 22.0),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Color(0xffE84C4F),
-                                    ),
-                                    child: IconButton(
-                                      onPressed: () {},
-                                      icon: Padding(
-                                        padding: const EdgeInsets.all(0.25),
-                                        child: SizedBox(
-                                          height: 24,
-                                          width: 25,
-                                          child: Image.asset(
-                                              "assets/images/settings_icon.png"),
-                                        ),
+                                Container(
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xffE84C4F),
+                                  ),
+                                  child: IconButton(
+                                    onPressed: () {},
+                                    icon: Padding(
+                                      padding: const EdgeInsets.all(0.25),
+                                      child: SizedBox(
+                                        height: 24,
+                                        width: 25,
+                                        child: Image.asset(
+                                            "assets/images/settings_icon.png"),
                                       ),
                                     ),
                                   ),
@@ -98,32 +97,34 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ],
                         ),
-                        sizedBoxHeight25,
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Column(
-                            children: [
-                              const Text(
-                                "Select your meal and enjoy our delicious and healthy food.",
-                                style: TextStyle(
-                                  color: Color(0xffFFFDFD),
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              sizedBoxHeight35,
-                            ],
-                          ),
+                        // sizedBoxHeight20,
+                        Column(
+                          children: [
+                            Text(
+                              "Select your meal and enjoy our delicious and healthy food.",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(
+                                    color: Colors.white,
+                                  ),
+                            ),
+                            sizedBoxHeight14,
+                          ],
                         ),
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
-                              children: homeController.plans
-                                  .asMap()
-                                  .map((index, plan) => MapEntry(
-                                      featuresPlanItem(plan, index), index))
-                                  .keys
-                                  .toList()),
+                            mainAxisSize: MainAxisSize.min,
+                            // crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: homeController.plans
+                                .asMap()
+                                .map((index, plan) => MapEntry(
+                                    featuresPlanItem(plan, index), index))
+                                .keys
+                                .toList(),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -138,13 +139,13 @@ class _HomePageState extends State<HomePage> {
                                     style: TextStyle(
                                       color: Color(0xffFFFDFD),
                                       fontWeight: FontWeight.w700,
-                                      fontSize: 27,
+                                      fontSize: 24,
                                     ),
                                   ),
                                   GestureDetector(
                                     onTap: () {},
                                     child: const Text(
-                                      "See All",
+                                      "See all",
                                       style: TextStyle(
                                         shadows: <Shadow>[
                                           Shadow(
@@ -161,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ],
                               ),
-                              sizedBoxHeight20,
+                              sizedBoxHeight14,
                               const Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 3.0),
                                 child: Text(
@@ -173,34 +174,37 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                               ),
-                              sizedBoxHeight20,
+                              sizedBoxHeight14,
                             ],
                           ),
                         ),
-                        SizedBox(
-                          height: 77.5,
-                          // width: 0.7.sw,
-                          child: ListView(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            children: List.generate(
-                              28,
-                              (index) {
-                                DateTime date =
-                                    DateTime.now().add(Duration(days: index));
-                                return dateWidget(
-                                    context,
-                                    getWeekday(date.weekday),
-                                    date.day.toString(),
-                                    homeController.selectedDate.day == date.day,
-                                    () {
-                                  homeController.selectDate(date);
-                                });
-                              },
+                        Padding(
+                          padding: edgeInsets0.copyWith(left: 8),
+                          child: SizedBox(
+                            height: 65,
+                            // width: 0.7.sw,
+                            child: ListView(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              children: List.generate(
+                                28,
+                                (index) {
+                                  DateTime date =
+                                      DateTime.now().add(Duration(days: index));
+                                  return dateWidget(
+                                      context,
+                                      getWeekday(date.weekday),
+                                      date.day.toString(),
+                                      homeController.selectedDate.day ==
+                                          date.day, () {
+                                    homeController.selectDate(date);
+                                  });
+                                },
+                              ),
                             ),
                           ),
                         ),
-                        sizedBoxHeight35,
+                        sizedBoxHeight14,
                         Padding(
                           padding: const EdgeInsets.only(left: 6.0),
                           child: SizedBox(
@@ -226,64 +230,69 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-  Column featuresPlanItem(
+  Widget featuresPlanItem(
     Plan plan,
     int index,
   ) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        GestureDetector(
-          onTap: (() {
-            Get.put(PlanController()).getPackages(plan);
-          }),
-          child: Container(
-            height: 180,
-            width: 195,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-              child: SizedBox(
-                height: 35,
-                width: 36,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: CachedNetworkImage(
-                    imageUrl: plan.image,
-                    height: 180,
-                    width: 195,
-                    fit: BoxFit.fitWidth,
-                    placeholder: (context, url) =>
-                        Image.asset("assets/images/feature$index.png"),
-                    errorWidget: (context, url, error) =>
-                        Image.asset("assets/images/feature$index.png"),
+    return SizedBox(
+      height: 234,
+      child: Column(
+        // mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          GestureDetector(
+            onTap: (() {
+              Get.put(PlanController()).getPackages(plan);
+            }),
+            child: Container(
+              height: 148,
+              width: 148,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                child: SizedBox(
+                  height: 35,
+                  width: 36,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: CachedNetworkImage(
+                      imageUrl: plan.image,
+                      height: 108,
+                      width: 75,
+                      fit: BoxFit.fitWidth,
+                      placeholder: (context, url) =>
+                          Image.asset("assets/images/feature$index.png"),
+                      errorWidget: (context, url, error) =>
+                          Image.asset("assets/images/feature$index.png"),
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
-          child: SizedBox(
-            width: 180,
-            height: 90,
-            child: Text(
-              plan.titleEn,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Color(0xffFFFDFD),
-                fontWeight: FontWeight.w500,
-                fontSize: 16,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+            child: SizedBox(
+              width: 130,
+              // height: 90,
+              child: Text(
+                plan.titleEn,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Color(0xffFFFDFD),
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

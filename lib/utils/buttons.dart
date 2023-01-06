@@ -179,7 +179,7 @@ class SplashButton extends StatelessWidget {
             ),
             borderRadius: const BorderRadius.all(Radius.circular(5)),
           ),
-          height: 52.h,
+          height: 52,
           child: Padding(
             padding: const EdgeInsets.only(left: 14),
             child: Row(

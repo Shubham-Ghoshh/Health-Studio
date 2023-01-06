@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/core/controllers/menu_controller.dart';
 import 'package:health_studio_user/utils/spacing.dart';
@@ -41,35 +42,7 @@ class _FoodDetailPageState extends State<FoodDetailPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     sizedBoxHeight6,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          child: IconButton(
-                            onPressed: () {
-                              Get.back();
-                            },
-                            icon: const Icon(
-                              Icons.arrow_back,
-                              size: 30,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        Center(
-                          child: SizedBox(
-                            height: 75,
-                            child: Hero(
-                              tag: "food-image",
-                              child: Image.asset(
-                                "assets/images/health_studio_logo.png",
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    appBar(),
                     sizedBoxHeight25,
                     Center(
                       child: FoodDetailCard(

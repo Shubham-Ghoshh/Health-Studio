@@ -6,6 +6,7 @@ import 'package:health_studio_user/core/controllers/address_controller.dart';
 import 'package:health_studio_user/core/models/address.dart';
 import 'package:health_studio_user/ui/screens/address_form.dart';
 import 'package:health_studio_user/ui/screens/confirmation_screen.dart';
+import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
@@ -40,82 +41,58 @@ class _AddressState extends State<Address> {
               ),
             ),
             body: Container(
+              height: double.infinity,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/images/background.png"),
                   fit: BoxFit.fill,
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  sizedBoxHeight35,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+              child: SafeArea(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      appBar(),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: IconButton(
-                          onPressed: () {
-                            Get.back();
-                          },
-                          icon: const Icon(
-                            Icons.arrow_back,
-                            size: 30,
-                            color: Colors.white,
-                          ),
+                        padding: edgeInsetsleft16,
+                        child: Text(
+                          'Address',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(
+                                  fontSize: 28.sp, fontWeight: FontWeight.w600),
                         ),
                       ),
-                      SizedBox(
-                        width: 270.w,
-                        height: 75.h,
-                        child:
-                            Image.asset("assets/images/health_studio_logo.png"),
-                      ),
+                      ...addressController.addresses
+                          .map((e) => addressContainer(
+                                e,
+                                home,
+                              )),
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     setState(() {
+                      //       home = !(home);
+                      //       office = false;
+                      //     });
+                      //   },
+                      //   child: addressContainer('Home', home),
+
+                      // ),
+                      // GestureDetector(
+                      //     onTap: () {
+                      //       setState(() {
+                      //         office = !(office);
+                      //         home = false;
+                      //       });
+                      //     },
+
+                      //     // child: addressContainer('Office', office)
+                      //     ),
                     ],
                   ),
-                  Padding(
-                    padding: edgeInsetsleft16,
-                    child: Text(
-                      'Address',
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          fontSize: 28.sp, fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                  ...addressController.addresses.map((e) => addressContainer(
-                        e,
-                        home,
-                      )),
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     setState(() {
-                  //       home = !(home);
-                  //       office = false;
-                  //     });
-                  //   },
-                  //   child: addressContainer('Home', home),
-
-                  // ),
-                  // GestureDetector(
-                  //     onTap: () {
-                  //       setState(() {
-                  //         office = !(office);
-                  //         home = false;
-                  //       });
-                  //     },
-
-                  //     // child: addressContainer('Office', office)
-                  //     ),
-                  LoginButton(
-                    width: 150,
-                    onTap: () {
-                      Get.to(() => const ConfirmationPage());
-                    },
-                    enabled: !(!home && !office),
-                    title: "Next",
-                    height: 50,
-                  )
-                ],
+                ),
               ),
             ),
           );
@@ -126,117 +103,122 @@ class _AddressState extends State<Address> {
     return GetBuilder<AddressController>(
         init: AddressController(),
         builder: (addressController) {
-          return Column(
-            children: [
-              Padding(
-                padding: edgeInsets16,
-                child: Container(
-                  height: 146.h,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(
-                              a.areaEn.toString(),
-                              style: TextStyle(
-                                  color: loginButtonColor,
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          isVisible
-                              ? Padding(
-                                  padding: const EdgeInsets.only(right: 16),
-                                  child: SvgPicture.asset(
-                                      'assets/images/verified.svg'),
-                                )
-                              : Container()
-                        ],
-                      ),
-                      Padding(
-                        padding: edgeInsetsleft16,
-                        child: Row(
-                          children: [
-                            Text(
-                              '${a.street}, ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14.sp,
-                                  color: pureblackColor),
-                            ),
-                            Text(
-                              'Building ${a.building}, ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14.sp,
-                                  color: pureblackColor),
-                            ),
-                            Text(
-                              'Floor ${a.floor},',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14.sp,
-                                  color: pureblackColor),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: edgeInsetsleft16,
-                        child: Text('Apartment ${a.apartementNumber}.',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14.sp,
-                                color: pureblackColor)),
-                      ),
-                      Padding(
-                        padding: edgeInsets16,
-                        child: Row(
+          return GestureDetector(
+            onTap: () {
+              Get.to(() => const ConfirmationPage());
+            },
+            child: Column(
+              children: [
+                Padding(
+                  padding: edgeInsets16,
+                  child: Container(
+                    height: 146.h,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                Text(
-                                  '${a.cityEn} , ',
-                                  style: TextStyle(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: pureblackColor),
-                                ),
-                                Text(
-                                  '${a.governorateEn}  ',
-                                  style: TextStyle(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: pureblackColor),
-                                ),
-                              ],
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(
+                                a.areaEn.toString(),
+                                style: TextStyle(
+                                    color: loginButtonColor,
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.w600),
+                              ),
                             ),
-                            GestureDetector(
-                                onTap: () {
-                                  addressController
-                                      .deleteAddress(a.id.toString());
-                                  addressController.getAddresses();
-                                },
-                                child: SvgPicture.asset(
-                                    'assets/images/deleteicon.svg'))
+                            isVisible
+                                ? Padding(
+                                    padding: const EdgeInsets.only(right: 16),
+                                    child: SvgPicture.asset(
+                                        'assets/images/verified.svg'),
+                                  )
+                                : Container()
                           ],
                         ),
-                      )
-                    ],
+                        Padding(
+                          padding: edgeInsetsleft16,
+                          child: Row(
+                            children: [
+                              Text(
+                                '${a.street}, ',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.sp,
+                                    color: pureblackColor),
+                              ),
+                              Text(
+                                'Building ${a.building}, ',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.sp,
+                                    color: pureblackColor),
+                              ),
+                              Text(
+                                'Floor ${a.floor},',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.sp,
+                                    color: pureblackColor),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: edgeInsetsleft16,
+                          child: Text('Apartment ${a.apartementNumber}.',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.sp,
+                                  color: pureblackColor)),
+                        ),
+                        Padding(
+                          padding: edgeInsets16,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    '${a.cityEn} , ',
+                                    style: TextStyle(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: pureblackColor),
+                                  ),
+                                  Text(
+                                    '${a.governorateEn}  ',
+                                    style: TextStyle(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: pureblackColor),
+                                  ),
+                                ],
+                              ),
+                              GestureDetector(
+                                  onTap: () {
+                                    addressController
+                                        .deleteAddress(a.id.toString());
+                                    addressController.getAddresses();
+                                  },
+                                  child: SvgPicture.asset(
+                                      'assets/images/deleteicon.svg'))
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         });
   }

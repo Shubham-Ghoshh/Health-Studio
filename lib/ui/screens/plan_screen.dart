@@ -30,66 +30,66 @@ class _PlanScreenState extends State<PlanScreen> {
               ),
             ),
             child: SingleChildScrollView(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    sizedBoxHeight25,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: 270.w,
-                          height: 75.h,
-                          child: Image.asset(
-                              "assets/images/health_studio_logo.png"),
-                        ),
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 22.0),
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: settingsBackground,
-                                ),
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: Padding(
-                                    padding: const EdgeInsets.all(0.25),
-                                    child: SizedBox(
-                                      height: 24.h,
-                                      width: 25.w,
-                                      child: Image.asset(
-                                          "assets/images/settings_icon.png"),
+              child: SafeArea(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: 242,
+                            // height: 57,
+                            child: Image.asset(
+                                "assets/images/health_studio_logo.png"),
+                          ),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 22.0),
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: settingsBackground,
+                                  ),
+                                  child: IconButton(
+                                    onPressed: () {},
+                                    icon: Padding(
+                                      padding: const EdgeInsets.all(0.25),
+                                      child: SizedBox(
+                                        height: 24.h,
+                                        width: 25.w,
+                                        child: Image.asset(
+                                            "assets/images/settings_icon.png"),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                            sizedBoxwidth8,
-                          ],
-                        ),
-                      ],
-                    ),
-                    sizedBoxHeight25,
-                    Padding(
-                      padding: edgeInsets22.copyWith(left: 16.w),
-                      child: Text(
-                        planController.selectedPlan!.titleEn,
-                        style: const TextStyle(
-                          color: Color(0xffFFFDFD),
-                          fontWeight: FontWeight.w600,
-                          fontSize: 30,
+                              sizedBoxwidth8,
+                            ],
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: edgeInsets22.copyWith(left: 16.w),
+                        child: Text(
+                          planController.selectedPlan!.titleEn,
+                          style: const TextStyle(
+                            color: Color(0xffFFFDFD),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 28,
+                          ),
                         ),
                       ),
-                    ),
-                    ...planController.packages
-                        .map(
-                          (e) => planItem(e),
-                        )
-                        .toList(),
-                    customplan('Custom Plan', "3", "1", "1"),
-                  ]),
+                      ...planController.packages
+                          .map(
+                            (e) => planItem(e),
+                          )
+                          .toList(),
+                      customplan('Custom Plan', "3", "1", "1"),
+                    ]),
+              ),
             ),
           ));
     });
@@ -118,79 +118,40 @@ class _PlanScreenState extends State<PlanScreen> {
             ),
           ),
           Container(
-            height: 238.h,
+            height: 220.h,
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
             ),
-            child: Column(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Padding(
-                            padding: edgeInsetsleft16,
-                            child: Text(
-                              package.titleEn,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 16.sp,
-                                color: plantextColor,
-                              ),
-                            ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      sizedBoxHeight8,
+                      Padding(
+                        padding: edgeInsetsleft16,
+                        child: Text(
+                          package.titleEn,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16.sp,
+                            color: plantextColor,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 16, right: 16),
-                            child: Column(
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 16),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Image.asset(
-                                          'assets/images/planimage.png',
-                                          height: 20.h,
-                                        ),
-                                        sizedBoxwidth8,
-                                        Text(
-                                          "${package.meal} Meals",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14.sp,
-                                            color: blackColor,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Image.asset(
-                                          'assets/images/planimage.png',
-                                          height: 20.h,
-                                        ),
-                                        sizedBoxwidth8,
-                                        Text(
-                                          "${package.snack} Snacks",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14.sp,
-                                            color: blackColor,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                sizedBoxHeight14,
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Image.asset(
                                       'assets/images/planimage.png',
@@ -198,7 +159,7 @@ class _PlanScreenState extends State<PlanScreen> {
                                     ),
                                     sizedBoxwidth8,
                                     Text(
-                                      "${package.breakfast} Breakfast",
+                                      "${package.meal} Meals",
                                       style: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 14.sp,
@@ -207,228 +168,267 @@ class _PlanScreenState extends State<PlanScreen> {
                                     ),
                                   ],
                                 ),
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/planimage.png',
+                                      height: 20.h,
+                                    ),
+                                    sizedBoxwidth8,
+                                    Text(
+                                      "${package.snack} Snacks",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.sp,
+                                        color: blackColor,
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ],
                             ),
+                            sizedBoxHeight14,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Image.asset(
+                                  'assets/images/planimage.png',
+                                  height: 20.h,
+                                ),
+                                sizedBoxwidth8,
+                                Text(
+                                  "${package.breakfast} Breakfast",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.sp,
+                                    color: blackColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Divider(
+                        height: 1,
+                        color: dividercolor,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Get.find<PlanController>()
+                                  .selectVariant(package.id, 7);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: package.selected == 7
+                                      ? loginButtonColor
+                                      : whiteColor,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Padding(
+                                padding: edgeInsets8,
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      '07',
+                                      style: TextStyle(
+                                          color: pureblackColor,
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 18.sp),
+                                    ),
+                                    Text(
+                                      'Days',
+                                      style: TextStyle(
+                                          color: pureblackColor,
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      'KD : ${package.sevenDays}',
+                                      style: TextStyle(
+                                          color: package.selected == 7
+                                              ? whiteColor
+                                              : loginButtonColor,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 12.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
-                          const Divider(
-                            height: 1,
-                            color: dividercolor,
+                          GestureDetector(
+                            onTap: () {
+                              Get.find<PlanController>()
+                                  .selectVariant(package.id, 15);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: package.selected == 15
+                                    ? loginButtonColor
+                                    : whiteColor,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Padding(
+                                padding: edgeInsets8,
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      '15',
+                                      style: TextStyle(
+                                          color: pureblackColor,
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 18.sp),
+                                    ),
+                                    Text(
+                                      'Days',
+                                      style: TextStyle(
+                                          color: pureblackColor,
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      'KD : ${package.fifteenDays}',
+                                      style: TextStyle(
+                                          color: package.selected == 15
+                                              ? whiteColor
+                                              : loginButtonColor,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 12.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.find<PlanController>()
-                                      .selectVariant(package.id, 7);
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: package.selected == 7
-                                          ? loginButtonColor
-                                          : whiteColor,
-                                      borderRadius: BorderRadius.circular(5)),
-                                  child: Padding(
-                                    padding: edgeInsets8,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          '07',
-                                          style: TextStyle(
-                                              color: pureblackColor,
-                                              fontWeight: FontWeight.w900,
-                                              fontSize: 18.sp),
-                                        ),
-                                        Text(
-                                          'Days',
-                                          style: TextStyle(
-                                              color: pureblackColor,
-                                              fontWeight: FontWeight.w300,
-                                              fontSize: 12.sp),
-                                        ),
-                                        Text(
-                                          'KD : ${package.sevenDays}',
-                                          style: TextStyle(
-                                              color: package.selected == 7
-                                                  ? whiteColor
-                                                  : loginButtonColor,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 12.sp),
-                                        ),
-                                      ],
+                          GestureDetector(
+                            onTap: () {
+                              Get.find<PlanController>()
+                                  .selectVariant(package.id, 30);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: package.selected == 30
+                                      ? loginButtonColor
+                                      : whiteColor),
+                              child: Padding(
+                                padding: edgeInsets8,
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      '30',
+                                      style: TextStyle(
+                                          color: pureblackColor,
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 18.sp),
                                     ),
-                                  ),
+                                    Text(
+                                      'Days',
+                                      style: TextStyle(
+                                          color: pureblackColor,
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 12.sp),
+                                    ),
+                                    Text(
+                                      'KD : ${package.thirtyDays}',
+                                      style: TextStyle(
+                                          color: package.selected == 30
+                                              ? whiteColor
+                                              : loginButtonColor,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 12.sp),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  Get.find<PlanController>()
-                                      .selectVariant(package.id, 15);
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: package.selected == 15
-                                        ? loginButtonColor
-                                        : whiteColor,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Padding(
-                                    padding: edgeInsets8,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          '15',
-                                          style: TextStyle(
-                                              color: pureblackColor,
-                                              fontWeight: FontWeight.w900,
-                                              fontSize: 18.sp),
-                                        ),
-                                        Text(
-                                          'Days',
-                                          style: TextStyle(
-                                              color: pureblackColor,
-                                              fontWeight: FontWeight.w300,
-                                              fontSize: 12.sp),
-                                        ),
-                                        Text(
-                                          'KD : ${package.fifteenDays}',
-                                          style: TextStyle(
-                                              color: package.selected == 15
-                                                  ? whiteColor
-                                                  : loginButtonColor,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 12.sp),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Get.find<PlanController>()
-                                      .selectVariant(package.id, 30);
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: package.selected == 30
-                                          ? loginButtonColor
-                                          : whiteColor),
-                                  child: Padding(
-                                    padding: edgeInsets8,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          '30',
-                                          style: TextStyle(
-                                              color: pureblackColor,
-                                              fontWeight: FontWeight.w900,
-                                              fontSize: 18.sp),
-                                        ),
-                                        Text(
-                                          'Days',
-                                          style: TextStyle(
-                                              color: pureblackColor,
-                                              fontWeight: FontWeight.w300,
-                                              fontSize: 12.sp),
-                                        ),
-                                        Text(
-                                          'KD : ${package.thirtyDays}',
-                                          style: TextStyle(
-                                              color: package.selected == 30
-                                                  ? whiteColor
-                                                  : loginButtonColor,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 12.sp),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  width: 56.w,
+                  height: 210.h,
+                  decoration: const BoxDecoration(
+                    color: itemsbackground,
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(6),
+                        bottomRight: Radius.circular(6)),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      sizedBoxHeight6,
+                      Column(
+                        children: [
+                          SvgPicture.asset('assets/images/calorie.svg'),
+                          sizedBoxHeight6,
+                          Text(
+                            '250',
+                            style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w900,
+                                color: whiteColor),
+                          ),
+                          Text(
+                            'Calorie',
+                            style: TextStyle(
+                                fontSize: 8.sp,
+                                fontWeight: FontWeight.w300,
+                                color: whiteColor),
                           )
                         ],
                       ),
-                    ),
-                    Container(
-                      width: 56.w,
-                      height: 224.h,
-                      decoration: const BoxDecoration(
-                        color: itemsbackground,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(6),
-                            bottomRight: Radius.circular(6)),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      sizedBoxHeight6,
+                      Column(
                         children: [
-                          Column(
-                            children: [
-                              SvgPicture.asset('assets/images/calorie.svg'),
-                              sizedBoxHeight6,
-                              Text(
-                                '250',
-                                style: TextStyle(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w900,
-                                    color: whiteColor),
-                              ),
-                              Text(
-                                'Calorie',
-                                style: TextStyle(
-                                    fontSize: 8.sp,
-                                    fontWeight: FontWeight.w300,
-                                    color: whiteColor),
-                              )
-                            ],
+                          SvgPicture.asset('assets/images/protein.svg'),
+                          sizedBoxHeight6,
+                          Text(
+                            '250',
+                            style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w900,
+                                color: whiteColor),
                           ),
-                          Column(
-                            children: [
-                              SvgPicture.asset('assets/images/protein.svg'),
-                              sizedBoxHeight6,
-                              Text(
-                                '250',
-                                style: TextStyle(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w900,
-                                    color: whiteColor),
-                              ),
-                              Text(
-                                'Protein',
-                                style: TextStyle(
-                                    fontSize: 8.sp,
-                                    fontWeight: FontWeight.w300,
-                                    color: whiteColor),
-                              )
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              SvgPicture.asset('assets/images/fat.svg'),
-                              sizedBoxHeight6,
-                              Text(
-                                '250',
-                                style: TextStyle(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w900,
-                                    color: whiteColor),
-                              ),
-                              Text(
-                                'Fat',
-                                style: TextStyle(
-                                    fontSize: 8.sp,
-                                    fontWeight: FontWeight.w300,
-                                    color: whiteColor),
-                              )
-                            ],
-                          ),
+                          Text(
+                            'Protein',
+                            style: TextStyle(
+                                fontSize: 8.sp,
+                                fontWeight: FontWeight.w300,
+                                color: whiteColor),
+                          )
                         ],
                       ),
-                    )
-                  ],
-                ),
+                      sizedBoxHeight6,
+                      Column(
+                        children: [
+                          SvgPicture.asset('assets/images/fat.svg'),
+                          sizedBoxHeight6,
+                          Text(
+                            '250',
+                            style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w900,
+                                color: whiteColor),
+                          ),
+                          Text(
+                            'Fat',
+                            style: TextStyle(
+                                fontSize: 8.sp,
+                                fontWeight: FontWeight.w300,
+                                color: whiteColor),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),

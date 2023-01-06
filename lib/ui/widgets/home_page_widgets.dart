@@ -16,6 +16,7 @@ class FoodMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
           onTap: () {
@@ -25,7 +26,7 @@ class FoodMenuItem extends StatelessWidget {
             padding: const EdgeInsets.only(right: 16.0),
             child: SizedBox(
               height: 280,
-              width: 185,
+              width: 180,
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Hero(
@@ -55,16 +56,15 @@ class FoodMenuItem extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.5),
           child: SizedBox(
-            width: 195,
+            width: 150,
             height: 20,
             child: Text(
               menu.titleEn,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Color(0xffFFFDFD),
-                fontWeight: FontWeight.w600,
-                fontFamily: "Poppins",
-                fontSize: 17,
+                fontWeight: FontWeight.w500,
+                fontSize: 16,
               ),
             ),
           ),
