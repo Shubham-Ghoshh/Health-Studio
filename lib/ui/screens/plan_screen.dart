@@ -8,6 +8,7 @@ import 'package:health_studio_user/core/models/plan.dart';
 import 'package:health_studio_user/ui/screens/address_screen.dart';
 import 'package:health_studio_user/ui/screens/authentication/login_screen.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
+import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 
@@ -54,18 +55,7 @@ class _PlanScreenState extends State<PlanScreen> {
                                     shape: BoxShape.circle,
                                     color: settingsBackground,
                                   ),
-                                  child: IconButton(
-                                    onPressed: () {},
-                                    icon: Padding(
-                                      padding: const EdgeInsets.all(0.25),
-                                      child: SizedBox(
-                                        height: 24.h,
-                                        width: 25.w,
-                                        child: Image.asset(
-                                            "assets/images/settings_icon.png"),
-                                      ),
-                                    ),
-                                  ),
+                                  child: SettingButton(),
                                 ),
                               ),
                               sizedBoxwidth8,
@@ -559,8 +549,7 @@ class _PlanScreenState extends State<PlanScreen> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 0, right: 15, top: 0),
+                      padding: const EdgeInsets.only(left: 0, right: 9, top: 0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [

@@ -16,6 +16,13 @@ SizedBox sizedBoxHeight14 = SizedBox(
 SizedBox sizedBoxHeight10 = SizedBox(
   height: 10.h,
 );
+
+SizedBox sizedBoxHeight30 = SizedBox(
+  height: 30.h,
+);
+SizedBox sizedBoxHeight90 = SizedBox(
+  height: 90.h,
+);
 SizedBox sizedBoxHeight16 = SizedBox(
   height: 16.h,
 );

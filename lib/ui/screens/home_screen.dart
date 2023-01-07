@@ -11,6 +11,7 @@ import 'package:health_studio_user/core/models/plan.dart';
 
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/ui/widgets/date.dart';
+import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/formatters.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/ui/widgets/home_page_widgets.dart';
@@ -86,20 +87,7 @@ class _HomePageState extends State<HomePage> {
                                     shape: BoxShape.circle,
                                     color: Color(0xffE84C4F),
                                   ),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      Get.to(() => const SettingPage());
-                                    },
-                                    icon: Padding(
-                                      padding: const EdgeInsets.all(0.25),
-                                      child: SizedBox(
-                                        height: 24,
-                                        // width: 25,
-                                        child: Image.asset(
-                                            "assets/images/settings_icon.png"),
-                                      ),
-                                    ),
-                                  ),
+                                  child: SettingButton(),
                                 ),
                                 sizedBoxwidth8,
                               ],

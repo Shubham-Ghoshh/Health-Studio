@@ -35,7 +35,6 @@ class _SettingPageState extends State<SettingPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  sizedBoxHeight6,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -62,9 +61,9 @@ class _SettingPageState extends State<SettingPage> {
                       ),
                     ],
                   ),
-                  sizedBoxHeight35,
+                  sizedBoxHeight30,
                   settingHeading("Language Preferance"),
-                  sizedBoxHeight16,
+                  sizedBoxHeight10,
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: GetBuilder<LanguageTogglerController>(
@@ -132,7 +131,7 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                   sizedBoxHeight25,
                   settingHeading("Your Account"),
-                  sizedBoxHeight16,
+                  sizedBoxHeight10,
                   SettingOptionItem(
                     settingIconImage: "default_address_icon",
                     settingName: "Default Address",
@@ -170,9 +169,9 @@ class _SettingPageState extends State<SettingPage> {
                     settingName: "Logout",
                     onTap: () {},
                   ),
-                  sizedBoxHeight25,
-                  settingHeading("Share the Love"),
                   sizedBoxHeight16,
+                  settingHeading("Share the Love"),
+                  sizedBoxHeight10,
                   SettingOptionItem(
                     settingIconImage: "share_icon",
                     settingName: "Share this app to your friends",
@@ -190,9 +189,9 @@ class _SettingPageState extends State<SettingPage> {
                     settingName: "Look at our Facebook Page",
                     onTap: () {},
                   ),
-                  sizedBoxHeight25,
-                  settingHeading("Support"),
                   sizedBoxHeight16,
+                  settingHeading("Support"),
+                  sizedBoxHeight10,
                   SettingOptionItem(
                     settingIconImage: "contact_icon",
                     settingName: "Contact us",
@@ -210,17 +209,15 @@ class _SettingPageState extends State<SettingPage> {
                     settingName: "Survey",
                     onTap: () {},
                   ),
-                  sizedBoxHeight25,
-                  settingHeading("Health Studio"),
                   sizedBoxHeight16,
+                  settingHeading("Health Studio"),
+                  sizedBoxHeight10,
                   SettingOptionItem(
                     settingIconImage: "ratings_icon",
                     settingName: "Rate the app",
                     onTap: () {},
                   ),
-                  const SizedBox(
-                    height: 108,
-                  ),
+                  sizedBoxHeight90,
                   Center(
                     child: Text(
                       "Health Studio 2.6",
