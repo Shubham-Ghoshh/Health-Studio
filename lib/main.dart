@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       theme: themeData(),
       useInheritedMediaQuery: true,
-      locale: lang ? Locale('en', '') : Locale('ar', ''),
+      locale: lang ? const Locale('en', '') : const Locale('ar', ''),
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       title: 'Health Studio',

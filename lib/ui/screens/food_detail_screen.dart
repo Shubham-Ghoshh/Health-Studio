@@ -67,7 +67,6 @@ class _FoodDetailPageState extends State<FoodDetailPage> {
                     sizedBoxHeight16,
                     Center(
                       child: GetBuilder<LanguageTogglerController>(
-                        init: LanguageTogglerController(),
                         builder: (languageController) => FoodDetailCard(
                           nutritionContent: menuController.menuDetail!.attribute
                               .map(
@@ -75,17 +74,16 @@ class _FoodDetailPageState extends State<FoodDetailPage> {
                                   image: SvgPicture.asset(
                                       "assets/images/menu/${e.titleEn}_icon.svg"),
                                   nutritionContent: e.value,
-                                  nutritionName:
-                                      languageController.englishPicker
-                                          ? e.titleEn
-                                          : e.titleAr!,
+                                  nutritionName: languageController.isEnglish
+                                      ? e.titleEn
+                                      : e.titleAr!,
                                 ),
                               )
                               .toList(),
-                          foodName: languageController.englishPicker
+                          foodName: languageController.isEnglish
                               ? menuController.menuDetail!.menu.titleEn
                               : menuController.menuDetail!.menu.titleAr,
-                          foodDescription: languageController.englishPicker
+                          foodDescription: languageController.isEnglish
                               ? menuController.menuDetail!.menu.descriptionEn
                               : menuController.menuDetail!.menu.descriptionAr,
                         ),

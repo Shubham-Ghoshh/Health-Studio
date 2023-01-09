@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/ui/screens/authentication/login_screen.dart';
 import 'package:health_studio_user/ui/screens/home_screen.dart';
+import 'package:health_studio_user/ui/screens/setting_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
@@ -9,6 +13,15 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
+
+  void chnageLanguage(bool isEnglish) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("lang", isEnglish);
+    print("yyyyyyyyyyyyyy");
+    Get.find<LanguageTogglerController>().isEnglish = isEnglish;
+    Get.find<LanguageTogglerController>().update();
+    Get.to(() => const HomePage());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +53,7 @@ class SplashScreen extends StatelessWidget {
                             Expanded(
                                 child: SplashButton(
                                     onTap: () {
-                                      Get.to(() => const HomePage());
+                                      chnageLanguage(true);
                                     },
                                     buttontitle: 'English',
                                     imagepath:
@@ -49,7 +62,9 @@ class SplashScreen extends StatelessWidget {
                             sizedBoxWidth12,
                             Expanded(
                                 child: SplashButton(
-                              onTap: () {},
+                              onTap: () {
+                                chnageLanguage(false);
+                              },
                               buttontitle: 'عربي',
                               imagepath: 'assets/images/arabicbtnlogo.png',
                               buttonColor: splashbuttonColor2,

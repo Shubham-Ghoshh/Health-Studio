@@ -63,14 +63,15 @@ class _SettingPageState extends State<SettingPage> {
                                     activeTrackColor: Colors.white,
                                     inactiveTrackColor: Colors.white,
                                     inactiveThumbColor: Colors.black,
-                                    value: controller.englishPicker,
+                                    value: controller.isEnglish,
                                     onChanged: (value) async {
                                       SharedPreferences prefs =
                                           await SharedPreferences.getInstance();
-                                      controller.englishPicker = value;
-                                      controller.arabicPicker = !value;
+
+                                      controller.isEnglish = value;
+                                      // controller.arabicPicker = !value;
                                       controller.update();
-                                      controller.englishPicker
+                                      controller.isEnglish
                                           ? {
                                               Get.updateLocale(
                                                   const Locale('en')),
@@ -109,15 +110,15 @@ class _SettingPageState extends State<SettingPage> {
                                     activeTrackColor: Colors.white,
                                     inactiveTrackColor: Colors.white,
                                     inactiveThumbColor: Colors.black,
-                                    value: controller.arabicPicker,
+                                    value: !controller.isEnglish,
                                     onChanged: (value) async {
                                       SharedPreferences prefs =
                                           await SharedPreferences.getInstance();
 
-                                      controller.englishPicker = !value;
-                                      controller.arabicPicker = value;
+                                      controller.isEnglish = !value;
+                                      // controller.arabicPicker = value;
                                       controller.update();
-                                      controller.arabicPicker
+                                      !controller.isEnglish
                                           ? {
                                               Get.updateLocale(
                                                   const Locale('ar')),
