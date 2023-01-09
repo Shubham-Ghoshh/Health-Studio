@@ -5,6 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/date_controller.dart';
+import 'package:health_studio_user/core/controllers/home_controller.dart';
+import 'package:health_studio_user/core/controllers/language_controller.dart';
+import 'package:health_studio_user/core/controllers/plan_controller.dart';
+import 'package:health_studio_user/core/models/menu.dart';
+import 'package:health_studio_user/core/models/plan.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/buttons.dart';
@@ -25,220 +30,221 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: bottomNavigationBar(),
-      backgroundColor: Colors.blueAccent.shade400,
-      body: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/background.png"),
-                fit: BoxFit.fill,
+    return GetBuilder<PlanController>(
+      builder: (planController) => Scaffold(
+        bottomNavigationBar: bottomNavigationBar(),
+        backgroundColor: Colors.blueAccent.shade400,
+        body: Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/background.png"),
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
-          ),
-          SingleChildScrollView(
-            child: SafeArea(
-              child: Column(
-                children: [
-                  appBar(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.confirmation,
-                          style: TextStyle(
-                            shadows: <Shadow>[
-                              const Shadow(
-                                offset: Offset(2.0, 5.0),
-                                blurRadius: 5.0,
-                                color: Color.fromARGB(61, 0, 0, 0),
-                              ),
-                            ],
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 30.sp,
-                          ),
-                        ),
-                        sizedBoxHeight6,
-                        Text(
-                          AppLocalizations.of(context)!.payment_gateway_deatils,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 15.sp,
-                          ),
-                        ),
-                        sizedBoxHeight16,
-                        Text(
-                          AppLocalizations.of(context)!.subscription,
-                          style: TextStyle(
-                            shadows: <Shadow>[
-                              const Shadow(
-                                offset: Offset(2.0, 5.0),
-                                blurRadius: 5.0,
-                                color: Color.fromARGB(88, 0, 0, 0),
-                              ),
-                            ],
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 24.sp,
-                          ),
-                        ),
-                        sizedBoxHeight10,
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                top: 15, left: 10.w, bottom: 15, right: 10.w),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                SizedBox(
-                                  width: 140,
-                                  height: 125,
-                                  child: Image.asset(
-                                    "assets/images/feature0.png",
-                                  ),
-                                ),
-                                SizedBox(
-                                  child: Text(
-                                    "Active Training\nWeight Gain\nMeal Plan",
-                                    style: TextStyle(
-                                      color: splashthemeColor,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 18,
-                                    ),
-                                  ),
+            SingleChildScrollView(
+              child: SafeArea(
+                child: Column(
+                  children: [
+                    appBar(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.confirmation,
+                            style: TextStyle(
+                              shadows: <Shadow>[
+                                const Shadow(
+                                  offset: Offset(2.0, 5.0),
+                                  blurRadius: 5.0,
+                                  color: Color.fromARGB(61, 0, 0, 0),
                                 ),
                               ],
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 30.sp,
                             ),
                           ),
-                        ),
-                        sizedBoxHeight16,
-                        Text(
-                          AppLocalizations.of(context)!.subscription_start_date,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14.sp,
+                          sizedBoxHeight6,
+                          Text(
+                            AppLocalizations.of(context)!
+                                .payment_gateway_deatils,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 15.sp,
+                            ),
                           ),
-                        ),
-                        sizedBoxHeight6,
-                        subscriptionDate("29/12/2022",
-                            dateController.subsciptionStartDateController),
-                        sizedBoxHeight10,
-                        Text(
-                          AppLocalizations.of(context)!.subscription_end_date,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                        sizedBoxHeight6,
-                        TextFormField(
-                          readOnly: true,
-                          cursorColor: Colors.black,
-                          style: const TextStyle(
-                            color: Color(0xff0A0909),
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          decoration: const InputDecoration(
-                            hintText: "01/01/2023",
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 18, vertical: 16),
-                          ),
-                        ),
-                        sizedBoxHeight10,
-                        Text(
-                          AppLocalizations.of(context)!.add_promo_code,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                        sizedBoxHeight6,
-                        Row(
-                          children: [
-                            Flexible(
-                              child: TextFormField(
-                                onChanged: (value) {},
-                                keyboardType: TextInputType.text,
-                                cursorColor: Colors.black,
-                                style: const TextStyle(
-                                  color: Color(0xff0A0909),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
+                          sizedBoxHeight16,
+                          Text(
+                            AppLocalizations.of(context)!.subscription,
+                            style: TextStyle(
+                              shadows: <Shadow>[
+                                const Shadow(
+                                  offset: Offset(2.0, 5.0),
+                                  blurRadius: 5.0,
+                                  color: Color.fromARGB(88, 0, 0, 0),
                                 ),
-                                decoration: InputDecoration(
-                                  prefixIcon: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 14, right: 8),
-                                    child: SizedBox(
-                                      height: 40,
-                                      width: 30,
-                                      child: Image.asset(
-                                          "assets/images/promo_code_icon.png"),
+                              ],
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 24.sp,
+                            ),
+                          ),
+                          sizedBoxHeight10,
+                          // PlanWidget(
+                          //   widget: widget,
+                          //   plan: planController.packages,
+                          // ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  top: 15, left: 10.w, bottom: 15, right: 10.w),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  SizedBox(
+                                    width: 140,
+                                    height: 125,
+                                    child: Image.asset(
+                                      "assets/images/feature0.png",
                                     ),
                                   ),
-                                  hintText: "ABCDDY50",
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 16),
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 15),
-                                decoration: const BoxDecoration(
-                                    color: Color(0xffFAAF4A),
-                                    shape: BoxShape.rectangle),
-                                child: Text(
-                                  AppLocalizations.of(context)!.apply,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16.5.sp,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        sizedBoxHeight40,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.total,
-                              style: TextStyle(
-                                shadows: <Shadow>[
-                                  const Shadow(
-                                    offset: Offset(2.0, 5.0),
-                                    blurRadius: 5.0,
-                                    color: Color.fromARGB(61, 0, 0, 0),
+                                  SizedBox(
+                                    child: SizedBox(
+                                      width: 0.25.sw,
+                                      child:
+                                          GetBuilder<LanguageTogglerController>(
+                                        builder: (languageController) => Text(
+                                          languageController.isEnglish
+                                              ? planController
+                                                  .selectedPlan!.titleEn
+                                              : planController
+                                                  .selectedPlan!.titleAr,
+                                          style: TextStyle(
+                                            color: splashthemeColor,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ],
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18.sp,
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 4.0),
-                              child: Text(
-                                "KWD 130",
+                          ),
+                          sizedBoxHeight16,
+                          Text(
+                            AppLocalizations.of(context)!
+                                .subscription_start_date,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                          sizedBoxHeight6,
+                          subscriptionDate("29/12/2022",
+                              dateController.subsciptionStartDateController),
+                          sizedBoxHeight10,
+                          Text(
+                            AppLocalizations.of(context)!.subscription_end_date,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                          sizedBoxHeight6,
+                          TextFormField(
+                            readOnly: true,
+                            cursorColor: Colors.black,
+                            style: const TextStyle(
+                              color: Color(0xff0A0909),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            decoration: const InputDecoration(
+                              hintText: "01/01/2023",
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 18, vertical: 16),
+                            ),
+                          ),
+                          sizedBoxHeight10,
+                          Text(
+                            AppLocalizations.of(context)!.add_promo_code,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                          sizedBoxHeight6,
+                          Row(
+                            children: [
+                              Flexible(
+                                child: TextFormField(
+                                  onChanged: (value) {},
+                                  keyboardType: TextInputType.text,
+                                  cursorColor: Colors.black,
+                                  style: const TextStyle(
+                                    color: Color(0xff0A0909),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  decoration: InputDecoration(
+                                    prefixIcon: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 14, right: 8),
+                                      child: SizedBox(
+                                        height: 40,
+                                        width: 30,
+                                        child: Image.asset(
+                                            "assets/images/promo_code_icon.png"),
+                                      ),
+                                    ),
+                                    hintText: "ABCDDY50",
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 12, vertical: 16),
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 15),
+                                  decoration: const BoxDecoration(
+                                      color: Color(0xffFAAF4A),
+                                      shape: BoxShape.rectangle),
+                                  child: Text(
+                                    AppLocalizations.of(context)!.apply,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16.5.sp,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          sizedBoxHeight40,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.total,
                                 style: TextStyle(
                                   shadows: <Shadow>[
                                     const Shadow(
@@ -252,19 +258,37 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                                   fontSize: 18.sp,
                                 ),
                               ),
-                            ),
-                          ],
-                        )
-                      ],
+                              Padding(
+                                padding: const EdgeInsets.only(right: 4.0),
+                                child: Text(
+                                  "KWD 130",
+                                  style: TextStyle(
+                                    shadows: <Shadow>[
+                                      const Shadow(
+                                        offset: Offset(2.0, 5.0),
+                                        blurRadius: 5.0,
+                                        color: Color.fromARGB(61, 0, 0, 0),
+                                      ),
+                                    ],
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 18.sp,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  sizedBoxHeight16,
-                  payNowButton(context),
-                ],
+                    sizedBoxHeight16,
+                    payNowButton(context),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -317,5 +341,54 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
             ),
           );
         });
+  }
+}
+
+class PlanWidget extends StatelessWidget {
+  const PlanWidget({
+    Key? key,
+    required this.widget,
+    required this.plan,
+  }) : super(key: key);
+
+  final ConfirmationPage widget;
+  final List<Plan> plan;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(top: 15, left: 10.w, bottom: 15, right: 10.w),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            SizedBox(
+              width: 140,
+              height: 125,
+              child: Image.asset(
+                "assets/images/feature0.png",
+              ),
+            ),
+            SizedBox(
+              child: Container(
+                width: 0.25.sw,
+                child: Text(
+                  "",
+                  style: TextStyle(
+                    color: splashthemeColor,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

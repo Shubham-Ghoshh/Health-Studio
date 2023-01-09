@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/models/bottom_nav_item.dart';
 import 'package:health_studio_user/ui/screens/setting_screen.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
@@ -262,13 +263,15 @@ class _HomePageState extends State<HomePage> {
             child: SizedBox(
               width: 130,
               // height: 90,
-              child: Text(
-                plan.titleEn,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Color(0xffFFFDFD),
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
+              child: GetBuilder<LanguageTogglerController>(
+                builder: (languageController) => Text(
+                  languageController.isEnglish ? plan.titleEn : plan.titleAr,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Color(0xffFFFDFD),
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                  ),
                 ),
               ),
             ),

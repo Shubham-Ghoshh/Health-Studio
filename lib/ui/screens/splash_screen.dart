@@ -16,8 +16,7 @@ class SplashScreen extends StatelessWidget {
 
   void chnageLanguage(bool isEnglish) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("lang", isEnglish);
-    print("yyyyyyyyyyyyyy");
+    prefs.setBool('language', isEnglish);
     Get.find<LanguageTogglerController>().isEnglish = isEnglish;
     Get.find<LanguageTogglerController>().update();
     Get.to(() => const HomePage());
@@ -54,6 +53,7 @@ class SplashScreen extends StatelessWidget {
                                 child: SplashButton(
                                     onTap: () {
                                       chnageLanguage(true);
+                                      Get.updateLocale(const Locale('en'));
                                     },
                                     buttontitle: 'English',
                                     imagepath:
@@ -64,6 +64,7 @@ class SplashScreen extends StatelessWidget {
                                 child: SplashButton(
                               onTap: () {
                                 chnageLanguage(false);
+                                Get.updateLocale(const Locale('ar'));
                               },
                               buttontitle: 'عربي',
                               imagepath: 'assets/images/arabicbtnlogo.png',

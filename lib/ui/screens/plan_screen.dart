@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
+import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
 import 'package:health_studio_user/core/models/plan.dart';
 import 'package:health_studio_user/ui/screens/address_screen.dart';
@@ -66,12 +67,16 @@ class _PlanScreenState extends State<PlanScreen> {
                       ),
                       Padding(
                         padding: edgeInsets22.copyWith(left: 16.w),
-                        child: Text(
-                          planController.selectedPlan!.titleEn,
-                          style: const TextStyle(
-                            color: Color(0xffFFFDFD),
-                            fontWeight: FontWeight.w600,
-                            fontSize: 28,
+                        child: GetBuilder<LanguageTogglerController>(
+                          builder: (languageController) => Text(
+                            languageController.isEnglish
+                                ? planController.selectedPlan!.titleEn
+                                : planController.selectedPlan!.titleAr,
+                            style: const TextStyle(
+                              color: Color(0xffFFFDFD),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 28,
+                            ),
                           ),
                         ),
                       ),
@@ -129,12 +134,16 @@ class _PlanScreenState extends State<PlanScreen> {
                       sizedBoxHeight8,
                       Padding(
                         padding: edgeInsetsleft16,
-                        child: Text(
-                          package.titleEn,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16.sp,
-                            color: plantextColor,
+                        child: GetBuilder<LanguageTogglerController>(
+                          builder: (languageController) => Text(
+                            languageController.isEnglish
+                                ? package.titleEn
+                                : package.titleAr,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16.sp,
+                              color: plantextColor,
+                            ),
                           ),
                         ),
                       ),

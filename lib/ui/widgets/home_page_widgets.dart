@@ -28,10 +28,6 @@ class _FoodMenuItemState extends State<FoodMenuItem> {
         GestureDetector(
           onTap: () {
             Get.put(MenuController()).getMenuDetail(widget.menu);
-
-            setState(() {
-              LanguageTogglerController();
-            });
           },
           child: Padding(
             padding: const EdgeInsets.only(right: 16.0),
@@ -69,13 +65,17 @@ class _FoodMenuItemState extends State<FoodMenuItem> {
           child: SizedBox(
             width: 150,
             height: 20,
-            child: Text(
-              widget.menu.titleEn,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Color(0xffFFFDFD),
-                fontWeight: FontWeight.w500,
-                fontSize: 16,
+            child: GetBuilder<LanguageTogglerController>(
+              builder: (languageController) => Text(
+                languageController.isEnglish
+                    ? widget.menu.titleEn
+                    : widget.menu.titleAr,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Color(0xffFFFDFD),
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                ),
               ),
             ),
           ),
