@@ -4,6 +4,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/utils/buttons.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginPage extends StatelessWidget {
   final Function()? onSuccess;
@@ -46,10 +47,10 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                         sizedBoxHeight16,
-                        const Text(
-                          "Welcome ,\nGlad to see you !",
+                        Text(
+                          "${AppLocalizations.of(context)!.welcome}\n${AppLocalizations.of(context)!.welcome_message}",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Color(0xffFFFDFD),
                             fontWeight: FontWeight.w600,
                             fontSize: 28,
@@ -61,9 +62,11 @@ class LoginPage extends StatelessWidget {
                           child: TextFormField(
                             validator: ((value) {
                               if (value?.isEmpty ?? true) {
-                                return "Please enter a valid mobile number";
+                                return AppLocalizations.of(context)!
+                                    .valid_mobile_no;
                               } else if (value?.length != 8) {
-                                return "Mobile number should be 8 digits";
+                                return AppLocalizations.of(context)!
+                                    .mobile_no_format;
                               } else {
                                 return null;
                               }
@@ -79,8 +82,8 @@ class LoginPage extends StatelessWidget {
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
                             ),
-                            decoration: const InputDecoration(
-                              hintText: 'Mobile Number',
+                            decoration: InputDecoration(
+                              hintText: AppLocalizations.of(context)!.mobile_no,
                             ),
                           ),
                         ),
@@ -94,9 +97,11 @@ class LoginPage extends StatelessWidget {
                             }),
                             validator: ((value) {
                               if (value?.isEmpty ?? true) {
-                                return "Please enter a valid password";
+                                return AppLocalizations.of(context)!
+                                    .valid_password;
                               } else if ((value?.length ?? 0) < 5) {
-                                return "Password should be more than 5 characters";
+                                return AppLocalizations.of(context)!
+                                    .password_format;
                               } else {
                                 return null;
                               }
@@ -108,8 +113,8 @@ class LoginPage extends StatelessWidget {
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
                             ),
-                            decoration: const InputDecoration(
-                              hintText: 'Password',
+                            decoration: InputDecoration(
+                              hintText: AppLocalizations.of(context)!.password,
                             ),
                           ),
                         ),
@@ -121,9 +126,9 @@ class LoginPage extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.bottomRight,
                             child: GestureDetector(
-                              child: const Text(
-                                "Forgot Password?",
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!.forgot_password,
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
                                   fontWeight: FontWeight.w400,
@@ -136,17 +141,17 @@ class LoginPage extends StatelessWidget {
                         sizedBoxHeight6,
                         LoginButton(
                           height: 52,
-                          title: 'LOGIN',
+                          title: AppLocalizations.of(context)!.login,
                           enabled: authController.isValid,
                           onTap: () {
                             authController.login(onSuccess: onSuccess);
                           },
                         ),
                         sizedBoxHeight16,
-                        const Text(
-                          "OR Login Using Social Networks",
+                        Text(
+                          AppLocalizations.of(context)!.login_social_networks,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Color(0xffFFFDFD),
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
@@ -171,10 +176,10 @@ class LoginPage extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
-                              "Don’t have an account?",
+                            Text(
+                              AppLocalizations.of(context)!.no_account,
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xffFFFDFD),
                                 fontWeight: FontWeight.w400,
                                 fontSize: 17,
@@ -182,10 +187,10 @@ class LoginPage extends StatelessWidget {
                             ),
                             TextButton(
                               onPressed: () {},
-                              child: const Text(
-                                "Sign Up Now",
+                              child: Text(
+                                AppLocalizations.of(context)!.sign_up_now,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   decoration: TextDecoration.underline,
                                   color: Color(0xffFFFDFD),
                                   fontWeight: FontWeight.w400,

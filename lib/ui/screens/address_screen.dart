@@ -11,6 +11,7 @@ import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Address extends StatefulWidget {
   const Address({Key? key}) : super(key: key);
@@ -57,7 +58,7 @@ class _AddressState extends State<Address> {
                       Padding(
                         padding: edgeInsetsleft16,
                         child: Text(
-                          'Address',
+                          AppLocalizations.of(context)!.address,
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!
@@ -155,14 +156,14 @@ class _AddressState extends State<Address> {
                                     color: pureblackColor),
                               ),
                               Text(
-                                'Building ${a.building}, ',
+                                '${AppLocalizations.of(context)!.building} ${a.building}, ',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 14.sp,
                                     color: pureblackColor),
                               ),
                               Text(
-                                'Floor ${a.floor},',
+                                '${AppLocalizations.of(context)!.floor} ${a.floor},',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 14.sp,
@@ -173,7 +174,8 @@ class _AddressState extends State<Address> {
                         ),
                         Padding(
                           padding: edgeInsetsleft16,
-                          child: Text('Apartment ${a.apartementNumber}.',
+                          child: Text(
+                              '${AppLocalizations.of(context)!.apartment} ${a.apartementNumber}.',
                               style: TextStyle(
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14.sp,

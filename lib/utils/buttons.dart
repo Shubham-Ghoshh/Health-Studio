@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../ui/screens/setting_screen.dart';
 
@@ -203,7 +204,7 @@ class SplashButton extends StatelessWidget {
   }
 }
 
-GestureDetector payNowButton() {
+GestureDetector payNowButton(dynamic context) {
   return GestureDetector(
     onTap: () {},
     child: Padding(
@@ -218,7 +219,7 @@ GestureDetector payNowButton() {
         ),
         child: Center(
           child: Text(
-            "Pay Now",
+            AppLocalizations.of(context)!.pay_now,
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w700,

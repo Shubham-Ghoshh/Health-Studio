@@ -15,6 +15,7 @@ import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/formatters.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/ui/widgets/home_page_widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,28 +25,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<String> days = [
-    "Sun",
-    "Mon",
-    "Tue",
-    "Wed",
-    "Thus",
-    "Fri",
-    "Sat",
-  ];
-  List<int> dates = [1, 2, 3, 4, 5, 6, 7];
-
-  List<String> foodMenu = [
-    "Fruit Salad Mix",
-    "Chicken Biryani",
-    "Fruit Salad Mix"
-  ];
-  List<String> foodImagesName = [
-    "food1",
-    "food2",
-    "food1",
-  ];
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
@@ -98,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                         Column(
                           children: [
                             Text(
-                              "Select your meal and enjoy our delicious and healthy food.",
+                              AppLocalizations.of(context)!.select_meal,
                               style: Theme.of(context)
                                   .textTheme
                                   .headline2!
@@ -128,9 +107,9 @@ class _HomePageState extends State<HomePage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  "Our Delicious Menu",
-                                  style: TextStyle(
+                                Text(
+                                  AppLocalizations.of(context)!.delicious_menu,
+                                  style: const TextStyle(
                                     color: Color(0xffFFFDFD),
                                     fontWeight: FontWeight.w700,
                                     fontSize: 24,
@@ -138,9 +117,9 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 GestureDetector(
                                   onTap: () {},
-                                  child: const Text(
-                                    "See all",
-                                    style: TextStyle(
+                                  child: Text(
+                                    AppLocalizations.of(context)!.see_all,
+                                    style: const TextStyle(
                                       shadows: <Shadow>[
                                         Shadow(
                                           offset: Offset(2.0, 5.0),
@@ -158,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             sizedBoxHeight14,
                             Text(
-                              "Here are the list of our preview of the menu we are having",
+                              AppLocalizations.of(context)!.menu_list_preview,
                               style: Theme.of(context)
                                   .textTheme
                                   .headline2!
@@ -201,10 +180,11 @@ class _HomePageState extends State<HomePage> {
                           child: SizedBox(
                             height: 280,
                             child: homeController.menu.isEmpty
-                                ? const Center(
+                                ? Center(
                                     child: Text(
-                                      "No Items available for this date",
-                                      style: TextStyle(
+                                      AppLocalizations.of(context)!
+                                          .no_items_available,
+                                      style: const TextStyle(
                                         color: Color(0xffFFFDFD),
                                         fontWeight: FontWeight.w500,
                                         fontSize: 20,

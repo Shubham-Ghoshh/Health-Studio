@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
+import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/ui/widgets/setting_option_item.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -35,34 +38,9 @@ class _SettingPageState extends State<SettingPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: IconButton(
-                          onPressed: () {
-                            Get.back();
-                          },
-                          icon: const Icon(
-                            Icons.arrow_back,
-                            size: 30,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Center(
-                        child: SizedBox(
-                          height: 75,
-                          child: Image.asset(
-                            "assets/images/health_studio_logo.png",
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  appBar(),
                   sizedBoxHeight30,
-                  settingHeading("Language Preferance"),
+                  settingHeading(AppLocalizations.of(context)!.lang_preferance),
                   sizedBoxHeight10,
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -86,10 +64,23 @@ class _SettingPageState extends State<SettingPage> {
                                     inactiveTrackColor: Colors.white,
                                     inactiveThumbColor: Colors.black,
                                     value: controller.englishPicker,
-                                    onChanged: (value) {
+                                    onChanged: (value) async {
+                                      SharedPreferences prefs =
+                                          await SharedPreferences.getInstance();
                                       controller.englishPicker = value;
                                       controller.arabicPicker = !value;
                                       controller.update();
+                                      controller.englishPicker
+                                          ? {
+                                              Get.updateLocale(
+                                                  const Locale('en')),
+                                              prefs.setBool('language', true),
+                                            }
+                                          : {
+                                              Get.updateLocale(
+                                                  const Locale('ar')),
+                                              prefs.setBool('language', false),
+                                            };
                                     }),
                               ),
                             ],
@@ -119,10 +110,24 @@ class _SettingPageState extends State<SettingPage> {
                                     inactiveTrackColor: Colors.white,
                                     inactiveThumbColor: Colors.black,
                                     value: controller.arabicPicker,
-                                    onChanged: (value) {
+                                    onChanged: (value) async {
+                                      SharedPreferences prefs =
+                                          await SharedPreferences.getInstance();
+
                                       controller.englishPicker = !value;
                                       controller.arabicPicker = value;
                                       controller.update();
+                                      controller.arabicPicker
+                                          ? {
+                                              Get.updateLocale(
+                                                  const Locale('ar')),
+                                              prefs.setBool('language', false),
+                                            }
+                                          : {
+                                              Get.updateLocale(
+                                                  const Locale('en')),
+                                              prefs.setBool('language', true),
+                                            };
                                     }),
                               ),
                             ],
@@ -130,83 +135,83 @@ class _SettingPageState extends State<SettingPage> {
                         }),
                   ),
                   sizedBoxHeight25,
-                  settingHeading("Your Account"),
+                  settingHeading(AppLocalizations.of(context)!.your_account),
                   sizedBoxHeight10,
                   SettingOptionItem(
                     settingIconImage: "default_address_icon",
-                    settingName: "Default Address",
+                    settingName: AppLocalizations.of(context)!.default_address,
                     onTap: () {},
                   ),
                   divider(),
                   SettingOptionItem(
                     settingIconImage: "notification_icon",
-                    settingName: "Notification",
+                    settingName: AppLocalizations.of(context)!.notifictaion,
                     onTap: () {},
                   ),
                   divider(),
                   SettingOptionItem(
                     optionalText: "December 22, 2022",
                     settingIconImage: "account_start_icon",
-                    settingName: "Account Start",
+                    settingName: AppLocalizations.of(context)!.account_start,
                     onTap: () {},
                   ),
                   divider(),
                   SettingOptionItem(
                     optionalText: "January 22, 2023",
                     settingIconImage: "account_expiry_icon",
-                    settingName: "Account Expiry",
+                    settingName: AppLocalizations.of(context)!.account_expiry,
                     onTap: () {},
                   ),
                   divider(),
                   SettingOptionItem(
                     settingIconImage: "change_password_icon",
-                    settingName: "Change Password",
+                    settingName: AppLocalizations.of(context)!.change_password,
                     onTap: () {},
                   ),
                   divider(),
                   SettingOptionItem(
                     settingIconImage: "logout_icon",
-                    settingName: "Logout",
+                    settingName: AppLocalizations.of(context)!.logout,
                     onTap: () {},
                   ),
                   sizedBoxHeight16,
-                  settingHeading("Share the Love"),
+                  settingHeading(AppLocalizations.of(context)!.share_love),
                   sizedBoxHeight10,
                   SettingOptionItem(
                     settingIconImage: "share_icon",
-                    settingName: "Share this app to your friends",
+                    settingName: AppLocalizations.of(context)!.share_friends,
                     onTap: () {},
                   ),
                   divider(),
                   SettingOptionItem(
                     settingIconImage: "instagram_icon",
-                    settingName: "Follow us on Instagram",
+                    settingName: AppLocalizations.of(context)!.follow_instagram,
                     onTap: () {},
                   ),
                   divider(),
                   SettingOptionItem(
                     settingIconImage: "facebook_icon",
-                    settingName: "Look at our Facebook Page",
+                    settingName: AppLocalizations.of(context)!.follow_facebook,
                     onTap: () {},
                   ),
                   sizedBoxHeight16,
-                  settingHeading("Support"),
+                  settingHeading(AppLocalizations.of(context)!.support),
                   sizedBoxHeight10,
                   SettingOptionItem(
                     settingIconImage: "contact_icon",
-                    settingName: "Contact us",
+                    settingName: AppLocalizations.of(context)!.contact_us,
                     onTap: () {},
                   ),
                   divider(),
                   SettingOptionItem(
                     settingIconImage: "terms_and_conditions_icon",
-                    settingName: "Terms & conditions",
+                    settingName: AppLocalizations.of(context)!.terms_conditions,
                     onTap: () {},
                   ),
                   divider(),
                   SettingOptionItem(
                     settingIconImage: "survey_icon",
-                    settingName: "Survey",
+                    settingName: AppLocalizations.of(context)!.survey,
                     onTap: () {},
                   ),
                   sizedBoxHeight16,
@@ -214,7 +219,7 @@ class _SettingPageState extends State<SettingPage> {
                   sizedBoxHeight10,
                   SettingOptionItem(
                     settingIconImage: "ratings_icon",
-                    settingName: "Rate the app",
+                    settingName: AppLocalizations.of(context)!.rate_app,
                     onTap: () {},
                   ),
                   sizedBoxHeight90,

@@ -11,6 +11,7 @@ import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PlanScreen extends StatefulWidget {
   const PlanScreen({Key? key}) : super(key: key);
@@ -79,7 +80,8 @@ class _PlanScreenState extends State<PlanScreen> {
                             (e) => planItem(e),
                           )
                           .toList(),
-                      customplan('Custom Plan', "3", "1", "1"),
+                      customplan(AppLocalizations.of(context)!.custom_plan, "3",
+                          "1", "1"),
                     ]),
               ),
             ),
@@ -151,7 +153,7 @@ class _PlanScreenState extends State<PlanScreen> {
                                     ),
                                     sizedBoxwidth8,
                                     Text(
-                                      "${package.meal} Meals",
+                                      "${package.meal} ${AppLocalizations.of(context)!.meals}",
                                       style: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 14.sp,
@@ -168,7 +170,7 @@ class _PlanScreenState extends State<PlanScreen> {
                                     ),
                                     sizedBoxwidth8,
                                     Text(
-                                      "${package.snack} Snacks",
+                                      "${package.meal} ${AppLocalizations.of(context)!.snacks}",
                                       style: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 14.sp,
@@ -189,7 +191,7 @@ class _PlanScreenState extends State<PlanScreen> {
                                 ),
                                 sizedBoxwidth8,
                                 Text(
-                                  "${package.breakfast} Breakfast",
+                                  "${package.meal} ${AppLocalizations.of(context)!.breakfast}",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 14.sp,
@@ -231,7 +233,7 @@ class _PlanScreenState extends State<PlanScreen> {
                                           fontSize: 18.sp),
                                     ),
                                     Text(
-                                      'Days',
+                                      AppLocalizations.of(context)!.days,
                                       style: TextStyle(
                                           color: pureblackColor,
                                           fontWeight: FontWeight.w300,
@@ -275,7 +277,7 @@ class _PlanScreenState extends State<PlanScreen> {
                                           fontSize: 18.sp),
                                     ),
                                     Text(
-                                      'Days',
+                                      AppLocalizations.of(context)!.days,
                                       style: TextStyle(
                                           color: pureblackColor,
                                           fontWeight: FontWeight.w300,
@@ -318,7 +320,7 @@ class _PlanScreenState extends State<PlanScreen> {
                                           fontSize: 18.sp),
                                     ),
                                     Text(
-                                      'Days',
+                                      AppLocalizations.of(context)!.days,
                                       style: TextStyle(
                                           color: pureblackColor,
                                           fontWeight: FontWeight.w300,
@@ -465,8 +467,8 @@ class _PlanScreenState extends State<PlanScreen> {
                         border: Border.all(color: whiteColor)),
                     child: Text(
                       Get.find<AuthController>().isLoggedIn
-                          ? "Order Now"
-                          : "Login to Order",
+                          ? AppLocalizations.of(context)!.order_now
+                          : AppLocalizations.of(context)!.login_to_order,
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                   ),
@@ -482,13 +484,13 @@ class _PlanScreenState extends State<PlanScreen> {
   String getText(Package package) {
     switch (package.selected) {
       case 7:
-        return "KD ${package.sevenDays} / 07 Days";
+        return "KD ${package.sevenDays} / 07 ${AppLocalizations.of(context)!.days}";
       case 15:
-        return "KD ${package.fifteenDays} / 15 Days";
+        return "KD ${package.fifteenDays} / 15 ${AppLocalizations.of(context)!.days}";
       case 30:
-        return "KD ${package.thirtyDays} / 30 Days";
+        return "KD ${package.thirtyDays} / 30 ${AppLocalizations.of(context)!.days}";
       default:
-        return "KD ${package.sevenDays} / 07 Days";
+        return "KD ${package.sevenDays} / 07 ${AppLocalizations.of(context)!.days}";
     }
   }
 
@@ -581,7 +583,7 @@ class _PlanScreenState extends State<PlanScreen> {
             ),
             child: Center(
               child: Text(
-                'CREATE',
+                AppLocalizations.of(context)!.create,
                 style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 14.sp,
@@ -634,12 +636,14 @@ class MealWidget extends StatelessWidget {
                         ),
                       ),
                       sizedBoxwidth8,
-                      Text('Meals',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14.sp,
-                            color: blackColor,
-                          ))
+                      Text(
+                        AppLocalizations.of(context)!.meals,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14.sp,
+                          color: blackColor,
+                        ),
+                      )
                     ],
                   ),
                 ],
@@ -667,7 +671,7 @@ class MealWidget extends StatelessWidget {
                     ),
                   ),
                   sizedBoxwidth8,
-                  Text('Snacks',
+                  Text(AppLocalizations.of(context)!.snacks,
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 14.sp,
@@ -701,7 +705,7 @@ class MealWidget extends StatelessWidget {
                 ),
               ),
               sizedBoxwidth8,
-              Text('Breakfast',
+              Text(AppLocalizations.of(context)!.breakfast,
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 14.sp,
@@ -740,7 +744,7 @@ class PricingRow extends StatelessWidget {
                       fontSize: 18.sp),
                 ),
                 Text(
-                  'Days',
+                  AppLocalizations.of(context)!.days,
                   style: TextStyle(
                       color: pureblackColor,
                       fontWeight: FontWeight.w300,
@@ -762,7 +766,7 @@ class PricingRow extends StatelessWidget {
                     fontSize: 18.sp),
               ),
               Text(
-                'Days',
+                AppLocalizations.of(context)!.days,
                 style: TextStyle(
                     color: pureblackColor,
                     fontWeight: FontWeight.w300,
@@ -783,7 +787,7 @@ class PricingRow extends StatelessWidget {
                     fontSize: 18.sp),
               ),
               Text(
-                'Days',
+                AppLocalizations.of(context)!.days,
                 style: TextStyle(
                     color: pureblackColor,
                     fontWeight: FontWeight.w300,

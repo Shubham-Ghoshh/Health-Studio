@@ -5,6 +5,7 @@ import 'package:health_studio_user/ui/screens/home_screen.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -59,7 +60,7 @@ class SplashScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Already A User? ',
+                          Text(AppLocalizations.of(context)!.already_user,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!
@@ -69,7 +70,7 @@ class SplashScreen extends StatelessWidget {
                               Get.to(() => const LoginPage());
                             },
                             child: Text(
-                              'Login Now',
+                              AppLocalizations.of(context)!.login_now,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!

@@ -11,6 +11,7 @@ import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ConfirmationPage extends StatefulWidget {
   const ConfirmationPage({super.key});
@@ -48,7 +49,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Confirmation",
+                          AppLocalizations.of(context)!.confirmation,
                           style: TextStyle(
                             shadows: <Shadow>[
                               const Shadow(
@@ -64,7 +65,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                         ),
                         sizedBoxHeight6,
                         Text(
-                          "Please check below details to open the payment gateway. Make sure everything is correct.",
+                          AppLocalizations.of(context)!.payment_gateway_deatils,
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w400,
@@ -73,7 +74,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                         ),
                         sizedBoxHeight16,
                         Text(
-                          "Subscription",
+                          AppLocalizations.of(context)!.subscription,
                           style: TextStyle(
                             shadows: <Shadow>[
                               const Shadow(
@@ -122,7 +123,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                         ),
                         sizedBoxHeight16,
                         Text(
-                          "Subscription Start Date",
+                          AppLocalizations.of(context)!.subscription_start_date,
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w400,
@@ -134,7 +135,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                             dateController.subsciptionStartDateController),
                         sizedBoxHeight10,
                         Text(
-                          "Subscription End Date",
+                          AppLocalizations.of(context)!.subscription_end_date,
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w400,
@@ -158,7 +159,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                         ),
                         sizedBoxHeight10,
                         Text(
-                          "Add Promo Code",
+                          AppLocalizations.of(context)!.add_promo_code,
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w400,
@@ -204,7 +205,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                                     color: Color(0xffFAAF4A),
                                     shape: BoxShape.rectangle),
                                 child: Text(
-                                  "Apply",
+                                  AppLocalizations.of(context)!.apply,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w700,
@@ -220,7 +221,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "TOTAL",
+                              AppLocalizations.of(context)!.total,
                               style: TextStyle(
                                 shadows: <Shadow>[
                                   const Shadow(
@@ -258,7 +259,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                     ),
                   ),
                   sizedBoxHeight16,
-                  payNowButton(),
+                  payNowButton(context),
                 ],
               ),
             ),
