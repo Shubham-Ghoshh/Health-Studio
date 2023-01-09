@@ -24,28 +24,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<String> days = [
-    "Sun",
-    "Mon",
-    "Tue",
-    "Wed",
-    "Thus",
-    "Fri",
-    "Sat",
-  ];
-  List<int> dates = [1, 2, 3, 4, 5, 6, 7];
-
-  List<String> foodMenu = [
-    "Fruit Salad Mix",
-    "Chicken Biryani",
-    "Fruit Salad Mix"
-  ];
-  List<String> foodImagesName = [
-    "food1",
-    "food2",
-    "food1",
-  ];
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(

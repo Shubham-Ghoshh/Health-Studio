@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/bindings.dart';
+import 'package:health_studio_user/ui/screens/logged_in_home_screen.dart';
 import 'package:health_studio_user/ui/screens/splash_screen.dart';
 import 'package:health_studio_user/utils/constants.dart';
 import 'package:health_studio_user/utils/theme.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       title: 'Health Studio',
-      home: const SplashScreen(),
+      home: const LoggedInHomePage(),
       initialBinding: AllBinder(),
     );
   }
