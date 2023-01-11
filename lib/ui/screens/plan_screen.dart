@@ -118,7 +118,7 @@ class _PlanScreenState extends State<PlanScreen> {
             ),
           ),
           Container(
-            height: 238.h,
+            height: 270.h,
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
@@ -131,10 +131,10 @@ class _PlanScreenState extends State<PlanScreen> {
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Padding(
-                            padding: edgeInsetsleft16,
+                            padding: edgeInsets16,
                             child: Text(
                               package.titleEn,
                               style: TextStyle(
@@ -210,10 +210,12 @@ class _PlanScreenState extends State<PlanScreen> {
                               ],
                             ),
                           ),
+                          sizedBoxHeight16,
                           const Divider(
                             height: 1,
                             color: dividercolor,
                           ),
+                          sizedBoxHeight10,
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -348,13 +350,14 @@ class _PlanScreenState extends State<PlanScreen> {
                                 ),
                               ),
                             ],
-                          )
+                          ),
+                          sizedBoxHeight40,
                         ],
                       ),
                     ),
                     Container(
                       width: 56.w,
-                      height: 224.h,
+                      height: 260.h,
                       decoration: const BoxDecoration(
                         color: itemsbackground,
                         borderRadius: BorderRadius.only(
@@ -362,7 +365,7 @@ class _PlanScreenState extends State<PlanScreen> {
                             bottomRight: Radius.circular(6)),
                       ),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Column(
                             children: [
@@ -384,6 +387,7 @@ class _PlanScreenState extends State<PlanScreen> {
                               )
                             ],
                           ),
+                          sizedBoxHeight16,
                           Column(
                             children: [
                               SvgPicture.asset('assets/images/protein.svg'),
@@ -404,6 +408,7 @@ class _PlanScreenState extends State<PlanScreen> {
                               )
                             ],
                           ),
+                          sizedBoxHeight16,
                           Column(
                             children: [
                               SvgPicture.asset('assets/images/fat.svg'),
@@ -421,7 +426,8 @@ class _PlanScreenState extends State<PlanScreen> {
                                     fontSize: 8.sp,
                                     fontWeight: FontWeight.w300,
                                     color: whiteColor),
-                              )
+                              ),
+                              sizedBoxHeight20,
                             ],
                           ),
                         ],
@@ -528,7 +534,6 @@ class _PlanScreenState extends State<PlanScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          sizedBoxHeight6,
                           Padding(
                             padding: edgeInsetsleft16,
                             child: Text(
