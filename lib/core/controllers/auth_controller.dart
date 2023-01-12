@@ -10,8 +10,24 @@ class AuthController extends GetxController {
   String? password;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isValid = false;
+  bool isLoggedIn = false;
 
-  void login() async {
+  @override
+  void onInit() {
+    super.onInit();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      checkLogin();
+    });
+  }
+
+  void checkLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? authKey = prefs.getString("auth_key");
+    isLoggedIn = authKey != null;
+    update();
+  }
+
+  void login({Function()? onSuccess}) async {
     Utility.showLoadingDialog();
     Map<String, dynamic> body = {
       "mobile": mobile,
@@ -24,7 +40,7 @@ class AuthController extends GetxController {
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString("auth_key", response["details"]?[0]?["auth_key"]);
-      Get.offAll(() => const HomePage());
+      onSuccess == null ? Get.offAll(() => const HomePage()) : onSuccess();
     }
   }
 }

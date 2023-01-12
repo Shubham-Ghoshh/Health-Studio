@@ -6,6 +6,8 @@ import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:sticky_headers/sticky_headers.dart';
+import 'package:health_studio_user/ui/widgets/app_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddressForm extends StatefulWidget {
  const  AddressForm({Key? key}) : super(key: key);
@@ -63,7 +65,7 @@ class _AddressFormState extends State<AddressForm> {
                     Padding(
                       padding: edgeInsetsleft16,
                       child: Text(
-                        'Add New Address',
+                        AppLocalizations.of(context)!.add_address,
                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             fontSize: 28.sp, fontWeight: FontWeight.w600),
                       ),
@@ -82,7 +84,7 @@ class _AddressFormState extends State<AddressForm> {
                             style: Theme.of(context).textTheme.headline1,
                             decoration: InputDecoration(
                               contentPadding: edgeInsets16,
-                              hintText: 'Enter your address name',
+                              hintText: AppLocalizations.of(context)!.address_name,
                             ),
                           ),
                         ),
@@ -97,7 +99,7 @@ class _AddressFormState extends State<AddressForm> {
                             style: Theme.of(context).textTheme.headline1,
                             decoration: InputDecoration(
                               contentPadding: edgeInsets16,
-                              hintText: 'Enter your block number',
+                              hintText: AppLocalizations.of(context)!.block_number,
                             ),
                           ),
                         ),
@@ -112,7 +114,7 @@ class _AddressFormState extends State<AddressForm> {
                             style: Theme.of(context).textTheme.headline1,
                             decoration: InputDecoration(
                               contentPadding: edgeInsets16,
-                              hintText: 'Enter your street number',
+                              hintText: AppLocalizations.of(context)!.street_number,
                             ),
                           ),
                         ),
@@ -126,7 +128,7 @@ class _AddressFormState extends State<AddressForm> {
                             cursorColor: Colors.black,
                             style: Theme.of(context).textTheme.headline1,
                             decoration: InputDecoration(
-                              hintText: 'Enter your house / building number',
+                              hintText: AppLocalizations.of(context)!.house_no,
                               contentPadding: edgeInsets16,
                             ),
                           ),
@@ -141,7 +143,7 @@ class _AddressFormState extends State<AddressForm> {
                             cursorColor: Colors.black,
                             style: Theme.of(context).textTheme.headline1,
                             decoration: InputDecoration(
-                              hintText: 'Enter PACI number (Optional)',
+                              hintText: AppLocalizations.of(context)!.paci_no,
                               contentPadding: edgeInsets16,
                             ),
                           ),
@@ -156,7 +158,7 @@ class _AddressFormState extends State<AddressForm> {
                             cursorColor: Colors.black,
                             style: Theme.of(context).textTheme.headline1,
                             decoration: InputDecoration(
-                              hintText: 'Enter floor number (Optional)',
+                              hintText: AppLocalizations.of(context)!.floor_no,
                               contentPadding: edgeInsets16,
                             ),
                           ),
@@ -172,7 +174,7 @@ class _AddressFormState extends State<AddressForm> {
                             style: Theme.of(context).textTheme.headline1,
                             decoration: InputDecoration(
                               contentPadding: edgeInsets16,
-                              hintText: 'Enter avenue (Optional)',
+                              hintText: AppLocalizations.of(context)!.avenue,
                             ),
                           ),
                         ),
@@ -192,7 +194,7 @@ class _AddressFormState extends State<AddressForm> {
                             style: Theme.of(context).textTheme.headline1,
                             decoration: InputDecoration(
                               contentPadding: edgeInsets16,
-                              hintText: 'Detail Address (Optional)',
+                              hintText:AppLocalizations.of(context)!.deatil_address,
                             ),
                           ),
                         ),
@@ -205,7 +207,7 @@ class _AddressFormState extends State<AddressForm> {
                             addressController.initialvalue = "Area/city";
                           },
                           enabled: true,
-                          title: 'Save',
+                          title: AppLocalizations.of(context)!.save,
                         ),
                         sizedBoxHeight35,
                       ],
@@ -324,5 +326,6 @@ class _AddressFormState extends State<AddressForm> {
                 )),
           );
         });
+
   }
 }

@@ -4,15 +4,11 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/utils/buttons.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
-
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
+class LoginPage extends StatelessWidget {
+  final Function()? onSuccess;
+  const LoginPage({super.key, this.onSuccess});
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AuthController>(
@@ -29,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                SingleChildScrollView(
+                SafeArea(
                   child: Form(
                     key: authController.formKey,
                     onChanged: () {
@@ -42,7 +38,6 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        sizedBoxHeight10,
                         Center(
                           child: SizedBox(
                             height: 75,
@@ -51,26 +46,27 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        sizedBoxHeight25,
-                        const Text(
-                          "Welcome ,\nGlad to see you !",
+                        sizedBoxHeight16,
+                        Text(
+                          "${AppLocalizations.of(context)!.welcome}\n${AppLocalizations.of(context)!.welcome_message}",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Color(0xffFFFDFD),
                             fontWeight: FontWeight.w600,
-                            fontFamily: "Poppins",
-                            fontSize: 30,
+                            fontSize: 28,
                           ),
                         ),
-                        sizedBoxHeight25,
+                        sizedBoxHeight16,
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 18),
                           child: TextFormField(
                             validator: ((value) {
                               if (value?.isEmpty ?? true) {
-                                return "Please enter a valid mobile number";
+                                return AppLocalizations.of(context)!
+                                    .valid_mobile_no;
                               } else if (value?.length != 8) {
-                                return "Mobile number should be 8 digits";
+                                return AppLocalizations.of(context)!
+                                    .mobile_no_format;
                               } else {
                                 return null;
                               }
@@ -82,17 +78,16 @@ class _LoginPageState extends State<LoginPage> {
                             keyboardType: TextInputType.number,
                             cursorColor: Colors.black,
                             style: const TextStyle(
-                              fontFamily: "Poppins",
                               color: Color(0xff0A0909),
-                              fontSize: 17,
+                              fontSize: 15,
                               fontWeight: FontWeight.w400,
                             ),
-                            decoration: const InputDecoration(
-                              hintText: 'Mobile Number',
+                            decoration: InputDecoration(
+                              hintText: AppLocalizations.of(context)!.mobile_no,
                             ),
                           ),
                         ),
-                        sizedBoxHeight16,
+                        sizedBoxHeight6,
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 18),
                           child: TextFormField(
@@ -102,9 +97,11 @@ class _LoginPageState extends State<LoginPage> {
                             }),
                             validator: ((value) {
                               if (value?.isEmpty ?? true) {
-                                return "Please enter a valid password";
+                                return AppLocalizations.of(context)!
+                                    .valid_password;
                               } else if ((value?.length ?? 0) < 5) {
-                                return "Password should be more than 5 characters";
+                                return AppLocalizations.of(context)!
+                                    .password_format;
                               } else {
                                 return null;
                               }
@@ -113,12 +110,11 @@ class _LoginPageState extends State<LoginPage> {
                             obscureText: true,
                             style: const TextStyle(
                               color: Color(0xff0A0909),
-                              fontFamily: "Poppins",
-                              fontSize: 17,
+                              fontSize: 15,
                               fontWeight: FontWeight.w400,
                             ),
-                            decoration: const InputDecoration(
-                              hintText: 'Password',
+                            decoration: InputDecoration(
+                              hintText: AppLocalizations.of(context)!.password,
                             ),
                           ),
                         ),
@@ -130,12 +126,11 @@ class _LoginPageState extends State<LoginPage> {
                           child: Align(
                             alignment: Alignment.bottomRight,
                             child: GestureDetector(
-                              child: const Text(
-                                "Forgot Password?",
-                                style: TextStyle(
-                                  fontFamily: "Poppins",
+                              child: Text(
+                                AppLocalizations.of(context)!.forgot_password,
+                                style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 17,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -143,24 +138,23 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        sizedBoxHeight10,
+                        sizedBoxHeight6,
                         LoginButton(
-                          height: 70.h,
-                          title: 'LOGIN',
+                          height: 52,
+                          title: AppLocalizations.of(context)!.login,
                           enabled: authController.isValid,
                           onTap: () {
-                            authController.login();
+                            authController.login(onSuccess: onSuccess);
                           },
                         ),
                         sizedBoxHeight16,
-                        const Text(
-                          "OR Login Using Social Networks",
+                        Text(
+                          AppLocalizations.of(context)!.login_social_networks,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Color(0xffFFFDFD),
                             fontWeight: FontWeight.w400,
-                            fontFamily: "Poppins",
-                            fontSize: 17,
+                            fontSize: 14,
                           ),
                         ),
                         sizedBoxHeight6,
@@ -178,37 +172,34 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ],
                         ),
-                        sizedBoxHeight52,
+                        const Spacer(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
-                              "Don’t have an account?",
+                            Text(
+                              AppLocalizations.of(context)!.no_account,
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xffFFFDFD),
                                 fontWeight: FontWeight.w400,
-                                fontFamily: "Poppins",
                                 fontSize: 17,
                               ),
                             ),
                             TextButton(
                               onPressed: () {},
-                              child: const Text(
-                                "Sign Up Now",
+                              child: Text(
+                                AppLocalizations.of(context)!.sign_up_now,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   decoration: TextDecoration.underline,
                                   color: Color(0xffFFFDFD),
                                   fontWeight: FontWeight.w400,
-                                  fontFamily: "Poppins",
                                   fontSize: 17,
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        sizedBoxHeight16,
                       ],
                     ),
                   ),

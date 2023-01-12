@@ -21,6 +21,11 @@ ThemeData themeData() {
         fontSize: 15.sp,
         fontWeight: FontWeight.w400,
       ),
+      headline2: TextStyle(
+        color: textfieldcolor,
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+      ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
@@ -28,7 +33,7 @@ ThemeData themeData() {
       contentPadding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
       hintStyle: const TextStyle(
         color: Color.fromARGB(183, 10, 9, 9),
-        fontSize: 17,
+        fontSize: 15,
         fontWeight: FontWeight.w400,
       ),
       border: InputBorder.none,

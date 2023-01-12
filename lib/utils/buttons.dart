@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../ui/screens/setting_screen.dart';
 
 class LoginButton extends StatelessWidget {
   LoginButton({
@@ -47,7 +51,7 @@ class LoginButton extends StatelessWidget {
                   color: Color(0xffFFFEFE),
                   fontFamily: "Poppins",
                   fontWeight: FontWeight.w700,
-                  fontSize: 19,
+                  fontSize: 16,
                 ),
               ),
             ),
@@ -75,8 +79,8 @@ class AppleLoginButton extends StatelessWidget {
             color: Colors.white,
             shape: BoxShape.circle,
           ),
-          height: 55,
-          width: 60,
+          height: 45,
+          width: 45,
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: SvgPicture.asset(
@@ -107,8 +111,8 @@ class FacebookLoginButton extends StatelessWidget {
             color: Colors.white,
             shape: BoxShape.circle,
           ),
-          height: 55,
-          width: 60,
+          height: 45,
+          width: 45,
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: SvgPicture.asset(
@@ -139,8 +143,8 @@ class GoogleLoginButton extends StatelessWidget {
             color: Colors.white,
             shape: BoxShape.circle,
           ),
-          height: 55,
-          width: 60,
+          height: 45,
+          width: 45,
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: SvgPicture.asset(
@@ -179,7 +183,7 @@ class SplashButton extends StatelessWidget {
             ),
             borderRadius: const BorderRadius.all(Radius.circular(5)),
           ),
-          height: 52.h,
+          height: 52,
           child: Padding(
             padding: const EdgeInsets.only(left: 14),
             child: Row(
@@ -200,7 +204,7 @@ class SplashButton extends StatelessWidget {
   }
 }
 
-GestureDetector payNowButton() {
+GestureDetector payNowButton(dynamic context) {
   return GestureDetector(
     onTap: () {},
     child: Padding(
@@ -215,7 +219,7 @@ GestureDetector payNowButton() {
         ),
         child: Center(
           child: Text(
-            "Pay Now",
+            AppLocalizations.of(context)!.pay_now,
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w700,
@@ -223,6 +227,22 @@ GestureDetector payNowButton() {
             ),
           ),
         ),
+      ),
+    ),
+  );
+}
+
+// ignore: non_constant_identifier_names
+IconButton SettingButton() {
+  return IconButton(
+    onPressed: () {
+      Get.to(() => const SettingPage());
+    },
+    icon: Padding(
+      padding: const EdgeInsets.all(0.25),
+      child: SizedBox(
+        height: 24,
+        child: Image.asset("assets/images/settings_icon.png"),
       ),
     ),
   );
