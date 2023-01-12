@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/controllers/menu_controller.dart';
 import 'package:health_studio_user/core/models/menu.dart';
+import 'package:health_studio_user/ui/screens/food_detail_screen.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:get/get.dart';
 
-class FoodMenuItem extends StatelessWidget {
+class FoodMenuItem extends StatefulWidget {
   const FoodMenuItem({
     required this.menu,
     Key? key,
@@ -14,13 +16,18 @@ class FoodMenuItem extends StatelessWidget {
   final Menu menu;
 
   @override
+  State<FoodMenuItem> createState() => _FoodMenuItemState();
+}
+
+class _FoodMenuItemState extends State<FoodMenuItem> {
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
           onTap: () {
-            Get.put(MenuController()).getMenuDetail(menu);
+            Get.put(MenuController()).getMenuDetail(widget.menu);
           },
           child: Padding(
             padding: const EdgeInsets.only(right: 16.0),
@@ -30,9 +37,9 @@ class FoodMenuItem extends StatelessWidget {
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Hero(
-                    tag: "food-image-${menu.image}",
+                    tag: "food-image-${widget.menu.image}",
                     child: CachedNetworkImage(
-                      imageUrl: menu.image,
+                      imageUrl: widget.menu.image,
                       height: 228,
                       width: 150,
                       fit: BoxFit.cover,
@@ -58,13 +65,17 @@ class FoodMenuItem extends StatelessWidget {
           child: SizedBox(
             width: 150,
             height: 20,
-            child: Text(
-              menu.titleEn,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Color(0xffFFFDFD),
-                fontWeight: FontWeight.w500,
-                fontSize: 16,
+            child: GetBuilder<LanguageTogglerController>(
+              builder: (languageController) => Text(
+                languageController.isEnglish
+                    ? widget.menu.titleEn
+                    : widget.menu.titleAr,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Color(0xffFFFDFD),
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                ),
               ),
             ),
           ),
@@ -124,7 +135,6 @@ class _CalenderDayDateState extends State<CalenderDayDate> {
                   color:
                       click == true ? activeDayFontColor : inactiveDayFontColor,
                   fontWeight: FontWeight.w700,
-                  fontFamily: "Poppins",
                   fontSize: 17.5,
                 ),
               ),
@@ -135,7 +145,6 @@ class _CalenderDayDateState extends State<CalenderDayDate> {
                       ? activeDateFontColor
                       : inactiveDateFontColor,
                   fontWeight: FontWeight.w700,
-                  fontFamily: "Poppins",
                   fontSize: 17.5,
                 ),
               ),

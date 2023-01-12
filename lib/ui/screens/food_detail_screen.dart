@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/core/controllers/menu_controller.dart';
@@ -65,20 +66,27 @@ class _FoodDetailPageState extends State<FoodDetailPage> {
                     appBar(),
                     sizedBoxHeight16,
                     Center(
-                      child: FoodDetailCard(
-                        nutritionContent: menuController.menuDetail!.attribute
-                            .map(
-                              (e) => NutritionContent(
-                                image: SvgPicture.asset(
-                                    "assets/images/menu/${e.titleEn}_icon.svg"),
-                                nutritionContent: e.value,
-                                nutritionName: e.titleEn,
-                              ),
-                            )
-                            .toList(),
-                        foodName: menuController.menuDetail!.menu.titleEn,
-                        foodDescription:
-                            menuController.menuDetail!.menu.descriptionEn,
+                      child: GetBuilder<LanguageTogglerController>(
+                        builder: (languageController) => FoodDetailCard(
+                          nutritionContent: menuController.menuDetail!.attribute
+                              .map(
+                                (e) => NutritionContent(
+                                  image: SvgPicture.asset(
+                                      "assets/images/menu/${e.titleEn}_icon.svg"),
+                                  nutritionContent: e.value,
+                                  nutritionName: languageController.isEnglish
+                                      ? e.titleEn
+                                      : e.titleAr!,
+                                ),
+                              )
+                              .toList(),
+                          foodName: languageController.isEnglish
+                              ? menuController.menuDetail!.menu.titleEn
+                              : menuController.menuDetail!.menu.titleAr,
+                          foodDescription: languageController.isEnglish
+                              ? menuController.menuDetail!.menu.descriptionEn
+                              : menuController.menuDetail!.menu.descriptionAr,
+                        ),
                       ),
                     ),
                   ],

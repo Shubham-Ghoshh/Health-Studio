@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/ui/screens/authentication/login_screen.dart';
 import 'package:health_studio_user/ui/screens/home_screen.dart';
+import 'package:health_studio_user/ui/screens/setting_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
+
+  void chnageLanguage(bool isEnglish) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('language', isEnglish);
+    Get.find<LanguageTogglerController>().isEnglish = isEnglish;
+    Get.find<LanguageTogglerController>().update();
+    Get.to(() => const HomePage());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +52,8 @@ class SplashScreen extends StatelessWidget {
                             Expanded(
                                 child: SplashButton(
                                     onTap: () {
-                                      Get.to(() => const HomePage());
+                                      chnageLanguage(true);
+                                      Get.updateLocale(const Locale('en'));
                                     },
                                     buttontitle: 'English',
                                     imagepath:
@@ -48,7 +62,10 @@ class SplashScreen extends StatelessWidget {
                             sizedBoxWidth12,
                             Expanded(
                                 child: SplashButton(
-                              onTap: () {},
+                              onTap: () {
+                                chnageLanguage(false);
+                                Get.updateLocale(const Locale('ar'));
+                              },
                               buttontitle: 'عربي',
                               imagepath: 'assets/images/arabicbtnlogo.png',
                               buttonColor: splashbuttonColor2,
@@ -59,7 +76,7 @@ class SplashScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Already A User? ',
+                          Text(AppLocalizations.of(context)!.already_user,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!
@@ -69,7 +86,7 @@ class SplashScreen extends StatelessWidget {
                               Get.to(() => const LoginPage());
                             },
                             child: Text(
-                              'Login Now',
+                              AppLocalizations.of(context)!.login_now,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!

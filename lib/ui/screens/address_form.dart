@@ -5,6 +5,7 @@ import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/spacing.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddressForm extends StatelessWidget {
   const AddressForm({Key? key}) : super(key: key);
@@ -29,7 +30,7 @@ class AddressForm extends StatelessWidget {
                 Padding(
                   padding: edgeInsetsleft16,
                   child: Text(
-                    'Add New Address',
+                    AppLocalizations.of(context)!.add_address,
                     style: Theme.of(context)
                         .textTheme
                         .bodyText1!
@@ -47,7 +48,7 @@ class AddressForm extends StatelessWidget {
                         style: Theme.of(context).textTheme.headline1,
                         decoration: InputDecoration(
                           contentPadding: edgeInsets16,
-                          hintText: 'Enter your address name',
+                          hintText: AppLocalizations.of(context)!.address_name,
                         ),
                       ),
                     ),
@@ -59,7 +60,7 @@ class AddressForm extends StatelessWidget {
                         style: Theme.of(context).textTheme.headline1,
                         decoration: InputDecoration(
                           contentPadding: edgeInsets16,
-                          hintText: 'Enter your block number',
+                          hintText: AppLocalizations.of(context)!.block_number,
                         ),
                       ),
                     ),
@@ -71,7 +72,7 @@ class AddressForm extends StatelessWidget {
                         style: Theme.of(context).textTheme.headline1,
                         decoration: InputDecoration(
                           contentPadding: edgeInsets16,
-                          hintText: 'Enter your street number',
+                          hintText: AppLocalizations.of(context)!.street_number,
                         ),
                       ),
                     ),
@@ -82,7 +83,7 @@ class AddressForm extends StatelessWidget {
                         cursorColor: Colors.black,
                         style: Theme.of(context).textTheme.headline1,
                         decoration: InputDecoration(
-                          hintText: 'Enter your house / building number',
+                          hintText: AppLocalizations.of(context)!.house_no,
                           contentPadding: edgeInsets16,
                         ),
                       ),
@@ -94,7 +95,7 @@ class AddressForm extends StatelessWidget {
                         cursorColor: Colors.black,
                         style: Theme.of(context).textTheme.headline1,
                         decoration: InputDecoration(
-                          hintText: 'Enter PACI number (Optional)',
+                          hintText: AppLocalizations.of(context)!.paci_no,
                           contentPadding: edgeInsets16,
                         ),
                       ),
@@ -106,7 +107,7 @@ class AddressForm extends StatelessWidget {
                         cursorColor: Colors.black,
                         style: Theme.of(context).textTheme.headline1,
                         decoration: InputDecoration(
-                          hintText: 'Enter floor number (Optional)',
+                          hintText: AppLocalizations.of(context)!.floor_no,
                           contentPadding: edgeInsets16,
                         ),
                       ),
@@ -119,7 +120,7 @@ class AddressForm extends StatelessWidget {
                         style: Theme.of(context).textTheme.headline1,
                         decoration: InputDecoration(
                           contentPadding: edgeInsets16,
-                          hintText: 'Enter avenue (Optional)',
+                          hintText: AppLocalizations.of(context)!.avenue,
                         ),
                       ),
                     ),
@@ -139,7 +140,7 @@ class AddressForm extends StatelessWidget {
                           //   ),
                           // ),
                           contentPadding: edgeInsets16,
-                          hintText: 'Area/City',
+                          hintText: AppLocalizations.of(context)!.area_city,
                         ),
                       ),
                     ),
@@ -152,7 +153,8 @@ class AddressForm extends StatelessWidget {
                         style: Theme.of(context).textTheme.headline1,
                         decoration: InputDecoration(
                           contentPadding: edgeInsets16,
-                          hintText: 'Detail Address (Optional)',
+                          hintText:
+                              AppLocalizations.of(context)!.deatil_address,
                         ),
                       ),
                     ),
@@ -161,7 +163,7 @@ class AddressForm extends StatelessWidget {
                       height: 50.h,
                       onTap: () {},
                       enabled: true,
-                      title: 'Save',
+                      title: AppLocalizations.of(context)!.save,
                     ),
                     sizedBoxHeight35,
                   ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FoodDetailCard extends StatelessWidget {
   const FoodDetailCard({
@@ -46,9 +47,9 @@ class FoodDetailCard extends StatelessWidget {
                   fontSize: 14,
                 ),
               ),
-              const Text(
-                "Diet Reference",
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.diet_reference,
+                style: const TextStyle(
                   decoration: TextDecoration.underline,
                   color: Color(0xff2A7891),
                   fontWeight: FontWeight.w700,
