@@ -59,7 +59,7 @@ class _SelectMenuPageState extends State<SelectMenuPage> {
                                 "Turkey Omelette - Breakfast",
                               ),
                               const Divider(
-                                color: Color.fromARGB(96, 0, 0, 0),
+                                color: Color.fromARGB(95, 0, 0, 0),
                               ),
                               selectMealBoxText(
                                 "Meal 2",
