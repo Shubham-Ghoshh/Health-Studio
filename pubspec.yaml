@@ -30,6 +30,7 @@ dependencies:
   cached_network_image: ^3.2.3
   # The following package is for sticky headers
   flutter_sticky_header: ^0.6.5
+  sticky_headers: ^0.3.0+2
 
 
 dev_dependencies:

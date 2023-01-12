@@ -190,6 +190,7 @@ class _PlanScreenState extends State<PlanScreen> {
                                 ),
                               ],
                             ),
+
                             sizedBoxHeight14,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -347,6 +348,7 @@ class _PlanScreenState extends State<PlanScreen> {
                                   ],
                                 ),
                               ),
+
                             ),
                           ),
                         ],
@@ -542,7 +544,6 @@ class _PlanScreenState extends State<PlanScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          sizedBoxHeight6,
                           Padding(
                             padding: edgeInsetsleft16,
                             child: Text(
