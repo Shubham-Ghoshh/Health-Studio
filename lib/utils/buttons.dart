@@ -233,16 +233,22 @@ GestureDetector payNowButton(dynamic context) {
 }
 
 // ignore: non_constant_identifier_names
-IconButton SettingButton() {
-  return IconButton(
-    onPressed: () {
-      Get.to(() => const SettingPage());
-    },
-    icon: Padding(
-      padding: const EdgeInsets.all(0.25),
-      child: SizedBox(
-        height: 24,
-        child: Image.asset("assets/images/settings_icon.png"),
+Widget SettingButton() {
+  return Container(
+    decoration: const BoxDecoration(
+      shape: BoxShape.circle,
+      color: Color(0xffE84C4F),
+    ),
+    child: IconButton(
+      onPressed: () {
+        Get.to(() => const SettingPage());
+      },
+      icon: Padding(
+        padding: const EdgeInsets.all(0.25),
+        child: SizedBox(
+          height: 24,
+          child: Image.asset("assets/images/settings_icon.png"),
+        ),
       ),
     ),
   );

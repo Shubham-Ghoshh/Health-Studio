@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:health_studio_user/core/bindings.dart';
+import 'package:health_studio_user/ui/screens/logged_in_home_screen.dart';
 import 'package:health_studio_user/ui/screens/splash_screen.dart';
 import 'package:health_studio_user/utils/constants.dart';
 import 'package:health_studio_user/utils/theme.dart';
