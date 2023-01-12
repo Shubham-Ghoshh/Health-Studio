@@ -25,3 +25,11 @@ const itemsbackground = Color(0xffC19C7D);
 
 const blacktextcolor = Color(0xff000000);
 const textfieldcolor = Color(0xff0A0909);
+
+const textShadow = <Shadow>[
+  Shadow(
+    offset: Offset(2.0, 5.0),
+    blurRadius: 5.0,
+    color: Color.fromARGB(61, 0, 0, 0),
+  ),
+];
