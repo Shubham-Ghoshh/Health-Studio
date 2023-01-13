@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
-
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -28,6 +28,29 @@ _launchInstagram() async {
 
 _launchFacebook() async {
   var webUrl = "https://m.facebook.com/healthstudiokw";
+
+  try {
+    await launchUrlString(webUrl, mode: LaunchMode.externalApplication);
+  } catch (e) {
+    // ignore: avoid_print
+    print(e);
+  }
+}
+
+_rateAppAndroid() async {
+  var webUrl =
+      "https://play.google.com/store/apps/details?id=com.healthstudio.app&gl=US&pli=1";
+
+  try {
+    await launchUrlString(webUrl, mode: LaunchMode.externalApplication);
+  } catch (e) {
+    // ignore: avoid_print
+    print(e);
+  }
+}
+
+_rateAppIos() async {
+  var webUrl = "https://apps.apple.com/app/id=com.healthstudio.app";
 
   try {
     await launchUrlString(webUrl, mode: LaunchMode.externalApplication);
@@ -251,7 +274,13 @@ class _SettingPageState extends State<SettingPage> {
                   SettingOptionItem(
                     settingIconImage: "ratings_icon",
                     settingName: AppLocalizations.of(context)!.rate_app,
-                    onTap: () {},
+                    onTap: () {
+                      if (Platform.isAndroid) {
+                        _rateAppAndroid();
+                      } else if (Platform.isIOS) {
+                        _rateAppIos();
+                      }
+                    },
                   ),
                   sizedBoxHeight90,
                   Center(
