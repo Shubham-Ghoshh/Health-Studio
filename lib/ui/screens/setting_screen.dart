@@ -20,8 +20,20 @@ _launchInstagram() async {
   try {
     await launchUrlString(nativeUrl, mode: LaunchMode.externalApplication);
   } catch (e) {
+    // ignore: avoid_print
     print(e);
     await launchUrlString(webUrl, mode: LaunchMode.platformDefault);
+  }
+}
+
+_launchFacebook() async {
+  var webUrl = "https://m.facebook.com/healthstudiokw";
+
+  try {
+    await launchUrlString(webUrl, mode: LaunchMode.externalApplication);
+  } catch (e) {
+    // ignore: avoid_print
+    print(e);
   }
 }
 
@@ -209,14 +221,8 @@ class _SettingPageState extends State<SettingPage> {
                   SettingOptionItem(
                     settingIconImage: "facebook_icon",
                     settingName: AppLocalizations.of(context)!.follow_facebook,
-                    onTap: () async {
-                      print("kkkk");
-                      final url = "https://twitter.com";
-                      if (await canLaunchUrlString(url)) {
-                        await launchUrlString(
-                          url,
-                        );
-                      }
+                    onTap: () {
+                      _launchFacebook();
                     },
                   ),
                   sizedBoxHeight16,
