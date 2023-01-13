@@ -14,7 +14,8 @@ import 'package:health_studio_user/utils/spacing.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Address extends StatefulWidget {
-  const Address({Key? key}) : super(key: key);
+  final bool check;
+  const Address({Key? key,  required this.check}) : super(key: key);
 
   @override
   State<Address> createState() => _AddressState();
@@ -23,6 +24,8 @@ class Address extends StatefulWidget {
 class _AddressState extends State<Address> {
   bool home = true;
   bool office = false;
+  
+  
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +73,7 @@ class _AddressState extends State<Address> {
                           .map((e) => addressContainer(
                                 e,
                                 home,
+                                widget.check,
                               )),
                       // GestureDetector(
                       //   onTap: () {
@@ -100,13 +104,15 @@ class _AddressState extends State<Address> {
         });
   }
 
-  Widget addressContainer(AddressListing a, bool isVisible) {
+  Widget addressContainer(AddressListing a, bool isVisible, check) {
     return GetBuilder<AddressController>(
         init: AddressController(),
         builder: (addressController) {
           return GestureDetector(
             onTap: () {
-              Get.to(() => const ConfirmationPage());
+              if (check) {
+                Get.to(() => const ConfirmationPage());
+              }
             },
             child: Column(
               children: [
