@@ -8,8 +8,22 @@ import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/ui/widgets/setting_option_item.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+
+_launchInstagram() async {
+  var nativeUrl = "instagram://user?username=healthstudiokw";
+  var webUrl = "https://www.instagram.com/healthstudiokw";
+
+  try {
+    await launchUrlString(nativeUrl, mode: LaunchMode.externalApplication);
+  } catch (e) {
+    print(e);
+    await launchUrlString(webUrl, mode: LaunchMode.platformDefault);
+  }
+}
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -187,13 +201,23 @@ class _SettingPageState extends State<SettingPage> {
                   SettingOptionItem(
                     settingIconImage: "instagram_icon",
                     settingName: AppLocalizations.of(context)!.follow_instagram,
-                    onTap: () {},
+                    onTap: () {
+                      _launchInstagram();
+                    },
                   ),
                   divider(),
                   SettingOptionItem(
                     settingIconImage: "facebook_icon",
                     settingName: AppLocalizations.of(context)!.follow_facebook,
-                    onTap: () {},
+                    onTap: () async {
+                      print("kkkk");
+                      final url = "https://twitter.com";
+                      if (await canLaunchUrlString(url)) {
+                        await launchUrlString(
+                          url,
+                        );
+                      }
+                    },
                   ),
                   sizedBoxHeight16,
                   settingHeading(AppLocalizations.of(context)!.support),
