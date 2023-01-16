@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
+import 'package:health_studio_user/utils/colors.dart';
+import 'package:health_studio_user/utils/spacing.dart';
 
 class TermsandConditions extends StatelessWidget {
   const TermsandConditions({Key? key}) : super(key: key);
@@ -20,8 +24,70 @@ class TermsandConditions extends StatelessWidget {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                  appBar(),
-                  
+                  Row(
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      // sizedBoxWidth12,
+                      IconButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          size: 30,
+                          color: Colors.white,
+                        ),
+                      ),
+                      // sizedBoxWidth25,
+                      Text(
+                        'Terms and Conditions',
+                        style: TextStyle(
+                            fontSize: 20.sp,
+                            color: whiteColor,
+                            fontWeight: FontWeight.bold),
+                      )
+                      // Center(
+                      //   child: SizedBox(
+                      //     width: 242,
+                      //     // height: 57,
+                      //     child: Image.asset(
+                      //         "assets/images/health_studio_logo.png"),
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: const [
+                        Text(
+                            'ملاحظه" مهمه يتم ابتداء وتفعيل الاشتراك من بعد الدفع من يومين الى ٣ أيام عمل"او يتم تحديد التاريخ المناسب في الابليكيشن\nعمل"او يتم تحديد التاريخ المناسب في الابليكيشن\nوفي حالة الاشتراك بالعرض لا يحق للمشترك استرداد المبلغ فقط في اشتراكات العرض'),
+                        Text(
+                            '1- في حاله الالغاء في الأسبوع الاول من تاريخ بدء الاشتراك يتم خصم أسبوع كامل من قيمة الاشتراك مع ٢٥دينار كويتي رسوم الغاء'),
+                        Text(
+                            '2- في حاله مرور ١٤ يوم من بدء الاشتراك لايحق للعميل الألغاء ولا استرداد قيمة الأشتراك الأشتراك'),
+                        Text(
+                            '3- يحق للعميل وقف الأشتراك عند الضروره مره واحده في الشهر لمده أسبوع متواصل والرجوع الي الإداره للموافقه علي وقف الاشتراك .'),
+                        Text(
+                            '4- اللحم يكون ٣ ايام بالاسبوع فقط والسمك ٣ ايام بالاسبوع فقط والربيان مره واحده بالاسبوع'),
+                        Text(
+                            '١٣-اي تغيير على نظام الجدول الغذائي من يومين إلى\n٣ أيام\nقد تحتوي بعض الوجبات على مسببات الحساسية. ينصح العملاء بشدة باختيار\nوجباتهم وفقًا لمتطلباتهم'),
+                        Text(
+                            'التوصيل كل يوم من الساعه ٨ صباحا حتى الساعه ٣ مساءا ويكون البوكس لليوم اللي بعده ( لا يوجد تحديد وقت لفترة التوصيل ) ويكون كل يوم جمعه يوم راحة')
+                      ],
+                    ),
+                  ),
+                  const Divider(
+                    // height: 2,
+                    thickness: 2,
+                    color: Colors.grey,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                        '1.  An important “note” that the subscription will start and be activated 3 working days after payment “or the appropriate date is specified in the application.\n2.  In subscribing to a promotion or offer, the subscriber who wishes to cancel his or her subscription will not entitled to a refund. Cancellations refunds made under the following instances will be  computed as follows:\na- In the event of cancellation in the first week of the subscription start date, a full week will be deducted from the subscription value plus 25 Kuwaiti dinars cancellation fees\nb- In the event that 14 days have passed since the start of the subscription, the customer is not entitled to cancel or refund the subscription value\nc- The customer has the right to stop the subscription when necessary once a month for a continuous week and refer to the administration for approval to stop the subscription.\n3.  Meat and Fish are served alternately for 3 days a week, and shrimp is served once a week\n4.  Any change to the diet schedule from will be effected after 3 days.\n5.  Some meals may contain allergens. Customers are strongly advised to choose their meals according to their requirements.\n6.  Subscription meals are delivered everyday between 8:00AM until 3:00PM at no exact time.  Meals delivered on the day are intended for next day consumption. There is no delivery schedule every Friday.\n'),
+                  )
                 ])))));
   }
 }

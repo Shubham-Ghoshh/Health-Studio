@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:health_studio_user/core/models/user.dart';
 import 'package:health_studio_user/core/request.dart';
 import 'package:health_studio_user/ui/widgets/loader.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsController extends GetxController {
   @override
@@ -10,13 +11,19 @@ class SettingsController extends GetxController {
     super.onInit();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       getstartenddetails();
+      generatesurveylink();
     });
   }
 
   String accountStart = "";
   String accountExpiry = "";
+  String? surveyname;
+  String? from;
+  String? surveylink;
+  String? authkey;
 
   List<Subscription> getsubscription = [];
+  List<UserDetails> getuserdetails = [];
   void getstartenddetails() async {
     Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest("user/subscribe");
@@ -29,7 +36,33 @@ class SettingsController extends GetxController {
           : List<Subscription>.from(response["details"]
               .map((e) => Subscription.fromJson(e))
               .toList());
-      
+
+      update();
+    }
+  }
+
+  Future<void> generatesurveylink() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    authkey = prefs.getString('auth_key');
+    await getUserDetails();
+
+    (getuserdetails.isNotEmpty) ? surveyname = getuserdetails[0].firstName : "";
+    surveylink =
+        "https://healthstudiokw.com/api/survey.php?name=$surveyname&auth=$authkey";
+  }
+
+  Future<void> getUserDetails() async {
+    Utility.showLoadingDialog();
+    Map<String, dynamic> response = await getRequest("user/detail");
+    Utility.closeDialog();
+    if (response["error"] != 0) {
+      Get.rawSnackbar(message: response["message"] ?? "");
+    } else {
+      getuserdetails = response["details"] == null
+          ? <UserDetails>[]
+          : List<UserDetails>.from(
+              response["details"].map((e) => UserDetails.fromJson(e)).toList());
+
       update();
     }
   }

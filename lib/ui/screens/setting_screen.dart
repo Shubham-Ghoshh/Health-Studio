@@ -268,7 +268,9 @@ class _SettingPageState extends State<SettingPage> {
                         SettingOptionItem(
                           settingIconImage: "survey_icon",
                           settingName: AppLocalizations.of(context)!.survey,
-                          onTap: () {},
+                          onTap: () {
+                            print('surveylink' + settingsController.surveylink.toString());
+                          },
                         ),
                         sizedBoxHeight16,
                         settingHeading("Health Studio"),
