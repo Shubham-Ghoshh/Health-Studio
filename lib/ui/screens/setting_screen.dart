@@ -8,8 +8,34 @@ import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/ui/widgets/setting_option_item.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+
+_launchInstagram() async {
+  var nativeUrl = "instagram://user?username=healthstudiokw";
+  var webUrl = "https://www.instagram.com/healthstudiokw";
+
+  try {
+    await launchUrlString(nativeUrl, mode: LaunchMode.externalApplication);
+  } catch (e) {
+    // ignore: avoid_print
+    print(e);
+    await launchUrlString(webUrl, mode: LaunchMode.platformDefault);
+  }
+}
+
+_launchFacebook() async {
+  var webUrl = "https://m.facebook.com/healthstudiokw";
+
+  try {
+    await launchUrlString(webUrl, mode: LaunchMode.externalApplication);
+  } catch (e) {
+    // ignore: avoid_print
+    print(e);
+  }
+}
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -187,13 +213,17 @@ class _SettingPageState extends State<SettingPage> {
                   SettingOptionItem(
                     settingIconImage: "instagram_icon",
                     settingName: AppLocalizations.of(context)!.follow_instagram,
-                    onTap: () {},
+                    onTap: () {
+                      _launchInstagram();
+                    },
                   ),
                   divider(),
                   SettingOptionItem(
                     settingIconImage: "facebook_icon",
                     settingName: AppLocalizations.of(context)!.follow_facebook,
-                    onTap: () {},
+                    onTap: () {
+                      _launchFacebook();
+                    },
                   ),
                   sizedBoxHeight16,
                   settingHeading(AppLocalizations.of(context)!.support),
