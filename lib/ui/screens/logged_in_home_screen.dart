@@ -253,7 +253,7 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
                               children: List.generate(
-                                28,
+                                7,
                                 (index) {
                                   DateTime date =
                                       DateTime.now().add(Duration(days: index));
