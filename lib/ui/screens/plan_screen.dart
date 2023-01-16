@@ -461,12 +461,12 @@ class _PlanScreenState extends State<PlanScreen> {
                 GestureDetector(
                   onTap: () {
                     Get.find<AuthController>().isLoggedIn
-                        ? Get.to(() => const Address())
+                        ? Get.to(() => const Address(check: true,))
                         : Get.to(() => LoginPage(
                               onSuccess: () {
                                 Get.back();
                                 Get.to(
-                                  () => const Address(),
+                                  () => const Address(check: true,),
                                 );
                               },
                             ));

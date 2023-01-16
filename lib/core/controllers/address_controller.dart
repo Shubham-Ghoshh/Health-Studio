@@ -48,7 +48,7 @@ class AddressController extends GetxController {
       Get.rawSnackbar(message: response["message"] ?? "");
     } else {
       Get.rawSnackbar(message: "Successfully added address");
-      Get.to(const Address());
+      Get.to(const Address(check: true,));
       update();
     }
   }
