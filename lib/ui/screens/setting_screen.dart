@@ -19,7 +19,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
 
@@ -28,7 +27,6 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-
   Future<void> _launchURL() async {
     final Uri uri = Uri(scheme: 'mailto', path: 'support@heatlhstudio.com');
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
@@ -92,10 +90,8 @@ class _SettingPageState extends State<SettingPage> {
   @override
   void initState() {
     _getAppVersion();
-    print("uuuu" + version);
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -303,7 +299,7 @@ class _SettingPageState extends State<SettingPage> {
                           settingName:
                               AppLocalizations.of(context)!.follow_instagram,
                           onTap: () {
-                          _launchInstagram();
+                            _launchInstagram();
                           },
                         ),
                         divider(),
@@ -312,7 +308,7 @@ class _SettingPageState extends State<SettingPage> {
                           settingName:
                               AppLocalizations.of(context)!.follow_facebook,
                           onTap: () {
-                          _launchFacebook();
+                            _launchFacebook();
                           },
                         ),
                         sizedBoxHeight16,
@@ -339,7 +335,8 @@ class _SettingPageState extends State<SettingPage> {
                           settingIconImage: "survey_icon",
                           settingName: AppLocalizations.of(context)!.survey,
                           onTap: () {
-                            print('surveylink' + settingsController.surveylink.toString());
+                            print('surveylink' +
+                                settingsController.surveylink.toString());
                           },
                         ),
                         sizedBoxHeight16,
@@ -349,39 +346,36 @@ class _SettingPageState extends State<SettingPage> {
                           settingIconImage: "ratings_icon",
                           settingName: AppLocalizations.of(context)!.rate_app,
                           onTap: () {
-                           if (Platform.isAndroid) {
-                        _rateAppAndroid();
-                      } else if (Platform.isIOS) {
-                        _rateAppIos();
-                      }
-                      },
+                            if (Platform.isAndroid) {
+                              _rateAppAndroid();
+                            } else if (Platform.isIOS) {
+                              _rateAppIos();
+                            }
+                          },
                         ),
                         sizedBoxHeight90,
                         Center(
-                        column(
-                        children:[
-                          AppVersion(),
-                        Text(
-                          "Health Studio $version",
-                          style: TextStyle(
-                            shadows: <Shadow>[
-                              const Shadow(
-                                offset: Offset(2.0, 5.0),
-                                blurRadius: 5.0,
-                                color: Color.fromARGB(41, 0, 0, 0),
+                          child: Column(
+                            children: [
+                              Text(
+                                "Health Studio $version",
+                                style: TextStyle(
+                                  shadows: <Shadow>[
+                                    const Shadow(
+                                      offset: Offset(2.0, 5.0),
+                                      blurRadius: 5.0,
+                                      color: Color.fromARGB(41, 0, 0, 0),
+                                    ),
+                                  ],
+                                  color: loginButtonColor,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.sp,
+                                ),
                               ),
+                              sizedBoxHeight16,
                             ],
-                            color: loginButtonColor,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14.sp,
                           ),
                         ),
-                        
-                        ]
-                        )
-                         
-                        sizedBoxHeight16,
-
                       ],
                     ),
                   ),

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
+import 'package:health_studio_user/ui/screens/authentication/sign_up_screen.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -187,7 +188,9 @@ class LoginPage extends StatelessWidget {
                               ),
                             ),
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.to(() => const RegistrationScreen());
+                              },
                               child: Text(
                                 AppLocalizations.of(context)!.sign_up_now,
                                 textAlign: TextAlign.center,

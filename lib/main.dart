@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       title: 'Health Studio',
-      home: const SelectMenuPage(),
+      home: const SplashScreen(),
       initialBinding: AllBinder(),
     );
   }
