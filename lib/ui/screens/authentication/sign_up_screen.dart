@@ -19,6 +19,8 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _dobController = TextEditingController();
+
   var items = ["Male", "Female"];
   @override
   Widget build(BuildContext context) {
@@ -157,6 +159,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                       sizedBoxHeight10,
                       TextFormField(
+                        controller: _dobController,
                         readOnly: true,
                         onTap: () async {
                           DateTime? pickedDate = await showDatePicker(
@@ -173,13 +176,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           if (pickedDate != null) {
                             String formattedDate =
                                 DateFormat("dd/MM/yyyy").format(pickedDate);
+                            setState(() {
+                              _dobController.text = formattedDate.toString();
+                            });
                           }
                         },
                         keyboardType: TextInputType.datetime,
                         cursorColor: Colors.black,
                         style: const TextStyle(
                           color: Color(0xff0A0909),
-                          fontSize: 18,
+                          fontSize: 15,
                           fontWeight: FontWeight.w400,
                         ),
                         decoration: InputDecoration(
