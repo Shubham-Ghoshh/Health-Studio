@@ -49,45 +49,42 @@ class NotificationScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                emptycontainer(),
-                emptycontainer(),
-                emptycontainer(),
-                emptycontainer(),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: settingsController.notifications.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return GetBuilder<LanguageTogglerController>(
-                          builder: (languageController) {
-                        return languageController.isEnglish
-                            ? textcontainer(settingsController
-                                .notifications[index].messageEn
-                                .toString())
-                            : textcontainer(settingsController
-                                .notifications[index].messageAr
-                                .toString());
-                      });
-                    },
-                  ),
-                ),
+                settingsController.notifications.isEmpty
+                    ? Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: const [
+                            Center(
+                              child: Text(
+                                'No Notifications to show',
+                                style: TextStyle(color: whiteColor),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : Expanded(
+                        child: ListView.builder(
+                          itemCount: settingsController.notifications.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return GetBuilder<LanguageTogglerController>(
+                                builder: (languageController) {
+                              return languageController.isEnglish
+                                  ? textcontainer(settingsController
+                                      .notifications[index].messageEn
+                                      .toString())
+                                  : textcontainer(settingsController
+                                      .notifications[index].messageAr
+                                      .toString());
+                            });
+                          },
+                        ),
+                      ),
               ],
             )),
           ));
         });
-  }
-
-  Widget emptycontainer() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        height: 20.h,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(6),
-        ),
-      ),
-    );
   }
 
   Widget textcontainer(String text) {

@@ -13,7 +13,6 @@ class SettingsController extends GetxController {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       getstartenddetails();
       generatesurveylink();
-      getnotifications();
     });
   }
 
@@ -70,9 +69,9 @@ class SettingsController extends GetxController {
     }
   }
 
-  void getnotifications() async {
+  Future getnotifications() async {
     Utility.showLoadingDialog();
-    Map<String, dynamic> response = await getRequest("user/messages");
+    Map<String, dynamic> response = await getRequest("messages");
     Utility.closeDialog();
     if (response["error"] != 0) {
       Get.rawSnackbar(message: response["message"] ?? "");
@@ -83,6 +82,7 @@ class SettingsController extends GetxController {
               .map((e) => NotificationsListing.fromJson(e))
               .toList());
       update();
+      return notifications;
     }
   }
 }

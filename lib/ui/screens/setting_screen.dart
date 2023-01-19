@@ -243,7 +243,8 @@ class _SettingPageState extends State<SettingPage> {
                           settingIconImage: "notification_icon",
                           settingName:
                               AppLocalizations.of(context)!.notifictaion,
-                          onTap: () {
+                          onTap: () async {
+                            await settingsController.getnotifications();
                             Get.to(const NotificationScreen());
                           },
                         ),
