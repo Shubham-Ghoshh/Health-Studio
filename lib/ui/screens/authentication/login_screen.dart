@@ -189,7 +189,7 @@ class LoginPage extends StatelessWidget {
                             ),
                             TextButton(
                               onPressed: () {
-                                Get.to(() => const RegistrationScreen());
+                                Get.to(() => const RegistrationPage());
                               },
                               child: Text(
                                 AppLocalizations.of(context)!.sign_up_now,
