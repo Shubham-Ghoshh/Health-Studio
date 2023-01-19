@@ -21,8 +21,43 @@ class RegistrationPage extends StatefulWidget {
 class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController _genderController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
+  final TextEditingController _pass = TextEditingController();
+  bool passwordsMatch = false;
 
   var items = ["Male", "Female"];
+
+  _calculateAge(DateTime birthDate) {
+    DateTime currentDate = DateTime.now();
+    int age = currentDate.year - birthDate.year;
+    int month1 = currentDate.month;
+    int month2 = birthDate.month;
+    if (month2 > month1) {
+      age--;
+    } else if (month1 == month2) {
+      int day1 = currentDate.day;
+      int day2 = birthDate.day;
+      if (day2 > day1) {
+        age--;
+      }
+    }
+    return age;
+  }
+
+  String? validateEmail(String? value) {
+    const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
+        r'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
+        r'\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*'
+        r'[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4]'
+        r'[0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9]'
+        r'[0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\'
+        r'x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])';
+    final regex = RegExp(pattern);
+
+    return value!.isNotEmpty && !regex.hasMatch(value)
+        ? 'Enter a valid email address'
+        : null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AuthController>(
@@ -41,7 +76,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
           SingleChildScrollView(
             child: SafeArea(
               child: Form(
-                // key: authController.formKey,
                 onChanged: () {
                   authController.isValid = true;
                   authController.update();
@@ -96,6 +130,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           sizedBoxHeight10,
                           TextFormField(
+                            controller: _pass,
                             validator: ((value) {
                               if (value?.isEmpty ?? true) {
                                 return AppLocalizations.of(context)!
@@ -107,10 +142,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 return null;
                               }
                             }),
-                            onChanged: (value) {
-                              authController.password = value;
-                              authController.update();
-                            },
+                            onChanged: (value) {},
                             obscureText: true,
                             cursorColor: Colors.black,
                             style: const TextStyle(
@@ -125,19 +157,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           sizedBoxHeight10,
                           TextFormField(
                             validator: ((value) {
-                              if (value?.isEmpty ?? true) {
-                                return AppLocalizations.of(context)!
-                                    .valid_password;
-                              } else if ((value?.length ?? 0) < 5) {
-                                return AppLocalizations.of(context)!
-                                    .password_format;
+                              if (value != _pass.text) {
+                                return "Passwords do not match";
                               } else {
-                                return null;
+                                passwordsMatch = true;
                               }
                             }),
                             onChanged: (value) {
-                              authController.password = value;
-                              authController.update();
+                              if (passwordsMatch == true) {
+                                authController.password = value;
+                                authController.update();
+                              }
                             },
                             obscureText: true,
                             cursorColor: Colors.black,
@@ -152,7 +182,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           sizedBoxHeight10,
                           TextFormField(
-                            onChanged: (value) {},
+                            onChanged: (value) {
+                              authController.name = value;
+                              authController.update();
+                            },
                             keyboardType: TextInputType.name,
                             cursorColor: Colors.black,
                             style: const TextStyle(
@@ -166,8 +199,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           sizedBoxHeight10,
                           TextFormField(
+                            validator: validateEmail,
                             onChanged: (value) {
-                              authController.name = value;
+                              authController.email = value;
                               authController.update();
                             },
                             keyboardType: TextInputType.emailAddress,
@@ -206,13 +240,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   _dobController.text =
                                       formattedDate.toString();
                                   authController.age =
-                                      (DateTime.now().year.toInt() -
-                                              pickedDate.year.toInt())
-                                          .toString();
-                                  print("uuuu" +
-                                      (DateTime.now().year.toInt() -
-                                              pickedDate.year.toInt())
-                                          .toString());
+                                      _calculateAge(pickedDate).toString();
+
                                   authController.update();
                                 });
                               }
@@ -281,7 +310,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           LoginButton(
                             height: 52,
                             title: "SIGN UP",
-                            enabled: true,
+                            enabled: authController.isValid && passwordsMatch,
                             onTap: () {
                               authController.signUp(
                                   onSuccess: widget.onSuccess);
