@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:health_studio_user/core/models/notificationlisting.dart';
 import 'package:health_studio_user/core/models/user.dart';
 import 'package:health_studio_user/core/request.dart';
 import 'package:health_studio_user/ui/widgets/loader.dart';
@@ -12,6 +13,7 @@ class SettingsController extends GetxController {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       getstartenddetails();
       generatesurveylink();
+      getnotifications();
     });
   }
 
@@ -24,6 +26,7 @@ class SettingsController extends GetxController {
 
   List<Subscription> getsubscription = [];
   List<UserDetails> getuserdetails = [];
+  List<NotificationsListing> notifications = [];
   void getstartenddetails() async {
     Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest("user/subscribe");
@@ -63,6 +66,22 @@ class SettingsController extends GetxController {
           : List<UserDetails>.from(
               response["details"].map((e) => UserDetails.fromJson(e)).toList());
 
+      update();
+    }
+  }
+
+  void getnotifications() async {
+    Utility.showLoadingDialog();
+    Map<String, dynamic> response = await getRequest("user/messages");
+    Utility.closeDialog();
+    if (response["error"] != 0) {
+      Get.rawSnackbar(message: response["message"] ?? "");
+    } else {
+      notifications = response["details"] == null
+          ? <NotificationsListing>[]
+          : List<NotificationsListing>.from(response["details"]
+              .map((e) => NotificationsListing.fromJson(e))
+              .toList());
       update();
     }
   }
