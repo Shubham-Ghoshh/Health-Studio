@@ -76,6 +76,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           SingleChildScrollView(
             child: SafeArea(
               child: Form(
+                key: authController.signUpFormKey,
                 onChanged: () {
                   authController.isValid = true;
                   authController.update();

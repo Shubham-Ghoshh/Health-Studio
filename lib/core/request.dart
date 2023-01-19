@@ -5,7 +5,7 @@ import 'package:health_studio_user/utils/constants.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const Duration timeout = Duration(seconds: 15);
+const Duration timeout = Duration(seconds: 30);
 
 Future<Map<String, dynamic>> postRequest(url, body) async {
   log(baseURL + url);

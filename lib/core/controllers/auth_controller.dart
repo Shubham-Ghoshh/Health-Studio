@@ -15,6 +15,7 @@ class AuthController extends GetxController {
   String? age;
   String? gender;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
   bool isValid = false;
   bool isLoggedIn = false;
 
