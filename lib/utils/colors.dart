@@ -33,3 +33,12 @@ const textShadow = <Shadow>[
     color: Color.fromARGB(61, 0, 0, 0),
   ),
 ];
+
+const defaultBoxShadow = [
+  BoxShadow(
+    color: Color.fromARGB(50, 0, 0, 0),
+    spreadRadius: 2,
+    blurRadius: 1.5,
+    offset: Offset(0, 4),
+  )
+];
