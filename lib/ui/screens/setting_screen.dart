@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'dart:io' show Platform;
 import 'package:app_version/app_version.dart';
+import 'package:health_studio_user/ui/screens/notification.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -241,7 +242,10 @@ class _SettingPageState extends State<SettingPage> {
                           settingIconImage: "notification_icon",
                           settingName:
                               AppLocalizations.of(context)!.notifictaion,
-                          onTap: () {},
+                          onTap: () async {
+                            await settingsController.getnotifications();
+                            Get.to(const NotificationScreen());
+                          },
                         ),
                         divider(),
                         SettingOptionItem(
@@ -379,7 +383,7 @@ class _SettingPageState extends State<SettingPage> {
                       ],
                     ),
                   ),
-                ),
+                )
               ],
             ),
           );

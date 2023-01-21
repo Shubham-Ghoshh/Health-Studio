@@ -10,10 +10,12 @@ import 'package:get/get.dart';
 class FoodMenuItem extends StatefulWidget {
   const FoodMenuItem({
     required this.menu,
+    required this.height,
     Key? key,
   }) : super(key: key);
 
   final Menu menu;
+  final double height;
 
   @override
   State<FoodMenuItem> createState() => _FoodMenuItemState();
@@ -40,7 +42,7 @@ class _FoodMenuItemState extends State<FoodMenuItem> {
                     tag: "food-image-${widget.menu.image}",
                     child: CachedNetworkImage(
                       imageUrl: widget.menu.image,
-                      height: 228,
+                      height: widget.height,
                       width: 150,
                       fit: BoxFit.cover,
                       placeholder: (context, url) => const Center(
