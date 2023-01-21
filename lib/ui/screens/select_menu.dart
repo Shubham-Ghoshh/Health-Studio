@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:health_studio_user/ui/screens/gridview.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/colors.dart';
@@ -242,7 +244,9 @@ class _SelectMenuPageState extends State<SelectMenuPage> {
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Get.to(const View());
+                },
                 child: const Icon(Icons.arrow_forward_ios_sharp),
               ),
             ),

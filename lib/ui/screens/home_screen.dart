@@ -197,6 +197,7 @@ class _HomePageState extends State<HomePage> {
                                     itemCount: homeController.menu.length,
                                     itemBuilder: (context, index) {
                                       return FoodMenuItem(
+                                        height: 228,
                                         menu: homeController.menu[index],
                                       );
                                     },
