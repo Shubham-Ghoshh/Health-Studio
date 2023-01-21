@@ -91,7 +91,6 @@ class _SettingPageState extends State<SettingPage> {
   @override
   void initState() {
     _getAppVersion();
-    print("uuuu" + version);
     super.initState();
   }
 
@@ -360,26 +359,27 @@ class _SettingPageState extends State<SettingPage> {
                         ),
                         sizedBoxHeight90,
                         Center(
-                          child: Column(children: [
-                            AppVersion(),
-                            Text(
-                              "Health Studio $version",
-                              style: TextStyle(
-                                shadows: <Shadow>[
-                                  const Shadow(
-                                    offset: Offset(2.0, 5.0),
-                                    blurRadius: 5.0,
-                                    color: Color.fromARGB(41, 0, 0, 0),
-                                  ),
-                                ],
-                                color: loginButtonColor,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14.sp,
+                          child: Column(
+                            children: [
+                              Text(
+                                "Health Studio $version",
+                                style: TextStyle(
+                                  shadows: <Shadow>[
+                                    const Shadow(
+                                      offset: Offset(2.0, 5.0),
+                                      blurRadius: 5.0,
+                                      color: Color.fromARGB(41, 0, 0, 0),
+                                    ),
+                                  ],
+                                  color: loginButtonColor,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.sp,
+                                ),
                               ),
-                            ),
-                          ]),
+                              sizedBoxHeight16,
+                            ],
+                          ),
                         ),
-                        sizedBoxHeight16,
                       ],
                     ),
                   ),
