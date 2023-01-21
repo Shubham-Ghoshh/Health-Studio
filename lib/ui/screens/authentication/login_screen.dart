@@ -170,7 +170,7 @@ class LoginPage extends StatelessWidget {
                               onTap: () {},
                             ),
                             AppleLoginButton(
-                              onTap: () {},
+                              onTap: () async {},
                             ),
                           ],
                         ),
