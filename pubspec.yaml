@@ -35,7 +35,7 @@ dependencies:
   # The following package is for sticky headers
   flutter_sticky_header: ^0.6.5
   sticky_headers: ^0.3.0+2
-
+  share_plus: ^6.3.0
 
 dev_dependencies:
   flutter_test:

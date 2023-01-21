@@ -1,17 +1,25 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'dart:io' show Platform;
 import 'package:health_studio_user/core/controllers/splash_controller.dart';
+import 'package:app_version/app_version.dart';
+import 'package:health_studio_user/ui/screens/notification.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
+import 'package:health_studio_user/core/controllers/setting_controller.dart';
+import 'package:health_studio_user/ui/screens/address_screen.dart';
+import 'package:health_studio_user/ui/screens/termsandconditions.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/ui/widgets/setting_option_item.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
+
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class SettingPage extends StatelessWidget {
@@ -281,6 +289,7 @@ class SettingPage extends StatelessWidget {
                   sizedBoxHeight10,
                   Center(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         GetBuilder<SplashController>(
                             builder: (splashController) {
@@ -307,10 +316,8 @@ class SettingPage extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 }
 
