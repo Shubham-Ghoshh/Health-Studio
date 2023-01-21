@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/models/bottom_nav_item.dart';
+import 'package:health_studio_user/ui/screens/select_menu.dart';
 import 'package:health_studio_user/ui/screens/setting_screen.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
@@ -13,6 +14,7 @@ import 'package:health_studio_user/core/models/plan.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/ui/widgets/date.dart';
 import 'package:health_studio_user/utils/buttons.dart';
+import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/formatters.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/ui/widgets/home_page_widgets.dart';
@@ -65,9 +67,37 @@ class _HomePageState extends State<HomePage> {
                                 Container(
                                   decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: Color(0xffE84C4F),
+                                    color: activeIconColor,
                                   ),
-                                  child: SettingButton(),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Get.to(() => const SelectMenuPage());
+                                    },
+                                    icon: const Icon(
+                                      Icons.dining_outlined,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                sizedBoxwidth8,
+                                Container(
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: activeIconColor,
+                                  ),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Get.to(() => const SettingPage());
+                                    },
+                                    icon: Padding(
+                                      padding: const EdgeInsets.all(0.25),
+                                      child: SizedBox(
+                                        height: 24,
+                                        child: Image.asset(
+                                            "assets/images/settings_icon.png"),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                                 sizedBoxwidth8,
                               ],
