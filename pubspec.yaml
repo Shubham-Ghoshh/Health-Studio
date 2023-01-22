@@ -35,6 +35,8 @@ dependencies:
   # The following package is for sticky headers
   flutter_sticky_header: ^0.6.5
   sticky_headers: ^0.3.0+2
+  # The following package is added to play Intro Video
+  video_player: ^2.5.1
   share_plus: ^6.3.0
 
 dev_dependencies:
@@ -56,6 +58,7 @@ flutter:
   assets:
   - assets/images/
   - assets/images/menu/
+  - assets/videos/intro_video.mp4
 
   fonts:
     - family: Poppins

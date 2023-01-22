@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/models/address.dart';
@@ -44,16 +46,17 @@ class AddressController extends GetxController {
     };
     Map<String, dynamic> response = await postRequest("address", body);
     Utility.closeDialog();
-    if (response["error"] != 0) {
+    if (response["error"] != 0 ||
+        response["details"] == null ||
+        (response["details"]?.isEmpty ?? true)) {
       Get.rawSnackbar(message: response["message"] ?? "");
     } else {
-      Get.rawSnackbar(message: "Successfully added address");
-      Get.to(const Address(check: true,));
+      getAddresses(back: true);
       update();
     }
   }
 
-  void getAddresses() async {
+  void getAddresses({bool back = false}) async {
     Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest("address");
     Utility.closeDialog();
@@ -68,6 +71,11 @@ class AddressController extends GetxController {
               .toList());
 
       update();
+    }
+
+    if (back) {
+      Get.back();
+      Get.rawSnackbar(message: "Successfully added address");
     }
   }
 

@@ -20,7 +20,6 @@ class Subscription {
   }
 }
 
-
 class UserDetails {
   String? id;
   String? firstName;
@@ -73,8 +72,8 @@ class UserDetails {
     socialId = json['social_id'];
     authKey = json['auth_key'];
     orderReference = json['order_reference'];
-    orderFrom = json['order_from'];
-    orderTo = json['order_to'];
+    orderFrom = json['order_from'] == "" ? null : json['order_from'];
+    orderTo = json['order_to'] == "" ? null : json['order_to'];
     orderStatus = json['order_status'];
     categoryEn = json['category_en'];
     categoryAr = json['category_ar'];

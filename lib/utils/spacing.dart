@@ -62,6 +62,7 @@ SizedBox sizedBoxWidth12 = SizedBox(
 SizedBox sizedBoxWidth25 = SizedBox(
   width: 25.w,
 );
+EdgeInsets edgeInsets4 = const EdgeInsets.all(4);
 EdgeInsets edgeInsets8 = const EdgeInsets.all(8);
 EdgeInsets edgeInsets16 = const EdgeInsets.all(16);
 

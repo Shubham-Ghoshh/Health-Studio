@@ -15,7 +15,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Address extends StatefulWidget {
   final bool check;
-  const Address({Key? key,  required this.check}) : super(key: key);
+  const Address({Key? key, required this.check}) : super(key: key);
 
   @override
   State<Address> createState() => _AddressState();
@@ -24,8 +24,6 @@ class Address extends StatefulWidget {
 class _AddressState extends State<Address> {
   bool home = true;
   bool office = false;
-  
-  
 
   @override
   Widget build(BuildContext context) {
@@ -75,26 +73,6 @@ class _AddressState extends State<Address> {
                                 home,
                                 widget.check,
                               )),
-                      // GestureDetector(
-                      //   onTap: () {
-                      //     setState(() {
-                      //       home = !(home);
-                      //       office = false;
-                      //     });
-                      //   },
-                      //   child: addressContainer('Home', home),
-
-                      // ),
-                      // GestureDetector(
-                      //     onTap: () {
-                      //       setState(() {
-                      //         office = !(office);
-                      //         home = false;
-                      //       });
-                      //     },
-
-                      //     // child: addressContainer('Office', office)
-                      //     ),
                     ],
                   ),
                 ),
@@ -141,7 +119,7 @@ class _AddressState extends State<Address> {
                                     fontWeight: FontWeight.w600),
                               ),
                             ),
-                            isVisible
+                            isVisible && check
                                 ? Padding(
                                     padding: const EdgeInsets.only(right: 16),
                                     child: SvgPicture.asset(

@@ -48,6 +48,8 @@ class AuthController extends GetxController {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString("auth_key", response["details"]?[0]?["auth_key"]);
       onSuccess == null ? Get.offAll(() => const HomePage()) : onSuccess();
+      isLoggedIn = true;
+      update();
     }
   }
 
@@ -69,6 +71,7 @@ class AuthController extends GetxController {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString("auth_key", response["details"]?[0]?["auth_key"]);
       onSuccess == null ? Get.offAll(() => const LoginPage()) : onSuccess();
+      Get.rawSnackbar(message: "Sign Up Successful! Please login.");
     }
   }
 }

@@ -11,17 +11,10 @@ import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:video_player/video_player.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
-
-  void chnageLanguage(bool isEnglish) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('language', isEnglish);
-    Get.find<LanguageTogglerController>().isEnglish = isEnglish;
-    Get.find<LanguageTogglerController>().update();
-    Get.to(() => const HomePage());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +25,21 @@ class SplashScreen extends StatelessWidget {
             body: Stack(
               fit: StackFit.expand,
               children: [
-                Image.asset(
-                  "assets/images/splashimg.png",
-                  height: MediaQuery.of(context).size.height,
-                  fit: BoxFit.fitWidth,
-                  width: MediaQuery.of(context).size.width,
-                ),
-                Container(height: Get.height, color: splashthemeColor),
+                splashController.controller.value.isInitialized
+                    ? AspectRatio(
+                        aspectRatio:
+                            splashController.controller.value.aspectRatio,
+                        child: VideoPlayer(splashController.controller),
+                      )
+                    : Image.asset(
+                        "assets/images/splashimg.png",
+                        height: MediaQuery.of(context).size.height,
+                        fit: BoxFit.fitWidth,
+                        width: MediaQuery.of(context).size.width,
+                      ),
+                splashController.controller.value.isInitialized
+                    ? const SizedBox()
+                    : Container(height: Get.height, color: splashthemeColor),
                 Padding(
                   padding: edgeInsets8,
                   child: SafeArea(
@@ -48,36 +49,37 @@ class SplashScreen extends StatelessWidget {
                         Image.asset('assets/images/apptitle.png'),
                         Column(
                           children: [
-                            Padding(
-                              padding: edgeInsets16,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Expanded(
-                                      child: SplashButton(
-                                          onTap: () {
-                                            chnageLanguage(true);
-                                            Get.updateLocale(
-                                                const Locale('en'));
-                                          },
-                                          buttontitle: 'English',
-                                          imagepath:
-                                              'assets/images/englishbuttonlogo.png',
-                                          buttonColor: splashbuttonColor1)),
-                                  sizedBoxWidth12,
-                                  Expanded(
-                                      child: SplashButton(
-                                    onTap: () {
-                                      chnageLanguage(false);
-                                      Get.updateLocale(const Locale('ar'));
-                                    },
-                                    buttontitle: 'عربي',
-                                    imagepath:
-                                        'assets/images/arabicbtnlogo.png',
-                                    buttonColor: splashbuttonColor2,
-                                  )),
-                                ],
+                            Visibility(
+                              visible: !splashController.languageSelected,
+                              child: Padding(
+                                padding: edgeInsets16,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Expanded(
+                                        child: SplashButton(
+                                            onTap: () {
+                                              splashController
+                                                  .changeLanguage(true);
+                                            },
+                                            buttontitle: 'English',
+                                            imagepath:
+                                                'assets/images/englishbuttonlogo.png',
+                                            buttonColor: splashbuttonColor1)),
+                                    sizedBoxWidth12,
+                                    Expanded(
+                                        child: SplashButton(
+                                      onTap: () {
+                                        splashController.changeLanguage(false);
+                                      },
+                                      buttontitle: 'عربي',
+                                      imagepath:
+                                          'assets/images/arabicbtnlogo.png',
+                                      buttonColor: splashbuttonColor2,
+                                    )),
+                                  ],
+                                ),
                               ),
                             ),
                             Visibility(

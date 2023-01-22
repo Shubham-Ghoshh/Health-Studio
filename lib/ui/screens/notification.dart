@@ -11,80 +11,78 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<SettingsController>(
-        init: SettingsController(),
-        builder: (settingsController) {
-          return Scaffold(
-              body: Container(
-            height: double.infinity,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/background.png"),
-                fit: BoxFit.fill,
-              ),
-            ),
-            child: SafeArea(
-                child: Column(
+    return GetBuilder<SettingsController>(builder: (settingsController) {
+      return Scaffold(
+          body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/background.png"),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: SafeArea(
+            child: Column(
+          children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    // sizedBoxWidth12,
-                    IconButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                    ),
-                    sizedBoxWidth25,
-                    Text(
-                      'Notifications',
-                      style: TextStyle(
-                          fontSize: 20.sp,
-                          color: whiteColor,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
+                // sizedBoxWidth12,
+                IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    size: 30,
+                    color: Colors.white,
+                  ),
                 ),
-                settingsController.notifications.isEmpty
-                    ? Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: const [
-                            Center(
-                              child: Text(
-                                'No Notifications to show',
-                                style: TextStyle(color: whiteColor),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : Expanded(
-                        child: ListView.builder(
-                          itemCount: settingsController.notifications.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return GetBuilder<LanguageTogglerController>(
-                                builder: (languageController) {
-                              return languageController.isEnglish
-                                  ? textcontainer(settingsController
-                                      .notifications[index].messageEn
-                                      .toString())
-                                  : textcontainer(settingsController
-                                      .notifications[index].messageAr
-                                      .toString());
-                            });
-                          },
-                        ),
-                      ),
+                sizedBoxWidth25,
+                Text(
+                  'Notifications',
+                  style: TextStyle(
+                      fontSize: 20.sp,
+                      color: whiteColor,
+                      fontWeight: FontWeight.bold),
+                ),
               ],
-            )),
-          ));
-        });
+            ),
+            settingsController.notifications.isEmpty
+                ? Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: const [
+                        Center(
+                          child: Text(
+                            'No Notifications to show',
+                            style: TextStyle(color: whiteColor),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : Expanded(
+                    child: ListView.builder(
+                      itemCount: settingsController.notifications.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GetBuilder<LanguageTogglerController>(
+                            builder: (languageController) {
+                          return languageController.isEnglish
+                              ? textcontainer(settingsController
+                                  .notifications[index].messageEn
+                                  .toString())
+                              : textcontainer(settingsController
+                                  .notifications[index].messageAr
+                                  .toString());
+                        });
+                      },
+                    ),
+                  ),
+          ],
+        )),
+      ));
+    });
   }
 
   Widget textcontainer(String text) {

@@ -4,20 +4,20 @@ import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/address_controller.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/buttons.dart';
+import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddressForm extends StatefulWidget {
- const  AddressForm({Key? key}) : super(key: key);
+  const AddressForm({Key? key}) : super(key: key);
 
   @override
   State<AddressForm> createState() => _AddressFormState();
 }
 
 class _AddressFormState extends State<AddressForm> {
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
@@ -32,187 +32,173 @@ class _AddressFormState extends State<AddressForm> {
                   fit: BoxFit.fill,
                 ),
               ),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    sizedBoxHeight10,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        sizedBoxHeight10,
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          child: IconButton(
-                            onPressed: () {
-                              Get.back();
-                            },
-                            icon: const Icon(
-                              Icons.arrow_back,
-                              size: 30,
-                              color: Colors.white,
-                            ),
-                          ),
+              child: SafeArea(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      appBar(),
+                      Padding(
+                        padding: edgeInsetsleft16,
+                        child: Text(
+                          AppLocalizations.of(context)!.add_address,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(
+                                  fontSize: 28.sp, fontWeight: FontWeight.w600),
                         ),
-                        SizedBox(
-                          width: 270.w,
-                          height: 75.h,
-                          child: Image.asset(
-                              "assets/images/health_studio_logo.png"),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: edgeInsetsleft16,
-                      child: Text(
-                        AppLocalizations.of(context)!.add_address,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontSize: 28.sp, fontWeight: FontWeight.w600),
                       ),
-                    ),
-                    sizedBoxHeight10,
-                    Form(
-                        child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14),
-                          child: TextFormField(
-                            onChanged: (value) {
-                              addressController.name = value;
-                            },
-                            cursorColor: Colors.black,
-                            style: Theme.of(context).textTheme.headline1,
-                            decoration: InputDecoration(
-                              contentPadding: edgeInsets16,
-                              hintText: AppLocalizations.of(context)!.address_name,
-                            ),
-                          ),
-                        ),
-                        sizedBoxHeight10,
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14),
-                          child: TextFormField(
-                            onChanged: (value) {
-                              addressController.block = value;
-                            },
-                            cursorColor: Colors.black,
-                            style: Theme.of(context).textTheme.headline1,
-                            decoration: InputDecoration(
-                              contentPadding: edgeInsets16,
-                              hintText: AppLocalizations.of(context)!.block_number,
-                            ),
-                          ),
-                        ),
-                        sizedBoxHeight10,
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14),
-                          child: TextFormField(
-                            onChanged: (value) {
-                              addressController.street = value;
-                            },
-                            cursorColor: Colors.black,
-                            style: Theme.of(context).textTheme.headline1,
-                            decoration: InputDecoration(
-                              contentPadding: edgeInsets16,
-                              hintText: AppLocalizations.of(context)!.street_number,
-                            ),
-                          ),
-                        ),
-                        sizedBoxHeight10,
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14),
-                          child: TextFormField(
-                            onChanged: (value) {
-                              addressController.housenumber = value;
-                            },
-                            cursorColor: Colors.black,
-                            style: Theme.of(context).textTheme.headline1,
-                            decoration: InputDecoration(
-                              hintText: AppLocalizations.of(context)!.house_no,
-                              contentPadding: edgeInsets16,
-                            ),
-                          ),
-                        ),
-                        sizedBoxHeight10,
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14),
-                          child: TextFormField(
-                            onChanged: (value) {
-                              addressController.paci = value;
-                            },
-                            cursorColor: Colors.black,
-                            style: Theme.of(context).textTheme.headline1,
-                            decoration: InputDecoration(
-                              hintText: AppLocalizations.of(context)!.paci_no,
-                              contentPadding: edgeInsets16,
-                            ),
-                          ),
-                        ),
-                        sizedBoxHeight10,
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14),
-                          child: TextFormField(
-                            onChanged: (value) {
-                              addressController.floornumber = value;
-                            },
-                            cursorColor: Colors.black,
-                            style: Theme.of(context).textTheme.headline1,
-                            decoration: InputDecoration(
-                              hintText: AppLocalizations.of(context)!.floor_no,
-                              contentPadding: edgeInsets16,
-                            ),
-                          ),
-                        ),
-                        sizedBoxHeight10,
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14),
-                          child: TextFormField(
-                            onChanged: (value) {
-                              addressController.avenue = value;
-                            },
-                            cursorColor: Colors.black,
-                            style: Theme.of(context).textTheme.headline1,
-                            decoration: InputDecoration(
-                              contentPadding: edgeInsets16,
-                              hintText: AppLocalizations.of(context)!.avenue,
-                            ),
-                          ),
-                        ),
-                        sizedBoxHeight10,
-                        Padding(
+                      sizedBoxHeight10,
+                      Form(
+                          child: Column(
+                        children: [
+                          Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 14),
-                            child: bottomwidget(context)),
-                        sizedBoxHeight10,
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14),
-                          child: TextFormField(
-                            onChanged: (value) {
-                              addressController.detailaddress = value;
-                            },
-                            cursorColor: Colors.black,
-                            maxLines: 5,
-                            style: Theme.of(context).textTheme.headline1,
-                            decoration: InputDecoration(
-                              contentPadding: edgeInsets16,
-                              hintText:AppLocalizations.of(context)!.deatil_address,
+                            child: TextFormField(
+                              onChanged: (value) {
+                                addressController.name = value;
+                              },
+                              cursorColor: Colors.black,
+                              style: Theme.of(context).textTheme.headline1,
+                              decoration: InputDecoration(
+                                contentPadding: edgeInsets16,
+                                hintText:
+                                    AppLocalizations.of(context)!.address_name,
+                              ),
                             ),
                           ),
-                        ),
-                        sizedBoxHeight10,
-                        LoginButton(
-                          height: 50.h,
-                          onTap: () {
-                            addressController.addAddress();
-                            addressController.getAddresses();
-                            addressController.initialvalue = "Area/city";
-                          },
-                          enabled: true,
-                          title: AppLocalizations.of(context)!.save,
-                        ),
-                        sizedBoxHeight35,
-                      ],
-                    ))
-                  ],
+                          sizedBoxHeight10,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            child: TextFormField(
+                              onChanged: (value) {
+                                addressController.block = value;
+                              },
+                              cursorColor: Colors.black,
+                              style: Theme.of(context).textTheme.headline1,
+                              decoration: InputDecoration(
+                                contentPadding: edgeInsets16,
+                                hintText:
+                                    AppLocalizations.of(context)!.block_number,
+                              ),
+                            ),
+                          ),
+                          sizedBoxHeight10,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            child: TextFormField(
+                              onChanged: (value) {
+                                addressController.street = value;
+                              },
+                              cursorColor: Colors.black,
+                              style: Theme.of(context).textTheme.headline1,
+                              decoration: InputDecoration(
+                                contentPadding: edgeInsets16,
+                                hintText:
+                                    AppLocalizations.of(context)!.street_number,
+                              ),
+                            ),
+                          ),
+                          sizedBoxHeight10,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            child: TextFormField(
+                              onChanged: (value) {
+                                addressController.housenumber = value;
+                              },
+                              cursorColor: Colors.black,
+                              style: Theme.of(context).textTheme.headline1,
+                              decoration: InputDecoration(
+                                hintText:
+                                    AppLocalizations.of(context)!.house_no,
+                                contentPadding: edgeInsets16,
+                              ),
+                            ),
+                          ),
+                          sizedBoxHeight10,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            child: TextFormField(
+                              onChanged: (value) {
+                                addressController.paci = value;
+                              },
+                              cursorColor: Colors.black,
+                              style: Theme.of(context).textTheme.headline1,
+                              decoration: InputDecoration(
+                                hintText: AppLocalizations.of(context)!.paci_no,
+                                contentPadding: edgeInsets16,
+                              ),
+                            ),
+                          ),
+                          sizedBoxHeight10,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            child: TextFormField(
+                              onChanged: (value) {
+                                addressController.floornumber = value;
+                              },
+                              cursorColor: Colors.black,
+                              style: Theme.of(context).textTheme.headline1,
+                              decoration: InputDecoration(
+                                hintText:
+                                    AppLocalizations.of(context)!.floor_no,
+                                contentPadding: edgeInsets16,
+                              ),
+                            ),
+                          ),
+                          sizedBoxHeight10,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            child: TextFormField(
+                              onChanged: (value) {
+                                addressController.avenue = value;
+                              },
+                              cursorColor: Colors.black,
+                              style: Theme.of(context).textTheme.headline1,
+                              decoration: InputDecoration(
+                                contentPadding: edgeInsets16,
+                                hintText: AppLocalizations.of(context)!.avenue,
+                              ),
+                            ),
+                          ),
+                          sizedBoxHeight10,
+                          Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 14),
+                              child: bottomwidget(context)),
+                          sizedBoxHeight10,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            child: TextFormField(
+                              onChanged: (value) {
+                                addressController.detailaddress = value;
+                              },
+                              cursorColor: Colors.black,
+                              maxLines: 5,
+                              style: Theme.of(context).textTheme.headline1,
+                              decoration: InputDecoration(
+                                contentPadding: edgeInsets16,
+                                hintText: AppLocalizations.of(context)!
+                                    .deatil_address,
+                              ),
+                            ),
+                          ),
+                          sizedBoxHeight10,
+                          LoginButton(
+                            height: 50.h,
+                            onTap: () {
+                              addressController.addAddress();
+                              addressController.initialvalue = "Area/city";
+                            },
+                            enabled: true,
+                            title: AppLocalizations.of(context)!.save,
+                          ),
+                          sizedBoxHeight35,
+                        ],
+                      ))
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -227,6 +213,7 @@ class _AddressFormState extends State<AddressForm> {
           return GestureDetector(
             onTap: () {
               showModalBottomSheet(
+                  // backgroundColor: Color(0xFF2A7891),
                   context: context,
                   builder: (context) {
                     return ListView.builder(
@@ -237,60 +224,57 @@ class _AddressFormState extends State<AddressForm> {
                       itemBuilder: (BuildContext context, int index) {
                         return StickyHeader(
                           header: Container(
-                            height: 20.h,
+                            padding: edgeInsets8,
                             width: double.infinity,
-                            color: Colors.white,
-                            child: Padding(
-                              padding: edgeInsetsleft16,
-                              child: Text(
-                                addressController.details[index].nameEn
-                                    .toString(),
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                ),
+                            color: plantextColor,
+                            child: Text(
+                              addressController.details[index].nameEn
+                                  .toString(),
+                              style: const TextStyle(
+                                color: Colors.white,
                               ),
                             ),
                           ),
-                          content: Container(
-                            color: const Color(0xff2A7891),
-                            child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: addressController
-                                  .details[index].cities!.length,
-                              itemBuilder:
-                                  (BuildContext context, int contentindex) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    addressController.initialvalue =
-                                        addressController.details[index]
-                                            .cities![contentindex].nameEn
-                                            .toString();
-                                    addressController.city = addressController
-                                        .details[index].cities![contentindex].id
-                                        .toString();
-                                    setState(() {});
-                                    Navigator.pop(context);
-                                  },
-                                  child: Container(
-                                    height: 40.h,
-                                    color: const Color.fromARGB(
-                                        150, 255, 255, 255),
-                                    child: Padding(
-                                      padding: edgeInsets16,
-                                      child: Text(
-                                        addressController.details[index]
-                                            .cities![contentindex].nameEn
-                                            .toString(),
-                                        style:
-                                            const TextStyle(color: Colors.blue),
-                                      ),
-                                    ),
+                          content: ListView.separated(
+                            separatorBuilder: (context, index) => Divider(),
+                            physics: const NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount:
+                                addressController.details[index].cities!.length,
+                            itemBuilder:
+                                (BuildContext context, int contentindex) {
+                              return GestureDetector(
+                                onTap: () {
+                                  addressController.initialvalue =
+                                      addressController.details[index]
+                                          .cities![contentindex].nameEn
+                                          .toString();
+                                  addressController.city = addressController
+                                      .details[index].cities![contentindex].id
+                                      .toString();
+                                  setState(() {});
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  padding: edgeInsets8,
+                                  // height: 40.h,
+                                  color:
+                                      const Color.fromARGB(150, 255, 255, 255),
+                                  child: Text(
+                                    addressController.details[index]
+                                        .cities![contentindex].nameEn
+                                        .toString(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2!
+                                        .copyWith(
+                                          color: textfieldcolor,
+                                        ),
                                   ),
-                                );
-                              },
-                            ),
+                                ),
+                              );
+                            },
                           ),
                         );
                       },
@@ -326,6 +310,5 @@ class _AddressFormState extends State<AddressForm> {
                 )),
           );
         });
-
   }
 }
