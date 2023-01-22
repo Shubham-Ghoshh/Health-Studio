@@ -8,6 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/ui/screens/address_screen.dart';
 import 'package:health_studio_user/ui/screens/authentication/login_screen.dart';
+import 'package:health_studio_user/ui/screens/termsandconditions.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
@@ -231,7 +233,10 @@ class SettingPage extends StatelessWidget {
                           settingIconImage: "share_icon",
                           settingName:
                               AppLocalizations.of(context)!.share_friends,
-                          onTap: () {},
+                          onTap: () {
+                            Share.share(
+                                'Health Studio app. Order health food right now. Available both for iOS & Android https://bit.ly/gethelthstudio');
+                          },
                         ),
                         divider(),
                         SettingOptionItem(
@@ -264,7 +269,9 @@ class SettingPage extends StatelessWidget {
                           settingIconImage: "terms_and_conditions_icon",
                           settingName:
                               AppLocalizations.of(context)!.terms_conditions,
-                          onTap: () {},
+                          onTap: () {
+                            Get.to(const TermsandConditions());
+                          },
                         ),
                         divider(),
                         SettingOptionItem(
