@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
@@ -133,14 +133,12 @@ class SettingsController extends GetxController {
   }
 
   launchInstagram() async {
-    var nativeUrl = "instagram://user?username=healthstudiokw";
     var webUrl = "https://www.instagram.com/healthstudiokw";
 
     try {
-      await launchUrlString(nativeUrl, mode: LaunchMode.platformDefault);
+      await launchUrlString(webUrl, mode: LaunchMode.platformDefault);
     } catch (e) {
       log(e.toString());
-      await launchUrlString(webUrl, mode: LaunchMode.platformDefault);
     }
   }
 
@@ -155,8 +153,11 @@ class SettingsController extends GetxController {
   }
 
   rateAppAndroid() async {
-    var webUrl =
-        "https://play.google.com/store/apps/details?id=com.healthstudio.app&gl=US&pli=1";
+    var webUrl = Platform.isAndroid
+        ? "https://play.google.com/store/apps/details?id=com.healthstudio.app&gl=US&pli=1"
+        : Platform.isIOS
+            ? "https://apps.apple.com/app/id=com.healthstudio.app"
+            : "";
 
     try {
       await launchUrlString(webUrl, mode: LaunchMode.platformDefault);
