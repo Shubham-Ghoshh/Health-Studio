@@ -337,8 +337,8 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                               .selectedDate
                                                               .day ==
                                                           date.day, () {
-                                                    Get.to(() =>
-                                                        const SelectMenuPage());
+                                                    // Get.to(() =>
+                                                    //     const SelectMenuPage());
                                                   });
                                                 },
                                               ),
@@ -440,6 +440,10 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                       orderController
                                                           .orderDetails!
                                                           .packageId,
+                                                      userDashboardController
+                                                          .userDashboard!
+                                                          .nextweek[index]
+                                                          .dateRequested,
                                                     );
                                                   });
                                                 },

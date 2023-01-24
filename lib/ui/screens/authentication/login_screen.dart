@@ -150,30 +150,30 @@ class LoginPage extends StatelessWidget {
                           },
                         ),
                         sizedBoxHeight16,
-                        Text(
-                          AppLocalizations.of(context)!.login_social_networks,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Color(0xffFFFDFD),
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                          ),
-                        ),
-                        sizedBoxHeight6,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            FacebookLoginButton(
-                              onTap: () {},
-                            ),
-                            GoogleLoginButton(
-                              onTap: () {},
-                            ),
-                            AppleLoginButton(
-                              onTap: () async {},
-                            ),
-                          ],
-                        ),
+                        // Text(
+                        //   AppLocalizations.of(context)!.login_social_networks,
+                        //   textAlign: TextAlign.center,
+                        //   style: const TextStyle(
+                        //     color: Color(0xffFFFDFD),
+                        //     fontWeight: FontWeight.w400,
+                        //     fontSize: 14,
+                        //   ),
+                        // ),
+                        // sizedBoxHeight6,
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     FacebookLoginButton(
+                        //       onTap: () {},
+                        //     ),
+                        //     GoogleLoginButton(
+                        //       onTap: () {},
+                        //     ),
+                        //     AppleLoginButton(
+                        //       onTap: () async {},
+                        //     ),
+                        //   ],
+                        // ),
                         const Spacer(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,

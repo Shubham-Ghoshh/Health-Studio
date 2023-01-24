@@ -8,14 +8,10 @@ import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 
-class SelectMenuPage extends StatefulWidget {
-  const SelectMenuPage({Key? key}) : super(key: key);
+class SelectMenuPage extends StatelessWidget {
+  final String date;
+  const SelectMenuPage({super.key, required this.date});
 
-  @override
-  State<SelectMenuPage> createState() => _SelectMenuPageState();
-}
-
-class _SelectMenuPageState extends State<SelectMenuPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +62,9 @@ class _SelectMenuPageState extends State<SelectMenuPage> {
                                   children: [
                                     selectMealBoxText(
                                       "Meal 1",
-                                      "Turkey Omelette - Breakfast",
+                                      "Chose a meal",
+                                      "meal",
+                                      date,
                                     ),
                                     const Divider(
                                       color: Color.fromARGB(95, 0, 0, 0),
@@ -88,7 +86,9 @@ class _SelectMenuPageState extends State<SelectMenuPage> {
                                   children: [
                                     selectMealBoxText(
                                       "Snack 1",
-                                      "Carrot - Cake",
+                                      "Chose a meal",
+                                      "snack",
+                                      date,
                                     ),
                                     const Divider(
                                       color: Color.fromARGB(95, 0, 0, 0),
@@ -108,10 +108,8 @@ class _SelectMenuPageState extends State<SelectMenuPage> {
                                     0,
                                 (index) => Column(
                                   children: [
-                                    selectMealBoxText(
-                                      "Breakfast 1",
-                                      "Carrot - Cake",
-                                    ),
+                                    selectMealBoxText("Breakfast 1",
+                                        "Chose a meal", "breakfast", date),
                                     const Divider(
                                       color: Color.fromARGB(95, 0, 0, 0),
                                     ),
@@ -226,60 +224,71 @@ class _SelectMenuPageState extends State<SelectMenuPage> {
     );
   }
 
-  Row selectMealBoxText(String mealNumber, String mealName) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 5.0, bottom: 14),
-          child: Text(
-            mealNumber,
-            style: TextStyle(
-              color: inactiveDayFontColor,
-              fontWeight: FontWeight.w600,
-              fontSize: 15.sp,
-            ),
-          ),
-        ),
-        Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  mealName,
-                  style: TextStyle(
-                    color: const Color(0xff0A0909),
-                    fontWeight: FontWeight.w400,
-                    fontSize: 13.sp,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "Set Random By System",
-                      style: TextStyle(
-                        color: const Color(0xffC19C7D),
-                        fontWeight: FontWeight.w400,
-                        fontSize: 10.sp,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: GestureDetector(
-                onTap: () {
-                  Get.to(const View());
-                },
-                child: const Icon(Icons.arrow_forward_ios_sharp),
+  Widget selectMealBoxText(
+    String mealNumber,
+    String mealName,
+    String type,
+    String date,
+  ) {
+    return GestureDetector(
+      onTap: () {
+        print("CHOOSE");
+        Get.find<UserDashboardController>().getMenuByTypeAndDate(type, date);
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 5.0, bottom: 14),
+            child: Text(
+              mealNumber,
+              style: TextStyle(
+                color: inactiveDayFontColor,
+                fontWeight: FontWeight.w600,
+                fontSize: 15.sp,
               ),
             ),
-          ],
-        ),
-      ],
+          ),
+          Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    mealName,
+                    style: TextStyle(
+                      color: const Color(0xff0A0909),
+                      fontWeight: FontWeight.w400,
+                      fontSize: 13.sp,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Set Random By System",
+                        style: TextStyle(
+                          color: const Color(0xffC19C7D),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 10.sp,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: GestureDetector(
+                  onTap: () {
+                    // Get.to(const View());
+                  },
+                  child: const Icon(Icons.arrow_forward_ios_sharp),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
