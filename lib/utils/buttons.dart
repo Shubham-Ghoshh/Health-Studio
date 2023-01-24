@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:health_studio_user/core/controllers/auth_controller.dart';
+import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -206,7 +208,9 @@ class SplashButton extends StatelessWidget {
 
 GestureDetector payNowButton(dynamic context) {
   return GestureDetector(
-    onTap: () {},
+    onTap: () {
+      Get.find<OrderController>().getPaymentURL();
+    },
     child: Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16, top: 8, bottom: 18),
       child: Container(

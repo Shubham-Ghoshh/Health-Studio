@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
+import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/core/models/bottom_nav_item.dart';
+import 'package:health_studio_user/ui/screens/logged_in_home_screen.dart';
 import 'package:health_studio_user/ui/screens/select_menu.dart';
 import 'package:health_studio_user/ui/screens/setting_screen.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
@@ -62,21 +64,30 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Row(
                           children: [
-                            Container(
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: activeIconColor,
-                              ),
-                              child: IconButton(
-                                onPressed: () {
-                                  Get.to(() => const SelectMenuPage());
-                                },
-                                icon: const Icon(
-                                  Icons.dining_outlined,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
+                            GetBuilder<OrderController>(
+                                init: OrderController(),
+                                builder: (orderController) {
+                                  return Visibility(
+                                    visible:
+                                        orderController.orderDetails != null,
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: activeIconColor,
+                                      ),
+                                      child: IconButton(
+                                        onPressed: () {
+                                          Get.to(
+                                              () => const LoggedInHomePage());
+                                        },
+                                        icon: const Icon(
+                                          Icons.dining_outlined,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }),
                             sizedBoxwidth8,
                             Container(
                               decoration: const BoxDecoration(
@@ -251,6 +262,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           GestureDetector(
             onTap: (() {
+              Get.put(OrderController()).order.planId = plan.id;
               Get.put(PlanController()).getPackages(plan);
             }),
             child: Container(

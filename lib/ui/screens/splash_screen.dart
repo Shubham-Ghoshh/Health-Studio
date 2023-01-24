@@ -95,6 +95,7 @@ class SplashScreen extends StatelessWidget {
                                           .copyWith(color: whiteColor)),
                                   GestureDetector(
                                     onTap: () {
+                                      splashController.timer.cancel();
                                       Get.to(() => const LoginPage());
                                     },
                                     child: Text(

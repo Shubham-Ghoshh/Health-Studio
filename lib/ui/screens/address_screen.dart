@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/address_controller.dart';
+import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/core/models/address.dart';
 import 'package:health_studio_user/ui/screens/address_form.dart';
 import 'package:health_studio_user/ui/screens/confirmation_screen.dart';
@@ -89,6 +90,7 @@ class _AddressState extends State<Address> {
           return GestureDetector(
             onTap: () {
               if (check) {
+                Get.find<OrderController>().order.addressId = a.id;
                 Get.to(() => const ConfirmationPage());
               }
             },

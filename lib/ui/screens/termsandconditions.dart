@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/utils/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 
 class TermsandConditions extends StatelessWidget {
@@ -11,6 +11,27 @@ class TermsandConditions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                size: 30,
+                color: Colors.white,
+              ),
+            ),
+            elevation: 0,
+            centerTitle: true,
+            backgroundColor: plantextColor,
+            title: Text(
+              AppLocalizations.of(context)!.terms_conditions,
+              style: TextStyle(
+                  fontSize: 20.sp,
+                  color: whiteColor,
+                  fontWeight: FontWeight.bold),
+            )),
         body: Container(
             height: double.infinity,
             decoration: const BoxDecoration(
@@ -24,39 +45,6 @@ class TermsandConditions extends StatelessWidget {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                  Row(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      // sizedBoxWidth12,
-                      IconButton(
-                        onPressed: () {
-                          Get.back();
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back,
-                          size: 30,
-                          color: Colors.white,
-                        ),
-                      ),
-                      // sizedBoxWidth25,
-                      Text(
-                        'Terms and Conditions',
-                        style: TextStyle(
-                            fontSize: 20.sp,
-                            color: whiteColor,
-                            fontWeight: FontWeight.bold),
-                      )
-                      // Center(
-                      //   child: SizedBox(
-                      //     width: 242,
-                      //     // height: 57,
-                      //     child: Image.asset(
-                      //         "assets/images/health_studio_logo.png"),
-                      //   ),
-                      // ),
-                    ],
-                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(

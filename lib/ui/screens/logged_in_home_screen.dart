@@ -4,12 +4,19 @@ import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
+import 'package:health_studio_user/core/controllers/order_controller.dart';
+import 'package:health_studio_user/core/controllers/plan_controller.dart';
+import 'package:health_studio_user/core/controllers/setting_controller.dart';
+import 'package:health_studio_user/core/controllers/userDashboardController.dart';
+import 'package:health_studio_user/ui/screens/select_menu.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/ui/widgets/date.dart';
 import 'package:health_studio_user/ui/widgets/food_detail_card.dart';
 import 'package:health_studio_user/utils/colors.dart';
+import 'package:health_studio_user/utils/formatters.dart';
 import 'package:health_studio_user/utils/spacing.dart';
+import 'package:intl/intl.dart';
 
 class LoggedInHomePage extends StatefulWidget {
   const LoggedInHomePage({Key? key}) : super(key: key);
@@ -23,289 +30,433 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: bottomNavigationBar(),
-        body: Stack(
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/background.png"),
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-            SingleChildScrollView(
-              child: SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        sizedBoxHeight6,
-                        appbarWithSetting(),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          sizedBoxHeight6,
-                          Text(
-                            "Meetab Bhasa",
-                            style: TextStyle(
-                              fontSize: 28.sp,
-                              fontWeight: FontWeight.w600,
-                              shadows: textShadow,
-                            ),
+        body: GetBuilder<UserDashboardController>(
+            init: UserDashboardController(),
+            builder: (userDashboardController) {
+              return GetBuilder<OrderController>(builder: (orderController) {
+                return GetBuilder<PlanController>(builder: (planController) {
+                  return Stack(
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("assets/images/background.png"),
+                            fit: BoxFit.fill,
                           ),
-                          sizedBoxHeight12,
-                          Stack(
-                            alignment: Alignment.bottomCenter,
+                        ),
+                      ),
+                      SingleChildScrollView(
+                        child: SafeArea(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Align(
-                                alignment: Alignment.topCenter,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  sizedBoxHeight6,
+                                  appbarWithSetting(),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      padding: edgeInsets16,
-                                      decoration: BoxDecoration(
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: Color.fromARGB(50, 0, 0, 0),
-                                            spreadRadius: 0.5,
-                                            blurRadius: 1,
-                                            offset: Offset(0, 8),
-                                          )
-                                        ],
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
+                                    sizedBoxHeight6,
+                                    Text(
+                                      Get.find<SettingsController>()
+                                              .userDetails
+                                              ?.firstName ??
+                                          "",
+                                      style: TextStyle(
+                                        fontSize: 28.sp,
+                                        fontWeight: FontWeight.w600,
+                                        shadows: textShadow,
                                       ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                    ),
+                                    sizedBoxHeight12,
+                                    Stack(
+                                      alignment: Alignment.bottomCenter,
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.topCenter,
+                                          child: Column(
                                             children: [
-                                              sizedBoxHeight6,
-                                              const Text(
-                                                "Meal package that contains meals and snacks. Customer has the option to choose brekfast as one of the meals. No delivery every Friday.",
-                                                style: TextStyle(
-                                                  color: Color(0xff0A0909),
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 14.4,
+                                              Container(
+                                                padding: edgeInsets16,
+                                                decoration: BoxDecoration(
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                      color: Color.fromARGB(
+                                                          50, 0, 0, 0),
+                                                      spreadRadius: 0.5,
+                                                      blurRadius: 1,
+                                                      offset: Offset(0, 8),
+                                                    )
+                                                  ],
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        sizedBoxHeight6,
+                                                        Text(
+                                                          planController
+                                                                  .planDetail
+                                                                  ?.descriptionEn ??
+                                                              "",
+                                                          style:
+                                                              const TextStyle(
+                                                            color: Color(
+                                                                0xff0A0909),
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            fontSize: 14.4,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const Divider(
+                                                      color: Color.fromARGB(
+                                                          96, 0, 0, 0),
+                                                    ),
+                                                    sizedBoxHeight6,
+                                                    const Text(
+                                                      "Every Meal:",
+                                                      style: TextStyle(
+                                                        color:
+                                                            Color(0xff0A0909),
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontSize: 14.4,
+                                                      ),
+                                                    ),
+                                                    sizedBoxHeight6,
+                                                    Column(
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            // NutritionContent(
+                                                            //     image:
+                                                            //         SvgPicture.asset(
+                                                            //       'assets/images/calorie.svg',
+                                                            //       color:
+                                                            //           plantextColor,
+                                                            //     ),
+                                                            //     nutritionContent:
+                                                            //         "250",
+                                                            //     nutritionName:
+                                                            //         "Calorie"),
+                                                            NutritionContent(
+                                                                image:
+                                                                    SvgPicture
+                                                                        .asset(
+                                                                  'assets/images/protein.svg',
+                                                                  color:
+                                                                      plantextColor,
+                                                                ),
+                                                                nutritionContent:
+                                                                    planController
+                                                                            .planDetail
+                                                                            ?.protein ??
+                                                                        "0",
+                                                                nutritionName:
+                                                                    "Protein"),
+                                                            sizedBoxWidth12,
+                                                            // NutritionContent(
+                                                            //     image:
+                                                            //         SvgPicture.asset(
+                                                            //       'assets/images/fat.svg',
+                                                            //       color:
+                                                            //           plantextColor,
+                                                            //     ),
+                                                            //     nutritionContent:
+                                                            //         "10",
+                                                            //     nutritionName: "Fat"),
+                                                            NutritionContent(
+                                                                image:
+                                                                    SvgPicture
+                                                                        .asset(
+                                                                  'assets/images/carbs.svg',
+                                                                  color:
+                                                                      plantextColor,
+                                                                ),
+                                                                nutritionContent:
+                                                                    planController
+                                                                            .planDetail
+                                                                            ?.carb ??
+                                                                        "0",
+                                                                nutritionName:
+                                                                    "Carbs"),
+                                                          ],
+                                                        ),
+                                                        sizedBoxHeight30,
+                                                      ],
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
+                                              sizedBoxHeight20,
                                             ],
                                           ),
-                                          const Divider(
-                                            color: Color.fromARGB(96, 0, 0, 0),
-                                          ),
-                                          sizedBoxHeight6,
-                                          const Text(
-                                            "Every Meal:",
-                                            style: TextStyle(
-                                              color: Color(0xff0A0909),
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 14.4,
+                                        ),
+                                        Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 15.0,
                                             ),
-                                          ),
-                                          sizedBoxHeight6,
-                                          Column(
-                                            children: [
-                                              Row(
+                                            child: Container(
+                                              height: 50.h,
+                                              decoration: BoxDecoration(
+                                                color: loginButtonColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(6),
+                                              ),
+                                              child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
-                                                        .spaceBetween,
+                                                        .spaceAround,
                                                 children: [
-                                                  NutritionContent(
-                                                      image: SvgPicture.asset(
-                                                        'assets/images/calorie.svg',
-                                                        color: plantextColor,
+                                                  Center(
+                                                    child: Container(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                        top: 8,
+                                                        bottom: 8,
                                                       ),
-                                                      nutritionContent: "250",
-                                                      nutritionName: "Calorie"),
-                                                  NutritionContent(
-                                                      image: SvgPicture.asset(
-                                                        'assets/images/protein.svg',
-                                                        color: plantextColor,
+                                                      child: Text(
+                                                        "Your subscription will last\n until ${DateFormat("MMM dd, yyyy").format(getDateFormat(Get.find<SettingsController>().userDetails?.orderTo, split: false))}",
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                        style: TextStyle(
+                                                          fontSize: 14.sp,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
                                                       ),
-                                                      nutritionContent: "24",
-                                                      nutritionName: "Protein"),
-                                                  NutritionContent(
-                                                      image: SvgPicture.asset(
-                                                        'assets/images/fat.svg',
-                                                        color: plantextColor,
+                                                    ),
+                                                  ),
+                                                  OutlinedButton(
+                                                    style: OutlinedButton
+                                                        .styleFrom(
+                                                            side: const BorderSide(
+                                                                width: 2.0,
+                                                                color: Colors
+                                                                    .white)),
+                                                    onPressed: () {},
+                                                    child: Text(
+                                                      "Extend",
+                                                      textAlign: TextAlign.left,
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14.sp,
+                                                        fontWeight:
+                                                            FontWeight.w500,
                                                       ),
-                                                      nutritionContent: "10",
-                                                      nutritionName: "Fat"),
-                                                  NutritionContent(
-                                                      image: SvgPicture.asset(
-                                                        'assets/images/carbs.svg',
-                                                        color: plantextColor,
-                                                      ),
-                                                      nutritionContent: "150",
-                                                      nutritionName: "Carbs"),
+                                                    ),
+                                                  )
                                                 ],
-                                              ),
-                                              sizedBoxHeight30,
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    sizedBoxHeight20,
-                                  ],
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 15.0,
-                                  ),
-                                  child: Container(
-                                    height: 50.h,
-                                    decoration: BoxDecoration(
-                                      color: loginButtonColor,
-                                      borderRadius: BorderRadius.circular(6),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Center(
-                                          child: Container(
-                                            padding: const EdgeInsets.only(
-                                              top: 8,
-                                              bottom: 8,
-                                            ),
-                                            child: Text(
-                                              "Your subscription will last\n until December 24 , 2023",
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.w400,
                                               ),
                                             ),
                                           ),
                                         ),
-                                        OutlinedButton(
-                                          style: OutlinedButton.styleFrom(
-                                              side: const BorderSide(
-                                                  width: 2.0,
-                                                  color: Colors.white)),
-                                          onPressed: () {},
-                                          child: Text(
-                                            "Extend",
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 14.sp,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        )
                                       ],
+                                    ),
+                                    sizedBoxHeight20,
+                                    Text(
+                                      "Current Week",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        shadows: textShadow,
+                                        color: Colors.white,
+                                        fontSize: 21.sp,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      "All your chosen meal this week.",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    sizedBoxHeight12,
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 16.0),
+                                child: GetBuilder<HomeController>(
+                                  init: HomeController(),
+                                  builder: (homeController) => Padding(
+                                    padding: edgeInsets0.copyWith(right: 0),
+                                    child: SizedBox(
+                                      height: 132.h,
+                                      child: (userDashboardController
+                                                  .userDashboard
+                                                  ?.thisweek
+                                                  .isEmpty ??
+                                              true)
+                                          ? const Center(
+                                              child: Text(
+                                                "No Meals for these dates",
+                                              ),
+                                            )
+                                          : ListView(
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.horizontal,
+                                              children: List.generate(
+                                                7,
+                                                (index) {
+                                                  DateTime date = DateTime.now()
+                                                      .add(Duration(
+                                                          days: index));
+                                                  return calenderWidget(
+                                                      context,
+                                                      date.month.toString(),
+                                                      date.day.toString(),
+                                                      homeController
+                                                              .selectedDate
+                                                              .day ==
+                                                          date.day, () {
+                                                    Get.to(() =>
+                                                        const SelectMenuPage());
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    sizedBoxHeight20,
+                                    Text(
+                                      "Next Week",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        shadows: textShadow,
+                                        color: Colors.white,
+                                        fontSize: 21.sp,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Chose your meal now for next week",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    sizedBoxHeight16,
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 16.0, bottom: 16),
+                                child: GetBuilder<HomeController>(
+                                  init: HomeController(),
+                                  builder: (homeController) => Padding(
+                                    padding: edgeInsets0.copyWith(right: 0),
+                                    child: SizedBox(
+                                      height: 132.h,
+                                      child: (userDashboardController
+                                                  .userDashboard
+                                                  ?.nextweek
+                                                  .isEmpty ??
+                                              true)
+                                          ? const Center(
+                                              child: Text(
+                                                "No Meals for these dates",
+                                              ),
+                                            )
+                                          : ListView(
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.horizontal,
+                                              children: List.generate(
+                                                userDashboardController
+                                                        .userDashboard
+                                                        ?.nextweek
+                                                        .length ??
+                                                    0,
+                                                (index) {
+                                                  DateTime date = DateTime.now()
+                                                      .add(Duration(
+                                                          days: index));
+                                                  return calenderWidget(
+                                                      context,
+                                                      DateTime.parse(
+                                                              userDashboardController
+                                                                  .userDashboard!
+                                                                  .nextweek[
+                                                                      index]
+                                                                  .dateRequested)
+                                                          .month
+                                                          .toString(),
+                                                      DateTime.parse(
+                                                              userDashboardController
+                                                                  .userDashboard!
+                                                                  .nextweek[
+                                                                      index]
+                                                                  .dateRequested)
+                                                          .day
+                                                          .toString(),
+                                                      userDashboardController
+                                                              .userDashboard!
+                                                              .nextweek[index]
+                                                              .menuEn !=
+                                                          "NONE", () {
+                                                    userDashboardController
+                                                        .getPackageDetails(
+                                                      orderController
+                                                          .orderDetails!
+                                                          .categoryId,
+                                                      orderController
+                                                          .orderDetails!
+                                                          .packageId,
+                                                    );
+                                                  });
+                                                },
+                                              ),
+                                            ),
                                     ),
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          sizedBoxHeight20,
-                          Text(
-                            "Current Week",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              shadows: textShadow,
-                              color: Colors.white,
-                              fontSize: 21.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Text(
-                            "All your chosen meal this week.",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          sizedBoxHeight12,
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0),
-                      child: GetBuilder<HomeController>(
-                        init: HomeController(),
-                        builder: (homeController) => Padding(
-                          padding: edgeInsets0.copyWith(right: 0),
-                          child: SizedBox(
-                            height: 132.h,
-                            child: ListView(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              children: List.generate(
-                                7,
-                                (index) {
-                                  DateTime date =
-                                      DateTime.now().add(Duration(days: index));
-                                  return calenderWidget(
-                                      context,
-                                      date.month.toString(),
-                                      date.day.toString(),
-                                      homeController.selectedDate.day ==
-                                          date.day, () {
-                                    () {};
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          sizedBoxHeight20,
-                          Text(
-                            "Next Week",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              shadows: textShadow,
-                              color: Colors.white,
-                              fontSize: 21.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Text(
-                            "Chose your meal now for next week",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          sizedBoxHeight16,
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ));
+                    ],
+                  );
+                });
+              });
+            }));
   }
 }

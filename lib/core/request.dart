@@ -27,6 +27,7 @@ Future<Map<String, dynamic>> postRequest(url, body) async {
         data: timeoutResponse(),
         statusCode: 400));
   }).catchError((error) {
+    log("ERROR $error");
     return getErrorMessage(error);
   });
   log("BODY == ${response.data}");

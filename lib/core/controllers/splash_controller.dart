@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
+import 'package:health_studio_user/core/controllers/setting_controller.dart';
 import 'package:health_studio_user/ui/screens/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 
 class SplashController extends GetxController {
+  late Timer timer = Timer(const Duration(seconds: 3), goHome);
   bool languageSelected = true;
   bool loggedIn = false;
   VideoPlayerController controller =
@@ -33,7 +35,7 @@ class SplashController extends GetxController {
     update();
     Get.put(HomeController(), permanent: true);
     checkIsUserLoggedIn();
-    Timer(const Duration(seconds: 3), goHome);
+    timer;
   }
 
   void checkIsUserLoggedIn() async {
@@ -42,6 +44,7 @@ class SplashController extends GetxController {
     if (value != null) {
       loggedIn = true;
       update();
+      Get.put(SettingsController(), permanent: true);
     }
   }
 

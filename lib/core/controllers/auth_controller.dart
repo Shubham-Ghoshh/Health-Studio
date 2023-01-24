@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:health_studio_user/core/controllers/setting_controller.dart';
 import 'package:health_studio_user/core/request.dart';
 import 'package:health_studio_user/ui/screens/authentication/login_screen.dart';
 import 'package:health_studio_user/ui/screens/authentication/sign_up_screen.dart';
 import 'package:health_studio_user/ui/screens/home_screen.dart';
 import 'package:health_studio_user/ui/widgets/loader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthController extends GetxController {
   String? mobile;
@@ -18,6 +20,12 @@ class AuthController extends GetxController {
   GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
   bool isValid = false;
   bool isLoggedIn = false;
+  GoogleSignIn googleSignIn = GoogleSignIn(
+    scopes: [
+      'https://www.googleapis.com/auth/userinfo.email',
+      'https://www.googleapis.com/auth/userinfo.profile',
+    ],
+  );
 
   @override
   void onInit() {
@@ -25,6 +33,22 @@ class AuthController extends GetxController {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       checkLogin();
     });
+  }
+
+  void addDevice() async {
+    Map<String, dynamic> body = {
+      "token": "",
+      "model": "",
+      "version": "",
+      "identifier": "",
+      "platform": "",
+      "timezone": ""
+    };
+
+    Map<String, dynamic> response = await postRequest("add/device", body);
+    if (response["error"] != 0) {
+      Get.rawSnackbar(message: response["message"]);
+    }
   }
 
   void checkLogin() async {
@@ -50,6 +74,9 @@ class AuthController extends GetxController {
       onSuccess == null ? Get.offAll(() => const HomePage()) : onSuccess();
       isLoggedIn = true;
       update();
+
+      Get.put(SettingsController()).getUserDetails();
+      Get.put(SettingsController()).getUserSubscription();
     }
   }
 

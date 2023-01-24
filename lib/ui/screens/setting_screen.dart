@@ -240,6 +240,7 @@ class SettingPage extends StatelessWidget {
                         ),
                         divider(),
                         SettingOptionItem(
+                          key: const Key("instagram_icon"),
                           settingIconImage: "instagram_icon",
                           settingName:
                               AppLocalizations.of(context)!.follow_instagram,
@@ -249,6 +250,7 @@ class SettingPage extends StatelessWidget {
                         ),
                         divider(),
                         SettingOptionItem(
+                          key: const Key("facebook_icon"),
                           settingIconImage: "facebook_icon",
                           settingName:
                               AppLocalizations.of(context)!.follow_facebook,
@@ -262,7 +264,9 @@ class SettingPage extends StatelessWidget {
                         SettingOptionItem(
                           settingIconImage: "contact_icon",
                           settingName: AppLocalizations.of(context)!.contact_us,
-                          onTap: () {},
+                          onTap: () {
+                            settingsController.openMailApp();
+                          },
                         ),
                         divider(),
                         SettingOptionItem(
@@ -270,7 +274,7 @@ class SettingPage extends StatelessWidget {
                           settingName:
                               AppLocalizations.of(context)!.terms_conditions,
                           onTap: () {
-                            Get.to(const TermsandConditions());
+                            Get.to(() => const TermsandConditions());
                           },
                         ),
                         divider(),

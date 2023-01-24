@@ -3,6 +3,8 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
+import 'package:health_studio_user/core/controllers/order_controller.dart';
+import 'package:health_studio_user/core/controllers/plan_controller.dart';
 import 'package:health_studio_user/core/models/notificationlisting.dart';
 import 'package:health_studio_user/core/models/user.dart';
 import 'package:health_studio_user/core/request.dart';
@@ -11,6 +13,7 @@ import 'package:health_studio_user/ui/screens/notification.dart';
 import 'package:health_studio_user/ui/widgets/loader.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class SettingsController extends GetxController {
@@ -20,6 +23,7 @@ class SettingsController extends GetxController {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (Get.find<AuthController>().isLoggedIn) {
         getUserDetails();
+        getUserSubscription();
       }
 
       getAppVersion();
@@ -40,27 +44,39 @@ class SettingsController extends GetxController {
   String? changePasswordLink;
   String? authkey;
 
-  List<Subscription> getsubscription = [];
+  List<Subscription> subscription = [];
   UserDetails? userDetails;
   List<NotificationsListing> notifications = [];
-  // void getstartenddetails() async {
-  //   Utility.showLoadingDialog();
-  //   Map<String, dynamic> response = await getRequest("user/subscribe");
-  //   Utility.closeDialog();
-  //   if (response["error"] != 0) {
-  //     // Get.rawSnackbar(message: response["message"] ?? "");
-  //     accountStart = "";
-  //     accountExpiry = "";
-  //   } else {
-  //     getsubscription = response["details"] == null
-  //         ? <Subscription>[]
-  //         : List<Subscription>.from(response["details"]
-  //             .map((e) => Subscription.fromJson(e))
-  //             .toList());
 
-  //     update();
-  //   }
-  // }
+  void getUserSubscription() async {
+    Utility.showLoadingDialog();
+    Map<String, dynamic> response = await getRequest("user/subscribe");
+    Utility.closeDialog();
+    if (response["error"] != 0) {
+      // Get.rawSnackbar(message: response["message"] ?? "");
+      accountStart = "";
+      accountExpiry = "";
+    } else {
+      subscription = response["details"] == null
+          ? <Subscription>[]
+          : List<Subscription>.from(response["details"]
+              .map((e) => Subscription.fromJson(e))
+              .toList());
+
+      update();
+
+      if (subscription.isNotEmpty) {
+        Get.put(OrderController()).orderReference =
+            subscription.first.orderReference;
+        await Get.put(OrderController()).getOrderDetails(navigate: false);
+        if (Get.find<OrderController>().orderDetails != null) {
+          Get.put(PlanController()).getPlanDetail(
+              Get.find<OrderController>().orderDetails!.categoryId,
+              navigate: false);
+        }
+      }
+    }
+  }
 
   getChangePasswordLink() async {
     Utility.showLoadingDialog();
@@ -136,7 +152,7 @@ class SettingsController extends GetxController {
     var webUrl = "https://www.instagram.com/healthstudiokw";
 
     try {
-      await launchUrlString(webUrl, mode: LaunchMode.platformDefault);
+      await launchUrl(Uri.parse(webUrl), mode: LaunchMode.platformDefault);
     } catch (e) {
       log(e.toString());
     }
@@ -146,7 +162,7 @@ class SettingsController extends GetxController {
     var webUrl = "https://m.facebook.com/healthstudiokw";
 
     try {
-      await launchUrlString(webUrl, mode: LaunchMode.platformDefault);
+      await launchUrl(Uri.parse(webUrl), mode: LaunchMode.platformDefault);
     } catch (e) {
       log(e.toString());
     }
@@ -182,5 +198,14 @@ class SettingsController extends GetxController {
 
     Get.offAll(() => HomePage());
     Get.find<AuthController>().isLoggedIn = false;
+  }
+
+  void openMailApp() async {
+    var url = "mailto:support@heatlhstudio.com";
+    try {
+      await launchUrlString(url, mode: LaunchMode.platformDefault);
+    } catch (e) {
+      log(e.toString());
+    }
   }
 }

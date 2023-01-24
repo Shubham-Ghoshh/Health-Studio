@@ -55,7 +55,7 @@
     "your_account" : "Your Account",
     "share_love" : "Share the Love",
     "support" : "Support",
-    "default_address" : "Default Address",
+    "default_address" : "Addresses",
     "notifictaion" : "Notification",
     "account_start" : "Account Start",
     "account_expiry" : "Account Expiry",
@@ -77,5 +77,6 @@
     "add_promo_code" : "Add Promo Code",
     "apply" : "Apply",
     "total" : "TOTAL",
-    "pay_now" : "Pay Now"
+    "pay_now" : "Pay Now",
+    "payment" : "Payment"
    }

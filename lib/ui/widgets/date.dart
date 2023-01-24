@@ -77,13 +77,21 @@ Widget calenderWidget(BuildContext context, String month, String day,
                   ),
                   child: IconButton(
                     onPressed: () {},
-                    icon: const Center(
-                      child: Icon(
-                        Icons.check,
-                        color: Colors.white,
-                        size: 15,
-                      ),
-                    ),
+                    icon: selected
+                        ? const Center(
+                            child: Icon(
+                              Icons.check,
+                              color: Colors.white,
+                              size: 15,
+                            ),
+                          )
+                        : const Center(
+                            child: Icon(
+                              Icons.add,
+                              color: Colors.white,
+                              size: 15,
+                            ),
+                          ),
                   ),
                 ),
               ),

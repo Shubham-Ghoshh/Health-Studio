@@ -18,3 +18,15 @@ String getWeekday(int day) {
       return "";
   }
 }
+
+DateTime getDateFormat(String? date, {bool split = true}) {
+  if (date == null) {
+    return DateTime.now();
+  }
+  if (split) {
+    return DateTime.parse(
+        "${date.split('-')[2]}-${date.split('-')[1]}-${date.split('-')[0]}");
+  } else {
+    return DateTime.parse(date);
+  }
+}

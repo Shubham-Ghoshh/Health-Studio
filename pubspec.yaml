@@ -37,7 +37,16 @@ dependencies:
   sticky_headers: ^0.3.0+2
   # The following package is added to play Intro Video
   video_player: ^2.5.1
+  # The following package is added to implement Google Sign In
+  google_sign_in: ^5.4.3
+  # The following package is added to implement Share
   share_plus: ^6.3.0
+  # The following package is added to implement In App Webview for Payment
+  flutter_inappwebview: ^5.7.2+3
+  # The following package is added to get device info
+  device_info_plus: ^8.0.0
+  # The following package is added to implement FCM
+  firebase_messaging: ^14.2.1
 
 dev_dependencies:
   flutter_test:
