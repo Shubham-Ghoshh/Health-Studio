@@ -29,7 +29,7 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: bottomNavigationBar(),
+        // bottomNavigationBar: bottomNavigationBar(),
         body: GetBuilder<UserDashboardController>(
             init: UserDashboardController(),
             builder: (userDashboardController) {
@@ -324,21 +324,54 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                               shrinkWrap: true,
                                               scrollDirection: Axis.horizontal,
                                               children: List.generate(
-                                                7,
+                                                userDashboardController
+                                                        .userDashboard!
+                                                        .thisweek
+                                                        .length ??
+                                                    0,
                                                 (index) {
                                                   DateTime date = DateTime.now()
                                                       .add(Duration(
                                                           days: index));
                                                   return calenderWidget(
                                                       context,
-                                                      date.month.toString(),
-                                                      date.day.toString(),
-                                                      homeController
-                                                              .selectedDate
-                                                              .day ==
-                                                          date.day, () {
-                                                    // Get.to(() =>
-                                                    //     const SelectMenuPage());
+                                                      DateTime.parse(
+                                                              userDashboardController
+                                                                  .userDashboard!
+                                                                  .thisweek[
+                                                                      index]
+                                                                  .dateRequested)
+                                                          .month
+                                                          .toString(),
+                                                      DateTime.parse(
+                                                              userDashboardController
+                                                                  .userDashboard!
+                                                                  .thisweek[
+                                                                      index]
+                                                                  .dateRequested)
+                                                          .day
+                                                          .toString(),
+                                                      userDashboardController
+                                                              .userDashboard!
+                                                              .thisweek[index]
+                                                              .menuEn ==
+                                                          "NONE", () {
+                                                    userDashboardController
+                                                        .getPackageDetails(
+                                                      orderController
+                                                          .orderDetails!
+                                                          .categoryId,
+                                                      orderController
+                                                          .orderDetails!
+                                                          .packageId,
+                                                      userDashboardController
+                                                          .userDashboard!
+                                                          .thisweek[index]
+                                                          .dateRequested,
+                                                      userDashboardController
+                                                          .userDashboard!
+                                                          .thisweek[index],
+                                                    );
                                                   });
                                                 },
                                               ),
@@ -444,6 +477,9 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                           .userDashboard!
                                                           .nextweek[index]
                                                           .dateRequested,
+                                                      userDashboardController
+                                                          .userDashboard!
+                                                          .nextweek[index],
                                                     );
                                                   });
                                                 },

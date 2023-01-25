@@ -6,6 +6,7 @@ import 'package:health_studio_user/core/controllers/menu_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
 import 'package:health_studio_user/core/controllers/userDashboardController.dart';
 import 'package:health_studio_user/core/models/meal.dart';
+import 'package:health_studio_user/core/models/user_dashboard.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:get/get.dart';
@@ -15,11 +16,13 @@ class MealItem extends StatelessWidget {
   const MealItem({
     required this.meal,
     required this.height,
+    required this.item,
     Key? key,
   }) : super(key: key);
 
   final Meal meal;
   final double height;
+  final DashboardItem item;
 
   @override
   Widget build(BuildContext context) {
@@ -180,7 +183,10 @@ class MealItem extends StatelessWidget {
                                     Text(
                                         "Price: KD ${userDashboardController.price}"),
                                     LoginButton(
-                                      onTap: () {},
+                                      onTap: () {
+                                        userDashboardController
+                                            .getMealPaymentLink(meal, item);
+                                      },
                                       enabled: true,
                                       title: "Pay Now",
                                       height: 50,

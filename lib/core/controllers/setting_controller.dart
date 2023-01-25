@@ -11,6 +11,8 @@ import 'package:health_studio_user/core/request.dart';
 import 'package:health_studio_user/ui/screens/home_screen.dart';
 import 'package:health_studio_user/ui/screens/notification.dart';
 import 'package:health_studio_user/ui/widgets/loader.dart';
+import 'package:health_studio_user/utils/formatters.dart';
+import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,10 +23,10 @@ class SettingsController extends GetxController {
   void onInit() {
     super.onInit();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (Get.find<AuthController>().isLoggedIn) {
-        getUserDetails();
-        getUserSubscription();
-      }
+      // if (Get.find<AuthController>().isLoggedIn) {
+      //   getUserDetails();
+      //   getUserSubscription();
+      // }
 
       getAppVersion();
     });
@@ -116,6 +118,7 @@ class SettingsController extends GetxController {
   }
 
   Future<void> getUserDetails() async {
+    print("GET USER DETAILS");
     Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest("user/detail");
     Utility.closeDialog();
@@ -196,7 +199,9 @@ class SettingsController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
 
-    Get.offAll(() => HomePage());
+    Get.find<OrderController>().orderDetails = null;
+    Get.find<OrderController>().update();
+    Get.offAll(() => const HomePage());
     Get.find<AuthController>().isLoggedIn = false;
   }
 

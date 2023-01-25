@@ -16,10 +16,10 @@ class PaymentScreen extends StatefulWidget {
   final Function? onFinish;
   final String? url;
   final num? amount;
-  final bool isPrivate;
+  final bool isMeal;
 
   const PaymentScreen(
-      {Key? key, this.onFinish, this.url, this.isPrivate = false, this.amount})
+      {Key? key, this.onFinish, this.url, this.isMeal = false, this.amount})
       : super(key: key);
 
   @override
@@ -88,42 +88,36 @@ class PaymentScreenState extends State<PaymentScreen> {
             var uri = navigationAction.request.url!;
             print("URI ===${uri.toString()}");
             print(uri.queryParameters);
-            // print(await controller.getHtml());
 
-            // if (uri.toString() ==
-            //     "http://148.66.142.197/~healthstudioking/api/index.php?path=/knet") {
-            //   Get.find<OrderController>().getOrderDetails();
-            // }
             return NavigationActionPolicy.ALLOW;
-            // if (uri.toString().contains(successUrl)) {
-            //   var params = uri.queryParameters;
-            //   String txId = params['OrderID'] ?? '';
-            //   String tranID = params['PaymentID'] ?? '';
-            //   // updatePayment(txId, tranID);
-            //   return NavigationActionPolicy.CANCEL;
-            // } else if (uri.toString().contains(failedUrl)) {
-            //   // showFailedDialog('Sorry, We are getting error');
-            //   return NavigationActionPolicy.CANCEL;
-            // } else {
-            //   return NavigationActionPolicy.ALLOW;
-            // }
           },
           onLoadStop: (controller, uri) async {
             if (uri.toString() ==
                 "http://148.66.142.197/~healthstudioking/api/index.php?path=/knet") {
               var html = await controller.evaluateJavascript(
                   source: "window.document.body.innerText;");
-              print("HTML CONTENT\n");
               switch (html) {
                 case "captured":
                   {
-                    Get.find<OrderController>().getOrderDetails(status: html);
+                    if (widget.isMeal) {
+                      Get.back();
+                      Get.back();
+                      Get.rawSnackbar(message: "Payment Successful");
+                    } else {
+                      Get.find<OrderController>().getOrderDetails(status: html);
+                    }
                     break;
                   }
                 case "not captured":
                   {
-                    Get.find<OrderController>().getOrderDetails(status: html);
-                    break;
+                    if (widget.isMeal) {
+                      Get.back();
+                      Get.back();
+                      Get.rawSnackbar(message: "Payment Failed");
+                    } else {
+                      Get.find<OrderController>().getOrderDetails(status: html);
+                      break;
+                    }
                   }
               }
             }

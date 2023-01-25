@@ -23,7 +23,7 @@ class _FoodDetailPageState extends State<FoodDetailPage> {
   Widget build(BuildContext context) {
     return GetBuilder<MenuController>(builder: (menuController) {
       return Scaffold(
-        bottomNavigationBar: bottomNavigationBar(),
+        // bottomNavigationBar: bottomNavigationBar(),
         backgroundColor: Colors.blueAccent.shade400,
         body: Stack(
           children: [

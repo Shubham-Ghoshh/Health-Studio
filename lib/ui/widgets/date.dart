@@ -76,7 +76,7 @@ Widget calenderWidget(BuildContext context, String month, String day,
                     color: Color(0xffE84C4F),
                   ),
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: onTap,
                     icon: selected
                         ? const Center(
                             child: Icon(

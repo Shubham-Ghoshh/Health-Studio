@@ -4,9 +4,11 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
 import 'package:health_studio_user/ui/screens/authentication/sign_up_screen.dart';
+import 'package:health_studio_user/utils/constants.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class LoginPage extends StatelessWidget {
   final Function()? onSuccess;
@@ -128,15 +130,20 @@ class LoginPage extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.bottomRight,
                             child: GestureDetector(
-                              child: Text(
-                                AppLocalizations.of(context)!.forgot_password,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w400,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  await launchUrlString(forgotPasswordURL,
+                                      mode: LaunchMode.platformDefault);
+                                },
+                                child: Text(
+                                  AppLocalizations.of(context)!.forgot_password,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
                               ),
-                              onTap: () {},
                             ),
                           ),
                         ),

@@ -7,12 +7,15 @@ import 'package:health_studio_user/core/controllers/auth_controller.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
+import 'package:health_studio_user/core/controllers/setting_controller.dart';
+import 'package:health_studio_user/core/models/order.dart';
 import 'package:health_studio_user/core/models/plan.dart';
 import 'package:health_studio_user/ui/screens/address_screen.dart';
 import 'package:health_studio_user/ui/screens/authentication/login_screen.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
+import 'package:health_studio_user/utils/formatters.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -29,71 +32,69 @@ class _PlanScreenState extends State<PlanScreen> {
   Widget build(BuildContext context) {
     return GetBuilder<PlanController>(builder: (planController) {
       return Scaffold(
-          bottomNavigationBar: bottomNavigationBar(),
+          // bottomNavigationBar: bottomNavigationBar(),
           body: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/background.png"),
-                fit: BoxFit.fill,
-              ),
-            ),
-            child: SingleChildScrollView(
-              child: SafeArea(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/background.png"),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: SafeArea(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 242,
+                    // height: 57,
+                    child: Image.asset("assets/images/health_studio_logo.png"),
+                  ),
+                  Row(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: 242,
-                            // height: 57,
-                            child: Image.asset(
-                                "assets/images/health_studio_logo.png"),
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 22.0),
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: settingsBackground,
-                                  ),
-                                  child: SettingButton(),
-                                ),
-                              ),
-                              sizedBoxwidth8,
-                            ],
-                          ),
-                        ],
-                      ),
                       Padding(
-                        padding: edgeInsets22.copyWith(left: 16.w),
-                        child: GetBuilder<LanguageTogglerController>(
-                          builder: (languageController) => Text(
-                            languageController.isEnglish
-                                ? planController.selectedPlan!.titleEn
-                                : planController.selectedPlan!.titleAr,
-                            style: const TextStyle(
-                              color: Color(0xffFFFDFD),
-                              fontWeight: FontWeight.w600,
-                              fontSize: 28,
-                            ),
+                        padding: const EdgeInsets.only(bottom: 22.0),
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: settingsBackground,
                           ),
+                          child: SettingButton(),
                         ),
                       ),
-                      ...planController.packages
-                          .map(
-                            (e) => planItem(e),
-                          )
-                          .toList(),
-                      customplan(AppLocalizations.of(context)!.custom_plan, "3",
-                          "1", "1"),
-                    ]),
+                      sizedBoxwidth8,
+                    ],
+                  ),
+                ],
               ),
-            ),
-          ));
+              Padding(
+                padding: edgeInsets22.copyWith(left: 16.w),
+                child: GetBuilder<LanguageTogglerController>(
+                  builder: (languageController) => Text(
+                    languageController.isEnglish
+                        ? planController.selectedPlan!.titleEn
+                        : planController.selectedPlan!.titleAr,
+                    style: const TextStyle(
+                      color: Color(0xffFFFDFD),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 28,
+                    ),
+                  ),
+                ),
+              ),
+              ...planController.packages
+                  .map(
+                    (e) => planItem(e),
+                  )
+                  .toList(),
+              customplan(
+                  AppLocalizations.of(context)!.custom_plan, "3", "1", "1"),
+            ]),
+          ),
+        ),
+      ));
     });
   }
 
@@ -512,22 +513,46 @@ class _PlanScreenState extends State<PlanScreen> {
                 GestureDetector(
                   onTap: () {
                     if (Get.find<AuthController>().isLoggedIn) {
-                      Get.find<OrderController>().order.amount =
-                          Get.find<OrderController>().order.amount ??
-                              package.sevenDays;
-                      Get.find<OrderController>().order.packageId = package.id;
+                      OrderController orderController =
+                          Get.find<OrderController>();
+                      SettingsController settingsController =
+                          Get.find<SettingsController>();
+                      if (settingsController.userDetails != null) {
+                        if (settingsController.userDetails!.orderTo != null ||
+                            settingsController.userDetails!.orderTo != "") {
+                          orderController.order.startDate =
+                              DateFormat("dd-MM-yyyy").format(getDateFormat(
+                                  settingsController.userDetails!.orderTo,
+                                  split: false));
+                          orderController.firstDate = getDateFormat(
+                              settingsController.userDetails!.orderTo,
+                              split: false);
+                        } else {
+                          orderController.order.startDate =
+                              DateFormat("dd-MM-yyyy").format(
+                            DateTime.now().add(
+                              const Duration(days: 2),
+                            ),
+                          );
+                          orderController.firstDate = DateTime.now().add(
+                            const Duration(days: 2),
+                          );
+                        }
+                      }
+                      print("START DATE ${orderController.order.startDate}");
+                      orderController.order.amount =
+                          orderController.order.amount ?? package.sevenDays;
+                      orderController.order.packageId = package.id;
 
-                      Get.find<OrderController>().order.endDate =
-                          DateFormat("dd-MM-yyyy").format(DateTime.now().add(
-                              Duration(
-                                  days: Get.find<OrderController>().duration)));
-                      Get.find<OrderController>().order.meal =
-                          Get.find<OrderController>().meal;
-                      Get.find<OrderController>().order.breakfast =
-                          Get.find<OrderController>().breakfast;
-                      Get.find<OrderController>().order.snack =
-                          Get.find<OrderController>().snack;
-                      Get.find<OrderController>().order.isCustom =
+                      orderController.order.endDate = DateFormat("dd-MM-yyyy")
+                          .format(getDateFormat(
+                                  orderController.order.startDate!)
+                              .add(Duration(days: orderController.duration)));
+                      orderController.order.meal = orderController.meal;
+                      orderController.order.breakfast =
+                          orderController.breakfast;
+                      orderController.order.snack = orderController.snack;
+                      orderController.order.isCustom =
                           Get.find<PlanController>()
                                   .selectedPackage
                                   ?.isCustom ??

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/userDashboardController.dart';
+import 'package:health_studio_user/core/models/user_dashboard.dart';
 import 'package:health_studio_user/ui/screens/meal_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 
 class ChooseMeal extends StatelessWidget {
-  const ChooseMeal({Key? key}) : super(key: key);
+  final DashboardItem item;
+  const ChooseMeal({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,7 @@ class ChooseMeal extends StatelessWidget {
                         return MealItem(
                           meal: userDashboardController.meals[index],
                           height: 125,
+                          item: item,
                         );
                       },
                     ),

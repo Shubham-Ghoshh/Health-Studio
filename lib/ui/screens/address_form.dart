@@ -24,7 +24,7 @@ class _AddressFormState extends State<AddressForm> {
         init: AddressController(),
         builder: (addressController) {
           return Scaffold(
-            bottomNavigationBar: bottomNavigationBar(),
+            // bottomNavigationBar: bottomNavigationBar(),
             body: Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(

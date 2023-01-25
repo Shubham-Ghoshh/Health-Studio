@@ -44,7 +44,8 @@ class SplashController extends GetxController {
     if (value != null) {
       loggedIn = true;
       update();
-      Get.put(SettingsController(), permanent: true);
+      Get.find<SettingsController>().getUserSubscription();
+      Get.put(SettingsController()).getUserDetails();
     }
   }
 

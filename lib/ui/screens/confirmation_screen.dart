@@ -33,7 +33,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   Widget build(BuildContext context) {
     return GetBuilder<PlanController>(
       builder: (planController) => Scaffold(
-        bottomNavigationBar: bottomNavigationBar(),
+        // bottomNavigationBar: bottomNavigationBar(),
         backgroundColor: Colors.blueAccent.shade400,
         body: Stack(
           children: [
@@ -331,8 +331,8 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               DateTime? pickedDate = await showDatePicker(
                 context: context,
                 initialDate: getDateFormat(hintText),
-                firstDate: DateTime.now().add(const Duration(days: 2)),
-                lastDate: DateTime.now().add(const Duration(days: 31)),
+                firstDate: Get.find<OrderController>().firstDate!,
+                lastDate: DateTime.now().add(const Duration(days: 365)),
                 builder: (context, child) => Theme(
                     data: Theme.of(context).copyWith(
                         colorScheme: const ColorScheme.light(

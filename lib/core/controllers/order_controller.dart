@@ -12,13 +12,8 @@ class OrderController extends GetxController {
   String? url;
   String? orderReference;
   OrderDetails? orderDetails;
-  Order order = Order(
-    startDate: DateFormat("dd-MM-yyyy").format(
-      DateTime.now().add(
-        const Duration(days: 2),
-      ),
-    ),
-  );
+  Order order = Order();
+  DateTime? firstDate;
 
   String meal = "1";
   String breakfast = "1";

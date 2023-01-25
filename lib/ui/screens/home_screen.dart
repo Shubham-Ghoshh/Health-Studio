@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (homeController) {
       return Scaffold(
-        bottomNavigationBar: bottomNavigationBar(),
+        // bottomNavigationBar: bottomNavigationBar(),
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -65,29 +65,26 @@ class _HomePageState extends State<HomePage> {
                         Row(
                           children: [
                             GetBuilder<OrderController>(
-                                init: OrderController(),
                                 builder: (orderController) {
-                                  return Visibility(
-                                    visible:
-                                        orderController.orderDetails != null,
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: activeIconColor,
-                                      ),
-                                      child: IconButton(
-                                        onPressed: () {
-                                          Get.to(
-                                              () => const LoggedInHomePage());
-                                        },
-                                        icon: const Icon(
-                                          Icons.dining_outlined,
-                                          color: Colors.white,
-                                        ),
-                                      ),
+                              return Visibility(
+                                visible: orderController.orderDetails != null,
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: activeIconColor,
+                                  ),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Get.to(() => const LoggedInHomePage());
+                                    },
+                                    icon: const Icon(
+                                      Icons.dining_outlined,
+                                      color: Colors.white,
                                     ),
-                                  );
-                                }),
+                                  ),
+                                ),
+                              );
+                            }),
                             sizedBoxwidth8,
                             Container(
                               decoration: const BoxDecoration(

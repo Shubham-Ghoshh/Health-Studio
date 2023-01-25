@@ -32,7 +32,7 @@ class _AddressState extends State<Address> {
         init: AddressController(),
         builder: (addressController) {
           return Scaffold(
-            bottomNavigationBar: bottomNavigationBar(),
+            // bottomNavigationBar: bottomNavigationBar(),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
                 Get.to(() => AddressForm());
