@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "367018665293",
+    "project_id": "health-studio-5f0b9",
+    "storage_bucket": "health-studio-5f0b9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367018665293:android:3d74ed01cbecfa2adb4304",
+        "android_client_info": {
+          "package_name": "com.healthstudio.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367018665293-vp2kha03tjp7b27nhuio260pqdqdcc79.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.healthstudio.app",
+            "certificate_hash": "734debe10db76b0224b01eca435b7d8e4a388a7a"
+          }
+        },
+        {
+          "client_id": "367018665293-531g8uasgs5pv3dsu4t62k78phu0jcjt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxRmAjGKvuYDvXHA64Aiqpp_UkPm3kOo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "367018665293-531g8uasgs5pv3dsu4t62k78phu0jcjt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "367018665293-b7lrtldno3dr62ifqnb09f4e24pnmsc4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.healthstudio.app",
+                "app_store_id": "1539879242"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -51,7 +51,7 @@ class UserDashboardController extends GetxController {
       packageDetail =
           PackageDetail.fromJson(response["details"]["package"].first);
       update();
-      getMealsByDate(date);
+      await getMealsByDate(date);
       Get.to(() => SelectMenuPage(
             date: date,
             item: item,
@@ -108,12 +108,13 @@ class UserDashboardController extends GetxController {
     }
   }
 
-  void getMealsByDate(String date) async {
+  Future<void> getMealsByDate(String date) async {
     Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest("meals/$date");
     Utility.closeDialog();
     if (response["error"] != 0) {
       Get.rawSnackbar(message: response["message"]);
     } else {}
+    return;
   }
 }
