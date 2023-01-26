@@ -16,6 +16,8 @@ class AuthController extends GetxController {
   String? email;
   String? age;
   String? gender;
+  String? socialid;
+  String? type;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
   bool isValid = false;
@@ -91,6 +93,30 @@ class AuthController extends GetxController {
       "gender": gender,
     };
     Map<String, dynamic> response = await postRequest("register/", body);
+    Utility.closeDialog();
+    if (response["error"] != 0) {
+      Get.rawSnackbar(message: response["message"]);
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("auth_key", response["details"]?[0]?["auth_key"]);
+      onSuccess == null ? Get.offAll(() => const LoginPage()) : onSuccess();
+      Get.rawSnackbar(message: "Sign Up Successful! Please login.");
+    }
+  }
+
+  void registersocial({Function()? onSuccess}) async {
+    Utility.showLoadingDialog();
+    Map<String, dynamic> body = {
+      "mobile": mobile,
+      "password": password,
+      "name": name,
+      "email": email,
+      "age": age,
+      "gender": gender,
+      "social_id": socialid,
+      "type":type,
+    };
+    Map<String, dynamic> response = await postRequest("register/social", body);
     Utility.closeDialog();
     if (response["error"] != 0) {
       Get.rawSnackbar(message: response["message"]);

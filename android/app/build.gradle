@@ -53,6 +53,12 @@ android {
         versionName flutterVersionName
         multiDexEnabled true
     }
+    signingConfigs{
+        debug{
+            keyAlias 'androiddebugkey'
+        }
+
+    }
 
     buildTypes {
         release {
