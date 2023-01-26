@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
-import 'package:health_studio_user/core/models/googlesignin.dart';
 import 'package:health_studio_user/ui/screens/authentication/sign_up_screen.dart';
 import 'package:health_studio_user/utils/constants.dart';
 import 'package:health_studio_user/utils/spacing.dart';
@@ -158,16 +156,16 @@ class LoginPage extends StatelessWidget {
                           },
                         ),
                         sizedBoxHeight16,
-                        // Text(
-                        //   AppLocalizations.of(context)!.login_social_networks,
-                        //   textAlign: TextAlign.center,
-                        //   style: const TextStyle(
-                        //     color: Color(0xffFFFDFD),
-                        //     fontWeight: FontWeight.w400,
-                        //     fontSize: 14,
-                        //   ),
-                        // ),
-                        // sizedBoxHeight6,
+                        Text(
+                          AppLocalizations.of(context)!.login_social_networks,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Color(0xffFFFDFD),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                          ),
+                        ),
+                        sizedBoxHeight6,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -176,13 +174,7 @@ class LoginPage extends StatelessWidget {
                             // ),
                             GoogleLoginButton(
                               onTap: () async {
-                               
-                                final userinfo = await GoogleSignInApi.login();
-                                if (userinfo == null) {
-                                  Get.rawSnackbar(message: "Sign In Failed");
-                                } else {
-                                  Get.to(RegistrationPage(email: userinfo.email,name:userinfo.displayName));
-                                }
+                                authController.loginWithSocialAccount("google");
                               },
                             ),
                             // AppleLoginButton(

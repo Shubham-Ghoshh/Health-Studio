@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
-import 'package:health_studio_user/core/models/googlesignin.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/utils/buttons.dart';
@@ -11,9 +10,12 @@ import 'package:intl/intl.dart';
 
 class RegistrationPage extends StatefulWidget {
   final Function()? onSuccess;
-  final email;
-  final name;
-  const RegistrationPage({super.key, this.onSuccess, this.email, this.name});
+  final bool isSocial;
+  const RegistrationPage({
+    super.key,
+    this.onSuccess,
+    this.isSocial = false,
+  });
 
   @override
   State<RegistrationPage> createState() => _RegistrationPageState();
@@ -113,6 +115,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           sizedBoxHeight16,
                           TextFormField(
+                            initialValue: authController.mobile,
                             validator: ((value) {
                               if (value?.isEmpty ?? true) {
                                 return AppLocalizations.of(context)!
@@ -193,8 +196,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           sizedBoxHeight10,
                           TextFormField(
-                            enabled: widget.name == null ? true : false,
-                            initialValue: widget.name,
+                            initialValue: authController.name,
                             validator: (value) =>
                                 (value == null || value.isEmpty)
                                     ? "Full Name is required"
@@ -216,8 +218,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           sizedBoxHeight10,
                           TextFormField(
-                            enabled: widget.email == null ? true : false,
-                            initialValue: widget.email,
+                            initialValue: authController.email,
                             validator: validateEmail,
                             onChanged: (value) {
                               authController.email = value;
@@ -339,11 +340,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             title: "SIGN UP",
                             enabled: authController.isValid && passwordsMatch,
                             onTap: () {
-                              authController.signUp(
-                                  onSuccess: widget.onSuccess);
+                              if (widget.isSocial) {
+                                authController.registersocial(
+                                  onSuccess: widget.onSuccess,
+                                );
+                              } else {
+                                authController.signUp(
+                                  onSuccess: widget.onSuccess,
+                                );
+                              }
                             },
                           ),
-                         
                         ],
                       ),
                     ),

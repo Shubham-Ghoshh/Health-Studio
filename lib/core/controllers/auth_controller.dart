@@ -26,6 +26,7 @@ class AuthController extends GetxController {
     scopes: [
       'https://www.googleapis.com/auth/userinfo.email',
       'https://www.googleapis.com/auth/userinfo.profile',
+      'openid',
     ],
   );
 
@@ -114,7 +115,7 @@ class AuthController extends GetxController {
       "age": age,
       "gender": gender,
       "social_id": socialid,
-      "type":type,
+      "type": type,
     };
     Map<String, dynamic> response = await postRequest("register/social", body);
     Utility.closeDialog();
@@ -125,6 +126,61 @@ class AuthController extends GetxController {
       prefs.setString("auth_key", response["details"]?[0]?["auth_key"]);
       onSuccess == null ? Get.offAll(() => const LoginPage()) : onSuccess();
       Get.rawSnackbar(message: "Sign Up Successful! Please login.");
+    }
+  }
+
+  void loginWithSocialAccount(String type, {Function()? onSuccess}) async {
+    Utility.showLoadingDialog();
+
+    switch (type) {
+      case "google":
+        {
+          await disconnectGoogleAccount();
+          final userinfo = await googleSignIn.signIn();
+          if (userinfo == null) {
+            Utility.closeDialog();
+            Get.rawSnackbar(message: "Sign In Failed");
+          } else {
+            email = userinfo.email;
+            name = userinfo.displayName;
+            socialid = userinfo.id;
+            type = "GOOGLE";
+            bool accountExists = await loginSocialAPI();
+            if (!accountExists) {
+              Utility.closeDialog();
+              Get.to(() => RegistrationPage(onSuccess: onSuccess));
+            }
+          }
+          break;
+        }
+      default:
+        Utility.closeDialog();
+        break;
+    }
+  }
+
+  Future<bool> loginSocialAPI({Function()? onSuccess}) async {
+    Map<String, dynamic> body = {"email": email};
+    Map<String, dynamic> response = await postRequest("login/social", body);
+    if (response["details"][0]["continue_register"] == "0") {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("auth_key", response["details"]?[0]?["auth_key"]);
+      onSuccess == null ? Get.offAll(() => const HomePage()) : onSuccess();
+      isLoggedIn = true;
+      update();
+
+      Get.put(SettingsController()).getUserDetails();
+      Get.put(SettingsController()).getUserSubscription();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<void> disconnectGoogleAccount() async {
+    if (await googleSignIn.isSignedIn()) {
+      await googleSignIn.disconnect();
+      await googleSignIn.signOut();
     }
   }
 }
