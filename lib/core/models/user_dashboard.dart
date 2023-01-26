@@ -9,41 +9,37 @@ class UserDashboard {
 
   factory UserDashboard.fromJson(Map<String, dynamic> json) {
     return UserDashboard(
-      nextweek: json["nextweek"].map((e) => DashboardItem.fromJson(e)).toList(),
-      thisweek: json["thisweek"].map((e) => DashboardItem.fromJson(e)).toList(),
+      nextweek:
+          json["next"]["items"].map((e) => DashboardItem.fromJson(e)).toList(),
+      thisweek: json["current"]["items"]
+          .map((e) => DashboardItem.fromJson(e))
+          .toList(),
     );
   }
 }
 
+// {id: 112898, date: 2023-02-05, date_text: 05/02, status: 0, allow_edit: 1, dataAllow: 0, force: true}
+
 class DashboardItem {
   String id;
-  String customMenu;
-  String orderReference;
   String dateRequested;
-  String menuEn;
-  String menuAr;
-  String image;
-  List detailed;
+  String status;
+  String dateText;
+  String allowEdit;
 
   DashboardItem({
     required this.id,
-    required this.customMenu,
-    required this.orderReference,
     required this.dateRequested,
-    required this.menuAr,
-    required this.menuEn,
-    required this.image,
-    required this.detailed,
+    required this.status,
+    required this.dateText,
+    this.allowEdit = "0",
   });
 
   factory DashboardItem.fromJson(Map<String, dynamic> json) => DashboardItem(
         id: json["id"],
-        customMenu: json["custom_menu"],
-        orderReference: json["order_reference"],
-        dateRequested: json["date_requested"],
-        menuAr: json["menu_ar"],
-        menuEn: json["menu_en"],
-        image: json["image"],
-        detailed: json["detailed"],
+        dateRequested: json["date"],
+        status: json["status"],
+        dateText: json["date_text"],
+        allowEdit: json["allow_edit"],
       );
 }

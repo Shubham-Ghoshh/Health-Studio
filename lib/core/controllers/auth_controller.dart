@@ -8,6 +8,7 @@ import 'package:health_studio_user/ui/screens/home_screen.dart';
 import 'package:health_studio_user/ui/widgets/loader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthController extends GetxController {
   String? mobile;
@@ -150,6 +151,49 @@ class AuthController extends GetxController {
               Utility.closeDialog();
               Get.to(() => RegistrationPage(onSuccess: onSuccess));
             }
+          }
+          break;
+        }
+      case "apple":
+        {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+
+          try {
+            AuthorizationCredentialAppleID credential =
+                await SignInWithApple.getAppleIDCredential(
+              scopes: [
+                AppleIDAuthorizationScopes.email,
+                AppleIDAuthorizationScopes.fullName,
+              ],
+            );
+            print("CREDENTIAL!!! $credential");
+            print("EMAIL");
+            print(credential.email);
+
+            if (credential.email != null) {
+              print("EMAIL IS NOT NULL");
+              prefs.setString("apple-id", credential.authorizationCode);
+              prefs.setString("apple-email", credential.email ?? "");
+              prefs.setString("apple-name",
+                  "${credential.givenName ?? ""} ${credential.familyName ?? ""}");
+              email = credential.email;
+              name =
+                  "${credential.givenName ?? ""} ${credential.familyName ?? ""}";
+            } else {
+              email = prefs.getString("apple-email");
+              name = prefs.getString("apple-name");
+            }
+
+            socialid = credential.authorizationCode;
+            type = "APPLE";
+            bool accountExists = await loginSocialAPI();
+            if (!accountExists) {
+              Utility.closeDialog();
+              Get.to(() => RegistrationPage(onSuccess: onSuccess));
+            }
+          } catch (e) {
+            Utility.closeDialog();
+            Get.rawSnackbar(message: "Sign In Failed");
           }
           break;
         }

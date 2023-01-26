@@ -9,6 +9,7 @@ import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 
 class SelectMenuPage extends StatelessWidget {
+  final bool allowEdit;
   final bool showSaveButton;
   final String date;
   final DashboardItem item;
@@ -17,6 +18,7 @@ class SelectMenuPage extends StatelessWidget {
     required this.date,
     required this.item,
     this.showSaveButton = true,
+    this.allowEdit = true,
   });
 
   @override
@@ -67,14 +69,23 @@ class SelectMenuPage extends StatelessWidget {
                                 0,
                             (index) {
                               int mealIndex = userDashboardController.mealItems
-                                  .indexWhere((e) => e.key == "meal");
+                                  .indexWhere((e) => e?.key == "meal");
                               int length = userDashboardController
-                                  .mealItems[mealIndex].items.length;
+                                      .mealItems[mealIndex]?.items.length ??
+                                  0;
 
                               String title = length > index
-                                  ? userDashboardController.mealItems[mealIndex]
-                                      .items[index].meal.nameEn
-                                  : "Choose a meal";
+                                  ? (userDashboardController
+                                          .mealItems[mealIndex]
+                                          ?.items[index]
+                                          ?.meal
+                                          ?.nameEn) ??
+                                      (!allowEdit
+                                          ? "Meal Selected"
+                                          : "Choose a meal")
+                                  : !allowEdit
+                                      ? "Meal Selected"
+                                      : "Choose a meal";
 
                               return Column(
                                 key: Key(index.toString()),
@@ -85,6 +96,8 @@ class SelectMenuPage extends StatelessWidget {
                                     "meal",
                                     date,
                                     item,
+                                    allowEdit: allowEdit,
+                                    itemIndex: index,
                                   ),
                                   const Divider(
                                     color: Color.fromARGB(95, 0, 0, 0),
@@ -104,18 +117,31 @@ class SelectMenuPage extends StatelessWidget {
                                       .packageDetail!.snack) ??
                                   0, (index) {
                             int snackIndex = userDashboardController.mealItems
-                                .indexWhere((e) => e.key == "snack");
+                                .indexWhere((e) => e?.key == "snack");
                             int length = userDashboardController
-                                .mealItems[snackIndex].items.length;
+                                    .mealItems[snackIndex]?.items.length ??
+                                0;
 
                             String title = length > index
-                                ? userDashboardController.mealItems[snackIndex]
-                                    .items[index].meal.nameEn
-                                : "Choose a meal";
+                                ? (userDashboardController.mealItems[snackIndex]
+                                        ?.items[index]?.meal?.nameEn) ??
+                                    (!allowEdit
+                                        ? "Meal Selected"
+                                        : "Choose a meal")
+                                : !allowEdit
+                                    ? "Meal Selected"
+                                    : "Choose a meal";
                             return Column(
                               children: [
-                                selectMealBoxText("Snack ${index + 1}", title,
-                                    "snack", date, item),
+                                selectMealBoxText(
+                                  "Snack ${index + 1}",
+                                  title,
+                                  "snack",
+                                  date,
+                                  item,
+                                  allowEdit: allowEdit,
+                                  itemIndex: index,
+                                ),
                                 const Divider(
                                   color: Color.fromARGB(95, 0, 0, 0),
                                 ),
@@ -135,17 +161,25 @@ class SelectMenuPage extends StatelessWidget {
                             (index) {
                               int breakfastIndex = userDashboardController
                                   .mealItems
-                                  .indexWhere((e) => e.key == "breakfast");
+                                  .indexWhere((e) => e?.key == "breakfast");
                               int length = userDashboardController
-                                  .mealItems[breakfastIndex].items.length;
+                                      .mealItems[breakfastIndex]
+                                      ?.items
+                                      .length ??
+                                  0;
 
                               String title = length > index
-                                  ? userDashboardController
-                                      .mealItems[breakfastIndex]
-                                      .items[index]
-                                      .meal
-                                      .nameEn
-                                  : "Choose a meal";
+                                  ? (userDashboardController
+                                          .mealItems[breakfastIndex]
+                                          ?.items[index]
+                                          ?.meal
+                                          ?.nameEn) ??
+                                      (!allowEdit
+                                          ? "Meal Selected"
+                                          : "Choose a meal")
+                                  : !allowEdit
+                                      ? "Meal Selected"
+                                      : "Choose a meal";
                               return Column(
                                 children: [
                                   selectMealBoxText(
@@ -154,6 +188,8 @@ class SelectMenuPage extends StatelessWidget {
                                     "breakfast",
                                     date,
                                     item,
+                                    allowEdit: allowEdit,
+                                    itemIndex: index,
                                   ),
                                   const Divider(
                                     color: Color.fromARGB(95, 0, 0, 0),
@@ -170,12 +206,15 @@ class SelectMenuPage extends StatelessWidget {
                             onTap: () {
                               userDashboardController.getMealPaymentLink(item);
                             },
-                            enabled: !(userDashboardController
-                                    .mealItems[0].items.isEmpty ||
-                                userDashboardController
-                                    .mealItems[1].items.isEmpty ||
-                                userDashboardController
-                                    .mealItems[2].items.isEmpty),
+                            enabled: !((userDashboardController
+                                        .mealItems[0]?.items.isEmpty ??
+                                    true) ||
+                                (userDashboardController
+                                        .mealItems[1]?.items.isEmpty ??
+                                    true) ||
+                                (userDashboardController
+                                        .mealItems[2]?.items.isEmpty ??
+                                    true)),
                             title: "Save All",
                             height: 50,
                           ),
@@ -287,18 +326,16 @@ class SelectMenuPage extends StatelessWidget {
     );
   }
 
-  Widget selectMealBoxText(
-    String mealNumber,
-    String mealName,
-    String type,
-    String date,
-    DashboardItem item,
-  ) {
+  Widget selectMealBoxText(String mealNumber, String mealName, String type,
+      String date, DashboardItem item,
+      {bool allowEdit = true, int itemIndex = 0}) {
     return GestureDetector(
-      onTap: () {
-        Get.find<UserDashboardController>()
-            .getMenuByTypeAndDate(type, date, item);
-      },
+      onTap: allowEdit
+          ? () {
+              Get.find<UserDashboardController>()
+                  .getMenuByTypeAndDate(type, date, item, itemIndex: itemIndex);
+            }
+          : null,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -313,43 +350,27 @@ class SelectMenuPage extends StatelessWidget {
               ),
             ),
           ),
-          Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    mealName,
-                    style: TextStyle(
-                      color: const Color(0xff0A0909),
-                      fontWeight: FontWeight.w400,
-                      fontSize: 13.sp,
-                    ),
-                  ),
-                  Visibility(
-                    visible: item.menuEn == "RANDOM MENU",
-                    child: Text(
-                      "Set Random By System",
-                      style: TextStyle(
-                        color: const Color(0xffC19C7D),
-                        fontWeight: FontWeight.w400,
-                        fontSize: 10.sp,
-                      ),
-                    ),
-                  ),
-                ],
+          const Spacer(),
+          Flexible(
+            fit: FlexFit.tight,
+            child: Text(
+              mealName,
+              style: TextStyle(
+                color: const Color(0xff0A0909),
+                fontWeight: FontWeight.w400,
+                fontSize: 13.sp,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Get.find<UserDashboardController>()
-                        .getMenuByTypeAndDate(type, date, item);
-                  },
-                  child: const Icon(Icons.arrow_forward_ios_sharp),
-                ),
-              ),
-            ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: GestureDetector(
+              onTap: () {
+                Get.find<UserDashboardController>()
+                    .getMenuByTypeAndDate(type, date, item);
+              },
+              child: const Icon(Icons.arrow_forward_ios_sharp),
+            ),
           ),
         ],
       ),

@@ -9,9 +9,11 @@ import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 
 class ChooseMeal extends StatelessWidget {
+  final int itemIndex;
   final DashboardItem item;
   final String type;
-  const ChooseMeal({Key? key, required this.item, required this.type})
+  const ChooseMeal(
+      {Key? key, required this.item, required this.type, this.itemIndex = 0})
       : super(key: key);
 
   @override
@@ -57,6 +59,7 @@ class ChooseMeal extends StatelessWidget {
                           height: 125,
                           item: item,
                           type: type,
+                          itemIndex: itemIndex,
                         );
                       },
                     ),

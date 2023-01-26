@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:io' show Platform;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
@@ -177,9 +178,14 @@ class LoginPage extends StatelessWidget {
                                 authController.loginWithSocialAccount("google");
                               },
                             ),
-                            // AppleLoginButton(
-                            //   onTap: () async {},
-                            // ),
+                            Platform.isIOS
+                                ? AppleLoginButton(
+                                    onTap: () async {
+                                      authController
+                                          .loginWithSocialAccount("apple");
+                                    },
+                                  )
+                                : const SizedBox(),
                           ],
                         ),
                         const Spacer(),

@@ -170,14 +170,16 @@ class _HomePageState extends State<HomePage> {
                             (index) {
                               DateTime date =
                                   DateTime.now().add(Duration(days: index));
-                              return dateWidget(
-                                  context,
-                                  getWeekday(date.weekday),
-                                  date.day.toString(),
-                                  homeController.selectedDate.day == date.day,
-                                  () {
-                                homeController.selectDate(date);
-                              });
+                              return date.weekday == 5
+                                  ? const SizedBox()
+                                  : dateWidget(
+                                      context,
+                                      getWeekday(date.weekday),
+                                      date.day.toString(),
+                                      homeController.selectedDate.day ==
+                                          date.day, () {
+                                      homeController.selectDate(date);
+                                    });
                             },
                           ),
                         ),

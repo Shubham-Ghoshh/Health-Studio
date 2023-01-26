@@ -22,7 +22,7 @@ class UserDashboardController extends GetxController {
   DashboardItem? selectedDashboardItem;
   String carbValue = "0";
   String proteinValue = "0";
-  List<MealItem> mealItems = [];
+  List<MealItem?> mealItems = [];
 
   @override
   void onInit() {
@@ -34,7 +34,7 @@ class UserDashboardController extends GetxController {
 
   void getUserDashboard() async {
     Utility.showLoadingDialog();
-    Map<String, dynamic> response = await getRequest("user/dashboard");
+    Map<String, dynamic> response = await getRequest("home");
     Utility.closeDialog();
     if (response["error"] != 0) {
       Get.rawSnackbar(message: response["message"]);
@@ -45,7 +45,8 @@ class UserDashboardController extends GetxController {
   }
 
   void getPackageDetails(
-      String planId, String? packageId, String date, DashboardItem item) async {
+      String planId, String? packageId, String date, DashboardItem item,
+      {bool allowEdit = true}) async {
     Utility.showLoadingDialog();
     Map<String, dynamic> response =
         await getRequest("package-detail/$planId/$packageId");
@@ -55,15 +56,16 @@ class UserDashboardController extends GetxController {
     } else {
       packageDetail =
           PackageDetail.fromJson(response["details"]["package"].first);
+
       update();
-      await getMealsByDate(date);
+      await getMealsByDate(date, allowEdit: allowEdit);
       selectedDashboardItem = item;
       update();
     }
   }
 
-  void getMenuByTypeAndDate(
-      String type, String date, DashboardItem item) async {
+  void getMenuByTypeAndDate(String type, String date, DashboardItem item,
+      {int itemIndex = 0}) async {
     Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest("choose/$type/$date");
     Utility.closeDialog();
@@ -75,6 +77,7 @@ class UserDashboardController extends GetxController {
       Get.to(() => ChooseMeal(
             item: item,
             type: type,
+            itemIndex: itemIndex,
           ));
       update();
     }
@@ -89,23 +92,19 @@ class UserDashboardController extends GetxController {
     update();
   }
 
-  void saveMeal(
-    Meal meal,
-    DashboardItem item,
-    String mealType,
-  ) {
-    int index = mealItems.indexWhere((m) => m.key == mealType);
+  void saveMeal(Meal meal, DashboardItem item, String mealType,
+      {int itemIndex = 0}) {
+    print("ITEM INDEX $itemIndex");
+    int index = mealItems.indexWhere((m) => m?.key == mealType);
     if (index != -1) {
-      mealItems[index].items.add(
-            Item(
-              id: meal.id,
-              price: price,
-              note: note,
-              meal: meal,
-              carb: carbValue,
-              protein: proteinValue,
-            ),
-          );
+      mealItems[index]?.items[itemIndex] = Item(
+        id: meal.id,
+        price: price,
+        note: note,
+        meal: meal,
+        carb: carbValue,
+        protein: proteinValue,
+      );
 
       carbValue = "0";
       proteinValue = "0";
@@ -129,10 +128,10 @@ class UserDashboardController extends GetxController {
     int tempProteinValue = 0;
 
     for (int i = 0; i < mealItems.length; i++) {
-      for (int j = 0; j < mealItems[i].items.length; j++) {
-        tempPrice += int.tryParse(mealItems[i].items[j].price) ?? 0;
-        tempCarbValue += int.tryParse(mealItems[i].items[j].carb) ?? 0;
-        tempProteinValue += int.tryParse(mealItems[i].items[j].protein) ?? 0;
+      for (int j = 0; j < (mealItems[i]?.items.length ?? 0); j++) {
+        tempPrice += int.tryParse(mealItems[i]?.items[j].price) ?? 0;
+        tempCarbValue += int.tryParse(mealItems[i]?.items[j].carb) ?? 0;
+        tempProteinValue += int.tryParse(mealItems[i]?.items[j].protein) ?? 0;
       }
     }
 
@@ -161,7 +160,7 @@ class UserDashboardController extends GetxController {
     }
   }
 
-  Future<void> getMealsByDate(String date) async {
+  Future<void> getMealsByDate(String date, {bool allowEdit = true}) async {
     Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest("meals/$date");
     Utility.closeDialog();
@@ -173,13 +172,30 @@ class UserDashboardController extends GetxController {
           (e) => MealItem.fromJson(e),
         ),
       );
+      if (allowEdit) {
+        if (mealItems[0]!.items.isEmpty) {
+          mealItems.firstWhere((e) => e?.key == "meal")?.items = List.generate(
+              int.tryParse(packageDetail!.meal) ?? 0, (idx) => null);
+        }
+        if (mealItems[1]!.items.isEmpty) {
+          mealItems.firstWhere((e) => e?.key == "snack")?.items = List.generate(
+              int.tryParse(packageDetail!.snack) ?? 0, (idx) => null);
+        }
+        if (mealItems[2]!.items.isEmpty) {
+          mealItems.firstWhere((e) => e?.key == "breakfast")?.items =
+              List.generate(
+                  int.tryParse(packageDetail!.breakfast) ?? 0, (idx) => null);
+        }
+      }
       update();
       Get.to(() => SelectMenuPage(
+            allowEdit: allowEdit,
             date: date,
             item: selectedDashboardItem!,
-            showSaveButton: mealItems[0].items.isEmpty ||
-                mealItems[1].items.isEmpty ||
-                mealItems[2].items.isEmpty,
+            showSaveButton: (mealItems[0]!.items.isEmpty ||
+                    mealItems[1]!.items.isEmpty ||
+                    mealItems[2]!.items.isEmpty) ||
+                allowEdit,
           ));
     }
     return;
@@ -191,15 +207,16 @@ class UserDashboardController extends GetxController {
     Utility.showLoadingDialog();
     Map<String, dynamic> body = {};
     for (int i = 0; i < mealItems.length; i++) {
-      body.addAll(
-          {mealItems[i].key: mealItems[i].items.map((e) => e.id).join(",")});
-      for (int j = 0; j < mealItems[i].items.length; j++) {
+      body.addAll({
+        mealItems[i]?.key ?? "": mealItems[i]?.items.map((e) => e.id).join(",")
+      });
+      for (int j = 0; j < (mealItems[i]?.items.length ?? 0); j++) {
         body.addAll(
-            {"note_${mealItems[i].items[j].id}": mealItems[i].items[j].note});
+            {"note_${mealItems[i]?.items[j].id}": mealItems[i]?.items[j].note});
       }
     }
     mealItems.map((e) => body.addAll({
-          e.key: e.items.map((e) => e.id).join(","),
+          e?.key ?? "": e?.items.map((e) => e.id).join(","),
         }));
     print(body);
     Map<String, dynamic> response = await postRequest(

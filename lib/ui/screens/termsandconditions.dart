@@ -82,15 +82,20 @@ class TermsandConditions extends StatelessWidget {
                       '1.  An important “note” that the subscription will start and be activated 3 working days after payment “or the appropriate date is specified in the application.\n2.  In subscribing to a promotion or offer, the subscriber who wishes to cancel his or her subscription will not entitled to a refund. Cancellations refunds made under the following instances will be  computed as follows:\na- In the event of cancellation in the first week of the subscription start date, a full week will be deducted from the subscription value plus 25 Kuwaiti dinars cancellation fees\nb- In the event that 14 days have passed since the start of the subscription, the customer is not entitled to cancel or refund the subscription value\nc- The customer has the right to stop the subscription when necessary once a month for a continuous week and refer to the administration for approval to stop the subscription.\n3.  Meat and Fish are served alternately for 3 days a week, and shrimp is served once a week\n4.  Any change to the diet schedule from will be effected after 3 days.\n5.  Some meals may contain allergens. Customers are strongly advised to choose their meals according to their requirements.\n6.  Subscription meals are delivered everyday between 8:00AM until 3:00PM at no exact time.  Meals delivered on the day are intended for next day consumption. There is no delivery schedule every Friday.\n'),
                 ),
                 showAddress
-                    ? LoginButton(
-                        enabled: true,
-                        height: 50,
-                        onTap: () {
-                          Get.to(() => const Address(
-                                check: true,
-                              ));
-                        },
-                        title: "Accept",
+                    ? Column(
+                        children: [
+                          LoginButton(
+                            enabled: true,
+                            height: 50,
+                            onTap: () {
+                              Get.to(() => const Address(
+                                    check: true,
+                                  ));
+                            },
+                            title: "Accept",
+                          ),
+                          sizedBoxHeight16,
+                        ],
                       )
                     : const SizedBox(),
               ],

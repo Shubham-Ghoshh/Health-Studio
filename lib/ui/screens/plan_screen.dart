@@ -27,7 +27,6 @@ class PlanScreen extends StatefulWidget {
 }
 
 class _PlanScreenState extends State<PlanScreen> {
-  List<String> items = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
   String selectedItem = '1';
   @override
   Widget build(BuildContext context) {
@@ -482,7 +481,10 @@ class _PlanScreenState extends State<PlanScreen> {
 
                             Column(
                               children: [
-                                SvgPicture.asset('assets/images/protein.svg'),
+                                SvgPicture.asset(
+                                  'assets/images/protein.svg',
+                                  height: 25.h,
+                                ),
                                 sizedBoxHeight6,
                                 Text(
                                   package.attributes
@@ -842,9 +844,9 @@ class MealWidget extends StatefulWidget {
 }
 
 class _MealWidgetState extends State<MealWidget> {
-  List<String> meals = ['1', '2', '3', '4', '5'];
-  List<String> snacks = ['1', '2', '3', '4', '5'];
-  List<String> breakfast = ['1', '2', '3', '4', '5'];
+  List<String> meals = ['0', '1', '2', '3', '4', '5'];
+  List<String> snacks = ['0', '1', '2', '3', '4', '5'];
+  List<String> breakfast = ['0', '1', '2', '3', '4', '5'];
   @override
   Widget build(BuildContext context) {
     return GetBuilder<OrderController>(builder: (orderController) {

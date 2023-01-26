@@ -133,6 +133,7 @@ class PaymentScreenState extends State<PaymentScreen> {
             }
           },
           onLoadError: (controller, url, code, message) {
+            print("ERROR!! $url $code  $message");
             Get.back();
             Get.rawSnackbar(message: "Unable to make payment at this time");
           },

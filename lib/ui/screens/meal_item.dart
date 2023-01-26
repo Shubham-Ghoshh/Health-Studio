@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/controllers/menu_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
@@ -19,6 +17,7 @@ class MealItem extends StatelessWidget {
     required this.height,
     required this.item,
     required this.type,
+    this.itemIndex = 0,
     Key? key,
   }) : super(key: key);
 
@@ -26,6 +25,7 @@ class MealItem extends StatelessWidget {
   final double height;
   final DashboardItem item;
   final String type;
+  final int itemIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -156,41 +156,6 @@ class MealItem extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        // Expanded(
-                                        //   child: TextFormField(
-                                        //     initialValue:
-                                        //         userDashboardController
-                                        //             .carbValue,
-                                        //     inputFormatters: [
-                                        //       LengthLimitingTextInputFormatter(
-                                        //           1),
-                                        //     ],
-                                        //     keyboardType: TextInputType.number,
-                                        //     cursorColor: Colors.black,
-                                        //     style: Theme.of(context)
-                                        //         .textTheme
-                                        //         .headline1,
-                                        //     decoration: InputDecoration(
-                                        //       contentPadding: edgeInsets16,
-                                        //       hintText: "1 to 5",
-                                        //       filled: true,
-                                        //     ),
-                                        //     onChanged: (val) {
-                                        //       userDashboardController
-                                        //           .carbValue = val;
-                                        //       userDashboardController.update();
-                                        //       userDashboardController
-                                        //           .calculateMealPrice(
-                                        //         Get.find<PlanController>()
-                                        //             .planDetail!
-                                        //             .carbPrice!,
-                                        //         Get.find<PlanController>()
-                                        //             .planDetail!
-                                        //             .proteinPrice!,
-                                        //       );
-                                        //     },
-                                        //   ),
-                                        // ),
                                       ],
                                     ),
                                     sizedBoxHeight16,
@@ -207,7 +172,7 @@ class MealItem extends StatelessWidget {
                                         Container(
                                           height: 50,
                                           width: 80,
-                                          color: Color.fromARGB(
+                                          color: const Color.fromARGB(
                                               150, 255, 255, 255),
                                           child: Center(
                                             child: DropdownButton<String>(
@@ -254,41 +219,6 @@ class MealItem extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        // Expanded(
-                                        //   child: TextFormField(
-                                        //     initialValue:
-                                        //         userDashboardController
-                                        //             .proteinValue,
-                                        //     inputFormatters: [
-                                        //       LengthLimitingTextInputFormatter(
-                                        //           1),
-                                        //     ],
-                                        //     keyboardType: TextInputType.number,
-                                        //     cursorColor: Colors.black,
-                                        //     style: Theme.of(context)
-                                        //         .textTheme
-                                        //         .headline1,
-                                        //     decoration: InputDecoration(
-                                        //       contentPadding: edgeInsets16,
-                                        //       hintText: "1 to 5",
-                                        //       filled: true,
-                                        //     ),
-                                        //     onChanged: (val) {
-                                        //       userDashboardController
-                                        //           .proteinValue = val;
-                                        //       userDashboardController.update();
-                                        //       userDashboardController
-                                        //           .calculateMealPrice(
-                                        //         Get.find<PlanController>()
-                                        //             .planDetail!
-                                        //             .carbPrice!,
-                                        //         Get.find<PlanController>()
-                                        //             .planDetail!
-                                        //             .proteinPrice!,
-                                        //       );
-                                        //     },
-                                        //   ),
-                                        // ),
                                       ],
                                     ),
                                     const Spacer(),
@@ -297,13 +227,11 @@ class MealItem extends StatelessWidget {
                                     LoginButton(
                                       onTap: () {
                                         userDashboardController.saveMeal(
-                                            meal, item, type);
-                                        // userDashboardController
-                                        //     .getMealPaymentLink(
-                                        //   meal,
-                                        //   item,
-                                        //   type,
-                                        // );
+                                          meal,
+                                          item,
+                                          type,
+                                          itemIndex: itemIndex,
+                                        );
                                       },
                                       enabled: true,
                                       title: "Save",
