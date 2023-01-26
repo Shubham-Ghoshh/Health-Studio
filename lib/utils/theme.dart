@@ -4,6 +4,7 @@ import 'package:health_studio_user/utils/colors.dart';
 
 ThemeData themeData() {
   return ThemeData(
+    appBarTheme: const AppBarTheme(color: plantextColor),
     fontFamily: "Poppins",
     textTheme: TextTheme(
       bodyText1: TextStyle(

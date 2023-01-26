@@ -67,3 +67,14 @@ Row appbarWithSetting() {
     ],
   );
 }
+
+AppBar customAppBar() {
+  return AppBar(
+    elevation: 0,
+    title: SizedBox(
+      width: 242,
+      // height: 57,
+      child: Image.asset("assets/images/health_studio_logo.png"),
+    ),
+  );
+}

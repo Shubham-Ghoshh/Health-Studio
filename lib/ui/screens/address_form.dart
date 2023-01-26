@@ -52,202 +52,201 @@ class _AddressFormState extends State<AddressForm> {
                       ),
                       sizedBoxHeight10,
                       Form(
-                          onChanged: () {
-                            if (addressController.addressKey.currentState
-                                    ?.validate() ??
-                                false) {
-                              if (addressController.city != null) {
-                                addressController.isValid = true;
-                                addressController.update();
-                              }
-                            } else {
-                              addressController.isValid = false;
+                        onChanged: () {
+                          if (addressController.addressKey.currentState
+                                  ?.validate() ??
+                              false) {
+                            if (addressController.city != null) {
+                              addressController.isValid = true;
                               addressController.update();
                             }
-                          },
-                          key: addressController.addressKey,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 14),
-                                child: TextFormField(
-                                  onChanged: (value) {
-                                    addressController.name = value;
-                                  },
-                                  cursorColor: Colors.black,
-                                  style: Theme.of(context).textTheme.headline1,
-                                  decoration: InputDecoration(
-                                    contentPadding: edgeInsets16,
-                                    hintText: AppLocalizations.of(context)!
-                                        .address_name,
-                                  ),
-                                  validator: (value) =>
-                                      (value == null || value.isEmpty)
-                                          ? "Name is required"
-                                          : null,
-                                ),
-                              ),
-                              sizedBoxHeight10,
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 14),
-                                child: TextFormField(
-                                  validator: (value) =>
-                                      (value == null || value.isEmpty)
-                                          ? "Block number is required"
-                                          : null,
-                                  onChanged: (value) {
-                                    addressController.block = value;
-                                  },
-                                  cursorColor: Colors.black,
-                                  style: Theme.of(context).textTheme.headline1,
-                                  decoration: InputDecoration(
-                                    contentPadding: edgeInsets16,
-                                    hintText: AppLocalizations.of(context)!
-                                        .block_number,
-                                  ),
-                                ),
-                              ),
-                              sizedBoxHeight10,
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 14),
-                                child: TextFormField(
-                                  validator: (value) =>
-                                      (value == null || value.isEmpty)
-                                          ? "Street number is required"
-                                          : null,
-                                  onChanged: (value) {
-                                    addressController.street = value;
-                                  },
-                                  cursorColor: Colors.black,
-                                  style: Theme.of(context).textTheme.headline1,
-                                  decoration: InputDecoration(
-                                    contentPadding: edgeInsets16,
-                                    hintText: AppLocalizations.of(context)!
-                                        .street_number,
-                                  ),
-                                ),
-                              ),
-                              sizedBoxHeight10,
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 14),
-                                child: TextFormField(
-                                  validator: (value) =>
-                                      (value == null || value.isEmpty)
-                                          ? "House number is required"
-                                          : null,
-                                  onChanged: (value) {
-                                    addressController.housenumber = value;
-                                  },
-                                  cursorColor: Colors.black,
-                                  style: Theme.of(context).textTheme.headline1,
-                                  decoration: InputDecoration(
-                                    hintText:
-                                        AppLocalizations.of(context)!.house_no,
-                                    contentPadding: edgeInsets16,
-                                  ),
-                                ),
-                              ),
-                              sizedBoxHeight10,
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 14),
-                                child: TextFormField(
-                                  onChanged: (value) {
-                                    addressController.paci = value;
-                                  },
-                                  cursorColor: Colors.black,
-                                  style: Theme.of(context).textTheme.headline1,
-                                  decoration: InputDecoration(
-                                    hintText:
-                                        AppLocalizations.of(context)!.paci_no,
-                                    contentPadding: edgeInsets16,
-                                  ),
-                                ),
-                              ),
-                              sizedBoxHeight10,
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 14),
-                                child: TextFormField(
-                                  onChanged: (value) {
-                                    addressController.floornumber = value;
-                                  },
-                                  cursorColor: Colors.black,
-                                  style: Theme.of(context).textTheme.headline1,
-                                  decoration: InputDecoration(
-                                    hintText:
-                                        AppLocalizations.of(context)!.floor_no,
-                                    contentPadding: edgeInsets16,
-                                  ),
-                                ),
-                              ),
-                              sizedBoxHeight10,
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 14),
-                                child: TextFormField(
-                                  onChanged: (value) {
-                                    addressController.avenue = value;
-                                  },
-                                  cursorColor: Colors.black,
-                                  style: Theme.of(context).textTheme.headline1,
-                                  decoration: InputDecoration(
-                                    contentPadding: edgeInsets16,
-                                    hintText:
-                                        AppLocalizations.of(context)!.avenue,
-                                  ),
-                                ),
-                              ),
-                              sizedBoxHeight10,
-                              Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 14),
-                                  child: bottomwidget(context)),
-                              sizedBoxHeight10,
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 14),
-                                child: TextFormField(
-                                  validator: (value) =>
-                                      (value == null || value.isEmpty)
-                                          ? "Detailed Address is required"
-                                          : null,
-                                  onChanged: (value) {
-                                    addressController.detailaddress = value;
-                                  },
-                                  cursorColor: Colors.black,
-                                  maxLines: 5,
-                                  style: Theme.of(context).textTheme.headline1,
-                                  decoration: InputDecoration(
-                                    contentPadding: edgeInsets16,
-                                    hintText: AppLocalizations.of(context)!
-                                        .deatil_address,
-                                  ),
-                                ),
-                              ),
-                              sizedBoxHeight10,
-                              LoginButton(
-                                height: 50.h,
-                                onTap: () {
-                                  addressController.addAddress();
-                                  addressController.initialvalue = "Area/city";
+                          } else {
+                            addressController.isValid = false;
+                            addressController.update();
+                          }
+                        },
+                        key: addressController.addressKey,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 14),
+                              child: TextFormField(
+                                onChanged: (value) {
+                                  addressController.name = value;
                                 },
-                                enabled: addressController.city != null &&
-                                    (addressController.addressKey.currentState
-                                            ?.validate() ??
-                                        false),
-                                title: AppLocalizations.of(context)!.save,
+                                cursorColor: Colors.black,
+                                style: Theme.of(context).textTheme.headline1,
+                                decoration: InputDecoration(
+                                  contentPadding: edgeInsets16,
+                                  hintText: AppLocalizations.of(context)!
+                                      .address_name,
+                                ),
+                                validator: (value) =>
+                                    (value == null || value.isEmpty)
+                                        ? "Name is required"
+                                        : null,
                               ),
-                              SizedBox(
-                                height: 260.h,
-                              )
-                            ],
-                          ))
+                            ),
+                            sizedBoxHeight10,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 14),
+                              child: TextFormField(
+                                validator: (value) =>
+                                    (value == null || value.isEmpty)
+                                        ? "Block number is required"
+                                        : null,
+                                onChanged: (value) {
+                                  addressController.block = value;
+                                },
+                                cursorColor: Colors.black,
+                                style: Theme.of(context).textTheme.headline1,
+                                decoration: InputDecoration(
+                                  contentPadding: edgeInsets16,
+                                  hintText: AppLocalizations.of(context)!
+                                      .block_number,
+                                ),
+                              ),
+                            ),
+                            sizedBoxHeight10,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 14),
+                              child: TextFormField(
+                                validator: (value) =>
+                                    (value == null || value.isEmpty)
+                                        ? "Street number is required"
+                                        : null,
+                                onChanged: (value) {
+                                  addressController.street = value;
+                                },
+                                cursorColor: Colors.black,
+                                style: Theme.of(context).textTheme.headline1,
+                                decoration: InputDecoration(
+                                  contentPadding: edgeInsets16,
+                                  hintText: AppLocalizations.of(context)!
+                                      .street_number,
+                                ),
+                              ),
+                            ),
+                            sizedBoxHeight10,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 14),
+                              child: TextFormField(
+                                validator: (value) =>
+                                    (value == null || value.isEmpty)
+                                        ? "House number is required"
+                                        : null,
+                                onChanged: (value) {
+                                  addressController.housenumber = value;
+                                },
+                                cursorColor: Colors.black,
+                                style: Theme.of(context).textTheme.headline1,
+                                decoration: InputDecoration(
+                                  hintText:
+                                      AppLocalizations.of(context)!.house_no,
+                                  contentPadding: edgeInsets16,
+                                ),
+                              ),
+                            ),
+                            sizedBoxHeight10,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 14),
+                              child: TextFormField(
+                                onChanged: (value) {
+                                  addressController.paci = value;
+                                },
+                                cursorColor: Colors.black,
+                                style: Theme.of(context).textTheme.headline1,
+                                decoration: InputDecoration(
+                                  hintText:
+                                      AppLocalizations.of(context)!.paci_no,
+                                  contentPadding: edgeInsets16,
+                                ),
+                              ),
+                            ),
+                            sizedBoxHeight10,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 14),
+                              child: TextFormField(
+                                onChanged: (value) {
+                                  addressController.floornumber = value;
+                                },
+                                cursorColor: Colors.black,
+                                style: Theme.of(context).textTheme.headline1,
+                                decoration: InputDecoration(
+                                  hintText:
+                                      AppLocalizations.of(context)!.floor_no,
+                                  contentPadding: edgeInsets16,
+                                ),
+                              ),
+                            ),
+                            sizedBoxHeight10,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 14),
+                              child: TextFormField(
+                                onChanged: (value) {
+                                  addressController.avenue = value;
+                                },
+                                cursorColor: Colors.black,
+                                style: Theme.of(context).textTheme.headline1,
+                                decoration: InputDecoration(
+                                  contentPadding: edgeInsets16,
+                                  hintText:
+                                      AppLocalizations.of(context)!.avenue,
+                                ),
+                              ),
+                            ),
+                            sizedBoxHeight10,
+                            Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 14),
+                                child: bottomwidget(context)),
+                            sizedBoxHeight10,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 14),
+                              child: TextFormField(
+                                textInputAction: TextInputAction.done,
+                                validator: (value) =>
+                                    (value == null || value.isEmpty)
+                                        ? "Detailed Address is required"
+                                        : null,
+                                onChanged: (value) {
+                                  addressController.detailaddress = value;
+                                },
+                                cursorColor: Colors.black,
+                                maxLines: 5,
+                                style: Theme.of(context).textTheme.headline1,
+                                decoration: InputDecoration(
+                                  contentPadding: edgeInsets16,
+                                  hintText: AppLocalizations.of(context)!
+                                      .deatil_address,
+                                ),
+                              ),
+                            ),
+                            sizedBoxHeight10,
+                            LoginButton(
+                              height: 50.h,
+                              onTap: () {
+                                addressController.addAddress();
+                                addressController.initialvalue = "Area/city";
+                              },
+                              enabled: addressController.city != null &&
+                                  (addressController.addressKey.currentState
+                                          ?.validate() ??
+                                      false),
+                              title: AppLocalizations.of(context)!.save,
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),

@@ -11,6 +11,7 @@ import 'package:health_studio_user/core/controllers/setting_controller.dart';
 import 'package:health_studio_user/core/models/plan.dart';
 import 'package:health_studio_user/ui/screens/address_screen.dart';
 import 'package:health_studio_user/ui/screens/authentication/login_screen.dart';
+import 'package:health_studio_user/ui/screens/termsandconditions.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/formatters.dart';
@@ -109,9 +110,6 @@ class _PlanScreenState extends State<PlanScreen> {
                             ? customplan(
                                 AppLocalizations.of(context)!.custom_plan)
                             : const SizedBox(),
-                        SizedBox(
-                          height: 260.h,
-                        )
                       ]),
                 ),
               ),
@@ -244,7 +242,7 @@ class _PlanScreenState extends State<PlanScreen> {
                         height: 1,
                         color: dividercolor,
                       ),
-                      sizedBoxHeight16,
+                      sizedBoxHeight8,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -252,6 +250,8 @@ class _PlanScreenState extends State<PlanScreen> {
                             return GestureDetector(
                               onTap: () {
                                 Get.find<OrderController>().duration = 7;
+                                Get.find<OrderController>().price =
+                                    package.sevenDays;
                                 Get.find<OrderController>().order.amount =
                                     package.sevenDays;
 
@@ -306,6 +306,8 @@ class _PlanScreenState extends State<PlanScreen> {
                             return GestureDetector(
                               onTap: () {
                                 Get.find<OrderController>().duration = 15;
+                                Get.find<OrderController>().price =
+                                    package.fifteenDays;
 
                                 Get.find<OrderController>().order.amount =
                                     package.fifteenDays;
@@ -361,6 +363,8 @@ class _PlanScreenState extends State<PlanScreen> {
                             return GestureDetector(
                               onTap: () {
                                 Get.find<OrderController>().duration = 30;
+                                Get.find<OrderController>().price =
+                                    package.thirtyDays;
 
                                 Get.find<OrderController>().order.amount =
                                     package.thirtyDays;
@@ -579,7 +583,19 @@ class _PlanScreenState extends State<PlanScreen> {
                           Get.find<OrderController>();
                       SettingsController settingsController =
                           Get.find<SettingsController>();
+                      PlanController planController =
+                          Get.find<PlanController>();
+                      planController.selectVariant(
+                        package,
+                        planController.days,
+                        planController.meal,
+                        planController.breakfast,
+                        planController.snack,
+                      );
+
                       if (settingsController.userDetails != null) {
+                        print(
+                            "ORDER TO ${settingsController.userDetails!.orderTo}");
                         if (settingsController.userDetails!.orderTo != null ||
                             settingsController.userDetails!.orderTo != "") {
                           orderController.order.startDate =
@@ -600,10 +616,33 @@ class _PlanScreenState extends State<PlanScreen> {
                             const Duration(days: 2),
                           );
                         }
+                      } else {
+                        orderController.order.startDate =
+                            DateFormat("dd-MM-yyyy").format(
+                          DateTime.now().add(
+                            const Duration(days: 2),
+                          ),
+                        );
+                        orderController.firstDate = DateTime.now().add(
+                          const Duration(days: 2),
+                        );
                       }
-                      print("START DATE ${orderController.order.startDate}");
+                      orderController.price =
+                          orderController.order.amount ?? package.sevenDays;
+
                       orderController.order.amount =
                           orderController.order.amount ?? package.sevenDays;
+                      if (package.selected == 7) {
+                        orderController.order.amount = package.sevenDays;
+                        orderController.price = package.sevenDays;
+                      } else if (package.selected == 15) {
+                        orderController.order.amount = package.fifteenDays;
+                        orderController.price = package.fifteenDays;
+                      } else if (package.selected == 30) {
+                        orderController.price = package.thirtyDays;
+
+                        orderController.order.amount = package.thirtyDays;
+                      }
                       orderController.order.packageId = package.id;
 
                       orderController.order.endDate = DateFormat("dd-MM-yyyy")
@@ -620,18 +659,16 @@ class _PlanScreenState extends State<PlanScreen> {
                                   ?.isCustom ??
                               false;
 
-                      Get.to(() => const Address(
-                            check: true,
+                      Get.to(() => const TermsandConditions(
+                            showAddress: true,
                           ));
                     } else {
                       Get.to(() => LoginPage(
                             onSuccess: () {
                               Get.back();
-                              Get.to(
-                                () => const Address(
-                                  check: true,
-                                ),
-                              );
+                              Get.to(() => const TermsandConditions(
+                                    showAddress: true,
+                                  ));
                             },
                           ));
                     }
@@ -805,9 +842,9 @@ class MealWidget extends StatefulWidget {
 }
 
 class _MealWidgetState extends State<MealWidget> {
-  List<String> meals = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-  List<String> snacks = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-  List<String> breakfast = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  List<String> meals = ['1', '2', '3', '4', '5'];
+  List<String> snacks = ['1', '2', '3', '4', '5'];
+  List<String> breakfast = ['1', '2', '3', '4', '5'];
   @override
   Widget build(BuildContext context) {
     return GetBuilder<OrderController>(builder: (orderController) {
@@ -821,16 +858,16 @@ class _MealWidgetState extends State<MealWidget> {
                 children: [
                   Row(
                     children: [
-                      Image.asset(
-                        'assets/images/planimage.png',
-                        height: 20.h,
-                      ),
+                      // Image.asset(
+                      //   'assets/images/planimage.png',
+                      //   height: 20.h,
+                      // ),
                       sizedBoxwidth8,
                       Row(
                         children: [
                           Container(
                             height: 26.h,
-                            width: 34.w,
+                            width: 50,
                             color: customcolor.withOpacity(0.1),
                             child: Center(
                               child: DropdownButton<String>(
@@ -875,39 +912,37 @@ class _MealWidgetState extends State<MealWidget> {
                   ),
                   Row(
                     children: [
-                      Image.asset(
-                        'assets/images/planimage.png',
-                        height: 20.h,
-                      ),
                       sizedBoxwidth8,
                       Container(
                         height: 26.h,
-                        width: 34.w,
+                        width: 50,
                         color: customcolor.withOpacity(0.1),
-                        child: DropdownButton<String>(
-                          underline: Container(),
-                          value: planController.snack,
-                          items: snacks
-                              .map((item) => DropdownMenuItem<String>(
-                                    value: item,
-                                    child: Center(
-                                      child: Text(
-                                        item,
-                                        style: const TextStyle(
-                                            color: Colors.black),
+                        child: Center(
+                          child: DropdownButton<String>(
+                            underline: Container(),
+                            value: planController.snack,
+                            items: meals
+                                .map((item) => DropdownMenuItem<String>(
+                                      value: item,
+                                      child: Center(
+                                        child: Text(
+                                          item,
+                                          style: const TextStyle(
+                                              color: Colors.black),
+                                        ),
                                       ),
-                                    ),
-                                  ))
-                              .toList(),
-                          onChanged: (val) {
-                            orderController.snack = val.toString();
-                            planController.snack = val.toString();
-                            planController.update();
-                            orderController.update();
-                            planController.calculatePrice(7);
-                            planController.calculatePrice(15);
-                            planController.calculatePrice(30);
-                          },
+                                    ))
+                                .toList(),
+                            onChanged: (val) {
+                              orderController.snack = val.toString();
+                              planController.snack = val.toString();
+                              planController.calculatePrice(7);
+                              planController.calculatePrice(15);
+                              planController.calculatePrice(30);
+                              planController.update();
+                              orderController.update();
+                            },
+                          ),
                         ),
                       ),
                       sizedBoxwidth8,
@@ -924,38 +959,37 @@ class _MealWidgetState extends State<MealWidget> {
               sizedBoxHeight14,
               Row(
                 children: [
-                  Image.asset(
-                    'assets/images/planimage.png',
-                    height: 20.h,
-                  ),
                   sizedBoxwidth8,
                   Container(
                     height: 26.h,
-                    width: 35.w,
+                    width: 50,
                     color: customcolor.withOpacity(0.1),
-                    child: DropdownButton<String>(
-                      underline: Container(),
-                      value: planController.breakfast,
-                      items: breakfast
-                          .map((item) => DropdownMenuItem<String>(
-                                value: item,
-                                child: Center(
-                                  child: Text(
-                                    item,
-                                    style: const TextStyle(color: Colors.black),
+                    child: Center(
+                      child: DropdownButton<String>(
+                        underline: Container(),
+                        value: planController.breakfast,
+                        items: meals
+                            .map((item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Center(
+                                    child: Text(
+                                      item,
+                                      style:
+                                          const TextStyle(color: Colors.black),
+                                    ),
                                   ),
-                                ),
-                              ))
-                          .toList(),
-                      onChanged: (val) {
-                        orderController.breakfast = val.toString();
-                        planController.breakfast = val.toString();
-                        orderController.update();
-                        planController.update();
-                        planController.calculatePrice(7);
-                        planController.calculatePrice(15);
-                        planController.calculatePrice(30);
-                      },
+                                ))
+                            .toList(),
+                        onChanged: (val) {
+                          orderController.breakfast = val.toString();
+                          planController.breakfast = val.toString();
+                          planController.calculatePrice(7);
+                          planController.calculatePrice(15);
+                          planController.calculatePrice(30);
+                          planController.update();
+                          orderController.update();
+                        },
+                      ),
                     ),
                   ),
                   sizedBoxwidth8,

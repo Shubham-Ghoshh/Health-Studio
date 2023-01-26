@@ -48,6 +48,8 @@ dependencies:
   # The following package is added to implement FCM
   firebase_messaging: ^14.2.1
   # flutter_facebook_auth: ^5.0.7
+  # The following package is added tp avoid keyboard
+  # avoid_keyboard: ^0.3.0
 
 dev_dependencies:
   flutter_test:
