@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
+import 'package:health_studio_user/core/models/googlesignin.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/utils/buttons.dart';
@@ -10,7 +11,9 @@ import 'package:intl/intl.dart';
 
 class RegistrationPage extends StatefulWidget {
   final Function()? onSuccess;
-  const RegistrationPage({super.key, this.onSuccess});
+  final email;
+  final name;
+  const RegistrationPage({super.key, this.onSuccess, this.email, this.name});
 
   @override
   State<RegistrationPage> createState() => _RegistrationPageState();
@@ -190,6 +193,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           sizedBoxHeight10,
                           TextFormField(
+                            enabled: widget.name == null ? true : false,
+                            initialValue: widget.name,
                             validator: (value) =>
                                 (value == null || value.isEmpty)
                                     ? "Full Name is required"
@@ -211,6 +216,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           sizedBoxHeight10,
                           TextFormField(
+                            enabled: widget.email == null ? true : false,
+                            initialValue: widget.email,
                             validator: validateEmail,
                             onChanged: (value) {
                               authController.email = value;
@@ -336,6 +343,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   onSuccess: widget.onSuccess);
                             },
                           ),
+                         
                         ],
                       ),
                     ),
