@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
+import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
+import 'package:health_studio_user/core/controllers/setting_controller.dart';
+import 'package:health_studio_user/core/models/order.dart';
 import 'package:health_studio_user/core/models/plan.dart';
 import 'package:health_studio_user/ui/screens/address_screen.dart';
 import 'package:health_studio_user/ui/screens/authentication/login_screen.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
+import 'package:health_studio_user/utils/formatters.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 class PlanScreen extends StatefulWidget {
   const PlanScreen({Key? key}) : super(key: key);
@@ -26,77 +32,80 @@ class _PlanScreenState extends State<PlanScreen> {
   Widget build(BuildContext context) {
     return GetBuilder<PlanController>(builder: (planController) {
       return Scaffold(
-          bottomNavigationBar: bottomNavigationBar(),
+          // bottomNavigationBar: bottomNavigationBar(),
           body: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/background.png"),
-                fit: BoxFit.fill,
-              ),
-            ),
-            child: SingleChildScrollView(
-              child: SafeArea(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/background.png"),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: SafeArea(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 242,
+                    // height: 57,
+                    child: Image.asset("assets/images/health_studio_logo.png"),
+                  ),
+                  Row(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: 242,
-                            // height: 57,
-                            child: Image.asset(
-                                "assets/images/health_studio_logo.png"),
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 22.0),
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: settingsBackground,
-                                  ),
-                                  child: SettingButton(),
-                                ),
-                              ),
-                              sizedBoxwidth8,
-                            ],
-                          ),
-                        ],
-                      ),
                       Padding(
-                        padding: edgeInsets22.copyWith(left: 16.w),
-                        child: GetBuilder<LanguageTogglerController>(
-                          builder: (languageController) => Text(
-                            languageController.isEnglish
-                                ? planController.selectedPlan!.titleEn
-                                : planController.selectedPlan!.titleAr,
-                            style: const TextStyle(
-                              color: Color(0xffFFFDFD),
-                              fontWeight: FontWeight.w600,
-                              fontSize: 28,
-                            ),
+                        padding: const EdgeInsets.only(bottom: 22.0),
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: settingsBackground,
                           ),
+                          child: SettingButton(),
                         ),
                       ),
-                      ...planController.packages
-                          .map(
-                            (e) => planItem(e),
-                          )
-                          .toList(),
-                      customplan(AppLocalizations.of(context)!.custom_plan, "3",
-                          "1", "1"),
-                    ]),
+                      sizedBoxwidth8,
+                    ],
+                  ),
+                ],
               ),
-            ),
-          ));
+              Padding(
+                padding: edgeInsets22.copyWith(left: 16.w),
+                child: GetBuilder<LanguageTogglerController>(
+                  builder: (languageController) => Text(
+                    languageController.isEnglish
+                        ? planController.selectedPlan!.titleEn
+                        : planController.selectedPlan!.titleAr,
+                    style: const TextStyle(
+                      color: Color(0xffFFFDFD),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 28,
+                    ),
+                  ),
+                ),
+              ),
+              ...planController.packages
+                  .map(
+                    (e) => planItem(e),
+                  )
+                  .toList(),
+              customplan(
+                  AppLocalizations.of(context)!.custom_plan, "3", "1", "1"),
+            ]),
+          ),
+        ),
+      ));
     });
   }
 
   Widget planItem(
     Package package,
   ) {
+    if (package.isCustom) {
+      print("MEAL ${package.meal}");
+      print("SNACK ${package.snack}");
+      print("BREAKFAST ${package.breakfast}");
+    }
     return Padding(
       padding: edgeInsets16,
       child: Stack(
@@ -179,7 +188,7 @@ class _PlanScreenState extends State<PlanScreen> {
                                     ),
                                     sizedBoxwidth8,
                                     Text(
-                                      "${package.meal} ${AppLocalizations.of(context)!.snacks}",
+                                      "${package.snack} ${AppLocalizations.of(context)!.snacks}",
                                       style: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 14.sp,
@@ -190,7 +199,6 @@ class _PlanScreenState extends State<PlanScreen> {
                                 ),
                               ],
                             ),
-
                             sizedBoxHeight14,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -201,7 +209,7 @@ class _PlanScreenState extends State<PlanScreen> {
                                 ),
                                 sizedBoxwidth8,
                                 Text(
-                                  "${package.meal} ${AppLocalizations.of(context)!.breakfast}",
+                                  "${package.breakfast} ${AppLocalizations.of(context)!.breakfast}",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 14.sp,
@@ -220,220 +228,264 @@ class _PlanScreenState extends State<PlanScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              Get.find<PlanController>()
-                                  .selectVariant(package.id, 7);
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: package.selected == 7
+                          GetBuilder<PlanController>(builder: (planController) {
+                            return GestureDetector(
+                              onTap: () {
+                                Get.find<OrderController>().duration = 7;
+                                Get.find<OrderController>().order.amount =
+                                    package.sevenDays;
+
+                                Get.find<PlanController>().selectVariant(
+                                  package,
+                                  7,
+                                  planController.meal,
+                                  planController.breakfast,
+                                  planController.snack,
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: package.selected == 7
+                                        ? loginButtonColor
+                                        : whiteColor,
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Padding(
+                                  padding: edgeInsets8,
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        '07',
+                                        style: TextStyle(
+                                            color: pureblackColor,
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: 18.sp),
+                                      ),
+                                      Text(
+                                        AppLocalizations.of(context)!.days,
+                                        style: TextStyle(
+                                            color: pureblackColor,
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: 12.sp),
+                                      ),
+                                      Text(
+                                        'KD : ${package.sevenDays}',
+                                        style: TextStyle(
+                                            color: package.selected == 7
+                                                ? whiteColor
+                                                : loginButtonColor,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 12.sp),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
+                          GetBuilder<PlanController>(builder: (planController) {
+                            return GestureDetector(
+                              onTap: () {
+                                Get.find<OrderController>().duration = 15;
+
+                                Get.find<OrderController>().order.amount =
+                                    package.fifteenDays;
+                                Get.find<PlanController>().selectVariant(
+                                  package,
+                                  15,
+                                  planController.meal,
+                                  planController.breakfast,
+                                  planController.snack,
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: package.selected == 15
                                       ? loginButtonColor
                                       : whiteColor,
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Padding(
-                                padding: edgeInsets8,
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      '07',
-                                      style: TextStyle(
-                                          color: pureblackColor,
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 18.sp),
-                                    ),
-                                    Text(
-                                      AppLocalizations.of(context)!.days,
-                                      style: TextStyle(
-                                          color: pureblackColor,
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: 12.sp),
-                                    ),
-                                    Text(
-                                      'KD : ${package.sevenDays}',
-                                      style: TextStyle(
-                                          color: package.selected == 7
-                                              ? whiteColor
-                                              : loginButtonColor,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 12.sp),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Get.find<PlanController>()
-                                  .selectVariant(package.id, 15);
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: package.selected == 15
-                                    ? loginButtonColor
-                                    : whiteColor,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Padding(
-                                padding: edgeInsets8,
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      '15',
-                                      style: TextStyle(
-                                          color: pureblackColor,
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 18.sp),
-                                    ),
-                                    Text(
-                                      AppLocalizations.of(context)!.days,
-                                      style: TextStyle(
-                                          color: pureblackColor,
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: 12.sp),
-                                    ),
-                                    Text(
-                                      'KD : ${package.fifteenDays}',
-                                      style: TextStyle(
-                                          color: package.selected == 15
-                                              ? whiteColor
-                                              : loginButtonColor,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 12.sp),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Get.find<PlanController>()
-                                  .selectVariant(package.id, 30);
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
-                                  color: package.selected == 30
-                                      ? loginButtonColor
-                                      : whiteColor),
-                              child: Padding(
-                                padding: edgeInsets8,
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      '30',
-                                      style: TextStyle(
-                                          color: pureblackColor,
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 18.sp),
-                                    ),
-                                    Text(
-                                      AppLocalizations.of(context)!.days,
-                                      style: TextStyle(
-                                          color: pureblackColor,
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: 12.sp),
-                                    ),
-                                    Text(
-                                      'KD : ${package.thirtyDays}',
-                                      style: TextStyle(
-                                          color: package.selected == 30
-                                              ? whiteColor
-                                              : loginButtonColor,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 12.sp),
-                                    ),
-                                  ],
+                                ),
+                                child: Padding(
+                                  padding: edgeInsets8,
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        '15',
+                                        style: TextStyle(
+                                            color: pureblackColor,
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: 18.sp),
+                                      ),
+                                      Text(
+                                        AppLocalizations.of(context)!.days,
+                                        style: TextStyle(
+                                            color: pureblackColor,
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: 12.sp),
+                                      ),
+                                      Text(
+                                        'KD : ${package.fifteenDays}',
+                                        style: TextStyle(
+                                            color: package.selected == 15
+                                                ? whiteColor
+                                                : loginButtonColor,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 12.sp),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
+                            );
+                          }),
+                          GetBuilder<PlanController>(builder: (planController) {
+                            return GestureDetector(
+                              onTap: () {
+                                Get.find<OrderController>().duration = 30;
 
-                            ),
-                          ),
+                                Get.find<OrderController>().order.amount =
+                                    package.thirtyDays;
+                                Get.find<PlanController>().selectVariant(
+                                  package,
+                                  30,
+                                  planController.meal,
+                                  planController.breakfast,
+                                  planController.snack,
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: package.selected == 30
+                                        ? loginButtonColor
+                                        : whiteColor),
+                                child: Padding(
+                                  padding: edgeInsets8,
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        '30',
+                                        style: TextStyle(
+                                            color: pureblackColor,
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: 18.sp),
+                                      ),
+                                      Text(
+                                        AppLocalizations.of(context)!.days,
+                                        style: TextStyle(
+                                            color: pureblackColor,
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: 12.sp),
+                                      ),
+                                      Text(
+                                        'KD : ${package.thirtyDays}',
+                                        style: TextStyle(
+                                            color: package.selected == 30
+                                                ? whiteColor
+                                                : loginButtonColor,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 12.sp),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          })
                         ],
                       )
                     ],
                   ),
                 ),
-                Container(
-                  width: 56.w,
-                  height: 210.h,
-                  decoration: const BoxDecoration(
-                    color: itemsbackground,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(6),
-                        bottomRight: Radius.circular(6)),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      sizedBoxHeight6,
-                      Column(
-                        children: [
-                          SvgPicture.asset('assets/images/calorie.svg'),
-                          sizedBoxHeight6,
-                          Text(
-                            '250',
-                            style: TextStyle(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w900,
-                                color: whiteColor),
-                          ),
-                          Text(
-                            'Calorie',
-                            style: TextStyle(
-                                fontSize: 8.sp,
-                                fontWeight: FontWeight.w300,
-                                color: whiteColor),
-                          )
-                        ],
-                      ),
-                      sizedBoxHeight6,
-                      Column(
-                        children: [
-                          SvgPicture.asset('assets/images/protein.svg'),
-                          sizedBoxHeight6,
-                          Text(
-                            '250',
-                            style: TextStyle(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w900,
-                                color: whiteColor),
-                          ),
-                          Text(
-                            'Protein',
-                            style: TextStyle(
-                                fontSize: 8.sp,
-                                fontWeight: FontWeight.w300,
-                                color: whiteColor),
-                          )
-                        ],
-                      ),
-                      sizedBoxHeight6,
-                      Column(
-                        children: [
-                          SvgPicture.asset('assets/images/fat.svg'),
-                          sizedBoxHeight6,
-                          Text(
-                            '250',
-                            style: TextStyle(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w900,
-                                color: whiteColor),
-                          ),
-                          Text(
-                            'Fat',
-                            style: TextStyle(
-                                fontSize: 8.sp,
-                                fontWeight: FontWeight.w300,
-                                color: whiteColor),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                )
+                package.isCustom
+                    ? Padding(
+                        padding:
+                            const EdgeInsets.only(left: 0, right: 9, top: 0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            sizedBoxHeight10,
+                            Image.asset("assets/images/Frame.png")
+                          ],
+                        ),
+                      )
+                    : Container(
+                        width: 56.w,
+                        height: 210.h,
+                        decoration: const BoxDecoration(
+                          color: itemsbackground,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(6),
+                              bottomRight: Radius.circular(6)),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            sizedBoxHeight6,
+                            Column(
+                              children: [
+                                SvgPicture.asset('assets/images/calorie.svg'),
+                                sizedBoxHeight6,
+                                Text(
+                                  '250',
+                                  style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w900,
+                                      color: whiteColor),
+                                ),
+                                Text(
+                                  'Calorie',
+                                  style: TextStyle(
+                                      fontSize: 8.sp,
+                                      fontWeight: FontWeight.w300,
+                                      color: whiteColor),
+                                )
+                              ],
+                            ),
+                            sizedBoxHeight6,
+                            Column(
+                              children: [
+                                SvgPicture.asset('assets/images/protein.svg'),
+                                sizedBoxHeight6,
+                                Text(
+                                  '250',
+                                  style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w900,
+                                      color: whiteColor),
+                                ),
+                                Text(
+                                  'Protein',
+                                  style: TextStyle(
+                                      fontSize: 8.sp,
+                                      fontWeight: FontWeight.w300,
+                                      color: whiteColor),
+                                )
+                              ],
+                            ),
+                            sizedBoxHeight6,
+                            Column(
+                              children: [
+                                SvgPicture.asset('assets/images/fat.svg'),
+                                sizedBoxHeight6,
+                                Text(
+                                  '250',
+                                  style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w900,
+                                      color: whiteColor),
+                                ),
+                                Text(
+                                  'Fat',
+                                  style: TextStyle(
+                                      fontSize: 8.sp,
+                                      fontWeight: FontWeight.w300,
+                                      color: whiteColor),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
               ],
             ),
           ),
@@ -460,16 +512,67 @@ class _PlanScreenState extends State<PlanScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.find<AuthController>().isLoggedIn
-                        ? Get.to(() => const Address(check: true,))
-                        : Get.to(() => LoginPage(
-                              onSuccess: () {
-                                Get.back();
-                                Get.to(
-                                  () => const Address(check: true,),
-                                );
-                              },
-                            ));
+                    if (Get.find<AuthController>().isLoggedIn) {
+                      OrderController orderController =
+                          Get.find<OrderController>();
+                      SettingsController settingsController =
+                          Get.find<SettingsController>();
+                      if (settingsController.userDetails != null) {
+                        if (settingsController.userDetails!.orderTo != null ||
+                            settingsController.userDetails!.orderTo != "") {
+                          orderController.order.startDate =
+                              DateFormat("dd-MM-yyyy").format(getDateFormat(
+                                  settingsController.userDetails!.orderTo,
+                                  split: false));
+                          orderController.firstDate = getDateFormat(
+                              settingsController.userDetails!.orderTo,
+                              split: false);
+                        } else {
+                          orderController.order.startDate =
+                              DateFormat("dd-MM-yyyy").format(
+                            DateTime.now().add(
+                              const Duration(days: 2),
+                            ),
+                          );
+                          orderController.firstDate = DateTime.now().add(
+                            const Duration(days: 2),
+                          );
+                        }
+                      }
+                      print("START DATE ${orderController.order.startDate}");
+                      orderController.order.amount =
+                          orderController.order.amount ?? package.sevenDays;
+                      orderController.order.packageId = package.id;
+
+                      orderController.order.endDate = DateFormat("dd-MM-yyyy")
+                          .format(getDateFormat(
+                                  orderController.order.startDate!)
+                              .add(Duration(days: orderController.duration)));
+                      orderController.order.meal = orderController.meal;
+                      orderController.order.breakfast =
+                          orderController.breakfast;
+                      orderController.order.snack = orderController.snack;
+                      orderController.order.isCustom =
+                          Get.find<PlanController>()
+                                  .selectedPackage
+                                  ?.isCustom ??
+                              false;
+
+                      Get.to(() => const Address(
+                            check: true,
+                          ));
+                    } else {
+                      Get.to(() => LoginPage(
+                            onSuccess: () {
+                              Get.back();
+                              Get.to(
+                                () => const Address(
+                                  check: true,
+                                ),
+                              );
+                            },
+                          ));
+                    }
                   },
                   child: Container(
                     padding: edgeInsets16.copyWith(top: 8, bottom: 8),
@@ -507,103 +610,130 @@ class _PlanScreenState extends State<PlanScreen> {
 
   Widget customplan(
       String plantitle, String meals, String snacks, String breakfast) {
-    return Padding(
-      padding: edgeInsets16,
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          Positioned(
-            bottom: 20,
-            left: 0,
-            top: 0,
-            right: 0,
-            child: Container(
-              height: 1000,
-              width: 1000,
+    return GetBuilder<PlanController>(builder: (planController) {
+      return Padding(
+        padding: edgeInsets16,
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            Positioned(
+              bottom: 20,
+              left: 0,
+              top: 0,
+              right: 0,
+              child: Container(
+                height: 1000,
+                width: 1000,
+                decoration: BoxDecoration(
+                  color: whiteColor,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+              ),
+            ),
+            Container(
+              height: 235.h,
+              width: double.infinity,
               decoration: BoxDecoration(
-                color: whiteColor,
                 borderRadius: BorderRadius.circular(6),
               ),
-            ),
-          ),
-          Container(
-            height: 235.h,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Padding(
-                            padding: edgeInsetsleft16,
-                            child: Text(
-                              plantitle,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 16.sp,
-                                color: plantextColor,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Padding(
+                              padding: edgeInsetsleft16,
+                              child: Text(
+                                plantitle,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16.sp,
+                                  color: plantextColor,
+                                ),
                               ),
                             ),
-                          ),
-                          sizedBoxHeight10,
-                          const MealWidget(),
-                        ],
+                            sizedBoxHeight10,
+                            const MealWidget(),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 0, right: 9, top: 0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          sizedBoxHeight10,
-                          Image.asset("assets/images/Frame.png")
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                const Divider(
-                  height: 1,
-                  color: dividercolor,
-                  thickness: 1,
-                ),
-                const PricingRow(),
-                sizedBoxHeight6,
-                sizedBoxHeight10,
-                sizedBoxHeight16,
-              ],
-            ),
-          ),
-          Container(
-            height: 42.h,
-            width: 207.w,
-            decoration: BoxDecoration(
-              color: const Color(0xffF1773E),
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Center(
-              child: Text(
-                AppLocalizations.of(context)!.create,
-                style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14.sp,
-                    color: Colors.white),
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 0, right: 9, top: 0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            sizedBoxHeight10,
+                            Image.asset("assets/images/Frame.png")
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  const Divider(
+                    height: 1,
+                    color: dividercolor,
+                    thickness: 1,
+                  ),
+                  const PricingRow(),
+                  sizedBoxHeight6,
+                  sizedBoxHeight10,
+                  sizedBoxHeight16,
+                ],
               ),
             ),
-          )
-        ],
-      ),
-    );
+            GestureDetector(
+              onTap: () {
+                print("MEAL ${planController.meal}");
+                print("BREAKFAST ${planController.breakfast}");
+                print("SNACK ${planController.snack}");
+
+                planController.packages.add(
+                  Package(
+                    titleAr: "خطة مخصصة",
+                    titleEn: "Custom Plan",
+                    descriptionAr: "",
+                    descriptionEn: "",
+                    breakfast: planController.breakfast,
+                    fifteenDays: planController.fifteenDays,
+                    meal: planController.meal,
+                    sevenDays: planController.sevenDays,
+                    snack: planController.snack,
+                    thirtyDays: planController.thirtyDays,
+                    isCustom: true,
+                  ),
+                );
+                planController.update();
+              },
+              child: Container(
+                height: 42.h,
+                width: 207.w,
+                decoration: BoxDecoration(
+                  color: loginButtonColor,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Center(
+                  child: Text(
+                    AppLocalizations.of(context)!.create,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14.sp,
+                        color: Colors.white),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    });
   }
 }
 
@@ -614,50 +744,100 @@ class MealWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16, right: 16),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return GetBuilder<OrderController>(builder: (orderController) {
+      return GetBuilder<PlanController>(builder: (planController) {
+        return Padding(
+          padding: const EdgeInsets.only(left: 16, right: 16),
+          child: Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset(
-                    'assets/images/planimage.png',
-                    height: 20.h,
-                  ),
-                  sizedBoxwidth8,
                   Row(
                     children: [
-                      Container(
-                        height: 26.h,
-                        width: 26.w,
-                        color: customcolor.withOpacity(0.1),
-                        child: Center(
-                          child: Text(
-                            "3",
+                      Image.asset(
+                        'assets/images/planimage.png',
+                        height: 20.h,
+                      ),
+                      sizedBoxwidth8,
+                      Row(
+                        children: [
+                          Container(
+                            height: 26.h,
+                            width: 26.w,
+                            color: customcolor.withOpacity(0.1),
+                            child: Center(
+                              child: TextField(
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(1),
+                                ],
+                                keyboardType: TextInputType.number,
+                                onChanged: (val) {
+                                  orderController.meal = val;
+                                  planController.meal = val;
+                                  planController.calculatePrice(7);
+                                  planController.calculatePrice(15);
+                                  planController.calculatePrice(30);
+                                  planController.update();
+                                  orderController.update();
+                                },
+                              ),
+                            ),
+                          ),
+                          sizedBoxwidth8,
+                          Text(
+                            AppLocalizations.of(context)!.meals,
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 14.sp,
                               color: blackColor,
                             ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Image.asset(
+                        'assets/images/planimage.png',
+                        height: 20.h,
+                      ),
+                      sizedBoxwidth8,
+                      Container(
+                        height: 26.h,
+                        width: 26.w,
+                        color: customcolor.withOpacity(0.1),
+                        child: Center(
+                          child: TextField(
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(1),
+                            ],
+                            keyboardType: TextInputType.number,
+                            onChanged: (val) {
+                              orderController.snack = val;
+                              planController.snack = val;
+                              planController.update();
+                              orderController.update();
+                              planController.calculatePrice(7);
+                              planController.calculatePrice(15);
+                              planController.calculatePrice(30);
+                            },
                           ),
                         ),
                       ),
                       sizedBoxwidth8,
-                      Text(
-                        AppLocalizations.of(context)!.meals,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14.sp,
-                          color: blackColor,
-                        ),
-                      )
+                      Text(AppLocalizations.of(context)!.snacks,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14.sp,
+                            color: blackColor,
+                          ))
                     ],
                   ),
                 ],
               ),
+              sizedBoxHeight14,
               Row(
                 children: [
                   Image.asset(
@@ -670,18 +850,25 @@ class MealWidget extends StatelessWidget {
                     width: 26.w,
                     color: customcolor.withOpacity(0.1),
                     child: Center(
-                      child: Text(
-                        "3",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14.sp,
-                          color: blackColor,
-                        ),
+                      child: TextField(
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(1),
+                        ],
+                        keyboardType: TextInputType.number,
+                        onChanged: (val) {
+                          orderController.breakfast = val;
+                          planController.breakfast = val;
+                          orderController.update();
+                          planController.update();
+                          planController.calculatePrice(7);
+                          planController.calculatePrice(15);
+                          planController.calculatePrice(30);
+                        },
                       ),
                     ),
                   ),
                   sizedBoxwidth8,
-                  Text(AppLocalizations.of(context)!.snacks,
+                  Text(AppLocalizations.of(context)!.breakfast,
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 14.sp,
@@ -691,41 +878,9 @@ class MealWidget extends StatelessWidget {
               ),
             ],
           ),
-          sizedBoxHeight14,
-          Row(
-            children: [
-              Image.asset(
-                'assets/images/planimage.png',
-                height: 20.h,
-              ),
-              sizedBoxwidth8,
-              Container(
-                height: 26.h,
-                width: 26.w,
-                color: customcolor.withOpacity(0.1),
-                child: Center(
-                  child: Text(
-                    "3",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14.sp,
-                      color: blackColor,
-                    ),
-                  ),
-                ),
-              ),
-              sizedBoxwidth8,
-              Text(AppLocalizations.of(context)!.breakfast,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14.sp,
-                    color: blackColor,
-                  ))
-            ],
-          ),
-        ],
-      ),
-    );
+        );
+      });
+    });
   }
 }
 
@@ -736,18 +891,49 @@ class PricingRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Container(
-          decoration: BoxDecoration(
-              color: loginButtonColor, borderRadius: BorderRadius.circular(5)),
-          child: Padding(
+    return GetBuilder<PlanController>(builder: (planController) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(5)),
+            child: Padding(
+              padding: edgeInsets8,
+              child: Column(
+                children: [
+                  Text(
+                    "07",
+                    style: TextStyle(
+                        color: pureblackColor,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 18.sp),
+                  ),
+                  Text(
+                    AppLocalizations.of(context)!.days,
+                    style: TextStyle(
+                        color: pureblackColor,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 12.sp),
+                  ),
+                  Text(
+                    "KD: ${planController.sevenDays}",
+                    style: TextStyle(
+                      color: loginButtonColor,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12.sp,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Padding(
             padding: edgeInsets8,
             child: Column(
               children: [
                 Text(
-                  '07',
+                  '15',
                   style: TextStyle(
                       color: pureblackColor,
                       fontWeight: FontWeight.w900,
@@ -760,53 +946,48 @@ class PricingRow extends StatelessWidget {
                       fontWeight: FontWeight.w300,
                       fontSize: 12.sp),
                 ),
+                Text(
+                  "KD: ${planController.fifteenDays}",
+                  style: TextStyle(
+                    color: loginButtonColor,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 12.sp,
+                  ),
+                )
               ],
             ),
           ),
-        ),
-        Padding(
-          padding: edgeInsets8,
-          child: Column(
-            children: [
-              Text(
-                '15',
-                style: TextStyle(
-                    color: pureblackColor,
-                    fontWeight: FontWeight.w900,
-                    fontSize: 18.sp),
-              ),
-              Text(
-                AppLocalizations.of(context)!.days,
-                style: TextStyle(
-                    color: pureblackColor,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 12.sp),
-              ),
-            ],
+          Padding(
+            padding: edgeInsets8,
+            child: Column(
+              children: [
+                Text(
+                  '30',
+                  style: TextStyle(
+                      color: pureblackColor,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 18.sp),
+                ),
+                Text(
+                  AppLocalizations.of(context)!.days,
+                  style: TextStyle(
+                      color: pureblackColor,
+                      fontWeight: FontWeight.w300,
+                      fontSize: 12.sp),
+                ),
+                Text(
+                  "KD: ${planController.thirtyDays}",
+                  style: TextStyle(
+                    color: loginButtonColor,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 12.sp,
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: edgeInsets8,
-          child: Column(
-            children: [
-              Text(
-                '30',
-                style: TextStyle(
-                    color: pureblackColor,
-                    fontWeight: FontWeight.w900,
-                    fontSize: 18.sp),
-              ),
-              Text(
-                AppLocalizations.of(context)!.days,
-                style: TextStyle(
-                    color: pureblackColor,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 12.sp),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
+        ],
+      );
+    });
   }
 }

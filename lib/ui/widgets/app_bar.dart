@@ -3,22 +3,24 @@ import 'package:get/get.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 
-Widget appBar() {
+Widget appBar({bool canGoBack = true}) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       sizedBoxWidth12,
-      IconButton(
-        onPressed: () {
-          Get.back();
-        },
-        icon: const Icon(
-          Icons.arrow_back,
-          size: 30,
-          color: Colors.white,
-        ),
-      ),
+      canGoBack
+          ? IconButton(
+              onPressed: () {
+                canGoBack ? Get.back() : null;
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                size: 30,
+                color: Colors.white,
+              ),
+            )
+          : const SizedBox(),
       sizedBoxWidth25,
       Center(
         child: SizedBox(

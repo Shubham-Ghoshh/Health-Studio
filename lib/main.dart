@@ -19,7 +19,8 @@ void main() async {
   var lang = prefs.getBool("language") ?? true;
   runApp(
     DevicePreview(
-      enabled: true,
+      // enabled: true,
+      enabled: false,
       builder: (context) => ScreenUtilInit(
         designSize: const Size(360, 690),
         minTextAdapt: true,
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       title: 'Health Studio',
-      home: const SelectMenuPage(),
+      home: const SplashScreen(),
       initialBinding: AllBinder(),
     );
   }

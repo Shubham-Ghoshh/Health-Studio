@@ -1,21 +1,22 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:health_studio_user/core/controllers/order_controller.dart';
+import 'package:health_studio_user/utils/formatters.dart';
+import 'package:intl/intl.dart';
 import 'package:health_studio_user/core/controllers/date_controller.dart';
-import 'package:health_studio_user/core/controllers/home_controller.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
-import 'package:health_studio_user/core/models/menu.dart';
 import 'package:health_studio_user/core/models/plan.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ConfirmationPage extends StatefulWidget {
@@ -32,7 +33,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
   Widget build(BuildContext context) {
     return GetBuilder<PlanController>(
       builder: (planController) => Scaffold(
-        bottomNavigationBar: bottomNavigationBar(),
+        // bottomNavigationBar: bottomNavigationBar(),
         backgroundColor: Colors.blueAccent.shade400,
         body: Stack(
           children: [
@@ -101,6 +102,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                           //   plan: planController.packages,
                           // ),
                           Container(
+                            width: 1.sw,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10),
@@ -112,33 +114,41 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  SizedBox(
-                                    width: 140,
-                                    height: 125,
-                                    child: Image.asset(
-                                      "assets/images/feature0.png",
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          planController.selectedPlan!.image,
+                                      height: 125,
+                                      width: 140,
+                                      fit: BoxFit.fitWidth,
+                                      placeholder: (context, url) =>
+                                          Image.asset(
+                                              "assets/images/feature1.png"),
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset(
+                                              "assets/images/feature1.png"),
                                     ),
                                   ),
-                                  SizedBox(
-                                    child: SizedBox(
-                                      width: 0.25.sw,
-                                      child:
-                                          GetBuilder<LanguageTogglerController>(
-                                        builder: (languageController) => Text(
-                                          languageController.isEnglish
-                                              ? planController
-                                                  .selectedPlan!.titleEn
-                                              : planController
-                                                  .selectedPlan!.titleAr,
-                                          style: TextStyle(
-                                            color: splashthemeColor,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 18,
-                                          ),
+                                  sizedBoxWidth12,
+                                  Flexible(
+                                    child:
+                                        GetBuilder<LanguageTogglerController>(
+                                      builder: (languageController) => Text(
+                                        languageController.isEnglish
+                                            ? planController
+                                                .selectedPlan!.titleEn
+                                            : planController
+                                                .selectedPlan!.titleAr,
+                                        style: TextStyle(
+                                          color: splashthemeColor,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 18,
                                         ),
                                       ),
                                     ),
                                   ),
+                                  sizedBoxWidth12,
                                 ],
                               ),
                             ),
@@ -154,8 +164,12 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                             ),
                           ),
                           sizedBoxHeight6,
-                          subscriptionDate("29/12/2022",
-                              dateController.subsciptionStartDateController),
+                          GetBuilder<OrderController>(
+                              builder: (orderController) {
+                            return subscriptionDate(
+                                orderController.order.startDate!,
+                                dateController.subsciptionStartDateController);
+                          }),
                           sizedBoxHeight10,
                           Text(
                             AppLocalizations.of(context)!.subscription_end_date,
@@ -166,20 +180,29 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                             ),
                           ),
                           sizedBoxHeight6,
-                          TextFormField(
-                            readOnly: true,
-                            cursorColor: Colors.black,
-                            style: const TextStyle(
-                              color: Color(0xff0A0909),
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            decoration: const InputDecoration(
-                              hintText: "01/01/2023",
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 18, vertical: 16),
-                            ),
-                          ),
+                          GetBuilder<OrderController>(
+                              builder: (orderController) {
+                            print("DURATION ${orderController.duration}");
+                            return TextFormField(
+                              readOnly: true,
+                              cursorColor: Colors.black,
+                              style: const TextStyle(
+                                color: Color(0xff0A0909),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: DateFormat("dd-MM-yyyy").format(
+                                  getDateFormat(orderController.order.startDate)
+                                      .add(
+                                    Duration(days: orderController.duration),
+                                  ),
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 18, vertical: 16),
+                              ),
+                            );
+                          }),
                           sizedBoxHeight10,
                           Text(
                             AppLocalizations.of(context)!.add_promo_code,
@@ -258,24 +281,27 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                                   fontSize: 18.sp,
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 4.0),
-                                child: Text(
-                                  "KWD 130",
-                                  style: TextStyle(
-                                    shadows: <Shadow>[
-                                      const Shadow(
-                                        offset: Offset(2.0, 5.0),
-                                        blurRadius: 5.0,
-                                        color: Color.fromARGB(61, 0, 0, 0),
-                                      ),
-                                    ],
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 18.sp,
+                              GetBuilder<OrderController>(
+                                  builder: (orderController) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 4.0),
+                                  child: Text(
+                                    "KD ${orderController.order.amount}",
+                                    style: TextStyle(
+                                      shadows: <Shadow>[
+                                        const Shadow(
+                                          offset: Offset(2.0, 5.0),
+                                          blurRadius: 5.0,
+                                          color: Color.fromARGB(61, 0, 0, 0),
+                                        ),
+                                      ],
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 18.sp,
+                                    ),
                                   ),
-                                ),
-                              ),
+                                );
+                              }),
                             ],
                           )
                         ],
@@ -304,9 +330,9 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
             onTap: () async {
               DateTime? pickedDate = await showDatePicker(
                 context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime.now(),
-                lastDate: DateTime(2100),
+                initialDate: getDateFormat(hintText),
+                firstDate: Get.find<OrderController>().firstDate!,
+                lastDate: DateTime.now().add(const Duration(days: 365)),
                 builder: (context, child) => Theme(
                     data: Theme.of(context).copyWith(
                         colorScheme: const ColorScheme.light(
@@ -315,7 +341,15 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
               );
               if (pickedDate != null) {
                 String formattedDate =
-                    DateFormat("dd/MM/yyyy").format(pickedDate);
+                    DateFormat("dd-MM-yyyy").format(pickedDate);
+                Get.find<OrderController>().order.startDate =
+                    DateFormat("dd-MM-yyyy").format(pickedDate);
+                Get.find<OrderController>().order.endDate =
+                    DateFormat("dd-MM-yyyy").format(
+                  pickedDate.add(
+                    Duration(days: Get.find<OrderController>().duration),
+                  ),
+                );
                 setState(() {
                   dateController.text = formattedDate.toString();
                 });

@@ -15,15 +15,15 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      getPlans();
-      getMenuForDate();
+      getPlans(showLoader: false);
+      getMenuForDate(showLoader: false);
     });
   }
 
-  void getPlans() async {
-    Utility.showLoadingDialog();
+  void getPlans({bool showLoader = true}) async {
+    if (showLoader) Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest("plans");
-    Utility.closeDialog();
+    if (showLoader) Utility.closeDialog();
 
     if (response["error"] != 0) {
       Get.rawSnackbar(message: response["message"] ?? "");
@@ -36,11 +36,11 @@ class HomeController extends GetxController {
     }
   }
 
-  void getMenuForDate() async {
-    Utility.showLoadingDialog();
+  void getMenuForDate({bool showLoader = false}) async {
+    if (showLoader) Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest(
         "menu/random/${DateFormat('dd-MM-yyyy').format(selectedDate)}");
-    Utility.closeDialog();
+    if (showLoader) Utility.closeDialog();
     if (response["error"] != 0) {
       Get.rawSnackbar(message: response["message"] ?? "");
     } else {

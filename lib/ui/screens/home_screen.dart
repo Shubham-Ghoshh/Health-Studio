@@ -4,7 +4,10 @@ import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
+import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/core/models/bottom_nav_item.dart';
+import 'package:health_studio_user/ui/screens/logged_in_home_screen.dart';
+import 'package:health_studio_user/ui/screens/select_menu.dart';
 import 'package:health_studio_user/ui/screens/setting_screen.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
@@ -13,6 +16,7 @@ import 'package:health_studio_user/core/models/plan.dart';
 import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/ui/widgets/date.dart';
 import 'package:health_studio_user/utils/buttons.dart';
+import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/formatters.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/ui/widgets/home_page_widgets.dart';
@@ -28,189 +32,218 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
-        init: HomeController(),
-        builder: (homeController) {
-          return Scaffold(
-            bottomNavigationBar: bottomNavigationBar(),
-            body: Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/background.png"),
-                  fit: BoxFit.fill,
+    return GetBuilder<HomeController>(builder: (homeController) {
+      return Scaffold(
+        // bottomNavigationBar: bottomNavigationBar(),
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/background.png"),
+              fit: BoxFit.fill,
+            ),
+          ),
+          child: SingleChildScrollView(
+            child: SafeArea(
+              child: Padding(
+                padding: edgeInsets16.copyWith(
+                  top: 0,
                 ),
-              ),
-              child: SingleChildScrollView(
-                child: SafeArea(
-                  child: Padding(
-                    padding: edgeInsets16.copyWith(
-                      top: 0,
-                    ),
-                    child: Column(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    sizedBoxHeight6,
+                    Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        sizedBoxHeight6,
+                        SizedBox(
+                          width: 242,
+                          // height: 57,
+                          child: Image.asset(
+                              "assets/images/health_studio_logo.png"),
+                        ),
                         Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SizedBox(
-                              width: 242,
-                              // height: 57,
-                              child: Image.asset(
-                                  "assets/images/health_studio_logo.png"),
-                            ),
-                            Row(
-                              children: [
-                                Container(
+                            GetBuilder<OrderController>(
+                                builder: (orderController) {
+                              return Visibility(
+                                visible: orderController.orderDetails != null,
+                                child: Container(
                                   decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: Color(0xffE84C4F),
+                                    color: activeIconColor,
                                   ),
-                                  child: SettingButton(),
-                                ),
-                                sizedBoxwidth8,
-                              ],
-                            ),
-                          ],
-                        ),
-                        // sizedBoxHeight20,
-                        Column(
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.select_meal,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline2!
-                                  .copyWith(
-                                    color: Colors.white,
-                                  ),
-                            ),
-                            sizedBoxHeight14,
-                          ],
-                        ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            // crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: homeController.plans
-                                .asMap()
-                                .map((index, plan) => MapEntry(
-                                    featuresPlanItem(plan, index), index))
-                                .keys
-                                .toList(),
-                          ),
-                        ),
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!.delicious_menu,
-                                  style: const TextStyle(
-                                    color: Color(0xffFFFDFD),
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 24,
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: Text(
-                                    AppLocalizations.of(context)!.see_all,
-                                    style: const TextStyle(
-                                      shadows: <Shadow>[
-                                        Shadow(
-                                          offset: Offset(2.0, 5.0),
-                                          blurRadius: 5.0,
-                                          color: Color.fromARGB(126, 0, 0, 0),
-                                        ),
-                                      ],
-                                      color: Color(0xffF1773E),
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 16,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Get.to(() => const LoggedInHomePage());
+                                    },
+                                    icon: const Icon(
+                                      Icons.dining_outlined,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
-                            sizedBoxHeight14,
-                            Text(
-                              AppLocalizations.of(context)!.menu_list_preview,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline2!
-                                  .copyWith(
-                                    color: Colors.white,
-                                  ),
-                            ),
-                            sizedBoxHeight14,
-                          ],
-                        ),
-                        Padding(
-                          padding: edgeInsets0.copyWith(right: 8),
-                          child: SizedBox(
-                            height: 65,
-                            // width: 0.7.sw,
-                            child: ListView(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              children: List.generate(
-                                28,
-                                (index) {
-                                  DateTime date =
-                                      DateTime.now().add(Duration(days: index));
-                                  return dateWidget(
-                                      context,
-                                      getWeekday(date.weekday),
-                                      date.day.toString(),
-                                      homeController.selectedDate.day ==
-                                          date.day, () {
-                                    homeController.selectDate(date);
-                                  });
+                              );
+                            }),
+                            sizedBoxwidth8,
+                            Container(
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: activeIconColor,
+                              ),
+                              child: IconButton(
+                                onPressed: () {
+                                  Get.to(() => const SettingPage());
                                 },
+                                icon: Padding(
+                                  padding: const EdgeInsets.all(0.25),
+                                  child: SizedBox(
+                                    height: 24,
+                                    child: Image.asset(
+                                        "assets/images/settings_icon.png"),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                        sizedBoxHeight14,
-                        Padding(
-                          padding: const EdgeInsets.only(right: 6.0),
-                          child: SizedBox(
-                            height: 280,
-                            child: homeController.menu.isEmpty
-                                ? Center(
-                                    child: Text(
-                                      AppLocalizations.of(context)!
-                                          .no_items_available,
-                                      style: const TextStyle(
-                                        color: Color(0xffFFFDFD),
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  )
-                                : ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: homeController.menu.length,
-                                    itemBuilder: (context, index) {
-                                      return FoodMenuItem(
-                                        menu: homeController.menu[index],
-                                      );
-                                    },
-                                  ),
-                          ),
+                            sizedBoxwidth8,
+                          ],
                         ),
                       ],
                     ),
-                  ),
+                    // sizedBoxHeight20,
+                    Column(
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.select_meal,
+                          style:
+                              Theme.of(context).textTheme.headline2!.copyWith(
+                                    color: Colors.white,
+                                  ),
+                        ),
+                        sizedBoxHeight14,
+                      ],
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        // crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: homeController.plans
+                            .asMap()
+                            .map((index, plan) =>
+                                MapEntry(featuresPlanItem(plan, index), index))
+                            .keys
+                            .toList(),
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.delicious_menu,
+                              style: const TextStyle(
+                                color: Color(0xffFFFDFD),
+                                fontWeight: FontWeight.w700,
+                                fontSize: 24,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {},
+                              child: Text(
+                                AppLocalizations.of(context)!.see_all,
+                                style: const TextStyle(
+                                  shadows: <Shadow>[
+                                    Shadow(
+                                      offset: Offset(2.0, 5.0),
+                                      blurRadius: 5.0,
+                                      color: Color.fromARGB(126, 0, 0, 0),
+                                    ),
+                                  ],
+                                  color: Color(0xffF1773E),
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        sizedBoxHeight14,
+                        Text(
+                          AppLocalizations.of(context)!.menu_list_preview,
+                          style:
+                              Theme.of(context).textTheme.headline2!.copyWith(
+                                    color: Colors.white,
+                                  ),
+                        ),
+                        sizedBoxHeight14,
+                      ],
+                    ),
+                    Padding(
+                      padding: edgeInsets0.copyWith(right: 8),
+                      child: SizedBox(
+                        height: 65,
+                        // width: 0.7.sw,
+                        child: ListView(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          children: List.generate(
+                            28,
+                            (index) {
+                              DateTime date =
+                                  DateTime.now().add(Duration(days: index));
+                              return dateWidget(
+                                  context,
+                                  getWeekday(date.weekday),
+                                  date.day.toString(),
+                                  homeController.selectedDate.day == date.day,
+                                  () {
+                                homeController.selectDate(date);
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    sizedBoxHeight14,
+                    Padding(
+                      padding: const EdgeInsets.only(right: 6.0),
+                      child: SizedBox(
+                        height: 280,
+                        child: homeController.menu.isEmpty
+                            ? Center(
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .no_items_available,
+                                  style: const TextStyle(
+                                    color: Color(0xffFFFDFD),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              )
+                            : ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: homeController.menu.length,
+                                itemBuilder: (context, index) {
+                                  return FoodMenuItem(
+                                    height: 228,
+                                    menu: homeController.menu[index],
+                                  );
+                                },
+                              ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          );
-        });
+          ),
+        ),
+      );
+    });
   }
 
   Widget featuresPlanItem(
@@ -226,6 +259,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           GestureDetector(
             onTap: (() {
+              Get.put(OrderController()).order.planId = plan.id;
               Get.put(PlanController()).getPackages(plan);
             }),
             child: Container(

@@ -26,14 +26,14 @@ class Plan {
 }
 
 class Package {
-  String id;
+  String? id;
   String titleEn;
   String titleAr;
   String descriptionEn;
   String descriptionAr;
-  String image;
-  String status;
-  String categoryId;
+  String? image;
+  String? status;
+  String? categoryId;
   String meal;
   String snack;
   String breakfast;
@@ -41,23 +41,25 @@ class Package {
   String fifteenDays;
   String thirtyDays;
   int selected;
+  bool isCustom;
 
   Package({
-    required this.id,
+    this.id,
     required this.titleAr,
     required this.titleEn,
     required this.descriptionAr,
     required this.descriptionEn,
-    required this.image,
+    this.image,
     required this.breakfast,
-    required this.categoryId,
+    this.categoryId,
     required this.fifteenDays,
     required this.meal,
     required this.sevenDays,
     required this.snack,
-    required this.status,
+    this.status,
     required this.thirtyDays,
     this.selected = 7,
+    this.isCustom = false,
   });
 
   factory Package.fromJson(Map<String, dynamic> json) => Package(

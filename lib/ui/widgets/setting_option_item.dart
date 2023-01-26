@@ -24,6 +24,7 @@ class _SettingOptionItemState extends State<SettingOptionItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      key: widget.key,
       onTap: widget.onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),

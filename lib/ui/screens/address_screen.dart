@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/address_controller.dart';
+import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/core/models/address.dart';
 import 'package:health_studio_user/ui/screens/address_form.dart';
 import 'package:health_studio_user/ui/screens/confirmation_screen.dart';
@@ -15,7 +16,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Address extends StatefulWidget {
   final bool check;
-  const Address({Key? key,  required this.check}) : super(key: key);
+  const Address({Key? key, required this.check}) : super(key: key);
 
   @override
   State<Address> createState() => _AddressState();
@@ -24,8 +25,6 @@ class Address extends StatefulWidget {
 class _AddressState extends State<Address> {
   bool home = true;
   bool office = false;
-  
-  
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,7 @@ class _AddressState extends State<Address> {
         init: AddressController(),
         builder: (addressController) {
           return Scaffold(
-            bottomNavigationBar: bottomNavigationBar(),
+            // bottomNavigationBar: bottomNavigationBar(),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
                 Get.to(() => AddressForm());
@@ -75,26 +74,6 @@ class _AddressState extends State<Address> {
                                 home,
                                 widget.check,
                               )),
-                      // GestureDetector(
-                      //   onTap: () {
-                      //     setState(() {
-                      //       home = !(home);
-                      //       office = false;
-                      //     });
-                      //   },
-                      //   child: addressContainer('Home', home),
-
-                      // ),
-                      // GestureDetector(
-                      //     onTap: () {
-                      //       setState(() {
-                      //         office = !(office);
-                      //         home = false;
-                      //       });
-                      //     },
-
-                      //     // child: addressContainer('Office', office)
-                      //     ),
                     ],
                   ),
                 ),
@@ -111,6 +90,7 @@ class _AddressState extends State<Address> {
           return GestureDetector(
             onTap: () {
               if (check) {
+                Get.find<OrderController>().order.addressId = a.id;
                 Get.to(() => const ConfirmationPage());
               }
             },
@@ -141,7 +121,7 @@ class _AddressState extends State<Address> {
                                     fontWeight: FontWeight.w600),
                               ),
                             ),
-                            isVisible
+                            isVisible && check
                                 ? Padding(
                                     padding: const EdgeInsets.only(right: 16),
                                     child: SvgPicture.asset(

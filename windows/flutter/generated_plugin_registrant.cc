@@ -12,7 +12,6 @@
 void RegisterPlugins(flutter::PluginRegistry* registry) {
   SharePlusWindowsPluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("SharePlusWindowsPluginCApi"));
-      UrlLauncherWindowsRegisterWithRegistrar(
+  UrlLauncherWindowsRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("UrlLauncherWindows"));
-      }
-
+}
