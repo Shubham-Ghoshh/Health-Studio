@@ -26,6 +26,8 @@ class PlanScreen extends StatefulWidget {
 }
 
 class _PlanScreenState extends State<PlanScreen> {
+  List<String> items = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  String selectedItem = '1';
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PlanController>(builder: (planController) {
@@ -141,7 +143,7 @@ class _PlanScreenState extends State<PlanScreen> {
             ),
           ),
           Container(
-            height: 220.h,
+            height: 240.h,
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
@@ -171,6 +173,7 @@ class _PlanScreenState extends State<PlanScreen> {
                           ),
                         ),
                       ),
+                      sizedBoxHeight6,
                       Padding(
                         padding: const EdgeInsets.only(left: 16, right: 16),
                         child: Column(
@@ -233,6 +236,7 @@ class _PlanScreenState extends State<PlanScreen> {
                                 ),
                               ],
                             ),
+                            sizedBoxHeight10,
                           ],
                         ),
                       ),
@@ -240,6 +244,7 @@ class _PlanScreenState extends State<PlanScreen> {
                         height: 1,
                         color: dividercolor,
                       ),
+                      sizedBoxHeight16,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -439,7 +444,7 @@ class _PlanScreenState extends State<PlanScreen> {
                       )
                     : Container(
                         width: 56.w,
-                        height: 210.h,
+                        height: 230.h,
                         decoration: const BoxDecoration(
                           color: itemsbackground,
                           borderRadius: BorderRadius.only(
@@ -504,7 +509,7 @@ class _PlanScreenState extends State<PlanScreen> {
                                 )
                               ],
                             ),
-                            sizedBoxHeight10,
+                            sizedBoxHeight20,
 
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -727,7 +732,7 @@ class _PlanScreenState extends State<PlanScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             sizedBoxHeight10,
-                            Image.asset("assets/images/Frame.png")
+                            Image.asset("assets/images/Frame.png"),
                           ],
                         ),
                       )
@@ -790,11 +795,19 @@ class _PlanScreenState extends State<PlanScreen> {
   }
 }
 
-class MealWidget extends StatelessWidget {
+class MealWidget extends StatefulWidget {
   const MealWidget({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<MealWidget> createState() => _MealWidgetState();
+}
+
+class _MealWidgetState extends State<MealWidget> {
+  List<String> meals = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  List<String> snacks = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  List<String> breakfast = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
   @override
   Widget build(BuildContext context) {
     return GetBuilder<OrderController>(builder: (orderController) {
@@ -817,18 +830,27 @@ class MealWidget extends StatelessWidget {
                         children: [
                           Container(
                             height: 26.h,
-                            width: 26.w,
+                            width: 34.w,
                             color: customcolor.withOpacity(0.1),
                             child: Center(
-                              child: TextFormField(
-                                initialValue: planController.meal,
-                                inputFormatters: [
-                                  LengthLimitingTextInputFormatter(1),
-                                ],
-                                keyboardType: TextInputType.number,
+                              child: DropdownButton<String>(
+                                underline: Container(),
+                                value: planController.meal,
+                                items: meals
+                                    .map((item) => DropdownMenuItem<String>(
+                                          value: item,
+                                          child: Center(
+                                            child: Text(
+                                              item,
+                                              style: const TextStyle(
+                                                  color: Colors.black),
+                                            ),
+                                          ),
+                                        ))
+                                    .toList(),
                                 onChanged: (val) {
-                                  orderController.meal = val;
-                                  planController.meal = val;
+                                  orderController.meal = val.toString();
+                                  planController.meal = val.toString();
                                   planController.calculatePrice(7);
                                   planController.calculatePrice(15);
                                   planController.calculatePrice(30);
@@ -860,25 +882,32 @@ class MealWidget extends StatelessWidget {
                       sizedBoxwidth8,
                       Container(
                         height: 26.h,
-                        width: 26.w,
+                        width: 34.w,
                         color: customcolor.withOpacity(0.1),
-                        child: Center(
-                          child: TextFormField(
-                            initialValue: planController.snack,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(1),
-                            ],
-                            keyboardType: TextInputType.number,
-                            onChanged: (val) {
-                              orderController.snack = val;
-                              planController.snack = val;
-                              planController.update();
-                              orderController.update();
-                              planController.calculatePrice(7);
-                              planController.calculatePrice(15);
-                              planController.calculatePrice(30);
-                            },
-                          ),
+                        child: DropdownButton<String>(
+                          underline: Container(),
+                          value: planController.snack,
+                          items: snacks
+                              .map((item) => DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Center(
+                                      child: Text(
+                                        item,
+                                        style: const TextStyle(
+                                            color: Colors.black),
+                                      ),
+                                    ),
+                                  ))
+                              .toList(),
+                          onChanged: (val) {
+                            orderController.snack = val.toString();
+                            planController.snack = val.toString();
+                            planController.update();
+                            orderController.update();
+                            planController.calculatePrice(7);
+                            planController.calculatePrice(15);
+                            planController.calculatePrice(30);
+                          },
                         ),
                       ),
                       sizedBoxwidth8,
@@ -902,25 +931,31 @@ class MealWidget extends StatelessWidget {
                   sizedBoxwidth8,
                   Container(
                     height: 26.h,
-                    width: 26.w,
+                    width: 35.w,
                     color: customcolor.withOpacity(0.1),
-                    child: Center(
-                      child: TextFormField(
-                        initialValue: planController.breakfast,
-                        inputFormatters: [
-                          LengthLimitingTextInputFormatter(1),
-                        ],
-                        keyboardType: TextInputType.number,
-                        onChanged: (val) {
-                          orderController.breakfast = val;
-                          planController.breakfast = val;
-                          orderController.update();
-                          planController.update();
-                          planController.calculatePrice(7);
-                          planController.calculatePrice(15);
-                          planController.calculatePrice(30);
-                        },
-                      ),
+                    child: DropdownButton<String>(
+                      underline: Container(),
+                      value: planController.breakfast,
+                      items: breakfast
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Center(
+                                  child: Text(
+                                    item,
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                      onChanged: (val) {
+                        orderController.breakfast = val.toString();
+                        planController.breakfast = val.toString();
+                        orderController.update();
+                        planController.update();
+                        planController.calculatePrice(7);
+                        planController.calculatePrice(15);
+                        planController.calculatePrice(30);
+                      },
                     ),
                   ),
                   sizedBoxwidth8,

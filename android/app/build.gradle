@@ -57,6 +57,7 @@ android {
         debug{
             keyAlias 'androiddebugkey'
         }
+
     }
 
     buildTypes {
