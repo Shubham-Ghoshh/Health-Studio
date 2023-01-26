@@ -487,11 +487,20 @@ class _PlanScreenState extends State<PlanScreen> {
                                       color: whiteColor),
                                 ),
                                 Text(
-                                  'Approx.\nProtein',
+                                  "Approx.",
                                   style: TextStyle(
-                                      fontSize: 10.sp,
-                                      fontWeight: FontWeight.w300,
-                                      color: whiteColor),
+                                    fontSize: 8.sp,
+                                    fontWeight: FontWeight.w300,
+                                    color: whiteColor,
+                                  ),
+                                ),
+                                Text(
+                                  'Protein',
+                                  style: TextStyle(
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.w300,
+                                    color: whiteColor,
+                                  ),
                                 )
                               ],
                             ),
@@ -515,7 +524,15 @@ class _PlanScreenState extends State<PlanScreen> {
                                       color: whiteColor),
                                 ),
                                 Text(
-                                  'Approx.\nCarbs',
+                                  "Approx.",
+                                  style: TextStyle(
+                                    fontSize: 8.sp,
+                                    fontWeight: FontWeight.w300,
+                                    color: whiteColor,
+                                  ),
+                                ),
+                                Text(
+                                  'Carbs',
                                   style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w300,

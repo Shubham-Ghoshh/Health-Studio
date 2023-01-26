@@ -19,8 +19,8 @@ void main() async {
   var lang = prefs.getBool("language") ?? true;
   runApp(
     DevicePreview(
-      enabled: true,
-      // enabled: false,
+      // enabled: true,
+      enabled: false,
       builder: (context) => ScreenUtilInit(
         designSize: const Size(360, 690),
         minTextAdapt: true,
