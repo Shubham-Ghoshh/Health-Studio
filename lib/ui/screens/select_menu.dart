@@ -4,16 +4,19 @@ import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/userDashboardController.dart';
 import 'package:health_studio_user/core/models/user_dashboard.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
+import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 
 class SelectMenuPage extends StatelessWidget {
+  final bool showSaveButton;
   final String date;
   final DashboardItem item;
   const SelectMenuPage({
     super.key,
     required this.date,
     required this.item,
+    this.showSaveButton = true,
   });
 
   @override
@@ -62,15 +65,33 @@ class SelectMenuPage extends StatelessWidget {
                             int.tryParse(userDashboardController
                                     .packageDetail!.meal) ??
                                 0,
-                            (index) => Column(
-                              children: [
-                                selectMealBoxText("Meal 1", "Chose a meal",
-                                    "meal", date, item),
-                                const Divider(
-                                  color: Color.fromARGB(95, 0, 0, 0),
-                                ),
-                              ],
-                            ),
+                            (index) {
+                              int mealIndex = userDashboardController.mealItems
+                                  .indexWhere((e) => e.key == "meal");
+                              int length = userDashboardController
+                                  .mealItems[mealIndex].items.length;
+
+                              String title = length > index
+                                  ? userDashboardController.mealItems[mealIndex]
+                                      .items[index].meal.nameEn
+                                  : "Choose a meal";
+
+                              return Column(
+                                key: Key(index.toString()),
+                                children: [
+                                  selectMealBoxText(
+                                    "Meal ${index + 1}",
+                                    title,
+                                    "meal",
+                                    date,
+                                    item,
+                                  ),
+                                  const Divider(
+                                    color: Color.fromARGB(95, 0, 0, 0),
+                                  ),
+                                ],
+                              );
+                            },
                           ),
                         ),
                         sizedBoxHeight25,
@@ -79,19 +100,28 @@ class SelectMenuPage extends StatelessWidget {
                           "Snack",
                           userDashboardController.packageDetail!.snack,
                           List.generate(
-                            int.tryParse(userDashboardController
-                                    .packageDetail!.snack) ??
-                                0,
-                            (index) => Column(
+                              int.tryParse(userDashboardController
+                                      .packageDetail!.snack) ??
+                                  0, (index) {
+                            int snackIndex = userDashboardController.mealItems
+                                .indexWhere((e) => e.key == "snack");
+                            int length = userDashboardController
+                                .mealItems[snackIndex].items.length;
+
+                            String title = length > index
+                                ? userDashboardController.mealItems[snackIndex]
+                                    .items[index].meal.nameEn
+                                : "Choose a meal";
+                            return Column(
                               children: [
-                                selectMealBoxText("Snack 1", "Chose a meal",
+                                selectMealBoxText("Snack ${index + 1}", title,
                                     "snack", date, item),
                                 const Divider(
                                   color: Color.fromARGB(95, 0, 0, 0),
                                 ),
                               ],
-                            ),
-                          ),
+                            );
+                          }),
                         ),
                         sizedBoxHeight25,
                         selectMealBox(
@@ -102,23 +132,55 @@ class SelectMenuPage extends StatelessWidget {
                             int.tryParse(userDashboardController
                                     .packageDetail!.breakfast) ??
                                 0,
-                            (index) => Column(
-                              children: [
-                                selectMealBoxText(
-                                  "Breakfast 1",
-                                  "Chose a meal",
-                                  "breakfast",
-                                  date,
-                                  item,
-                                ),
-                                const Divider(
-                                  color: Color.fromARGB(95, 0, 0, 0),
-                                ),
-                              ],
-                            ),
+                            (index) {
+                              int breakfastIndex = userDashboardController
+                                  .mealItems
+                                  .indexWhere((e) => e.key == "breakfast");
+                              int length = userDashboardController
+                                  .mealItems[breakfastIndex].items.length;
+
+                              String title = length > index
+                                  ? userDashboardController
+                                      .mealItems[breakfastIndex]
+                                      .items[index]
+                                      .meal
+                                      .nameEn
+                                  : "Choose a meal";
+                              return Column(
+                                children: [
+                                  selectMealBoxText(
+                                    "Breakfast ${index + 1}",
+                                    title,
+                                    "breakfast",
+                                    date,
+                                    item,
+                                  ),
+                                  const Divider(
+                                    color: Color.fromARGB(95, 0, 0, 0),
+                                  ),
+                                ],
+                              );
+                            },
                           ),
                         ),
-                        sizedBoxHeight35,
+                        // sizedBoxHeight8,
+                        Visibility(
+                          visible: showSaveButton,
+                          child: LoginButton(
+                            onTap: () {
+                              userDashboardController.getMealPaymentLink(item);
+                            },
+                            enabled: !(userDashboardController
+                                    .mealItems[0].items.isEmpty ||
+                                userDashboardController
+                                    .mealItems[1].items.isEmpty ||
+                                userDashboardController
+                                    .mealItems[2].items.isEmpty),
+                            title: "Save All",
+                            height: 50,
+                          ),
+                        ),
+                        sizedBoxHeight12,
                       ],
                     ),
                   ),

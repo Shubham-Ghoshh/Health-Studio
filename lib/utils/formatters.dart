@@ -25,6 +25,7 @@ DateTime getDateFormat(String? date, {bool split = true}) {
     return DateTime.now();
   }
   if (split) {
+    // Accepted forma yyyy-mm-dd
     return DateTime.parse(
         "${date.split('-')[2]}-${date.split('-')[1]}-${date.split('-')[0]}");
   } else {

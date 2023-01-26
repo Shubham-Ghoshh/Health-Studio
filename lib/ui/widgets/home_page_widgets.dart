@@ -29,7 +29,7 @@ class _FoodMenuItemState extends State<FoodMenuItem> {
       children: [
         GestureDetector(
           onTap: () {
-            Get.put(MenuController()).getMenuDetail(widget.menu);
+            Get.put(MenuController()).getMenuDetail(widget.menu.id);
           },
           child: Padding(
             padding: const EdgeInsets.only(right: 16.0),

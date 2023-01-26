@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:health_studio_user/core/controllers/userDashboardController.dart';
 import 'package:health_studio_user/core/models/user_dashboard.dart';
 import 'package:health_studio_user/ui/screens/meal_item.dart';
@@ -9,7 +10,9 @@ import 'package:health_studio_user/utils/spacing.dart';
 
 class ChooseMeal extends StatelessWidget {
   final DashboardItem item;
-  const ChooseMeal({Key? key, required this.item}) : super(key: key);
+  final String type;
+  const ChooseMeal({Key? key, required this.item, required this.type})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +56,7 @@ class ChooseMeal extends StatelessWidget {
                           meal: userDashboardController.meals[index],
                           height: 125,
                           item: item,
+                          type: type,
                         );
                       },
                     ),

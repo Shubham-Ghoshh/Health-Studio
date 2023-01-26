@@ -17,12 +17,14 @@ class MealItem extends StatelessWidget {
     required this.meal,
     required this.height,
     required this.item,
+    required this.type,
     Key? key,
   }) : super(key: key);
 
   final Meal meal;
   final double height;
   final DashboardItem item;
+  final String type;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class MealItem extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            // Get.put(MenuController()).getMenuDetail(menu);
+            Get.put(MenuController()).getMenuDetail(meal.id);
           },
           child: Padding(
             padding: const EdgeInsets.only(right: 16.0),
@@ -65,7 +67,6 @@ class MealItem extends StatelessWidget {
                   right: 4,
                   child: GestureDetector(
                     onTap: () {
-                      print("CHOOSE ITEM");
                       showModalBottomSheet(
                           backgroundColor: plantextColor,
                           context: context,
@@ -87,7 +88,10 @@ class MealItem extends StatelessWidget {
                                             "Write additional instructions",
                                         filled: true,
                                       ),
-                                      onChanged: (val) {},
+                                      onChanged: (val) {
+                                        userDashboardController.note = val;
+                                        userDashboardController.update();
+                                      },
                                     ),
                                     sizedBoxHeight12,
                                     Row(
@@ -102,6 +106,9 @@ class MealItem extends StatelessWidget {
                                         const Spacer(),
                                         Expanded(
                                           child: TextFormField(
+                                            initialValue:
+                                                userDashboardController
+                                                    .carbValue,
                                             inputFormatters: [
                                               LengthLimitingTextInputFormatter(
                                                   1),
@@ -147,6 +154,9 @@ class MealItem extends StatelessWidget {
                                         const Spacer(),
                                         Expanded(
                                           child: TextFormField(
+                                            initialValue:
+                                                userDashboardController
+                                                    .proteinValue,
                                             inputFormatters: [
                                               LengthLimitingTextInputFormatter(
                                                   1),
@@ -184,11 +194,17 @@ class MealItem extends StatelessWidget {
                                         "Price: KD ${userDashboardController.price}"),
                                     LoginButton(
                                       onTap: () {
-                                        userDashboardController
-                                            .getMealPaymentLink(meal, item);
+                                        userDashboardController.saveMeal(
+                                            meal, item, type);
+                                        // userDashboardController
+                                        //     .getMealPaymentLink(
+                                        //   meal,
+                                        //   item,
+                                        //   type,
+                                        // );
                                       },
                                       enabled: true,
-                                      title: "Pay Now",
+                                      title: "Save",
                                       height: 50,
                                     ),
                                     sizedBoxHeight12,

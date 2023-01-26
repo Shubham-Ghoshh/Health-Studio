@@ -1,15 +1,13 @@
 import 'dart:collection';
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:core';
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/order_controller.dart';
-import 'package:health_studio_user/ui/screens/payment_confirmation.dart';
-import 'dart:core';
-import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/utils/colors.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -46,6 +44,8 @@ class PaymentScreenState extends State<PaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("ONFINISH ${widget.onFinish}");
+
     return Scaffold(
         appBar: AppBar(
             leading: IconButton(
@@ -102,6 +102,8 @@ class PaymentScreenState extends State<PaymentScreen> {
                     if (widget.isMeal) {
                       Get.back();
                       Get.back();
+                      print(widget.onFinish != null);
+                      widget.onFinish != null ? widget.onFinish!() : null;
                       Get.rawSnackbar(message: "Payment Successful");
                     } else {
                       Get.find<OrderController>().getOrderDetails(status: html);

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
-import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -53,9 +51,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
         r'x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])';
     final regex = RegExp(pattern);
 
-    return value!.isNotEmpty && !regex.hasMatch(value)
-        ? 'Enter a valid email address'
-        : null;
+    if (value == null || value.isEmpty) {
+      return "Email address is required.";
+    } else if (!regex.hasMatch(value)) {
+      return 'Enter a valid email address';
+    } else
+      return null;
   }
 
   @override
@@ -78,8 +79,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
               child: Form(
                 key: authController.signUpFormKey,
                 onChanged: () {
-                  authController.isValid = true;
-                  authController.update();
+                  if (authController.signUpFormKey.currentState?.validate() ??
+                      false) {
+                    authController.isValid = true;
+                    authController.update();
+                  } else {
+                    authController.isValid = false;
+                    authController.update();
+                  }
                 },
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
@@ -183,6 +190,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           sizedBoxHeight10,
                           TextFormField(
+                            validator: (value) =>
+                                (value == null || value.isEmpty)
+                                    ? "Full Name is required"
+                                    : null,
                             onChanged: (value) {
                               authController.name = value;
                               authController.update();
@@ -218,6 +229,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           sizedBoxHeight10,
                           TextFormField(
+                            validator: (value) =>
+                                (value == null || value.isEmpty)
+                                    ? "Date of Birth is required"
+                                    : null,
                             controller: _dobController,
                             readOnly: true,
                             onChanged: (value) {},
@@ -269,6 +284,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           sizedBoxHeight10,
                           TextFormField(
+                            validator: (value) =>
+                                (value == null || value.isEmpty)
+                                    ? "Gender is required"
+                                    : null,
                             readOnly: true,
                             onChanged: (value) {},
                             controller: _genderController,

@@ -1,10 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/models/address.dart';
 import 'package:health_studio_user/core/request.dart';
-import 'package:health_studio_user/ui/screens/address_screen.dart';
 import 'package:health_studio_user/ui/widgets/loader.dart';
 
 class AddressController extends GetxController {
@@ -20,6 +17,8 @@ class AddressController extends GetxController {
   String? floornumber;
   String? housenumber;
   String initialvalue = "Area/city";
+  GlobalKey<FormState> addressKey = GlobalKey<FormState>();
+  bool isValid = false;
 
   @override
   void onInit() {

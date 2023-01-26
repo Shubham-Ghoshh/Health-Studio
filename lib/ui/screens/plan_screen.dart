@@ -8,11 +8,9 @@ import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
 import 'package:health_studio_user/core/controllers/setting_controller.dart';
-import 'package:health_studio_user/core/models/order.dart';
 import 'package:health_studio_user/core/models/plan.dart';
 import 'package:health_studio_user/ui/screens/address_screen.dart';
 import 'package:health_studio_user/ui/screens/authentication/login_screen.dart';
-import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/formatters.dart';
@@ -31,81 +29,98 @@ class _PlanScreenState extends State<PlanScreen> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PlanController>(builder: (planController) {
-      return Scaffold(
-          // bottomNavigationBar: bottomNavigationBar(),
-          body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/background.png"),
-            fit: BoxFit.fill,
-          ),
-        ),
-        child: SingleChildScrollView(
-          child: SafeArea(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 242,
-                    // height: 57,
-                    child: Image.asset("assets/images/health_studio_logo.png"),
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 22.0),
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: settingsBackground,
-                          ),
-                          child: SettingButton(),
-                        ),
-                      ),
-                      sizedBoxwidth8,
-                    ],
-                  ),
-                ],
-              ),
-              Padding(
-                padding: edgeInsets22.copyWith(left: 16.w),
-                child: GetBuilder<LanguageTogglerController>(
-                  builder: (languageController) => Text(
-                    languageController.isEnglish
-                        ? planController.selectedPlan!.titleEn
-                        : planController.selectedPlan!.titleAr,
-                    style: const TextStyle(
-                      color: Color(0xffFFFDFD),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 28,
-                    ),
-                  ),
+      return GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: Scaffold(
+            resizeToAvoidBottomInset: true,
+            // bottomNavigationBar: bottomNavigationBar(),
+            body: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/background.png"),
+                  fit: BoxFit.fill,
                 ),
               ),
-              ...planController.packages
-                  .map(
-                    (e) => planItem(e),
-                  )
-                  .toList(),
-              customplan(
-                  AppLocalizations.of(context)!.custom_plan, "3", "1", "1"),
-            ]),
-          ),
-        ),
-      ));
+              child: SingleChildScrollView(
+                child: SafeArea(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              icon: const Icon(
+                                Icons.arrow_back,
+                                size: 30,
+                                color: Colors.white,
+                              ),
+                            ),
+                            // sizedBoxWidth25,
+                            SizedBox(
+                              width: 242,
+                              // height: 57,
+                              child: Image.asset(
+                                  "assets/images/health_studio_logo.png"),
+                            ),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 22.0),
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: settingsBackground,
+                                    ),
+                                    child: SettingButton(),
+                                  ),
+                                ),
+                                sizedBoxwidth8,
+                              ],
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: edgeInsets22.copyWith(left: 16.w),
+                          child: GetBuilder<LanguageTogglerController>(
+                            builder: (languageController) => Text(
+                              languageController.isEnglish
+                                  ? planController.selectedPlan!.titleEn
+                                  : planController.selectedPlan!.titleAr,
+                              style: const TextStyle(
+                                color: Color(0xffFFFDFD),
+                                fontWeight: FontWeight.w600,
+                                fontSize: 28,
+                              ),
+                            ),
+                          ),
+                        ),
+                        ...planController.packages
+                            .map(
+                              (e) => planItem(e),
+                            )
+                            .toList(),
+                        !planController.customPlanCreated
+                            ? customplan(
+                                AppLocalizations.of(context)!.custom_plan)
+                            : const SizedBox(),
+                        SizedBox(
+                          height: 260.h,
+                        )
+                      ]),
+                ),
+              ),
+            )),
+      );
     });
   }
 
   Widget planItem(
     Package package,
   ) {
-    if (package.isCustom) {
-      print("MEAL ${package.meal}");
-      print("SNACK ${package.snack}");
-      print("BREAKFAST ${package.breakfast}");
-    }
     return Padding(
       padding: edgeInsets16,
       child: Stack(
@@ -404,7 +419,21 @@ class _PlanScreenState extends State<PlanScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             sizedBoxHeight10,
-                            Image.asset("assets/images/Frame.png")
+                            Image.asset("assets/images/Frame.png"),
+                            IconButton(
+                              onPressed: () {
+                                Get.find<PlanController>()
+                                    .packages
+                                    .removeLast();
+                                Get.find<PlanController>().customPlanCreated =
+                                    false;
+                                Get.find<PlanController>().update();
+                              },
+                              icon: const Icon(
+                                Icons.edit,
+                                color: loginButtonColor,
+                              ),
+                            )
                           ],
                         ),
                       )
@@ -420,64 +449,75 @@ class _PlanScreenState extends State<PlanScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            sizedBoxHeight6,
-                            Column(
-                              children: [
-                                SvgPicture.asset('assets/images/calorie.svg'),
-                                sizedBoxHeight6,
-                                Text(
-                                  '250',
-                                  style: TextStyle(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w900,
-                                      color: whiteColor),
-                                ),
-                                Text(
-                                  'Calorie',
-                                  style: TextStyle(
-                                      fontSize: 8.sp,
-                                      fontWeight: FontWeight.w300,
-                                      color: whiteColor),
-                                )
-                              ],
-                            ),
-                            sizedBoxHeight6,
+                            sizedBoxHeight12,
+                            // Column(
+                            //   children: [
+                            //     SvgPicture.asset('assets/images/calorie.svg'),
+                            //     sizedBoxHeight6,
+                            //     Text(
+                            //       '250',
+                            //       style: TextStyle(
+                            //           fontSize: 12.sp,
+                            //           fontWeight: FontWeight.w900,
+                            //           color: whiteColor),
+                            //     ),
+                            //     Text(
+                            //       'Calorie',
+                            //       style: TextStyle(
+                            //           fontSize: 8.sp,
+                            //           fontWeight: FontWeight.w300,
+                            //           color: whiteColor),
+                            //     )
+                            //   ],
+                            // ),
+
                             Column(
                               children: [
                                 SvgPicture.asset('assets/images/protein.svg'),
                                 sizedBoxHeight6,
                                 Text(
-                                  '250',
+                                  package.attributes
+                                          ?.firstWhere((element) =>
+                                              element.titleEn == "Protein")
+                                          .value ??
+                                      "-",
                                   style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w900,
                                       color: whiteColor),
                                 ),
                                 Text(
-                                  'Protein',
+                                  'Approx.\nProtein',
                                   style: TextStyle(
-                                      fontSize: 8.sp,
+                                      fontSize: 10.sp,
                                       fontWeight: FontWeight.w300,
                                       color: whiteColor),
                                 )
                               ],
                             ),
-                            sizedBoxHeight6,
+                            sizedBoxHeight10,
+
                             Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SvgPicture.asset('assets/images/fat.svg'),
                                 sizedBoxHeight6,
                                 Text(
-                                  '250',
+                                  package.attributes
+                                          ?.firstWhere((element) =>
+                                              element.titleEn == "Carbs")
+                                          .value ??
+                                      "-",
                                   style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w900,
                                       color: whiteColor),
                                 ),
                                 Text(
-                                  'Fat',
+                                  'Approx.\nCarbs',
                                   style: TextStyle(
-                                      fontSize: 8.sp,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.w300,
                                       color: whiteColor),
                                 )
@@ -608,8 +648,7 @@ class _PlanScreenState extends State<PlanScreen> {
     }
   }
 
-  Widget customplan(
-      String plantitle, String meals, String snacks, String breakfast) {
+  Widget customplan(String plantitle) {
     return GetBuilder<PlanController>(builder: (planController) {
       return Padding(
         padding: edgeInsets16,
@@ -691,10 +730,6 @@ class _PlanScreenState extends State<PlanScreen> {
             ),
             GestureDetector(
               onTap: () {
-                print("MEAL ${planController.meal}");
-                print("BREAKFAST ${planController.breakfast}");
-                print("SNACK ${planController.snack}");
-
                 planController.packages.add(
                   Package(
                     titleAr: "خطة مخصصة",
@@ -710,6 +745,7 @@ class _PlanScreenState extends State<PlanScreen> {
                     isCustom: true,
                   ),
                 );
+                planController.customPlanCreated = true;
                 planController.update();
               },
               child: Container(
@@ -767,7 +803,8 @@ class MealWidget extends StatelessWidget {
                             width: 26.w,
                             color: customcolor.withOpacity(0.1),
                             child: Center(
-                              child: TextField(
+                              child: TextFormField(
+                                initialValue: planController.meal,
                                 inputFormatters: [
                                   LengthLimitingTextInputFormatter(1),
                                 ],
@@ -809,7 +846,8 @@ class MealWidget extends StatelessWidget {
                         width: 26.w,
                         color: customcolor.withOpacity(0.1),
                         child: Center(
-                          child: TextField(
+                          child: TextFormField(
+                            initialValue: planController.snack,
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(1),
                             ],
@@ -850,7 +888,8 @@ class MealWidget extends StatelessWidget {
                     width: 26.w,
                     color: customcolor.withOpacity(0.1),
                     child: Center(
-                      child: TextField(
+                      child: TextFormField(
+                        initialValue: planController.breakfast,
                         inputFormatters: [
                           LengthLimitingTextInputFormatter(1),
                         ],

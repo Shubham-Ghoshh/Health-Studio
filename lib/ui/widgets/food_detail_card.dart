@@ -93,7 +93,7 @@ class NutritionContent extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 12, right: 8, left: 8),
+          padding: const EdgeInsets.only(top: 0, right: 8, left: 8),
           child: SizedBox(
             height: 45,
             width: 45,
