@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
+import 'package:health_studio_user/core/models/googlesignin.dart';
 import 'package:health_studio_user/ui/screens/authentication/sign_up_screen.dart';
 import 'package:health_studio_user/utils/constants.dart';
 import 'package:health_studio_user/utils/spacing.dart';
@@ -167,20 +168,28 @@ class LoginPage extends StatelessWidget {
                         //   ),
                         // ),
                         // sizedBoxHeight6,
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   children: [
-                        //     FacebookLoginButton(
-                        //       onTap: () {},
-                        //     ),
-                        //     GoogleLoginButton(
-                        //       onTap: () {},
-                        //     ),
-                        //     AppleLoginButton(
-                        //       onTap: () async {},
-                        //     ),
-                        //   ],
-                        // ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // FacebookLoginButton(
+                            //   onTap: () {},
+                            // ),
+                            GoogleLoginButton(
+                              onTap: () async {
+                               
+                                final userinfo = await GoogleSignInApi.login();
+                                if (userinfo == null) {
+                                  Get.rawSnackbar(message: "Sign In Failed");
+                                } else {
+                                  Get.to(RegistrationPage(email: userinfo.email,name:userinfo.displayName));
+                                }
+                              },
+                            ),
+                            // AppleLoginButton(
+                            //   onTap: () async {},
+                            // ),
+                          ],
+                        ),
                         const Spacer(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
