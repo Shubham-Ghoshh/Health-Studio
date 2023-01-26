@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/order_controller.dart';
+import 'package:health_studio_user/core/controllers/setting_controller.dart';
 import 'package:health_studio_user/ui/screens/home_screen.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/utils/colors.dart';
@@ -117,6 +118,7 @@ class PaymentConfirmationPage extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Get.offAll(() => const HomePage());
+                        Get.find<SettingsController>().getUserDetails();
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(

@@ -70,13 +70,16 @@ class _FoodDetailPageState extends State<FoodDetailPage> {
                         builder: (languageController) => FoodDetailCard(
                           nutritionContent: menuController.menuDetail!.attribute
                               .map(
-                                (e) => NutritionContent(
-                                  image: SvgPicture.asset(
-                                      "assets/images/menu/${e.titleEn}_icon.svg"),
-                                  nutritionContent: e.value,
-                                  nutritionName: languageController.isEnglish
-                                      ? e.titleEn
-                                      : e.titleAr!,
+                                (e) => Padding(
+                                  padding: const EdgeInsets.only(top: 12.0),
+                                  child: NutritionContent(
+                                    image: SvgPicture.asset(
+                                        "assets/images/menu/${e.titleEn}_icon.svg"),
+                                    nutritionContent: e.value,
+                                    nutritionName: languageController.isEnglish
+                                        ? e.titleEn
+                                        : e.titleAr!,
+                                  ),
                                 ),
                               )
                               .toList(),

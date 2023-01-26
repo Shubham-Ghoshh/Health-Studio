@@ -19,9 +19,11 @@ class PlanController extends GetxController {
   String fifteenDays = "0";
   String thirtyDays = "0";
   Package? selectedPackage;
+  bool customPlanCreated = false;
 
   void getPackages(Plan plan) async {
     selectedPlan = plan;
+    customPlanCreated = false;
     Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest("package/${plan.id}");
     Utility.closeDialog();
@@ -50,6 +52,9 @@ class PlanController extends GetxController {
       Get.rawSnackbar(message: response["message"] ?? "");
     } else {
       planDetail = PlanDetail.fromJson(response["details"][0]);
+      calculatePrice(7);
+      calculatePrice(15);
+      calculatePrice(30);
       update();
       if (navigate) {
         Get.to(() => const PlanScreen());

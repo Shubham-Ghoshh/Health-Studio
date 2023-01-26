@@ -8,9 +8,9 @@ import 'package:health_studio_user/ui/widgets/loader.dart';
 class MenuController extends GetxController {
   Menu? selectedMenu;
   MenuDetail? menuDetail;
-  void getMenuDetail(Menu menu) async {
+  void getMenuDetail(String menuId) async {
     Utility.showLoadingDialog();
-    Map<String, dynamic> response = await getRequest("menu/${menu.id}");
+    Map<String, dynamic> response = await getRequest("menu/$menuId");
     Utility.closeDialog();
     if (response["error"] != 0) {
       menuDetail = null;

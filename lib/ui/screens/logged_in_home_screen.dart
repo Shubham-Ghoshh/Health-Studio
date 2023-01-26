@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
 import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
 import 'package:health_studio_user/core/controllers/setting_controller.dart';
 import 'package:health_studio_user/core/controllers/userDashboardController.dart';
-import 'package:health_studio_user/ui/screens/select_menu.dart';
+import 'package:health_studio_user/core/models/order.dart';
+import 'package:health_studio_user/ui/screens/address_screen.dart';
+import 'package:health_studio_user/ui/screens/confirmation_screen.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
-import 'package:health_studio_user/ui/widgets/bottom_navigation_bar.dart';
 import 'package:health_studio_user/ui/widgets/date.dart';
 import 'package:health_studio_user/ui/widgets/food_detail_card.dart';
 import 'package:health_studio_user/utils/colors.dart';
@@ -111,12 +111,12 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                        sizedBoxHeight6,
                                                         Text(
-                                                          planController
-                                                                  .planDetail
-                                                                  ?.descriptionEn ??
-                                                              "",
+                                                          (planController
+                                                                      .planDetail
+                                                                      ?.descriptionEn ??
+                                                                  "")
+                                                              .trimRight(),
                                                           style:
                                                               const TextStyle(
                                                             color: Color(
@@ -132,7 +132,6 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                       color: Color.fromARGB(
                                                           96, 0, 0, 0),
                                                     ),
-                                                    sizedBoxHeight6,
                                                     const Text(
                                                       "Every Meal:",
                                                       style: TextStyle(
@@ -143,7 +142,7 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                         fontSize: 14.4,
                                                       ),
                                                     ),
-                                                    sizedBoxHeight6,
+                                                    // sizedBoxHeight6,x
                                                     Column(
                                                       children: [
                                                         Row(
@@ -173,10 +172,10 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                                 nutritionContent:
                                                                     planController
                                                                             .planDetail
-                                                                            ?.protein ??
+                                                                            ?.fat ??
                                                                         "0",
                                                                 nutritionName:
-                                                                    "Protein"),
+                                                                    "Fat"),
                                                             sizedBoxWidth12,
                                                             // NutritionContent(
                                                             //     image:
@@ -199,10 +198,10 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                                 nutritionContent:
                                                                     planController
                                                                             .planDetail
-                                                                            ?.carb ??
+                                                                            ?.calorie ??
                                                                         "0",
                                                                 nutritionName:
-                                                                    "Carbs"),
+                                                                    "Calorie"),
                                                           ],
                                                         ),
                                                         sizedBoxHeight30,
@@ -259,7 +258,83 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                                 width: 2.0,
                                                                 color: Colors
                                                                     .white)),
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      print(
+                                                          "FROM ${Get.find<SettingsController>().userDetails?.orderFrom} TO ${Get.find<SettingsController>().userDetails?.orderTo}");
+                                                      int duration = getDateFormat(
+                                                              Get.find<
+                                                                      SettingsController>()
+                                                                  .userDetails
+                                                                  ?.orderTo,
+                                                              split: false)
+                                                          .difference(getDateFormat(
+                                                              Get.find<
+                                                                      SettingsController>()
+                                                                  .userDetails
+                                                                  ?.orderFrom,
+                                                              split: false))
+                                                          .inDays;
+                                                      print(
+                                                          "DURATION ${duration + 1}");
+
+                                                      DateTime startDate =
+                                                          getDateFormat(
+                                                                  Get.find<
+                                                                          SettingsController>()
+                                                                      .userDetails
+                                                                      ?.orderTo,
+                                                                  split: false)
+                                                              .add(
+                                                        const Duration(
+                                                          days: 1,
+                                                        ),
+                                                      );
+
+                                                      DateTime endDate =
+                                                          startDate.add(
+                                                        Duration(
+                                                          days: (duration + 1),
+                                                        ),
+                                                      );
+
+                                                      orderController.order =
+                                                          Order(
+                                                        planId: orderController
+                                                            .orderDetails!
+                                                            .categoryId,
+                                                        packageId:
+                                                            orderController
+                                                                .orderDetails!
+                                                                .packageId,
+                                                        amount: orderController
+                                                            .orderDetails!
+                                                            .amount,
+                                                        startDate: DateFormat(
+                                                                "dd-MM-yyyy")
+                                                            .format(startDate),
+                                                        endDate: DateFormat(
+                                                                "dd-MM-yyyy")
+                                                            .format(endDate),
+                                                      );
+                                                      orderController.duration =
+                                                          duration + 1;
+                                                      orderController.update();
+
+                                                      Get.put(PlanController())
+                                                          .selectedPlan = Get.find<
+                                                              HomeController>()
+                                                          .plans
+                                                          .firstWhere((plan) =>
+                                                              plan.id ==
+                                                              orderController
+                                                                  .orderDetails!
+                                                                  .categoryId);
+                                                      Get.to(
+                                                        () => const Address(
+                                                          check: true,
+                                                        ),
+                                                      );
+                                                    },
                                                     child: Text(
                                                       "Extend",
                                                       textAlign: TextAlign.left,
@@ -351,27 +426,56 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                                   .dateRequested)
                                                           .day
                                                           .toString(),
-                                                      userDashboardController
-                                                              .userDashboard!
-                                                              .thisweek[index]
-                                                              .menuEn ==
-                                                          "NONE", () {
-                                                    userDashboardController
-                                                        .getPackageDetails(
-                                                      orderController
-                                                          .orderDetails!
-                                                          .categoryId,
-                                                      orderController
-                                                          .orderDetails!
-                                                          .packageId,
-                                                      userDashboardController
-                                                          .userDashboard!
-                                                          .thisweek[index]
-                                                          .dateRequested,
-                                                      userDashboardController
-                                                          .userDashboard!
-                                                          .thisweek[index],
-                                                    );
+                                                      // userDashboardController
+                                                      //             .userDashboard!
+                                                      //             .thisweek[
+                                                      //                 index]
+                                                      //             .menuEn ==
+                                                      //         "NONE" &&
+                                                      DateTime.parse(
+                                                              userDashboardController
+                                                                  .userDashboard!
+                                                                  .thisweek[
+                                                                      index]
+                                                                  .dateRequested)
+                                                          .isAfter(DateTime
+                                                                  .now()
+                                                              .add(
+                                                                  const Duration(
+                                                                      hours:
+                                                                          24))),
+                                                      () {
+                                                    // userDashboardController
+                                                    //                 .userDashboard!
+                                                    //                 .thisweek[
+                                                    //                     index]
+                                                    //                 .menuEn ==
+                                                    //             "NONE" &&
+                                                    DateTime.parse(userDashboardController
+                                                                .userDashboard!
+                                                                .thisweek[index]
+                                                                .dateRequested)
+                                                            .isAfter(DateTime
+                                                                    .now()
+                                                                .add(const Duration(
+                                                                    hours: 24)))
+                                                        ? userDashboardController
+                                                            .getPackageDetails(
+                                                            orderController
+                                                                .orderDetails!
+                                                                .categoryId,
+                                                            orderController
+                                                                .orderDetails!
+                                                                .packageId,
+                                                            userDashboardController
+                                                                .userDashboard!
+                                                                .thisweek[index]
+                                                                .dateRequested,
+                                                            userDashboardController
+                                                                .userDashboard!
+                                                                .thisweek[index],
+                                                          )
+                                                        : null;
                                                   });
                                                 },
                                               ),
@@ -460,27 +564,56 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                                   .dateRequested)
                                                           .day
                                                           .toString(),
-                                                      userDashboardController
-                                                              .userDashboard!
-                                                              .nextweek[index]
-                                                              .menuEn !=
-                                                          "NONE", () {
-                                                    userDashboardController
-                                                        .getPackageDetails(
-                                                      orderController
-                                                          .orderDetails!
-                                                          .categoryId,
-                                                      orderController
-                                                          .orderDetails!
-                                                          .packageId,
-                                                      userDashboardController
-                                                          .userDashboard!
-                                                          .nextweek[index]
-                                                          .dateRequested,
-                                                      userDashboardController
-                                                          .userDashboard!
-                                                          .nextweek[index],
-                                                    );
+                                                      // userDashboardController
+                                                      //             .userDashboard!
+                                                      //             .nextweek[
+                                                      //                 index]
+                                                      //             .menuEn ==
+                                                      //         "NONE" &&
+                                                      DateTime.parse(
+                                                              userDashboardController
+                                                                  .userDashboard!
+                                                                  .nextweek[
+                                                                      index]
+                                                                  .dateRequested)
+                                                          .isAfter(DateTime
+                                                                  .now()
+                                                              .add(
+                                                                  const Duration(
+                                                                      hours:
+                                                                          24))),
+                                                      () {
+                                                    // userDashboardController
+                                                    //                 .userDashboard!
+                                                    //                 .nextweek[
+                                                    //                     index]
+                                                    //                 .menuEn ==
+                                                    //             "NONE" &&
+                                                    DateTime.parse(userDashboardController
+                                                                .userDashboard!
+                                                                .nextweek[index]
+                                                                .dateRequested)
+                                                            .isAfter(DateTime
+                                                                    .now()
+                                                                .add(const Duration(
+                                                                    hours: 24)))
+                                                        ? userDashboardController
+                                                            .getPackageDetails(
+                                                            orderController
+                                                                .orderDetails!
+                                                                .categoryId,
+                                                            orderController
+                                                                .orderDetails!
+                                                                .packageId,
+                                                            userDashboardController
+                                                                .userDashboard!
+                                                                .nextweek[index]
+                                                                .dateRequested,
+                                                            userDashboardController
+                                                                .userDashboard!
+                                                                .nextweek[index],
+                                                          )
+                                                        : null;
                                                   });
                                                 },
                                               ),

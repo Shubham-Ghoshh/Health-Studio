@@ -8,6 +8,8 @@ class PlanDetail {
   String grams;
   String carb;
   String protein;
+  String? fat;
+  String? calorie;
   String? proteinPrice;
   String? carbPrice;
   String? mealSevenDays;
@@ -30,6 +32,8 @@ class PlanDetail {
     required this.grams,
     required this.carb,
     required this.protein,
+    this.fat,
+    this.calorie,
     this.proteinPrice,
     this.carbPrice,
     this.mealSevenDays,
@@ -52,6 +56,8 @@ class PlanDetail {
         grams: json["grams"],
         protein: json["protein"],
         carb: json["carb"],
+        fat: json["fat"],
+        calorie: json["calorie"],
         proteinPrice: json["protein_price"],
         carbPrice: json["carb_price"],
         mealSevenDays: json["meal_7_days"] == "" ? "0" : json["meal_7_days"],

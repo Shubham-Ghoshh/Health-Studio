@@ -42,6 +42,7 @@ class Package {
   String thirtyDays;
   int selected;
   bool isCustom;
+  List? attributes;
 
   Package({
     this.id,
@@ -60,6 +61,7 @@ class Package {
     required this.thirtyDays,
     this.selected = 7,
     this.isCustom = false,
+    this.attributes,
   });
 
   factory Package.fromJson(Map<String, dynamic> json) => Package(
@@ -78,5 +80,36 @@ class Package {
         status: json["status"],
         meal: json["meal"],
         selected: 7,
+        attributes: json["attributes"] == null
+            ? []
+            : json["attributes"].map((e) => Attribute.fromJson(e)).toList(),
       );
+}
+
+// [{title_en: Carbs, title_ar: Carbs, description_ar: null, description_en: null, value: 8}, {title_en: Protein, title_ar: Protein, description_ar: null, description_en: null, value: 6}]
+
+class Attribute {
+  String? value;
+  String titleEn;
+  String titleAr;
+  String? descriptionEn;
+  String? descriptionAr;
+
+  Attribute({
+    this.value,
+    required this.titleAr,
+    required this.titleEn,
+    this.descriptionAr,
+    this.descriptionEn,
+  });
+
+  factory Attribute.fromJson(Map<String, dynamic> json) {
+    return Attribute(
+      value: json["value"],
+      titleAr: json["title_ar"],
+      titleEn: json["title_en"],
+      descriptionAr: json["description_ar"],
+      descriptionEn: json["description_en"],
+    );
+  }
 }

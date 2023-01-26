@@ -44,7 +44,7 @@ Widget dateWidget(BuildContext context, String weekday, String day,
 }
 
 Widget calenderWidget(BuildContext context, String month, String day,
-    bool selected, Function() onTap) {
+    bool notSelected, Function() onTap) {
   return Padding(
     padding: const EdgeInsets.only(right: 10.0),
     child: GestureDetector(
@@ -77,17 +77,17 @@ Widget calenderWidget(BuildContext context, String month, String day,
                   ),
                   child: IconButton(
                     onPressed: onTap,
-                    icon: selected
+                    icon: notSelected
                         ? const Center(
                             child: Icon(
-                              Icons.check,
+                              Icons.add,
                               color: Colors.white,
                               size: 15,
                             ),
                           )
                         : const Center(
                             child: Icon(
-                              Icons.add,
+                              Icons.check,
                               color: Colors.white,
                               size: 15,
                             ),
