@@ -93,7 +93,7 @@ class TermsandConditions extends StatelessWidget {
                                     check: true,
                                   ));
                             },
-                            title: "Accept",
+                            title: AppLocalizations.of(context)!.accept,
                           ),
                           sizedBoxHeight16,
                         ],

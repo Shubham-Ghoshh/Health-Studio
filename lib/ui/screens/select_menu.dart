@@ -84,11 +84,13 @@ class SelectMenuPage extends StatelessWidget {
                                           ?.meal
                                           ?.nameEn) ??
                                       (!allowEdit
-                                          ? "Meal Selected"
+                                          ? AppLocalizations.of(context)!
+                                              .meal_selected
                                           : AppLocalizations.of(context)!
                                               .choose_meal)
                                   : !allowEdit
-                                      ? "Meal Selected"
+                                      ? AppLocalizations.of(context)!
+                                          .meal_selected
                                       : AppLocalizations.of(context)!
                                           .choose_meal;
 
@@ -131,11 +133,13 @@ class SelectMenuPage extends StatelessWidget {
                                 ? (userDashboardController.mealItems[snackIndex]
                                         ?.items[index]?.meal?.nameEn) ??
                                     (!allowEdit
-                                        ? "Meal Selected"
+                                        ? AppLocalizations.of(context)!
+                                            .meal_selected
                                         : AppLocalizations.of(context)!
                                             .choose_meal)
                                 : !allowEdit
-                                    ? "Meal Selected"
+                                    ? AppLocalizations.of(context)!
+                                        .meal_selected
                                     : AppLocalizations.of(context)!.choose_meal;
                             return Column(
                               children: [
@@ -181,11 +185,13 @@ class SelectMenuPage extends StatelessWidget {
                                           ?.meal
                                           ?.nameEn) ??
                                       (!allowEdit
-                                          ? "Meal Selected"
+                                          ? AppLocalizations.of(context)!
+                                              .meal_selected
                                           : AppLocalizations.of(context)!
                                               .choose_meal)
                                   : !allowEdit
-                                      ? "Meal Selected"
+                                      ? AppLocalizations.of(context)!
+                                          .meal_selected
                                       : AppLocalizations.of(context)!
                                           .choose_meal;
                               return Column(
@@ -214,7 +220,7 @@ class SelectMenuPage extends StatelessWidget {
                             children: [
                               sizedBoxHeight12,
                               Text(
-                                  "Amount to be paid: ${userDashboardController.tempPrice} KD"),
+                                  "${AppLocalizations.of(context)!.amount_paid}: ${userDashboardController.tempPrice} KD"),
                               sizedBoxHeight12,
                               LoginButton(
                                 onTap: () {
@@ -231,7 +237,7 @@ class SelectMenuPage extends StatelessWidget {
                                             .mealItems[2]?.items.isEmpty ??
                                         true)),
                                 title: isUpdate
-                                    ? "Update Meals"
+                                    ? AppLocalizations.of(context)!.update_meals
                                     : AppLocalizations.of(context)!.save_all,
                                 height: 50,
                               ),

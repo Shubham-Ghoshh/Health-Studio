@@ -100,7 +100,8 @@ class MealItem extends StatelessWidget {
                                     Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        const Text("Extra Carbs: "),
+                                        Text(AppLocalizations.of(context)!
+                                            .extra_carbs),
                                         const Text("15"),
                                         Text(
                                             "g/KD ${Get.find<PlanController>().planDetail!.carbPrice}   "),
@@ -161,7 +162,8 @@ class MealItem extends StatelessWidget {
                                     Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        const Text("Extra Protein: "),
+                                        Text(AppLocalizations.of(context)!
+                                            .extra_protein),
                                         const Text("15"),
                                         Text(
                                             "g/KD ${Get.find<PlanController>().planDetail!.proteinPrice}"),
@@ -220,7 +222,7 @@ class MealItem extends StatelessWidget {
                                     ),
                                     const Spacer(),
                                     Text(
-                                        "Price: ${userDashboardController.price} KD"),
+                                        "${AppLocalizations.of(context)!.price}: ${userDashboardController.price} KD"),
                                     sizedBoxHeight12,
                                     LoginButton(
                                       onTap: () {

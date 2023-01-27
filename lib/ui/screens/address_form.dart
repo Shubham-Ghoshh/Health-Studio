@@ -85,7 +85,8 @@ class _AddressFormState extends State<AddressForm> {
                                 ),
                                 validator: (value) =>
                                     (value == null || value.isEmpty)
-                                        ? "Name is required"
+                                        ? AppLocalizations.of(context)!
+                                            .name_required
                                         : null,
                               ),
                             ),
@@ -96,7 +97,8 @@ class _AddressFormState extends State<AddressForm> {
                               child: TextFormField(
                                 validator: (value) =>
                                     (value == null || value.isEmpty)
-                                        ? "Block number is required"
+                                        ? AppLocalizations.of(context)!
+                                            .block_required
                                         : null,
                                 onChanged: (value) {
                                   addressController.block = value;
@@ -117,7 +119,8 @@ class _AddressFormState extends State<AddressForm> {
                               child: TextFormField(
                                 validator: (value) =>
                                     (value == null || value.isEmpty)
-                                        ? "Street number is required"
+                                        ? AppLocalizations.of(context)!
+                                            .street_required
                                         : null,
                                 onChanged: (value) {
                                   addressController.street = value;
@@ -138,7 +141,8 @@ class _AddressFormState extends State<AddressForm> {
                               child: TextFormField(
                                 validator: (value) =>
                                     (value == null || value.isEmpty)
-                                        ? "House number is required"
+                                        ? AppLocalizations.of(context)!
+                                            .house_required
                                         : null,
                                 onChanged: (value) {
                                   addressController.housenumber = value;
@@ -216,7 +220,8 @@ class _AddressFormState extends State<AddressForm> {
                                 textInputAction: TextInputAction.done,
                                 validator: (value) =>
                                     (value == null || value.isEmpty)
-                                        ? "Detailed Address is required"
+                                        ? AppLocalizations.of(context)!
+                                            .address_required
                                         : null,
                                 onChanged: (value) {
                                   addressController.detailaddress = value;
