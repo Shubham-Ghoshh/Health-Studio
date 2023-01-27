@@ -15,8 +15,11 @@ class FirebaseController extends GetxController {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   Future<String?> getToken() async {
+    print("GET FCM TOKEN ");
     await messaging.requestPermission();
     String? fcmToken = await messaging.getToken();
+    print("FCM ===");
+    print(fcmToken);
     return fcmToken;
   }
 

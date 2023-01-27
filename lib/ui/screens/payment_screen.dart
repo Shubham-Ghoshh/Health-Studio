@@ -92,6 +92,14 @@ class PaymentScreenState extends State<PaymentScreen> {
             return NavigationActionPolicy.ALLOW;
           },
           onLoadStop: (controller, uri) async {
+            print("ON LOAD STOP ${uri.toString()}");
+            if (uri.toString() ==
+                    "http://148.66.142.197/~healthstudioking/api/survey2.php?path=/knet" &&
+                widget.amount == 0) {
+              if (!widget.isMeal) {
+                Get.find<OrderController>().getOrderDetails(status: "captured");
+              }
+            }
             if (uri.toString() ==
                 "http://148.66.142.197/~healthstudioking/api/index.php?path=/knet") {
               var html = await controller.evaluateJavascript(
@@ -128,6 +136,7 @@ class PaymentScreenState extends State<PaymentScreen> {
             }
           },
           onLoadError: (controller, url, code, message) {
+            print("ERROR!! $url $code  $message");
             Get.back();
             Get.rawSnackbar(
                 message: AppLocalizations.of(context)!.failed_payment);

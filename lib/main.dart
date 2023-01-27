@@ -1,13 +1,11 @@
-import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:health_studio_user/ui/screens/select_menu.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:health_studio_user/core/bindings.dart';
-import 'package:health_studio_user/ui/screens/logged_in_home_screen.dart';
 import 'package:health_studio_user/ui/screens/splash_screen.dart';
 import 'package:health_studio_user/utils/constants.dart';
 import 'package:health_studio_user/utils/theme.dart';
@@ -17,20 +15,23 @@ void main() async {
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var lang = prefs.getBool("language") ?? true;
+  WidgetsFlutterBinding.ensureInitialized();
+  if (Firebase.apps.isEmpty) {
+    await Firebase.initializeApp(
+        // options: DefaultFirebaseOptions.currentPlatform,
+        );
+  }
   runApp(
-    DevicePreview(
-      enabled: true,
-      // enabled: false,
-      builder: (context) => ScreenUtilInit(
-        designSize: const Size(360, 690),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        builder: (context, child) {
-          return MyApp(
-            lang: lang,
-          );
-        },
-      ),
+    ScreenUtilInit(
+      useInheritedMediaQuery: true,
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MyApp(
+          lang: lang,
+        );
+      },
     ),
   );
 }
@@ -54,9 +55,7 @@ class MyApp extends StatelessWidget {
       ],
       navigatorKey: navigatorKey,
       theme: themeData(),
-      useInheritedMediaQuery: true,
       locale: lang ? const Locale('en', '') : const Locale('ar', ''),
-      builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       title: 'Health Studio',
       home: const SplashScreen(),

@@ -9,7 +9,9 @@ import 'package:health_studio_user/ui/widgets/loader.dart';
 class HomeController extends GetxController {
   List<Plan> plans = [];
   List<Menu> menu = [];
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = DateTime.now().weekday == 5
+      ? DateTime.now().add(const Duration(days: 1))
+      : DateTime.now();
 
   @override
   void onInit() {

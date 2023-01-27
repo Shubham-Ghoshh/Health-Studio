@@ -30,8 +30,7 @@ class LoginButton extends StatelessWidget {
     return GestureDetector(
       onTap: enabled ? onTap : null,
       child: Padding(
-        padding: EdgeInsets.only(
-          top: .03.sh,
+        padding: const EdgeInsets.only(
           left: 18,
           right: 18,
         ),

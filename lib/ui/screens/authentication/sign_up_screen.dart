@@ -10,7 +10,12 @@ import 'package:intl/intl.dart';
 
 class RegistrationPage extends StatefulWidget {
   final Function()? onSuccess;
-  const RegistrationPage({super.key, this.onSuccess});
+  final bool isSocial;
+  const RegistrationPage({
+    super.key,
+    this.onSuccess,
+    this.isSocial = false,
+  });
 
   @override
   State<RegistrationPage> createState() => _RegistrationPageState();
@@ -114,6 +119,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           sizedBoxHeight16,
                           TextFormField(
+                            initialValue: authController.mobile,
                             validator: ((value) {
                               if (value?.isEmpty ?? true) {
                                 return AppLocalizations.of(context)!
@@ -198,6 +204,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           sizedBoxHeight10,
                           TextFormField(
+                            initialValue: authController.name,
                             validator: (value) => (value == null ||
                                     value.isEmpty)
                                 ? AppLocalizations.of(context)!.name_required
@@ -220,6 +227,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           sizedBoxHeight10,
                           TextFormField(
+                            initialValue: authController.email,
                             validator: validateEmail,
                             onChanged: (value) {
                               authController.email = value;
@@ -249,9 +257,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             onTap: () async {
                               DateTime? pickedDate = await showDatePicker(
                                 context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime.now(),
+                                initialDate: DateTime.now()
+                                    .subtract(const Duration(days: 5475)),
+                                firstDate: DateTime.now()
+                                    .subtract(const Duration(days: 29200)),
+                                lastDate: DateTime.now()
+                                    .subtract(const Duration(days: 5475)),
                                 builder: (context, child) => Theme(
                                     data: Theme.of(context).copyWith(
                                         colorScheme: const ColorScheme.light(
@@ -342,8 +353,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             title: AppLocalizations.of(context)!.sign_up,
                             enabled: authController.isValid && passwordsMatch,
                             onTap: () {
-                              authController.signUp(
-                                  onSuccess: widget.onSuccess);
+                              if (widget.isSocial) {
+                                authController.registersocial(
+                                  onSuccess: widget.onSuccess,
+                                );
+                              } else {
+                                authController.signUp(
+                                  onSuccess: widget.onSuccess,
+                                );
+                              }
                             },
                           ),
                         ],

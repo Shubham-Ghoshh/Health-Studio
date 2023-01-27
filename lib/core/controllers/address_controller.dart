@@ -57,7 +57,11 @@ class AddressController extends GetxController {
     if (response["error"] != 0 ||
         response["details"] == null ||
         (response["details"]?.isEmpty ?? true)) {
-      Get.rawSnackbar(message: response["message"] ?? "");
+      Get.rawSnackbar(
+        message: (response["message"] == null || response["message"] == "")
+            ? "Error saving address"
+            : response["message"],
+      );
     } else {
       getAddresses(back: true);
       update();

@@ -144,24 +144,6 @@ class _HomePageState extends State<HomePage> {
                                 fontSize: 24,
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Text(
-                                AppLocalizations.of(context)!.see_all,
-                                style: const TextStyle(
-                                  shadows: <Shadow>[
-                                    Shadow(
-                                      offset: Offset(2.0, 5.0),
-                                      blurRadius: 5.0,
-                                      color: Color.fromARGB(126, 0, 0, 0),
-                                    ),
-                                  ],
-                                  color: Color(0xffF1773E),
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                         sizedBoxHeight14,
@@ -188,14 +170,16 @@ class _HomePageState extends State<HomePage> {
                             (index) {
                               DateTime date =
                                   DateTime.now().add(Duration(days: index));
-                              return dateWidget(
-                                  context,
-                                  getWeekday(date.weekday),
-                                  date.day.toString(),
-                                  homeController.selectedDate.day == date.day,
-                                  () {
-                                homeController.selectDate(date);
-                              });
+                              return date.weekday == 5
+                                  ? const SizedBox()
+                                  : dateWidget(
+                                      context,
+                                      getWeekday(date.weekday),
+                                      date.day.toString(),
+                                      homeController.selectedDate.day ==
+                                          date.day, () {
+                                      homeController.selectDate(date);
+                                    });
                             },
                           ),
                         ),

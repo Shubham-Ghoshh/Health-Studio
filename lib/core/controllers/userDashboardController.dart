@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
 import 'package:health_studio_user/core/models/item.dart';
 import 'package:health_studio_user/core/models/meal.dart';
@@ -22,7 +23,10 @@ class UserDashboardController extends GetxController {
   DashboardItem? selectedDashboardItem;
   String carbValue = "0";
   String proteinValue = "0";
-  List<MealItem> mealItems = [];
+  List<MealItem?> mealItems = [];
+  int tempPrice = 0;
+  int tempCarbValue = 0;
+  int tempProteinValue = 0;
 
   @override
   void onInit() {
@@ -34,7 +38,7 @@ class UserDashboardController extends GetxController {
 
   void getUserDashboard() async {
     Utility.showLoadingDialog();
-    Map<String, dynamic> response = await getRequest("user/dashboard");
+    Map<String, dynamic> response = await getRequest("home");
     Utility.closeDialog();
     if (response["error"] != 0) {
       Get.rawSnackbar(message: response["message"]);
@@ -45,25 +49,30 @@ class UserDashboardController extends GetxController {
   }
 
   void getPackageDetails(
-      String planId, String? packageId, String date, DashboardItem item) async {
+      String planId, String? packageId, String date, DashboardItem item,
+      {bool allowEdit = true}) async {
     Utility.showLoadingDialog();
-    Map<String, dynamic> response =
-        await getRequest("package-detail/$planId/$packageId");
+    Map<String, dynamic> response = await getRequest(
+        "package-detail/$planId/${(packageId == "" || packageId == null) ? "custom_${Get.find<OrderController>().orderReference}" : packageId}");
     Utility.closeDialog();
     if (response["error"] != 0) {
       Get.rawSnackbar(message: response["message"]);
     } else {
       packageDetail =
           PackageDetail.fromJson(response["details"]["package"].first);
+
       update();
-      await getMealsByDate(date);
+      await getMealsByDate(date, allowEdit: allowEdit);
       selectedDashboardItem = item;
+      tempPrice = 0;
+      tempCarbValue = 0;
+      tempProteinValue = 0;
       update();
     }
   }
 
-  void getMenuByTypeAndDate(
-      String type, String date, DashboardItem item) async {
+  void getMenuByTypeAndDate(String type, String date, DashboardItem item,
+      {int itemIndex = 0}) async {
     Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest("choose/$type/$date");
     Utility.closeDialog();
@@ -75,6 +84,7 @@ class UserDashboardController extends GetxController {
       Get.to(() => ChooseMeal(
             item: item,
             type: type,
+            itemIndex: itemIndex,
           ));
       update();
     }
@@ -89,33 +99,42 @@ class UserDashboardController extends GetxController {
     update();
   }
 
-  void saveMeal(
-    Meal meal,
-    DashboardItem item,
-    String mealType,
-  ) {
-    int index = mealItems.indexWhere((m) => m.key == mealType);
+  void saveMeal(Meal meal, DashboardItem item, String mealType,
+      {int itemIndex = 0}) {
+    int index = mealItems.indexWhere((m) => m?.key == mealType);
     if (index != -1) {
-      mealItems[index].items.add(
-            Item(
-              id: meal.id,
-              price: price,
-              note: note,
-              meal: meal,
-              carb: carbValue,
-              protein: proteinValue,
-            ),
-          );
+      mealItems[index]?.items[itemIndex] = Item(
+        id: meal.id,
+        price: price,
+        note: note,
+        meal: meal,
+        carb: carbValue,
+        protein: proteinValue,
+      );
 
       carbValue = "0";
       proteinValue = "0";
       price = "0";
 
       update();
-
+      calculateTotal();
       Get.back();
       Get.back();
     }
+  }
+
+  void calculateTotal() async {
+    tempPrice = 0;
+    tempCarbValue = 0;
+    tempProteinValue = 0;
+    for (int i = 0; i < mealItems.length; i++) {
+      for (int j = 0; j < (mealItems[i]?.items.length ?? 0); j++) {
+        tempPrice += int.tryParse(mealItems[i]?.items[j].price) ?? 0;
+        tempCarbValue += int.tryParse(mealItems[i]?.items[j].carb) ?? 0;
+        tempProteinValue += int.tryParse(mealItems[i]?.items[j].protein) ?? 0;
+      }
+    }
+    update();
   }
 
   void getMealPaymentLink(
@@ -124,44 +143,37 @@ class UserDashboardController extends GetxController {
     // String mealType,
   ) async {
     Utility.showLoadingDialog();
-    int tempPrice = 0;
-    int tempCarbValue = 0;
-    int tempProteinValue = 0;
 
-    for (int i = 0; i < mealItems.length; i++) {
-      for (int j = 0; j < mealItems[i].items.length; j++) {
-        tempPrice += int.tryParse(mealItems[i].items[j].price) ?? 0;
-        tempCarbValue += int.tryParse(mealItems[i].items[j].carb) ?? 0;
-        tempProteinValue += int.tryParse(mealItems[i].items[j].protein) ?? 0;
-      }
-    }
-
-    Map<String, dynamic> body = {
-      "amount": tempPrice.toString(),
-      "date": item.dateRequested,
-      "carbs": tempCarbValue.toString(),
-      "proteins": tempProteinValue.toString(),
-      "carb_price": Get.find<PlanController>().planDetail!.carbPrice,
-      "protein_price": Get.find<PlanController>().planDetail!.proteinPrice
-    };
-    Map<String, dynamic> response =
-        await postRequest("get-meal-payment-link", body);
-    Utility.closeDialog();
-    if (response["error"] != 0) {
-      Get.rawSnackbar(message: response["message"]);
+    if (tempPrice.toString() == "0") {
+      submitMeals();
     } else {
-      Get.to(() => PaymentScreen(
-            url: response["details"]["url"],
-            amount: tempPrice,
-            isMeal: true,
-            onFinish: () {
-              submitMeals();
-            },
-          ));
+      Map<String, dynamic> body = {
+        "amount": tempPrice.toString(),
+        "date": item.dateRequested,
+        "carbs": tempCarbValue.toString(),
+        "proteins": tempProteinValue.toString(),
+        "carb_price": Get.find<PlanController>().planDetail!.carbPrice,
+        "protein_price": Get.find<PlanController>().planDetail!.proteinPrice
+      };
+      Map<String, dynamic> response =
+          await postRequest("get-meal-payment-link", body);
+      Utility.closeDialog();
+      if (response["error"] != 0) {
+        Get.rawSnackbar(message: response["message"]);
+      } else {
+        Get.to(() => PaymentScreen(
+              url: response["details"]["url"],
+              amount: tempPrice,
+              isMeal: true,
+              onFinish: () {
+                submitMeals();
+              },
+            ));
+      }
     }
   }
 
-  Future<void> getMealsByDate(String date) async {
+  Future<void> getMealsByDate(String date, {bool allowEdit = true}) async {
     Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest("meals/$date");
     Utility.closeDialog();
@@ -173,13 +185,38 @@ class UserDashboardController extends GetxController {
           (e) => MealItem.fromJson(e),
         ),
       );
+      bool isUpdate = false;
+      if (allowEdit) {
+        if (mealItems[0]!.items.isEmpty) {
+          mealItems.firstWhere((e) => e?.key == "meal")?.items = List.generate(
+              int.tryParse(packageDetail!.meal) ?? 0, (idx) => null);
+        } else {
+          isUpdate = true;
+        }
+        if (mealItems[1]!.items.isEmpty) {
+          mealItems.firstWhere((e) => e?.key == "snack")?.items = List.generate(
+              int.tryParse(packageDetail!.snack) ?? 0, (idx) => null);
+        } else {
+          isUpdate = true;
+        }
+        if (mealItems[2]!.items.isEmpty) {
+          mealItems.firstWhere((e) => e?.key == "breakfast")?.items =
+              List.generate(
+                  int.tryParse(packageDetail!.breakfast) ?? 0, (idx) => null);
+        } else {
+          isUpdate = true;
+        }
+      }
       update();
       Get.to(() => SelectMenuPage(
+            allowEdit: allowEdit,
             date: date,
             item: selectedDashboardItem!,
-            showSaveButton: mealItems[0].items.isEmpty ||
-                mealItems[1].items.isEmpty ||
-                mealItems[2].items.isEmpty,
+            showSaveButton: (mealItems[0]!.items.isEmpty ||
+                    mealItems[1]!.items.isEmpty ||
+                    mealItems[2]!.items.isEmpty) ||
+                allowEdit,
+            isUpdate: isUpdate,
           ));
     }
     return;
@@ -191,15 +228,16 @@ class UserDashboardController extends GetxController {
     Utility.showLoadingDialog();
     Map<String, dynamic> body = {};
     for (int i = 0; i < mealItems.length; i++) {
-      body.addAll(
-          {mealItems[i].key: mealItems[i].items.map((e) => e.id).join(",")});
-      for (int j = 0; j < mealItems[i].items.length; j++) {
+      body.addAll({
+        mealItems[i]?.key ?? "": mealItems[i]?.items.map((e) => e.id).join(",")
+      });
+      for (int j = 0; j < (mealItems[i]?.items.length ?? 0); j++) {
         body.addAll(
-            {"note_${mealItems[i].items[j].id}": mealItems[i].items[j].note});
+            {"note_${mealItems[i]?.items[j].id}": mealItems[i]?.items[j].note});
       }
     }
     mealItems.map((e) => body.addAll({
-          e.key: e.items.map((e) => e.id).join(","),
+          e?.key ?? "": e?.items.map((e) => e.id).join(","),
         }));
     print(body);
     Map<String, dynamic> response = await postRequest(
@@ -209,6 +247,8 @@ class UserDashboardController extends GetxController {
       Get.rawSnackbar(message: response["message"]);
     } else {
       Get.back();
+      Get.rawSnackbar(message: "Meals saved successfully");
+      getUserDashboard();
     }
   }
 }

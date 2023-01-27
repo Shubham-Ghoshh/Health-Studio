@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:io' show Platform;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
 import 'package:health_studio_user/ui/screens/authentication/sign_up_screen.dart';
 import 'package:health_studio_user/utils/constants.dart';
@@ -147,7 +147,7 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        sizedBoxHeight6,
+                        sizedBoxHeight12,
                         LoginButton(
                           height: 52,
                           title: AppLocalizations.of(context)!.login,
@@ -157,30 +157,37 @@ class LoginPage extends StatelessWidget {
                           },
                         ),
                         sizedBoxHeight16,
-                        // Text(
-                        //   AppLocalizations.of(context)!.login_social_networks,
-                        //   textAlign: TextAlign.center,
-                        //   style: const TextStyle(
-                        //     color: Color(0xffFFFDFD),
-                        //     fontWeight: FontWeight.w400,
-                        //     fontSize: 14,
-                        //   ),
-                        // ),
-                        // sizedBoxHeight6,
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   children: [
-                        //     FacebookLoginButton(
-                        //       onTap: () {},
-                        //     ),
-                        //     GoogleLoginButton(
-                        //       onTap: () {},
-                        //     ),
-                        //     AppleLoginButton(
-                        //       onTap: () async {},
-                        //     ),
-                        //   ],
-                        // ),
+                        Text(
+                          AppLocalizations.of(context)!.login_social_networks,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Color(0xffFFFDFD),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                          ),
+                        ),
+                        sizedBoxHeight6,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // FacebookLoginButton(
+                            //   onTap: () {},
+                            // ),
+                            GoogleLoginButton(
+                              onTap: () async {
+                                authController.loginWithSocialAccount("google");
+                              },
+                            ),
+                            Platform.isIOS
+                                ? AppleLoginButton(
+                                    onTap: () async {
+                                      authController
+                                          .loginWithSocialAccount("apple");
+                                    },
+                                  )
+                                : const SizedBox(),
+                          ],
+                        ),
                         const Spacer(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
