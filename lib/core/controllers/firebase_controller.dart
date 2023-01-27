@@ -39,6 +39,6 @@ class FirebaseController extends GetxController {
   }
 
   void _handleMessage(RemoteMessage message, {bool terminateState = false}) {
-    if (message.data['screen'] != null) {}
+    print("MESSAGE $message");
   }
 }

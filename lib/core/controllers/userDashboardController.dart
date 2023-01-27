@@ -233,7 +233,6 @@ class UserDashboardController extends GetxController {
 
   void submitMeals() async {
     print("SUBMIT MEALS");
-    // {"meal":"77,109","note_109":"None","note_91":"None","note_77":"None","note_109_1":"None","note_77_0":"None","snack":"91","note_91_2":"None"}
     Utility.showLoadingDialog();
     Map<String, dynamic> body = {};
     for (int i = 0; i < mealItems.length; i++) {
@@ -243,6 +242,11 @@ class UserDashboardController extends GetxController {
       for (int j = 0; j < (mealItems[i]?.items.length ?? 0); j++) {
         body.addAll(
             {"note_${mealItems[i]?.items[j].id}": mealItems[i]?.items[j].note});
+        body.addAll(
+            {"carb_${mealItems[i]?.items[j].id}": mealItems[i]?.items[j].carb});
+        body.addAll({
+          "protein_${mealItems[i]?.items[j].id}": mealItems[i]?.items[j].protein
+        });
       }
     }
     mealItems.map((e) => body.addAll({
