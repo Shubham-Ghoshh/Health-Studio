@@ -292,11 +292,7 @@ class SettingPage extends StatelessWidget {
                           settingIconImage: "ratings_icon",
                           settingName: AppLocalizations.of(context)!.rate_app,
                           onTap: () {
-                            if (Platform.isAndroid) {
-                              settingsController.rateAppAndroid();
-                            } else if (Platform.isIOS) {
-                              settingsController.rateAppIos();
-                            }
+                            settingsController.rateApp();
                           },
                         ),
                         sizedBoxHeight10,

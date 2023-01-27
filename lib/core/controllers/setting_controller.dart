@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
@@ -11,12 +12,12 @@ import 'package:health_studio_user/core/request.dart';
 import 'package:health_studio_user/ui/screens/home_screen.dart';
 import 'package:health_studio_user/ui/screens/notification.dart';
 import 'package:health_studio_user/ui/widgets/loader.dart';
-import 'package:health_studio_user/utils/formatters.dart';
-import 'package:intl/intl.dart';
+import 'package:health_studio_user/utils/constants.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:version/version.dart';
 
 class SettingsController extends GetxController {
   @override
@@ -36,6 +37,8 @@ class SettingsController extends GetxController {
 
   void getAppVersion() async {
     packageInfo = await PackageInfo.fromPlatform();
+    update();
+    Timer(const Duration(seconds: 4), getVersion);
   }
 
   String accountStart = "";
@@ -172,22 +175,12 @@ class SettingsController extends GetxController {
     }
   }
 
-  rateAppAndroid() async {
+  rateApp() async {
     var webUrl = Platform.isAndroid
-        ? "https://play.google.com/store/apps/details?id=com.healthstudio.app&gl=US&pli=1"
+        ? androidLink
         : Platform.isIOS
-            ? "https://apps.apple.com/app/id=com.healthstudio.app"
+            ? appleLink
             : "";
-
-    try {
-      await launchUrlString(webUrl, mode: LaunchMode.platformDefault);
-    } catch (e) {
-      log(e.toString());
-    }
-  }
-
-  rateAppIos() async {
-    var webUrl = "https://apps.apple.com/app/id=com.healthstudio.app";
 
     try {
       await launchUrlString(webUrl, mode: LaunchMode.platformDefault);
@@ -212,6 +205,46 @@ class SettingsController extends GetxController {
       await launchUrlString(url, mode: LaunchMode.platformDefault);
     } catch (e) {
       log(e.toString());
+    }
+  }
+
+  void getVersion() async {
+    Map<String, dynamic> response = await getRequest("commons");
+
+    String version = Platform.isIOS
+        ? response["details"][9]["common_value"]
+        : response["details"][10]["common_value"];
+    if (Version.parse(version) > Version.parse(packageInfo?.version ?? "")) {
+      showDialog(
+          context: navigatorKey.currentContext!,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text("Update Available"),
+              content: const Text(
+                  "New update is available! Please update for better experience."),
+              actions: <Widget>[
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: Theme.of(context).textTheme.labelLarge,
+                  ),
+                  child: const Text('Okay'),
+                  onPressed: () {
+                    Get.back();
+                    rateApp();
+                  },
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: Theme.of(context).textTheme.labelLarge,
+                  ),
+                  child: const Text('Cancel'),
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+              ],
+            );
+          });
     }
   }
 }
