@@ -29,7 +29,7 @@ class _AddressState extends State<Address> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AddressController>(
-        init: AddressController(),
+        init: AddressController(context),
         builder: (addressController) {
           return Scaffold(
             // bottomNavigationBar: bottomNavigationBar(),
@@ -85,7 +85,7 @@ class _AddressState extends State<Address> {
 
   Widget addressContainer(AddressListing a, bool isVisible, check) {
     return GetBuilder<AddressController>(
-        init: AddressController(),
+        init: AddressController(context),
         builder: (addressController) {
           return GestureDetector(
             onTap: () {

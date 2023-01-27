@@ -6,6 +6,7 @@ import 'package:health_studio_user/core/models/user_dashboard.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 
 class SelectMenuPage extends StatelessWidget {
@@ -49,7 +50,7 @@ class SelectMenuPage extends StatelessWidget {
                       children: [
                         sizedBoxHeight6,
                         Text(
-                          "Choose a meal",
+                          AppLocalizations.of(context)!.choose_meal,
                           style: TextStyle(
                             fontSize: 28.sp,
                             fontWeight: FontWeight.w600,
@@ -59,7 +60,7 @@ class SelectMenuPage extends StatelessWidget {
                         sizedBoxHeight12,
                         selectMealBox(
                           loginButtonColor,
-                          "Meal",
+                          AppLocalizations.of(context)!.meal,
                           userDashboardController.packageDetail!.meal,
                           List.generate(
                             int.tryParse(userDashboardController
@@ -74,16 +75,17 @@ class SelectMenuPage extends StatelessWidget {
                               String title = length > index
                                   ? userDashboardController.mealItems[mealIndex]
                                       .items[index].meal.nameEn
-                                  : "Choose a meal";
+                                  : AppLocalizations.of(context)!.choose_meal;
 
                               return Column(
                                 key: Key(index.toString()),
                                 children: [
                                   selectMealBoxText(
-                                    "Meal ${index + 1}",
+                                    "${AppLocalizations.of(context)!.meal} ${index + 1}",
                                     title,
-                                    "meal",
+                                    AppLocalizations.of(context)!.meal,
                                     date,
+                                    context,
                                     item,
                                   ),
                                   const Divider(
@@ -97,25 +99,32 @@ class SelectMenuPage extends StatelessWidget {
                         sizedBoxHeight25,
                         selectMealBox(
                           activeIconColor,
-                          "Snack",
+                          AppLocalizations.of(context)!.snack,
                           userDashboardController.packageDetail!.snack,
                           List.generate(
                               int.tryParse(userDashboardController
                                       .packageDetail!.snack) ??
                                   0, (index) {
                             int snackIndex = userDashboardController.mealItems
-                                .indexWhere((e) => e.key == "snack");
+                                .indexWhere((e) =>
+                                    e.key ==
+                                    AppLocalizations.of(context)!.snack);
                             int length = userDashboardController
                                 .mealItems[snackIndex].items.length;
 
                             String title = length > index
                                 ? userDashboardController.mealItems[snackIndex]
                                     .items[index].meal.nameEn
-                                : "Choose a meal";
+                                : AppLocalizations.of(context)!.choose_meal;
                             return Column(
                               children: [
-                                selectMealBoxText("Snack ${index + 1}", title,
-                                    "snack", date, item),
+                                selectMealBoxText(
+                                    "${AppLocalizations.of(context)!.snack} ${index + 1}",
+                                    title,
+                                    AppLocalizations.of(context)!.snack,
+                                    date,
+                                    context,
+                                    item),
                                 const Divider(
                                   color: Color.fromARGB(95, 0, 0, 0),
                                 ),
@@ -126,7 +135,7 @@ class SelectMenuPage extends StatelessWidget {
                         sizedBoxHeight25,
                         selectMealBox(
                           itemsbackground,
-                          "Breakfast",
+                          AppLocalizations.of(context)!.breakfast,
                           userDashboardController.packageDetail!.breakfast,
                           List.generate(
                             int.tryParse(userDashboardController
@@ -135,7 +144,9 @@ class SelectMenuPage extends StatelessWidget {
                             (index) {
                               int breakfastIndex = userDashboardController
                                   .mealItems
-                                  .indexWhere((e) => e.key == "breakfast");
+                                  .indexWhere((e) =>
+                                      e.key ==
+                                      AppLocalizations.of(context)!.breakfast);
                               int length = userDashboardController
                                   .mealItems[breakfastIndex].items.length;
 
@@ -145,14 +156,15 @@ class SelectMenuPage extends StatelessWidget {
                                       .items[index]
                                       .meal
                                       .nameEn
-                                  : "Choose a meal";
+                                  : AppLocalizations.of(context)!.choose_meal;
                               return Column(
                                 children: [
                                   selectMealBoxText(
-                                    "Breakfast ${index + 1}",
+                                    "${AppLocalizations.of(context)!.breakfast} ${index + 1}",
                                     title,
-                                    "breakfast",
+                                    AppLocalizations.of(context)!.breakfast,
                                     date,
+                                    context,
                                     item,
                                   ),
                                   const Divider(
@@ -176,7 +188,7 @@ class SelectMenuPage extends StatelessWidget {
                                     .mealItems[1].items.isEmpty ||
                                 userDashboardController
                                     .mealItems[2].items.isEmpty),
-                            title: "Save All",
+                            title: AppLocalizations.of(context)!.save_all,
                             height: 50,
                           ),
                         ),
@@ -292,6 +304,7 @@ class SelectMenuPage extends StatelessWidget {
     String mealName,
     String type,
     String date,
+    BuildContext context,
     DashboardItem item,
   ) {
     return GestureDetector(
@@ -329,7 +342,7 @@ class SelectMenuPage extends StatelessWidget {
                   Visibility(
                     visible: item.menuEn == "RANDOM MENU",
                     child: Text(
-                      "Set Random By System",
+                      AppLocalizations.of(context)!.set_random,
                       style: TextStyle(
                         color: const Color(0xffC19C7D),
                         fontWeight: FontWeight.w400,

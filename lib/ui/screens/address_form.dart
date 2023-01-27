@@ -21,7 +21,7 @@ class _AddressFormState extends State<AddressForm> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
-        init: AddressController(),
+        init: AddressController(context),
         builder: (addressController) {
           return Scaffold(
             resizeToAvoidBottomInset: true,
@@ -235,7 +235,8 @@ class _AddressFormState extends State<AddressForm> {
                                 height: 50.h,
                                 onTap: () {
                                   addressController.addAddress();
-                                  addressController.initialvalue = "Area/city";
+                                  addressController.setInitailValue =
+                                      AppLocalizations.of(context)!.area_city;
                                 },
                                 enabled: addressController.city != null &&
                                     (addressController.addressKey.currentState
@@ -259,7 +260,7 @@ class _AddressFormState extends State<AddressForm> {
 
   Widget bottomwidget(context) {
     return GetBuilder<AddressController>(
-        init: AddressController(),
+        init: AddressController(context),
         builder: (addressController) {
           return GestureDetector(
             onTap: () {
@@ -297,7 +298,7 @@ class _AddressFormState extends State<AddressForm> {
                                 (BuildContext context, int contentindex) {
                               return GestureDetector(
                                 onTap: () {
-                                  addressController.initialvalue =
+                                  addressController.setInitailValue =
                                       addressController.details[index]
                                           .cities![contentindex].nameEn
                                           .toString();

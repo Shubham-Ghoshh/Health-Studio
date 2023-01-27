@@ -1,7 +1,7 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:core';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -104,7 +104,9 @@ class PaymentScreenState extends State<PaymentScreen> {
                       Get.back();
                       print(widget.onFinish != null);
                       widget.onFinish != null ? widget.onFinish!() : null;
-                      Get.rawSnackbar(message: "Payment Successful");
+                      Get.rawSnackbar(
+                          message:
+                              AppLocalizations.of(context)!.payment_successful);
                     } else {
                       Get.find<OrderController>().getOrderDetails(status: html);
                     }
@@ -115,7 +117,8 @@ class PaymentScreenState extends State<PaymentScreen> {
                     if (widget.isMeal) {
                       Get.back();
                       Get.back();
-                      Get.rawSnackbar(message: "Payment Failed");
+                      Get.rawSnackbar(
+                          message: AppLocalizations.of(context)!.payment_faied);
                     } else {
                       Get.find<OrderController>().getOrderDetails(status: html);
                       break;
@@ -126,7 +129,8 @@ class PaymentScreenState extends State<PaymentScreen> {
           },
           onLoadError: (controller, url, code, message) {
             Get.back();
-            Get.rawSnackbar(message: "Unable to make payment at this time");
+            Get.rawSnackbar(
+                message: AppLocalizations.of(context)!.failed_payment);
           },
           onProgressChanged: (controller, progress) {
             if (progress == 100 && firstTimeLoad) {

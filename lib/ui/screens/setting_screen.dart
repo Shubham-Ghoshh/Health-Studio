@@ -16,7 +16,6 @@ import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/ui/widgets/setting_option_item.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
-
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -180,7 +179,7 @@ class SettingPage extends StatelessWidget {
                                   SettingOptionItem(
                                     optionalText: settingsController
                                             .userDetails?.orderFrom ??
-                                        "No Info",
+                                        AppLocalizations.of(context)!.no_info,
                                     settingIconImage: "account_start_icon",
                                     settingName: AppLocalizations.of(context)!
                                         .account_start,
@@ -190,7 +189,7 @@ class SettingPage extends StatelessWidget {
                                   SettingOptionItem(
                                     optionalText: settingsController
                                             .userDetails?.orderTo ??
-                                        "No Info",
+                                        AppLocalizations.of(context)!.no_info,
                                     settingIconImage: "account_expiry_icon",
                                     settingName: AppLocalizations.of(context)!
                                         .account_expiry,

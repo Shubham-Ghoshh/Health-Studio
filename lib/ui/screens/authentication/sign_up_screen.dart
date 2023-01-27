@@ -20,9 +20,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController _genderController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
   final TextEditingController _pass = TextEditingController();
+
   bool passwordsMatch = false;
 
-  var items = ["Male", "Female"];
+  List<String> get items => [
+        AppLocalizations.of(context)!.male,
+        AppLocalizations.of(context)!.female
+      ];
 
   _calculateAge(DateTime birthDate) {
     DateTime currentDate = DateTime.now();
@@ -52,9 +56,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
     final regex = RegExp(pattern);
 
     if (value == null || value.isEmpty) {
-      return "Email address is required.";
+      return AppLocalizations.of(context)!.email_required;
     } else if (!regex.hasMatch(value)) {
-      return 'Enter a valid email address';
+      return AppLocalizations.of(context)!.valid_email;
     } else
       return null;
   }
@@ -99,10 +103,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Column(
                         children: [
-                          const Text(
-                            "Register",
+                          Text(
+                            AppLocalizations.of(context)!.register,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color(0xffFFFDFD),
                               fontWeight: FontWeight.w600,
                               fontSize: 28,
@@ -132,8 +136,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
                             ),
-                            decoration: const InputDecoration(
-                              hintText: "Enter your phone number",
+                            decoration: InputDecoration(
+                              hintText:
+                                  AppLocalizations.of(context)!.enter_phone_no,
                             ),
                           ),
                           sizedBoxHeight10,
@@ -158,15 +163,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
                             ),
-                            decoration: const InputDecoration(
-                              hintText: "Enter your password",
+                            decoration: InputDecoration(
+                              hintText:
+                                  AppLocalizations.of(context)!.enter_password,
                             ),
                           ),
                           sizedBoxHeight10,
                           TextFormField(
                             validator: ((value) {
                               if (value != _pass.text) {
-                                return "Passwords do not match";
+                                return AppLocalizations.of(context)!
+                                    .passwords_mismatch;
                               } else {
                                 passwordsMatch = true;
                               }
@@ -184,16 +191,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
                             ),
-                            decoration: const InputDecoration(
-                              hintText: "Enter your password again",
+                            decoration: InputDecoration(
+                              hintText: AppLocalizations.of(context)!
+                                  .enter_password_again,
                             ),
                           ),
                           sizedBoxHeight10,
                           TextFormField(
-                            validator: (value) =>
-                                (value == null || value.isEmpty)
-                                    ? "Full Name is required"
-                                    : null,
+                            validator: (value) => (value == null ||
+                                    value.isEmpty)
+                                ? AppLocalizations.of(context)!.name_required
+                                : null,
                             onChanged: (value) {
                               authController.name = value;
                               authController.update();
@@ -205,8 +213,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
                             ),
-                            decoration: const InputDecoration(
-                              hintText: "Enter your fullname",
+                            decoration: InputDecoration(
+                              hintText:
+                                  AppLocalizations.of(context)!.enter_fullname,
                             ),
                           ),
                           sizedBoxHeight10,
@@ -223,15 +232,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
                             ),
-                            decoration: const InputDecoration(
-                              hintText: "Enter your email",
+                            decoration: InputDecoration(
+                              hintText:
+                                  AppLocalizations.of(context)!.enter_email,
                             ),
                           ),
                           sizedBoxHeight10,
                           TextFormField(
                             validator: (value) =>
                                 (value == null || value.isEmpty)
-                                    ? "Date of Birth is required"
+                                    ? AppLocalizations.of(context)!.dob_required
                                     : null,
                             controller: _dobController,
                             readOnly: true,
@@ -270,7 +280,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               fontWeight: FontWeight.w400,
                             ),
                             decoration: InputDecoration(
-                              hintText: "Your date of birth",
+                              hintText: AppLocalizations.of(context)!.dob,
                               suffixIcon: Padding(
                                 padding: const EdgeInsets.only(right: 20),
                                 child: SizedBox(
@@ -284,10 +294,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           sizedBoxHeight10,
                           TextFormField(
-                            validator: (value) =>
-                                (value == null || value.isEmpty)
-                                    ? "Gender is required"
-                                    : null,
+                            validator: (value) => (value == null ||
+                                    value.isEmpty)
+                                ? AppLocalizations.of(context)!.gender_required
+                                : null,
                             readOnly: true,
                             onChanged: (value) {},
                             controller: _genderController,
@@ -299,7 +309,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               fontWeight: FontWeight.w400,
                             ),
                             decoration: InputDecoration(
-                                hintText: "Your gender",
+                                hintText: AppLocalizations.of(context)!.gender,
                                 suffixIcon: PopupMenuButton<String>(
                                   itemBuilder: (BuildContext context) {
                                     return items.map<PopupMenuItem<String>>(
@@ -329,7 +339,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           sizedBoxHeight40,
                           LoginButton(
                             height: 52,
-                            title: "SIGN UP",
+                            title: AppLocalizations.of(context)!.sign_up,
                             enabled: authController.isValid && passwordsMatch,
                             onTap: () {
                               authController.signUp(

@@ -5,6 +5,7 @@ import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/controllers/setting_controller.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -39,7 +40,7 @@ class NotificationScreen extends StatelessWidget {
                 ),
                 sizedBoxWidth25,
                 Text(
-                  'Notifications',
+                  AppLocalizations.of(context)!.notifications,
                   style: TextStyle(
                       fontSize: 20.sp,
                       color: whiteColor,
@@ -52,11 +53,11 @@ class NotificationScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: const [
+                      children: [
                         Center(
                           child: Text(
-                            'No Notifications to show',
-                            style: TextStyle(color: whiteColor),
+                            AppLocalizations.of(context)!.no_notifications,
+                            style: const TextStyle(color: whiteColor),
                           ),
                         ),
                       ],

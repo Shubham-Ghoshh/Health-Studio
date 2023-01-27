@@ -11,6 +11,7 @@ import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/utils/spacing.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MealItem extends StatelessWidget {
   const MealItem({
@@ -84,8 +85,8 @@ class MealItem extends StatelessWidget {
                                           Theme.of(context).textTheme.headline1,
                                       decoration: InputDecoration(
                                         contentPadding: edgeInsets16,
-                                        hintText:
-                                            "Write additional instructions",
+                                        hintText: AppLocalizations.of(context)!
+                                            .additional_instructions,
                                         filled: true,
                                       ),
                                       onChanged: (val) {
@@ -120,7 +121,8 @@ class MealItem extends StatelessWidget {
                                                 .headline1,
                                             decoration: InputDecoration(
                                               contentPadding: edgeInsets16,
-                                              hintText: "1 to 5",
+                                              hintText:
+                                                  "1 ${AppLocalizations.of(context)!.to} 5",
                                               filled: true,
                                             ),
                                             onChanged: (val) {
@@ -168,7 +170,8 @@ class MealItem extends StatelessWidget {
                                                 .headline1,
                                             decoration: InputDecoration(
                                               contentPadding: edgeInsets16,
-                                              hintText: "1 to 5",
+                                              hintText:
+                                                  "1 ${AppLocalizations.of(context)!.to} 5",
                                               filled: true,
                                             ),
                                             onChanged: (val) {
@@ -204,7 +207,7 @@ class MealItem extends StatelessWidget {
                                         // );
                                       },
                                       enabled: true,
-                                      title: "Save",
+                                      title: AppLocalizations.of(context)!.save,
                                       height: 50,
                                     ),
                                     sizedBoxHeight12,

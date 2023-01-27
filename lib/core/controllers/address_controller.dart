@@ -3,8 +3,11 @@ import 'package:get/get.dart';
 import 'package:health_studio_user/core/models/address.dart';
 import 'package:health_studio_user/core/request.dart';
 import 'package:health_studio_user/ui/widgets/loader.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddressController extends GetxController {
+  final BuildContext context;
+  AddressController(this.context);
   List<AddressListing> addresses = [];
   List<Details> details = [];
   String? name;
@@ -16,9 +19,15 @@ class AddressController extends GetxController {
   String? avenue;
   String? floornumber;
   String? housenumber;
-  String initialvalue = "Area/city";
+  String get initialvalue => AppLocalizations.of(context)!.area_city;
+  set setInitailValue(String value) {
+    setInitailValue = value;
+  }
+
   GlobalKey<FormState> addressKey = GlobalKey<FormState>();
   bool isValid = false;
+
+  // static BuildContext get context => context;
 
   @override
   void onInit() {
@@ -74,7 +83,7 @@ class AddressController extends GetxController {
 
     if (back) {
       Get.back();
-      Get.rawSnackbar(message: "Successfully added address");
+      Get.rawSnackbar(message: AppLocalizations.of(context)!.added_address);
     }
   }
 
@@ -104,7 +113,7 @@ class AddressController extends GetxController {
       Get.rawSnackbar(message: response["message"] ?? "");
     } else {
       addresses.removeWhere((item) => item.id.toString() == id.toString());
-      Get.rawSnackbar(message: "Successfully address deleted");
+      Get.rawSnackbar(message: AppLocalizations.of(context)!.deleted_address);
 
       update();
     }

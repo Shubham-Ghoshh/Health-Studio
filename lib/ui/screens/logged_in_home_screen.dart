@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
 import 'package:health_studio_user/core/controllers/order_controller.dart';
@@ -132,9 +133,11 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                       color: Color.fromARGB(
                                                           96, 0, 0, 0),
                                                     ),
-                                                    const Text(
-                                                      "Every Meal:",
-                                                      style: TextStyle(
+                                                    Text(
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .every_meal,
+                                                      style: const TextStyle(
                                                         color:
                                                             Color(0xff0A0909),
                                                         fontWeight:
@@ -175,7 +178,9 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                                             ?.fat ??
                                                                         "0",
                                                                 nutritionName:
-                                                                    "Fat"),
+                                                                    AppLocalizations.of(
+                                                                            context)!
+                                                                        .fat),
                                                             sizedBoxWidth12,
                                                             // NutritionContent(
                                                             //     image:
@@ -201,7 +206,9 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                                             ?.calorie ??
                                                                         "0",
                                                                 nutritionName:
-                                                                    "Calorie"),
+                                                                    AppLocalizations.of(
+                                                                            context)!
+                                                                        .calorie),
                                                           ],
                                                         ),
                                                         sizedBoxHeight30,
@@ -240,7 +247,7 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                         bottom: 8,
                                                       ),
                                                       child: Text(
-                                                        "Your subscription will last\n until ${DateFormat("MMM dd, yyyy").format(getDateFormat(Get.find<SettingsController>().userDetails?.orderTo, split: false))}",
+                                                        "${AppLocalizations.of(context)!.subscription_last} \n ${AppLocalizations.of(context)!.until} ${DateFormat("MMM dd, yyyy").format(getDateFormat(Get.find<SettingsController>().userDetails?.orderTo, split: false))}",
                                                         textAlign:
                                                             TextAlign.left,
                                                         style: TextStyle(
@@ -275,7 +282,7 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                               split: false))
                                                           .inDays;
                                                       print(
-                                                          "DURATION ${duration + 1}");
+                                                          "${AppLocalizations.of(context)!.duration} ${duration + 1}");
 
                                                       DateTime startDate =
                                                           getDateFormat(
@@ -336,7 +343,9 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                       );
                                                     },
                                                     child: Text(
-                                                      "Extend",
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .extend,
                                                       textAlign: TextAlign.left,
                                                       style: TextStyle(
                                                         color: Colors.white,
@@ -355,7 +364,8 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                     ),
                                     sizedBoxHeight20,
                                     Text(
-                                      "Current Week",
+                                      AppLocalizations.of(context)!
+                                          .current_week,
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         shadows: textShadow,
@@ -365,7 +375,8 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                       ),
                                     ),
                                     Text(
-                                      "All your chosen meal this week.",
+                                      AppLocalizations.of(context)!
+                                          .meal_this_week,
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         color: Colors.white,
@@ -390,9 +401,10 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                   ?.thisweek
                                                   .isEmpty ??
                                               true)
-                                          ? const Center(
+                                          ? Center(
                                               child: Text(
-                                                "No Meals for these dates",
+                                                AppLocalizations.of(context)!
+                                                    .no_meals,
                                               ),
                                             )
                                           : ListView(
@@ -492,7 +504,7 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                   children: [
                                     sizedBoxHeight20,
                                     Text(
-                                      "Next Week",
+                                      AppLocalizations.of(context)!.next_week,
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         shadows: textShadow,
@@ -502,7 +514,8 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                       ),
                                     ),
                                     Text(
-                                      "Chose your meal now for next week",
+                                      AppLocalizations.of(context)!
+                                          .choose_meal_next_week,
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         color: Colors.white,
@@ -528,9 +541,10 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                   ?.nextweek
                                                   .isEmpty ??
                                               true)
-                                          ? const Center(
+                                          ? Center(
                                               child: Text(
-                                                "No Meals for these dates",
+                                                AppLocalizations.of(context)!
+                                                    .no_meals,
                                               ),
                                             )
                                           : ListView(

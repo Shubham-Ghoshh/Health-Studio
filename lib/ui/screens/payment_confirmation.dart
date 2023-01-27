@@ -3,23 +3,30 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/order_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:health_studio_user/core/controllers/setting_controller.dart';
 import 'package:health_studio_user/ui/screens/home_screen.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 
-class PaymentConfirmationPage extends StatelessWidget {
+class PaymentConfirmationPage extends StatefulWidget {
   final String status;
 
   const PaymentConfirmationPage({required this.status});
 
+  @override
+  State<PaymentConfirmationPage> createState() =>
+      _PaymentConfirmationPageState();
+}
+
+class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
   Widget paymentSuccessful() {
     return GetBuilder<OrderController>(builder: (orderController) {
       return Column(
         children: [
           Text(
-            status.toUpperCase(),
+            widget.status.toUpperCase(),
             textAlign: TextAlign.center,
             style: TextStyle(
               color: loginButtonColor,
@@ -31,7 +38,7 @@ class PaymentConfirmationPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Text(
-              "Thank you! We have received your payment.",
+              AppLocalizations.of(context)!.payment_received,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: whiteColor,
@@ -49,7 +56,7 @@ class PaymentConfirmationPage extends StatelessWidget {
     return Column(
       children: [
         Text(
-          status.toUpperCase(),
+          widget.status.toUpperCase(),
           textAlign: TextAlign.center,
           style: TextStyle(
             color: activeIconColor,
@@ -61,7 +68,7 @@ class PaymentConfirmationPage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(
-            "Sorry! We could not recieve your payement.",
+            AppLocalizations.of(context)!.payment_not_received,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: whiteColor,
@@ -95,24 +102,26 @@ class PaymentConfirmationPage extends StatelessWidget {
                     sizedBoxHeight6,
                     appBar(canGoBack: false),
                     sizedBoxHeight20,
-                    status == "captured" || status == "paid"
+                    widget.status == "captured" || widget.status == "paid"
                         ? paymentSuccessful()
                         : paymentUnsuccessful(),
                     sizedBoxHeight16,
-                    PaymentFeatures("Subscription",
+                    PaymentFeatures(AppLocalizations.of(context)!.subscription,
                         orderController.orderDetails!.categoryEn),
                     PaymentFeatures(
-                        "Subscription Start", orderController.order.startDate!),
+                        AppLocalizations.of(context)!.subscription_start,
+                        orderController.order.startDate!),
                     // PaymentFeatures("End Date", orderController.order.endDate!),
+                    PaymentFeatures(AppLocalizations.of(context)!.amount,
+                        "KD ${orderController.order.amount!}"),
                     PaymentFeatures(
-                        "Amount", "KD ${orderController.order.amount!}"),
-                    PaymentFeatures(
-                      "Package",
+                      AppLocalizations.of(context)!.package,
                       orderController.orderDetails!.packageEn == ""
-                          ? "Custom Package"
+                          ? AppLocalizations.of(context)!.custom_package
                           : orderController.orderDetails!.packageEn,
                     ),
-                    PaymentFeatures("Order Reference ID",
+                    PaymentFeatures(
+                        AppLocalizations.of(context)!.order_reference_ID,
                         orderController.orderDetails!.orderReference),
                     sizedBoxHeight40,
                     GestureDetector(
@@ -133,7 +142,7 @@ class PaymentConfirmationPage extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              "Done",
+                              AppLocalizations.of(context)!.done,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
