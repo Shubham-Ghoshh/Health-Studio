@@ -43,8 +43,8 @@ Widget dateWidget(BuildContext context, String weekday, String day,
   );
 }
 
-Widget calenderWidget(BuildContext context, String month, String day,
-    bool notSelected, Function() onTap) {
+Widget calenderWidget(
+    BuildContext context, String dateText, bool notSelected, Function() onTap) {
   return Padding(
     padding: const EdgeInsets.only(right: 10.0),
     child: GestureDetector(
@@ -109,7 +109,7 @@ Widget calenderWidget(BuildContext context, String month, String day,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "$month/$day",
+                      dateText,
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w500,

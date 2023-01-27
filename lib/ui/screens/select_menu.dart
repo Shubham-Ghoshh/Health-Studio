@@ -207,23 +207,20 @@ class SelectMenuPage extends StatelessWidget {
                           child: Column(
                             children: [
                               sizedBoxHeight12,
-                              Text(
-                                  "Amount to be paid: ${userDashboardController.tempPrice} KD"),
+                              Visibility(
+                                visible: userDashboardController
+                                        .packageDetail?.categoryId ==
+                                    "1",
+                                child: Text(
+                                    "Amount to be paid: ${userDashboardController.tempPrice} KD"),
+                              ),
                               sizedBoxHeight12,
                               LoginButton(
                                 onTap: () {
                                   userDashboardController
                                       .getMealPaymentLink(item);
                                 },
-                                enabled: !((userDashboardController
-                                            .mealItems[0]?.items.isEmpty ??
-                                        true) ||
-                                    (userDashboardController
-                                            .mealItems[1]?.items.isEmpty ??
-                                        true) ||
-                                    (userDashboardController
-                                            .mealItems[2]?.items.isEmpty ??
-                                        true)),
+                                enabled: userDashboardController.allMealsAdded,
                                 title: isUpdate ? "Update Meals" : "Save All",
                                 height: 50,
                               ),
@@ -376,10 +373,13 @@ class SelectMenuPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: GestureDetector(
-              onTap: () {
-                Get.find<UserDashboardController>()
-                    .getMenuByTypeAndDate(type, date, item);
-              },
+              onTap: allowEdit
+                  ? () {
+                      Get.find<UserDashboardController>().getMenuByTypeAndDate(
+                          type, date, item,
+                          itemIndex: itemIndex);
+                    }
+                  : null,
               child: const Icon(Icons.arrow_forward_ios_sharp),
             ),
           ),

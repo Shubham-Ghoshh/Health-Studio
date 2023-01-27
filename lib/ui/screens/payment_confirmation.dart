@@ -119,6 +119,7 @@ class PaymentConfirmationPage extends StatelessWidget {
                       onTap: () {
                         Get.offAll(() => const HomePage());
                         Get.find<SettingsController>().getUserDetails();
+                        Get.find<SettingsController>().getUserSubscription();
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(

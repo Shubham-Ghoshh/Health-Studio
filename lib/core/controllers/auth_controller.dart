@@ -42,7 +42,7 @@ class AuthController extends GetxController {
 
   void addDevice() async {
     Map<String, dynamic> body = {
-      "token": await Get.put(FirebaseController()).getToken(),
+      // "token": await Get.put(FirebaseController()).getToken(),
       "model": "",
       "version": "",
       "identifier": "",
@@ -51,9 +51,9 @@ class AuthController extends GetxController {
     };
 
     Map<String, dynamic> response = await postRequest("add/device", body);
-    if (response["error"] != 0) {
-      Get.rawSnackbar(message: response["message"]);
-    }
+    // if (response["error"] != 0) {
+    //   Get.rawSnackbar(message: response["message"]);
+    // }
   }
 
   void checkLogin() async {

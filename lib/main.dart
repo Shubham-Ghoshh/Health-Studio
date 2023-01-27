@@ -16,11 +16,11 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var lang = prefs.getBool("language") ?? true;
   WidgetsFlutterBinding.ensureInitialized();
-  if (Firebase.apps.isEmpty) {
-    await Firebase.initializeApp(
-        // options: DefaultFirebaseOptions.currentPlatform,
-        );
-  }
+  // if (Firebase.apps.isEmpty) {
+  //   await Firebase.initializeApp(
+  //       // options: DefaultFirebaseOptions.currentPlatform,
+  //       );
+  // }
   runApp(
     ScreenUtilInit(
       useInheritedMediaQuery: true,

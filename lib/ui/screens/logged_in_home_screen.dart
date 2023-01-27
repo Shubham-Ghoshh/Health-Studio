@@ -415,20 +415,10 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                       ? const SizedBox()
                                                       : calenderWidget(
                                                           context,
-                                                          DateTime.parse(userDashboardController
-                                                                  .userDashboard!
-                                                                  .thisweek[
-                                                                      index]
-                                                                  .dateRequested)
-                                                              .month
-                                                              .toString(),
-                                                          DateTime.parse(userDashboardController
-                                                                  .userDashboard!
-                                                                  .thisweek[
-                                                                      index]
-                                                                  .dateRequested)
-                                                              .day
-                                                              .toString(),
+                                                          userDashboardController
+                                                              .userDashboard!
+                                                              .thisweek[index]
+                                                              .dateText,
                                                           userDashboardController
                                                                   .userDashboard!
                                                                   .thisweek[
@@ -534,20 +524,10 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                       ? const SizedBox()
                                                       : calenderWidget(
                                                           context,
-                                                          DateTime.parse(userDashboardController
-                                                                  .userDashboard!
-                                                                  .nextweek[
-                                                                      index]
-                                                                  .dateRequested)
-                                                              .month
-                                                              .toString(),
-                                                          DateTime.parse(userDashboardController
-                                                                  .userDashboard!
-                                                                  .nextweek[
-                                                                      index]
-                                                                  .dateRequested)
-                                                              .day
-                                                              .toString(),
+                                                          userDashboardController
+                                                              .userDashboard!
+                                                              .nextweek[index]
+                                                              .dateText,
                                                           userDashboardController
                                                                   .userDashboard!
                                                                   .nextweek[

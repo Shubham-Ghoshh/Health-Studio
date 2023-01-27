@@ -152,7 +152,8 @@ class SettingsController extends GetxController {
   }
 
   launchInstagram() async {
-    var webUrl = "https://www.instagram.com/healthstudiokw";
+    var webUrl =
+        "https://www.instagram.com/healthstudiokw/?utm_medium=copy_link";
 
     try {
       await launchUrl(Uri.parse(webUrl), mode: LaunchMode.platformDefault);
@@ -162,7 +163,7 @@ class SettingsController extends GetxController {
   }
 
   launchFacebook() async {
-    var webUrl = "https://m.facebook.com/healthstudiokw";
+    var webUrl = "https://www.facebook.com/healthstudiokw";
 
     try {
       await launchUrl(Uri.parse(webUrl), mode: LaunchMode.platformDefault);
@@ -206,7 +207,7 @@ class SettingsController extends GetxController {
   }
 
   void openMailApp() async {
-    var url = "mailto:support@heatlhstudio.com";
+    var url = "mailto:support@healthstudiokw.com";
     try {
       await launchUrlString(url, mode: LaunchMode.platformDefault);
     } catch (e) {

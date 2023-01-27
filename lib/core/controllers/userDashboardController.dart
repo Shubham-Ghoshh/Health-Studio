@@ -27,6 +27,7 @@ class UserDashboardController extends GetxController {
   int tempPrice = 0;
   int tempCarbValue = 0;
   int tempProteinValue = 0;
+  bool allMealsAdded = false;
 
   @override
   void onInit() {
@@ -124,16 +125,21 @@ class UserDashboardController extends GetxController {
   }
 
   void calculateTotal() async {
+    bool tempAdded = true;
     tempPrice = 0;
     tempCarbValue = 0;
     tempProteinValue = 0;
     for (int i = 0; i < mealItems.length; i++) {
       for (int j = 0; j < (mealItems[i]?.items.length ?? 0); j++) {
+        if (mealItems[i]?.items[j] == null) {
+          tempAdded = false;
+        }
         tempPrice += int.tryParse(mealItems[i]?.items[j].price) ?? 0;
         tempCarbValue += int.tryParse(mealItems[i]?.items[j].carb) ?? 0;
         tempProteinValue += int.tryParse(mealItems[i]?.items[j].protein) ?? 0;
       }
     }
+    allMealsAdded = tempAdded;
     update();
   }
 
@@ -188,22 +194,28 @@ class UserDashboardController extends GetxController {
       bool isUpdate = false;
       if (allowEdit) {
         if (mealItems[0]!.items.isEmpty) {
+          allMealsAdded = false;
           mealItems.firstWhere((e) => e?.key == "meal")?.items = List.generate(
               int.tryParse(packageDetail!.meal) ?? 0, (idx) => null);
         } else {
+          allMealsAdded = true;
           isUpdate = true;
         }
         if (mealItems[1]!.items.isEmpty) {
+          allMealsAdded = false;
           mealItems.firstWhere((e) => e?.key == "snack")?.items = List.generate(
               int.tryParse(packageDetail!.snack) ?? 0, (idx) => null);
         } else {
+          allMealsAdded = true;
           isUpdate = true;
         }
         if (mealItems[2]!.items.isEmpty) {
+          allMealsAdded = false;
           mealItems.firstWhere((e) => e?.key == "breakfast")?.items =
               List.generate(
                   int.tryParse(packageDetail!.breakfast) ?? 0, (idx) => null);
         } else {
+          allMealsAdded = true;
           isUpdate = true;
         }
       }
@@ -212,10 +224,7 @@ class UserDashboardController extends GetxController {
             allowEdit: allowEdit,
             date: date,
             item: selectedDashboardItem!,
-            showSaveButton: (mealItems[0]!.items.isEmpty ||
-                    mealItems[1]!.items.isEmpty ||
-                    mealItems[2]!.items.isEmpty) ||
-                allowEdit,
+            showSaveButton: allowEdit,
             isUpdate: isUpdate,
           ));
     }
@@ -246,6 +255,7 @@ class UserDashboardController extends GetxController {
     if (response["error"] != 0) {
       Get.rawSnackbar(message: response["message"]);
     } else {
+      Get.back();
       Get.back();
       Get.rawSnackbar(message: "Meals saved successfully");
       getUserDashboard();

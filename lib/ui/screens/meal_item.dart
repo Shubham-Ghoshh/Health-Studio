@@ -96,132 +96,160 @@ class MealItem extends StatelessWidget {
                                       },
                                     ),
                                     sizedBoxHeight12,
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Text("Extra Carbs: "),
-                                        const Text("15"),
-                                        Text(
-                                            "g/KD ${Get.find<PlanController>().planDetail!.carbPrice}   "),
-                                        const Spacer(),
-                                        Container(
-                                          height: 50,
-                                          width: 80,
-                                          color: const Color.fromARGB(
-                                              150, 255, 255, 255),
-                                          child: Center(
-                                            child: DropdownButton<String>(
-                                              underline: Container(),
-                                              value: userDashboardController
-                                                  .carbValue,
-                                              items: [
-                                                "0",
+                                    Visibility(
+                                        visible:
+                                            Get.find<UserDashboardController>()
+                                                    .packageDetail
+                                                    ?.categoryId ==
                                                 "1",
-                                                "2",
-                                                "3",
-                                                "4",
-                                                "5"
-                                              ]
-                                                  .map((item) =>
-                                                      DropdownMenuItem<String>(
-                                                        value: item,
-                                                        child: Center(
-                                                          child: Text(
-                                                            item,
-                                                            style:
-                                                                const TextStyle(
-                                                                    color: Colors
-                                                                        .black),
-                                                          ),
-                                                        ),
-                                                      ))
-                                                  .toList(),
-                                              onChanged: (val) {
-                                                userDashboardController
-                                                    .carbValue = val ?? "0";
-                                                userDashboardController
-                                                    .update();
-                                                userDashboardController
-                                                    .calculateMealPrice(
-                                                  Get.find<PlanController>()
-                                                      .planDetail!
-                                                      .carbPrice!,
-                                                  Get.find<PlanController>()
-                                                      .planDetail!
-                                                      .proteinPrice!,
-                                                );
-                                              },
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                const Text("Extra Carbs: "),
+                                                const Text("15"),
+                                                Text(
+                                                    "g/KD ${Get.find<PlanController>().planDetail!.carbPrice}   "),
+                                                const Spacer(),
+                                                Container(
+                                                  height: 50,
+                                                  width: 80,
+                                                  color: const Color.fromARGB(
+                                                      150, 255, 255, 255),
+                                                  child: Center(
+                                                    child:
+                                                        DropdownButton<String>(
+                                                      underline: Container(),
+                                                      value:
+                                                          userDashboardController
+                                                              .carbValue,
+                                                      items: [
+                                                        "0",
+                                                        "1",
+                                                        "2",
+                                                        "3",
+                                                        "4",
+                                                        "5"
+                                                      ]
+                                                          .map((item) =>
+                                                              DropdownMenuItem<
+                                                                  String>(
+                                                                value: item,
+                                                                child: Center(
+                                                                  child: Text(
+                                                                    item,
+                                                                    style: const TextStyle(
+                                                                        color: Colors
+                                                                            .black),
+                                                                  ),
+                                                                ),
+                                                              ))
+                                                          .toList(),
+                                                      onChanged: (val) {
+                                                        userDashboardController
+                                                                .carbValue =
+                                                            val ?? "0";
+                                                        userDashboardController
+                                                            .update();
+                                                        userDashboardController
+                                                            .calculateMealPrice(
+                                                          Get.find<
+                                                                  PlanController>()
+                                                              .planDetail!
+                                                              .carbPrice!,
+                                                          Get.find<
+                                                                  PlanController>()
+                                                              .planDetail!
+                                                              .proteinPrice!,
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    sizedBoxHeight16,
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Text("Extra Protein: "),
-                                        const Text("15"),
-                                        Text(
-                                            "g/KD ${Get.find<PlanController>().planDetail!.proteinPrice}"),
-                                        const Spacer(),
-                                        Container(
-                                          height: 50,
-                                          width: 80,
-                                          color: const Color.fromARGB(
-                                              150, 255, 255, 255),
-                                          child: Center(
-                                            child: DropdownButton<String>(
-                                              underline: Container(),
-                                              value: userDashboardController
-                                                  .proteinValue,
-                                              items: [
-                                                "0",
-                                                "1",
-                                                "2",
-                                                "3",
-                                                "4",
-                                                "5"
-                                              ]
-                                                  .map((item) =>
-                                                      DropdownMenuItem<String>(
-                                                        value: item,
-                                                        child: Center(
-                                                          child: Text(
-                                                            item,
-                                                            style:
-                                                                const TextStyle(
-                                                                    color: Colors
-                                                                        .black),
-                                                          ),
-                                                        ),
-                                                      ))
-                                                  .toList(),
-                                              onChanged: (val) {
-                                                userDashboardController
-                                                    .proteinValue = val ?? "0";
-                                                userDashboardController
-                                                    .update();
-                                                userDashboardController
-                                                    .calculateMealPrice(
-                                                  Get.find<PlanController>()
-                                                      .planDetail!
-                                                      .carbPrice!,
-                                                  Get.find<PlanController>()
-                                                      .planDetail!
-                                                      .proteinPrice!,
-                                                );
-                                              },
+                                            sizedBoxHeight16,
+                                            Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                const Text("Extra Protein: "),
+                                                const Text("15"),
+                                                Text(
+                                                    "g/KD ${Get.find<PlanController>().planDetail!.proteinPrice}"),
+                                                const Spacer(),
+                                                Container(
+                                                  height: 50,
+                                                  width: 80,
+                                                  color: const Color.fromARGB(
+                                                      150, 255, 255, 255),
+                                                  child: Center(
+                                                    child:
+                                                        DropdownButton<String>(
+                                                      underline: Container(),
+                                                      value:
+                                                          userDashboardController
+                                                              .proteinValue,
+                                                      items: [
+                                                        "0",
+                                                        "1",
+                                                        "2",
+                                                        "3",
+                                                        "4",
+                                                        "5"
+                                                      ]
+                                                          .map((item) =>
+                                                              DropdownMenuItem<
+                                                                  String>(
+                                                                value: item,
+                                                                child: Center(
+                                                                  child: Text(
+                                                                    item,
+                                                                    style: const TextStyle(
+                                                                        color: Colors
+                                                                            .black),
+                                                                  ),
+                                                                ),
+                                                              ))
+                                                          .toList(),
+                                                      onChanged: (val) {
+                                                        userDashboardController
+                                                                .proteinValue =
+                                                            val ?? "0";
+                                                        userDashboardController
+                                                            .update();
+                                                        userDashboardController
+                                                            .calculateMealPrice(
+                                                          Get.find<
+                                                                  PlanController>()
+                                                              .planDetail!
+                                                              .carbPrice!,
+                                                          Get.find<
+                                                                  PlanController>()
+                                                              .planDetail!
+                                                              .proteinPrice!,
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                            sizedBoxHeight12,
+                                          ],
+                                        )),
                                     const Spacer(),
-                                    Text(
-                                        "Price: ${userDashboardController.price} KD"),
-                                    sizedBoxHeight12,
+                                    Visibility(
+                                      visible:
+                                          Get.find<UserDashboardController>()
+                                                  .packageDetail
+                                                  ?.categoryId ==
+                                              "1",
+                                      child: Text(
+                                          "Price: ${userDashboardController.price} KD"),
+                                    ),
                                     LoginButton(
+                                      width: 200,
                                       onTap: () {
                                         userDashboardController.saveMeal(
                                           meal,
@@ -234,7 +262,7 @@ class MealItem extends StatelessWidget {
                                       title: "Save",
                                       height: 50,
                                     ),
-                                    sizedBoxHeight12,
+                                    sizedBoxHeight30,
                                   ],
                                 ),
                               );
