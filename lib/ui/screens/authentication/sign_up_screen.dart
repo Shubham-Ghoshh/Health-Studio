@@ -247,9 +247,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             onTap: () async {
                               DateTime? pickedDate = await showDatePicker(
                                 context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime.now(),
+                                initialDate: DateTime.now()
+                                    .subtract(const Duration(days: 5475)),
+                                firstDate: DateTime.now()
+                                    .subtract(const Duration(days: 29200)),
+                                lastDate: DateTime.now()
+                                    .subtract(const Duration(days: 5475)),
                                 builder: (context, child) => Theme(
                                     data: Theme.of(context).copyWith(
                                         colorScheme: const ColorScheme.light(

@@ -6,7 +6,7 @@ class PackageDetail {
   String descriptionAr;
   String image;
   String categoryId;
-  String price;
+  String? price;
   String breakfast;
   String meal;
   String snack;
@@ -27,7 +27,7 @@ class PackageDetail {
 
   factory PackageDetail.fromJson(Map<String, dynamic> json) {
     return PackageDetail(
-      id: json["id"],
+      id: json["id"] ?? "",
       titleAr: json["title_ar"],
       titleEn: json["title_en"],
       descriptionAr: json["description_ar"],

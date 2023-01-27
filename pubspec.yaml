@@ -47,6 +47,7 @@ dependencies:
   device_info_plus: ^8.0.0
   # The following package is added to implement FCM
   firebase_messaging: ^14.2.1
+  firebase_core: ^2.4.1
   # flutter_facebook_auth: ^5.0.7
   # The following package is added to implement sign in with apple
   sign_in_with_apple: ^4.3.0

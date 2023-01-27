@@ -147,7 +147,7 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        sizedBoxHeight6,
+                        sizedBoxHeight12,
                         LoginButton(
                           height: 52,
                           title: AppLocalizations.of(context)!.login,

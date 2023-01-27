@@ -598,7 +598,7 @@ class _PlanScreenState extends State<PlanScreen> {
                       if (settingsController.userDetails != null) {
                         print(
                             "ORDER TO ${settingsController.userDetails!.orderTo}");
-                        if (settingsController.userDetails!.orderTo != null ||
+                        if (settingsController.userDetails!.orderTo != null &&
                             settingsController.userDetails!.orderTo != "") {
                           orderController.order.startDate =
                               DateFormat("dd-MM-yyyy").format(getDateFormat(

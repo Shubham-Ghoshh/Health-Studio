@@ -231,7 +231,7 @@ class _AddressFormState extends State<AddressForm> {
                                 ),
                               ),
                             ),
-                            sizedBoxHeight10,
+                            sizedBoxHeight12,
                             LoginButton(
                               height: 50.h,
                               onTap: () {

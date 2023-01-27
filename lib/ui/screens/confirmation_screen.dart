@@ -78,26 +78,30 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                           ),
                         ),
                         sizedBoxHeight16,
-                        Text(
-                          AppLocalizations.of(context)!.subscription,
-                          style: TextStyle(
-                            shadows: <Shadow>[
-                              const Shadow(
-                                offset: Offset(2.0, 5.0),
-                                blurRadius: 5.0,
-                                color: Color.fromARGB(88, 0, 0, 0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.subscription,
+                              style: TextStyle(
+                                shadows: <Shadow>[
+                                  const Shadow(
+                                    offset: Offset(2.0, 5.0),
+                                    blurRadius: 5.0,
+                                    color: Color.fromARGB(88, 0, 0, 0),
+                                  ),
+                                ],
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 24.sp,
                               ),
-                            ],
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 24.sp,
-                          ),
+                            ),
+                            planController.selectedPackage!.isCustom
+                                ? Image.asset("assets/images/Frame.png")
+                                : const SizedBox(),
+                          ],
                         ),
                         sizedBoxHeight10,
-                        // PlanWidget(
-                        //   widget: widget,
-                        //   plan: planController.packages,
-                        // ),
                         Container(
                           width: 1.sw,
                           decoration: BoxDecoration(

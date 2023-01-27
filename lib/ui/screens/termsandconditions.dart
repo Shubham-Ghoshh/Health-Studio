@@ -84,6 +84,7 @@ class TermsandConditions extends StatelessWidget {
                 showAddress
                     ? Column(
                         children: [
+                          sizedBoxHeight12,
                           LoginButton(
                             enabled: true,
                             height: 50,

@@ -25,25 +25,31 @@ class OrderController extends GetxController {
   PromoCode? promoCode;
 
   void checkVoucherAPI() async {
-    Utility.showLoadingDialog();
-    Map<String, dynamic> body = {
-      "coupon_code": code,
-      "package_id": Get.find<PlanController>().selectedPackage!.id,
-      "order_amount": order.amount,
-    };
-    Map<String, dynamic> response = await postRequest("vourcher/check", body);
-    Utility.closeDialog();
-    if (response["error"] != 0) {
+    if (code == "") {
       order.amount = price;
       update();
-      Get.rawSnackbar(message: response["message"]);
     } else {
-      promoCode = PromoCode.fromJson(response["details"][0]);
-      if (promoCode?.orderFinalAmount != null &&
-          promoCode?.orderFinalAmount != "") {
-        order.amount = promoCode?.orderFinalAmount;
+      Utility.showLoadingDialog();
+      Map<String, dynamic> body = {
+        "coupon_code": code,
+        "package_id": Get.find<PlanController>().selectedPackage!.id,
+        "order_amount": order.amount,
+      };
+      Map<String, dynamic> response = await postRequest("vourcher/check", body);
+      Utility.closeDialog();
+
+      if (response["error"] != 0) {
+        order.amount = price;
+        update();
+        Get.rawSnackbar(message: response["message"]);
+      } else {
+        promoCode = PromoCode.fromJson(response["details"][0]);
+        if (promoCode?.orderFinalAmount != null &&
+            promoCode?.orderFinalAmount != "") {
+          order.amount = promoCode?.orderFinalAmount;
+        }
+        update();
       }
-      update();
     }
   }
 

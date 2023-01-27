@@ -405,51 +405,59 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                         .length ??
                                                     0,
                                                 (index) {
-                                                  return calenderWidget(
-                                                      context,
-                                                      DateTime.parse(
-                                                              userDashboardController
+                                                  return DateTime.parse(userDashboardController
                                                                   .userDashboard!
                                                                   .thisweek[
                                                                       index]
                                                                   .dateRequested)
-                                                          .month
-                                                          .toString(),
-                                                      DateTime.parse(
-                                                              userDashboardController
+                                                              .weekday ==
+                                                          5
+                                                      ? const SizedBox()
+                                                      : calenderWidget(
+                                                          context,
+                                                          DateTime.parse(userDashboardController
                                                                   .userDashboard!
                                                                   .thisweek[
                                                                       index]
                                                                   .dateRequested)
-                                                          .day
-                                                          .toString(),
-                                                      userDashboardController
-                                                              .userDashboard!
-                                                              .thisweek[index]
-                                                              .status ==
-                                                          "0", () {
-                                                    userDashboardController.getPackageDetails(
-                                                        orderController
-                                                            .orderDetails!
-                                                            .categoryId,
-                                                        orderController
-                                                            .orderDetails!
-                                                            .packageId,
-                                                        userDashboardController
-                                                            .userDashboard!
-                                                            .thisweek[index]
-                                                            .dateRequested,
-                                                        userDashboardController
-                                                            .userDashboard!
-                                                            .thisweek[index],
-                                                        allowEdit:
-                                                            userDashboardController
-                                                                    .userDashboard!
-                                                                    .thisweek[
-                                                                        index]
-                                                                    .allowEdit ==
-                                                                "1");
-                                                  });
+                                                              .month
+                                                              .toString(),
+                                                          DateTime.parse(userDashboardController
+                                                                  .userDashboard!
+                                                                  .thisweek[
+                                                                      index]
+                                                                  .dateRequested)
+                                                              .day
+                                                              .toString(),
+                                                          userDashboardController
+                                                                  .userDashboard!
+                                                                  .thisweek[
+                                                                      index]
+                                                                  .status ==
+                                                              "0", () {
+                                                          userDashboardController.getPackageDetails(
+                                                              orderController
+                                                                  .orderDetails!
+                                                                  .categoryId,
+                                                              orderController
+                                                                  .orderDetails!
+                                                                  .packageId,
+                                                              userDashboardController
+                                                                  .userDashboard!
+                                                                  .thisweek[
+                                                                      index]
+                                                                  .dateRequested,
+                                                              userDashboardController
+                                                                      .userDashboard!
+                                                                      .thisweek[
+                                                                  index],
+                                                              allowEdit: userDashboardController
+                                                                      .userDashboard!
+                                                                      .thisweek[
+                                                                          index]
+                                                                      .allowEdit ==
+                                                                  "1");
+                                                        });
                                                 },
                                               ),
                                             ),
@@ -516,54 +524,59 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                         .length ??
                                                     0,
                                                 (index) {
-                                                  DateTime date = DateTime.now()
-                                                      .add(Duration(
-                                                          days: index));
-                                                  return calenderWidget(
-                                                      context,
-                                                      DateTime.parse(
-                                                              userDashboardController
+                                                  return DateTime.parse(userDashboardController
                                                                   .userDashboard!
                                                                   .nextweek[
                                                                       index]
                                                                   .dateRequested)
-                                                          .month
-                                                          .toString(),
-                                                      DateTime.parse(
-                                                              userDashboardController
+                                                              .weekday ==
+                                                          5
+                                                      ? const SizedBox()
+                                                      : calenderWidget(
+                                                          context,
+                                                          DateTime.parse(userDashboardController
                                                                   .userDashboard!
                                                                   .nextweek[
                                                                       index]
                                                                   .dateRequested)
-                                                          .day
-                                                          .toString(),
-                                                      userDashboardController
-                                                              .userDashboard!
-                                                              .nextweek[index]
-                                                              .status ==
-                                                          "0", () {
-                                                    userDashboardController.getPackageDetails(
-                                                        orderController
-                                                            .orderDetails!
-                                                            .categoryId,
-                                                        orderController
-                                                            .orderDetails!
-                                                            .packageId,
-                                                        userDashboardController
-                                                            .userDashboard!
-                                                            .nextweek[index]
-                                                            .dateRequested,
-                                                        userDashboardController
-                                                            .userDashboard!
-                                                            .nextweek[index],
-                                                        allowEdit:
-                                                            userDashboardController
-                                                                    .userDashboard!
-                                                                    .nextweek[
-                                                                        index]
-                                                                    .allowEdit ==
-                                                                "1");
-                                                  });
+                                                              .month
+                                                              .toString(),
+                                                          DateTime.parse(userDashboardController
+                                                                  .userDashboard!
+                                                                  .nextweek[
+                                                                      index]
+                                                                  .dateRequested)
+                                                              .day
+                                                              .toString(),
+                                                          userDashboardController
+                                                                  .userDashboard!
+                                                                  .nextweek[
+                                                                      index]
+                                                                  .status ==
+                                                              "0", () {
+                                                          userDashboardController.getPackageDetails(
+                                                              orderController
+                                                                  .orderDetails!
+                                                                  .categoryId,
+                                                              orderController
+                                                                  .orderDetails!
+                                                                  .packageId,
+                                                              userDashboardController
+                                                                  .userDashboard!
+                                                                  .nextweek[
+                                                                      index]
+                                                                  .dateRequested,
+                                                              userDashboardController
+                                                                      .userDashboard!
+                                                                      .nextweek[
+                                                                  index],
+                                                              allowEdit: userDashboardController
+                                                                      .userDashboard!
+                                                                      .nextweek[
+                                                                          index]
+                                                                      .allowEdit ==
+                                                                  "1");
+                                                        });
                                                 },
                                               ),
                                             ),

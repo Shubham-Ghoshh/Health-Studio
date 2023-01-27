@@ -13,12 +13,14 @@ class SelectMenuPage extends StatelessWidget {
   final bool showSaveButton;
   final String date;
   final DashboardItem item;
+  final bool isUpdate;
   const SelectMenuPage({
     super.key,
     required this.date,
     required this.item,
     this.showSaveButton = true,
     this.allowEdit = true,
+    this.isUpdate = false,
   });
 
   @override
@@ -202,21 +204,30 @@ class SelectMenuPage extends StatelessWidget {
                         // sizedBoxHeight8,
                         Visibility(
                           visible: showSaveButton,
-                          child: LoginButton(
-                            onTap: () {
-                              userDashboardController.getMealPaymentLink(item);
-                            },
-                            enabled: !((userDashboardController
-                                        .mealItems[0]?.items.isEmpty ??
-                                    true) ||
-                                (userDashboardController
-                                        .mealItems[1]?.items.isEmpty ??
-                                    true) ||
-                                (userDashboardController
-                                        .mealItems[2]?.items.isEmpty ??
-                                    true)),
-                            title: "Save All",
-                            height: 50,
+                          child: Column(
+                            children: [
+                              sizedBoxHeight12,
+                              Text(
+                                  "Amount to be paid: ${userDashboardController.tempPrice} KD"),
+                              sizedBoxHeight12,
+                              LoginButton(
+                                onTap: () {
+                                  userDashboardController
+                                      .getMealPaymentLink(item);
+                                },
+                                enabled: !((userDashboardController
+                                            .mealItems[0]?.items.isEmpty ??
+                                        true) ||
+                                    (userDashboardController
+                                            .mealItems[1]?.items.isEmpty ??
+                                        true) ||
+                                    (userDashboardController
+                                            .mealItems[2]?.items.isEmpty ??
+                                        true)),
+                                title: isUpdate ? "Update Meals" : "Save All",
+                                height: 50,
+                              ),
+                            ],
                           ),
                         ),
                         sizedBoxHeight12,

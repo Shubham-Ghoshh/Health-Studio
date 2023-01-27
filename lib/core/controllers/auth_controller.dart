@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:health_studio_user/core/controllers/firebase_controller.dart';
 import 'package:health_studio_user/core/controllers/setting_controller.dart';
 import 'package:health_studio_user/core/request.dart';
 import 'package:health_studio_user/ui/screens/authentication/login_screen.dart';
@@ -41,7 +42,7 @@ class AuthController extends GetxController {
 
   void addDevice() async {
     Map<String, dynamic> body = {
-      "token": "",
+      "token": await Get.put(FirebaseController()).getToken(),
       "model": "",
       "version": "",
       "identifier": "",

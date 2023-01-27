@@ -18,8 +18,6 @@ class UserDashboard {
   }
 }
 
-// {id: 112898, date: 2023-02-05, date_text: 05/02, status: 0, allow_edit: 1, dataAllow: 0, force: true}
-
 class DashboardItem {
   String id;
   String dateRequested;

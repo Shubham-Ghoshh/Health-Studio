@@ -100,16 +100,14 @@ class MealItem extends StatelessWidget {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         const Text("Extra Carbs: "),
-                                        Text(Get.find<PlanController>()
-                                            .planDetail!
-                                            .grams),
+                                        const Text("15"),
                                         Text(
                                             "g/KD ${Get.find<PlanController>().planDetail!.carbPrice}   "),
                                         const Spacer(),
                                         Container(
                                           height: 50,
                                           width: 80,
-                                          color: Color.fromARGB(
+                                          color: const Color.fromARGB(
                                               150, 255, 255, 255),
                                           child: Center(
                                             child: DropdownButton<String>(
@@ -163,9 +161,7 @@ class MealItem extends StatelessWidget {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         const Text("Extra Protein: "),
-                                        Text(Get.find<PlanController>()
-                                            .planDetail!
-                                            .grams),
+                                        const Text("15"),
                                         Text(
                                             "g/KD ${Get.find<PlanController>().planDetail!.proteinPrice}"),
                                         const Spacer(),
@@ -223,7 +219,8 @@ class MealItem extends StatelessWidget {
                                     ),
                                     const Spacer(),
                                     Text(
-                                        "Price: KD ${userDashboardController.price}"),
+                                        "Price: ${userDashboardController.price} KD"),
+                                    sizedBoxHeight12,
                                     LoginButton(
                                       onTap: () {
                                         userDashboardController.saveMeal(
