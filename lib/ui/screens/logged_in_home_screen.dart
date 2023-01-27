@@ -318,6 +318,14 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                       );
                                                       orderController.duration =
                                                           duration + 1;
+                                                      orderController
+                                                              .firstDate =
+                                                          getDateFormat(
+                                                              Get.find<
+                                                                      SettingsController>()
+                                                                  .userDetails!
+                                                                  .orderTo,
+                                                              split: false);
                                                       orderController.update();
 
                                                       Get.put(PlanController())
@@ -329,10 +337,14 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                               orderController
                                                                   .orderDetails!
                                                                   .categoryId);
-                                                      Get.to(
-                                                        () => const Address(
-                                                          check: true,
-                                                        ),
+                                                      userDashboardController
+                                                          .getPackageData(
+                                                        orderController
+                                                            .orderDetails!
+                                                            .categoryId,
+                                                        orderController
+                                                            .orderDetails!
+                                                            .packageId,
                                                       );
                                                     },
                                                     child: Text(

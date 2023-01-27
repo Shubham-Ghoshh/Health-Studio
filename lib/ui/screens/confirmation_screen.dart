@@ -34,6 +34,9 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
     return GetBuilder<PlanController>(
       builder: (planController) =>
           GetBuilder<OrderController>(builder: (orderController) {
+        print("SELECTED PACKAGE");
+        print(planController.selectedPackage);
+
         return Scaffold(
           appBar: customAppBar(),
           resizeToAvoidBottomInset: true,

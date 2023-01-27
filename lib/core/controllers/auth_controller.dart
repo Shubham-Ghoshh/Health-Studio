@@ -1,5 +1,7 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:io' show Platform;
 import 'package:health_studio_user/core/controllers/firebase_controller.dart';
 import 'package:health_studio_user/core/controllers/setting_controller.dart';
 import 'package:health_studio_user/core/request.dart';
@@ -31,6 +33,7 @@ class AuthController extends GetxController {
       'openid',
     ],
   );
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
   @override
   void onInit() {
@@ -41,14 +44,28 @@ class AuthController extends GetxController {
   }
 
   void addDevice() async {
-    Map<String, dynamic> body = {
-      "token": await Get.put(FirebaseController()).getToken(),
-      "model": "",
-      "version": "",
-      "identifier": "",
-      "platform": "",
-      "timezone": ""
-    };
+    Map<String, dynamic> body = {};
+    if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      body = {
+        "token": await Get.put(FirebaseController()).getToken(),
+        "model": iosInfo.model,
+        "version": Get.find<SettingsController>().packageInfo?.version ?? "",
+        "identifier": "com.healthstudio.app",
+        "platform": "ios",
+        "timezone": DateTime.now().timeZoneName,
+      };
+    } else if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      body = {
+        "token": await Get.put(FirebaseController()).getToken(),
+        "model": androidInfo.model,
+        "version": Get.find<SettingsController>().packageInfo?.version ?? "",
+        "identifier": "com.healthstudio.app",
+        "platform": "android",
+        "timezone": DateTime.now().timeZoneName,
+      };
+    }
 
     Map<String, dynamic> response = await postRequest("add/device", body);
     // if (response["error"] != 0) {
@@ -80,9 +97,9 @@ class AuthController extends GetxController {
       isLoggedIn = true;
       update();
 
-      addDevice();
       Get.put(SettingsController()).getUserDetails();
       Get.put(SettingsController()).getUserSubscription();
+      addDevice();
     }
   }
 

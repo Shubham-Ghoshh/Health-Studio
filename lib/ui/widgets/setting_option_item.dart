@@ -62,9 +62,9 @@ class _SettingOptionItemState extends State<SettingOptionItem> {
                   Text(
                     widget.optionalText,
                     style: TextStyle(
-                      color: const Color(0xff9E9E9E),
+                      color: Colors.white,
                       fontWeight: FontWeight.w400,
-                      fontSize: 12.sp,
+                      fontSize: 14.sp,
                     ),
                   ),
                 ],

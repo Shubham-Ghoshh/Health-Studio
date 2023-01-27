@@ -7,8 +7,10 @@ import 'package:health_studio_user/core/models/item.dart';
 import 'package:health_studio_user/core/models/meal.dart';
 import 'package:health_studio_user/core/models/meal_item.dart';
 import 'package:health_studio_user/core/models/package.dart';
+import 'package:health_studio_user/core/models/plan.dart';
 import 'package:health_studio_user/core/models/user_dashboard.dart';
 import 'package:health_studio_user/core/request.dart';
+import 'package:health_studio_user/ui/screens/address_screen.dart';
 import 'package:health_studio_user/ui/screens/choose_item.dart';
 import 'package:health_studio_user/ui/screens/payment_screen.dart';
 import 'package:health_studio_user/ui/screens/select_menu.dart';
@@ -49,6 +51,50 @@ class UserDashboardController extends GetxController {
     }
   }
 
+  void getPackageData(
+    String planId,
+    String? packageId,
+  ) async {
+    Utility.showLoadingDialog();
+    Map<String, dynamic> response = await getRequest(
+        "package-detail/$planId/${(packageId == "" || packageId == null) ? "custom_${Get.find<OrderController>().orderReference}" : packageId}");
+    Utility.closeDialog();
+    if (response["error"] != 0) {
+      Get.rawSnackbar(message: response["message"]);
+    } else {
+      packageDetail =
+          PackageDetail.fromJson(response["details"]["package"].first);
+
+      update();
+
+      if (packageDetail != null) {
+        Get.find<PlanController>().selectedPackage = Package(
+          id: packageId,
+          titleAr: packageDetail!.titleAr,
+          titleEn: packageDetail!.titleEn,
+          descriptionAr: packageDetail!.descriptionAr,
+          descriptionEn: packageDetail!.descriptionEn,
+          image: packageDetail!.image,
+          breakfast: packageDetail!.breakfast,
+          categoryId: planId,
+          fifteenDays: "0",
+          sevenDays: "0",
+          thirtyDays: "0",
+          meal: packageDetail!.meal,
+          snack: packageDetail!.snack,
+          isCustom: packageDetail == null || packageId == "",
+        );
+        Get.find<PlanController>().update();
+        Get.to(
+          () => const Address(
+            check: true,
+          ),
+        );
+      }
+      update();
+    }
+  }
+
   void getPackageDetails(
       String planId, String? packageId, String date, DashboardItem item,
       {bool allowEdit = true}) async {
@@ -68,6 +114,24 @@ class UserDashboardController extends GetxController {
       tempPrice = 0;
       tempCarbValue = 0;
       tempProteinValue = 0;
+      if (packageDetail != null) {
+        Get.find<PlanController>().selectedPackage = Package(
+          id: packageId,
+          titleAr: packageDetail!.titleAr,
+          titleEn: packageDetail!.titleEn,
+          descriptionAr: packageDetail!.descriptionAr,
+          descriptionEn: packageDetail!.descriptionEn,
+          image: packageDetail!.image,
+          breakfast: packageDetail!.breakfast,
+          categoryId: planId,
+          fifteenDays: "0",
+          sevenDays: "0",
+          thirtyDays: "0",
+          meal: packageDetail!.meal,
+          snack: packageDetail!.snack,
+          isCustom: packageDetail == null || packageId == "",
+        );
+      }
       update();
     }
   }

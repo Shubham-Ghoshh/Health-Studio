@@ -47,8 +47,8 @@ class SplashController extends GetxController {
       update();
       Get.find<SettingsController>().getUserSubscription();
       Get.put(SettingsController()).getUserDetails();
+      Get.find<AuthController>().addDevice();
     }
-    Get.find<AuthController>().addDevice();
   }
 
   void goHome() async {
