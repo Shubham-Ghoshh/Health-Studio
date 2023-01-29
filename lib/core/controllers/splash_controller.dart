@@ -1,8 +1,10 @@
 import 'dart:async';
-
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:health_studio_user/core/controllers/apn_controller.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
+import 'package:health_studio_user/core/controllers/firebase_controller.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/controllers/setting_controller.dart';
@@ -47,7 +49,11 @@ class SplashController extends GetxController {
       update();
       Get.find<SettingsController>().getUserSubscription();
       Get.put(SettingsController()).getUserDetails();
-      Get.find<AuthController>().addDevice();
+      if (Platform.isIOS) {
+        Get.put(APNController()).getToken();
+      } else {
+        Get.put(FirebaseController(), permanent: true).getToken();
+      }
     }
   }
 

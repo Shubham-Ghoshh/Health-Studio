@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
+import 'package:health_studio_user/core/controllers/firebase_controller.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';

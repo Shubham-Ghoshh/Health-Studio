@@ -198,7 +198,9 @@ class _AddressState extends State<Address> {
                                     addressController.getAddresses();
                                   },
                                   child: SvgPicture.asset(
-                                      'assets/images/deleteicon.svg'))
+                                    'assets/images/deleteicon.svg',
+                                    width: 24,
+                                  ))
                             ],
                           ),
                         )

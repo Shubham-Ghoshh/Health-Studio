@@ -125,7 +125,8 @@ class PaymentScreenState extends State<PaymentScreen> {
                       Get.back();
                       Get.rawSnackbar(message: "Payment Failed");
                     } else {
-                      Get.find<OrderController>().getOrderDetails(status: html);
+                      Get.find<OrderController>()
+                          .getOrderDetails(status: "REQUESTED");
                       break;
                     }
                   }

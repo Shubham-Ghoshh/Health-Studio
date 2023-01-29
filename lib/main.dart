@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'dart:io' show Platform;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:health_studio_user/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,9 +19,11 @@ void main() async {
   var lang = prefs.getBool("language") ?? true;
   WidgetsFlutterBinding.ensureInitialized();
   if (Firebase.apps.isEmpty) {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+    if (!Platform.isIOS) {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    }
   }
   runApp(
     ScreenUtilInit(

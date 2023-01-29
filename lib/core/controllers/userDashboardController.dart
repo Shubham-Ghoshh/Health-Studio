@@ -168,23 +168,37 @@ class UserDashboardController extends GetxController {
       {int itemIndex = 0}) {
     int index = mealItems.indexWhere((m) => m?.key == mealType);
     if (index != -1) {
-      mealItems[index]?.items[itemIndex] = Item(
-        id: meal.id,
-        price: price,
-        note: note,
-        meal: meal,
-        carb: carbValue,
-        protein: proteinValue,
-      );
+      if (meal.menuType != "No Special" &&
+          mealItems[index]
+                  ?.items
+                  .indexWhere((i) => i.meal.menuType == meal.menuType) !=
+              -1) {
+        Get.rawSnackbar(
+          message:
+              "Two meals with same Special Category cannot be added, please try adding another meal.",
+          duration: const Duration(
+            seconds: 5,
+          ),
+        );
+      } else {
+        mealItems[index]?.items[itemIndex] = Item(
+          id: meal.id,
+          price: price,
+          note: note,
+          meal: meal,
+          carb: carbValue,
+          protein: proteinValue,
+        );
 
-      carbValue = "0";
-      proteinValue = "0";
-      price = "0";
+        carbValue = "0";
+        proteinValue = "0";
+        price = "0";
 
-      update();
-      calculateTotal();
-      Get.back();
-      Get.back();
+        update();
+        calculateTotal();
+        Get.back();
+        Get.back();
+      }
     }
   }
 

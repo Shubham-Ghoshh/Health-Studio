@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
+import 'dart:io' show Platform;
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:health_studio_user/core/controllers/auth_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FirebaseController extends GetxController {
@@ -9,18 +11,22 @@ class FirebaseController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    setupInteractedMessage();
+    if (!Platform.isIOS) {
+      setupInteractedMessage();
+    }
   }
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-  Future<String?> getToken() async {
-    print("GET FCM TOKEN ");
-    await messaging.requestPermission();
-    String? fcmToken = await messaging.getToken();
-    print("FCM ===");
-    print(fcmToken);
-    return fcmToken;
+  void getToken() async {
+    if (!Platform.isIOS) {
+      print("GET FCM TOKEN ");
+      await messaging.requestPermission();
+      String? fcmToken = await messaging.getToken();
+      print("FCM ===");
+      print(fcmToken);
+      Get.find<AuthController>().addDevice(fcmToken ?? "");
+    }
   }
 
   Future<void> setupInteractedMessage() async {

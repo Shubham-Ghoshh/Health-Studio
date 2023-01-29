@@ -1,6 +1,7 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:health_studio_user/core/controllers/apn_controller.dart';
 import 'dart:io' show Platform;
 import 'package:health_studio_user/core/controllers/firebase_controller.dart';
 import 'package:health_studio_user/core/controllers/setting_controller.dart';
@@ -43,22 +44,22 @@ class AuthController extends GetxController {
     });
   }
 
-  void addDevice() async {
+  void addDevice(String token) async {
     Map<String, dynamic> body = {};
     if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
       body = {
-        "token": await Get.put(FirebaseController()).getToken(),
+        "token": token,
         "model": iosInfo.model,
         "version": Get.find<SettingsController>().packageInfo?.version ?? "",
         "identifier": "com.healthstudio.app",
-        "platform": "ios",
+        "platform": "iOS",
         "timezone": DateTime.now().timeZoneName,
       };
     } else if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
       body = {
-        "token": await Get.put(FirebaseController()).getToken(),
+        "token": token,
         "model": androidInfo.model,
         "version": Get.find<SettingsController>().packageInfo?.version ?? "",
         "identifier": "com.healthstudio.app",
@@ -99,7 +100,11 @@ class AuthController extends GetxController {
 
       Get.put(SettingsController()).getUserDetails();
       Get.put(SettingsController()).getUserSubscription();
-      addDevice();
+      if (Platform.isIOS) {
+        Get.put(APNController()).getToken();
+      } else {
+        Get.put(FirebaseController(), permanent: true).getToken();
+      }
     }
   }
 
@@ -212,7 +217,7 @@ class AuthController extends GetxController {
             }
           } catch (e) {
             Utility.closeDialog();
-            Get.rawSnackbar(message: "Sign In Failed");
+            Get.rawSnackbar(message: "Apple Sign In Failed $e");
           }
           break;
         }
