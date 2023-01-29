@@ -100,11 +100,11 @@ class AuthController extends GetxController {
 
       Get.put(SettingsController()).getUserDetails();
       Get.put(SettingsController()).getUserSubscription();
-      if (Platform.isIOS) {
-        Get.put(APNController()).getToken();
-      } else {
-        Get.put(FirebaseController(), permanent: true).getToken();
-      }
+      // if (Platform.isIOS) {
+      //   Get.put(APNController()).getToken();
+      // } else {
+      Get.put(FirebaseController(), permanent: true).getToken();
+      // }
     }
   }
 
@@ -207,6 +207,9 @@ class AuthController extends GetxController {
               email = prefs.getString("apple-email");
               name = prefs.getString("apple-name");
             }
+
+            print("EMAIL=== $email");
+            print("NAME=== $name");
 
             socialid = credential.authorizationCode;
             type = "APPLE";

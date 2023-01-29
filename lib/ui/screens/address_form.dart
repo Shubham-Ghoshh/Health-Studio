@@ -241,7 +241,7 @@ class _AddressFormState extends State<AddressForm> {
                               height: 50.h,
                               onTap: () {
                                 addressController.addAddress();
-                                addressController.setInitailValue = "Area/city";
+                                addressController.initialvalue = "Area/city";
                               },
                               enabled: addressController.city != null &&
                                   (addressController.addressKey.currentState
@@ -301,7 +301,7 @@ class _AddressFormState extends State<AddressForm> {
                                 (BuildContext context, int contentindex) {
                               return GestureDetector(
                                 onTap: () {
-                                  addressController.setInitailValue =
+                                  addressController.initialvalue =
                                       addressController.details[index]
                                           .cities![contentindex].nameEn
                                           .toString();

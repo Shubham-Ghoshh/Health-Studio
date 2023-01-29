@@ -20,10 +20,7 @@ class AddressController extends GetxController {
   String? avenue;
   String? floornumber;
   String? housenumber;
-  String get initialvalue => AppLocalizations.of(context)!.area_city;
-  set setInitailValue(String value) {
-    setInitailValue = value;
-  }
+  String initialvalue = "Area/City";
 
   AddressListing? selectedAddress;
 

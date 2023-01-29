@@ -188,12 +188,20 @@ class SettingsController extends GetxController {
 
   void logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? code = prefs.getString("apple-id");
+    String? email = prefs.getString("apple-email");
+    String? name = prefs.getString("apple-name");
+
     prefs.clear();
 
     Get.find<OrderController>().orderDetails = null;
     Get.find<OrderController>().update();
     Get.offAll(() => const HomePage());
     Get.find<AuthController>().isLoggedIn = false;
+    prefs.setString("apple-id", code ?? "");
+
+    prefs.setString("apple-email", email ?? "");
+    prefs.setString("apple-name", name ?? "");
   }
 
   void openMailApp() async {

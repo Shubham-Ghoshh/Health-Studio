@@ -266,23 +266,20 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                                 color: Colors
                                                                     .white)),
                                                     onPressed: () {
-                                                      print(
-                                                          "FROM ${Get.find<SettingsController>().userDetails?.orderFrom} TO ${Get.find<SettingsController>().userDetails?.orderTo}");
                                                       int duration = getDateFormat(
-                                                              Get.find<
-                                                                      SettingsController>()
-                                                                  .userDetails
-                                                                  ?.orderTo,
-                                                              split: false)
-                                                          .difference(getDateFormat(
-                                                              Get.find<
-                                                                      SettingsController>()
-                                                                  .userDetails
-                                                                  ?.orderFrom,
-                                                              split: false))
-                                                          .inDays;
-                                                      print(
-                                                          "DURATION ${duration + 1}");
+                                                                  Get.find<
+                                                                          SettingsController>()
+                                                                      .userDetails
+                                                                      ?.orderTo,
+                                                                  split: false)
+                                                              .difference(getDateFormat(
+                                                                  Get.find<
+                                                                          SettingsController>()
+                                                                      .userDetails
+                                                                      ?.orderFrom,
+                                                                  split: false))
+                                                              .inDays -
+                                                          1;
 
                                                       DateTime startDate =
                                                           getDateFormat(
@@ -296,11 +293,13 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                           days: 1,
                                                         ),
                                                       );
+                                                      print("DURATION---");
+                                                      print(duration);
 
                                                       DateTime endDate =
                                                           startDate.add(
                                                         Duration(
-                                                          days: (duration + 1),
+                                                          days: (duration),
                                                         ),
                                                       );
 
@@ -324,7 +323,7 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                             .format(endDate),
                                                       );
                                                       orderController.duration =
-                                                          duration + 1;
+                                                          duration;
                                                       orderController
                                                               .firstDate =
                                                           getDateFormat(

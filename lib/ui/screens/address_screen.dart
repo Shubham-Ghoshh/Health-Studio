@@ -79,7 +79,6 @@ class _AddressState extends State<Address> {
                             .toList(),
                       ),
                     ),
-                    const Spacer(),
                     Visibility(
                       visible: !widget.check,
                       child: LoginButton(
@@ -90,7 +89,7 @@ class _AddressState extends State<Address> {
                             addressController
                                     .selectedAddress!.isDefaultRequest ==
                                 "0",
-                        title: "Set as Default",
+                        title: AppLocalizations.of(context)!.set_as_default,
                         height: 50,
                         width: 200.w,
                       ),

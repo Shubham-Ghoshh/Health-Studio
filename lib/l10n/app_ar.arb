@@ -83,6 +83,7 @@
     "added_address": "تمت إضافة العنوان بنجاح",
     "deleted_address": "تم حذف العنوان بنجاح",
     "default_address_request": "العنوان تم إرسال الطلب الافتراضي",
+    "set_as_default": "تعيين كافتراضي",
     "payment_faied": "عملية الدفع فشلت",
     "payment_successful": "تم الدفع بنجاح",
     "set_random": "تعيين عشوائي حسب النظام",

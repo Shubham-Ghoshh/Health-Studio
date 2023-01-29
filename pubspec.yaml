@@ -1,7 +1,7 @@
 name: health_studio_user
 description: A new Flutter project.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 3.0.0+20
+version: 3.0.0+22
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
@@ -46,18 +46,18 @@ dependencies:
   # The following package is added to get device info
   device_info_plus: ^8.0.0
   # The following package is added to implement FCM
-  firebase_messaging: ^12.0.1
-  firebase_core: ^1.20.0
+  firebase_messaging: ^14.2.1
+  firebase_core: ^2.4.1
   # The following package is added to implement to APNs
-  flutter_apns: ^1.6.0
+  # flutter_apns: ^1.6.0
   # flutter_facebook_auth: ^5.0.7
   # The following package is added to implement sign in with apple
   sign_in_with_apple: ^4.3.0
   # The following package is added to compare version number
   version: ^3.0.2
   
-dependency_overrides:
-  firebase_core_platform_interface: 4.5.1
+# dependency_overrides:
+#   firebase_core_platform_interface: 4.5.1
 
 dev_dependencies:
   flutter_test:

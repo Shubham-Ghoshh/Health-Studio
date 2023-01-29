@@ -119,6 +119,7 @@
     "avenue" : "Enter avenue (Optional)",
     "area_city" : "Area/City",
     "deatil_address" : "Detail Address",
+    "set_as_default":"Set as Default",
     "save" : "Save",
     "lang_preferance" : "Language Preference",
     "your_account" : "Your Account",

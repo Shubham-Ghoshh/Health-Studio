@@ -49,11 +49,11 @@ class SplashController extends GetxController {
       update();
       Get.find<SettingsController>().getUserSubscription();
       Get.put(SettingsController()).getUserDetails();
-      if (Platform.isIOS) {
-        Get.put(APNController()).getToken();
-      } else {
-        Get.put(FirebaseController(), permanent: true).getToken();
-      }
+      // if (Platform.isIOS) {
+      //   Get.put(APNController()).getToken();
+      // } else {
+      Get.put(FirebaseController(), permanent: true).getToken();
+      // }
     }
   }
 

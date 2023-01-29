@@ -14,6 +14,7 @@ import 'package:health_studio_user/ui/screens/address_screen.dart';
 import 'package:health_studio_user/ui/screens/choose_item.dart';
 import 'package:health_studio_user/ui/screens/payment_screen.dart';
 import 'package:health_studio_user/ui/screens/select_menu.dart';
+import 'package:health_studio_user/ui/screens/termsandconditions.dart';
 import 'package:health_studio_user/ui/widgets/loader.dart';
 
 class UserDashboardController extends GetxController {
@@ -85,11 +86,14 @@ class UserDashboardController extends GetxController {
           isCustom: packageDetail == null || packageId == "",
         );
         Get.find<PlanController>().update();
-        Get.to(
-          () => const Address(
-            check: true,
-          ),
-        );
+        // Get.to(
+        //   () => const Address(
+        //     check: true,
+        //   ),
+        // );
+        Get.to(() => const TermsandConditions(
+              showAddress: true,
+            ));
       }
       update();
     }
