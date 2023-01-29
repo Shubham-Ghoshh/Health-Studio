@@ -498,7 +498,7 @@ class _PlanScreenState extends State<PlanScreen> {
                                       color: whiteColor),
                                 ),
                                 Text(
-                                  "Approx.",
+                                  AppLocalizations.of(context)!.approx,
                                   style: TextStyle(
                                     fontSize: 8.sp,
                                     fontWeight: FontWeight.w300,
@@ -506,7 +506,7 @@ class _PlanScreenState extends State<PlanScreen> {
                                   ),
                                 ),
                                 Text(
-                                  'Protein',
+                                  AppLocalizations.of(context)!.protein,
                                   style: TextStyle(
                                     fontSize: 10.sp,
                                     fontWeight: FontWeight.w300,
@@ -535,7 +535,7 @@ class _PlanScreenState extends State<PlanScreen> {
                                       color: whiteColor),
                                 ),
                                 Text(
-                                  "Approx.",
+                                  AppLocalizations.of(context)!.approx,
                                   style: TextStyle(
                                     fontSize: 8.sp,
                                     fontWeight: FontWeight.w300,
@@ -543,7 +543,7 @@ class _PlanScreenState extends State<PlanScreen> {
                                   ),
                                 ),
                                 Text(
-                                  'Carbs',
+                                  AppLocalizations.of(context)!.carbs,
                                   style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w300,

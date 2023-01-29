@@ -22,7 +22,7 @@ class ChooseMeal extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: plantextColor,
         elevation: 0,
-        title: Text("Choose Item"),
+        title: Text(AppLocalizations.of(context)!.choose_item),
       ),
       body: GetBuilder<UserDashboardController>(
           builder: (userDashboardController) {

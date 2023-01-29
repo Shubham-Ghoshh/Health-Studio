@@ -10,6 +10,7 @@ import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/utils/spacing.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MealItem extends StatelessWidget {
   const MealItem({
@@ -86,8 +87,8 @@ class MealItem extends StatelessWidget {
                                           Theme.of(context).textTheme.headline1,
                                       decoration: InputDecoration(
                                         contentPadding: edgeInsets16,
-                                        hintText:
-                                            "Write additional instructions",
+                                        hintText: AppLocalizations.of(context)!
+                                            .additional_instructions,
                                         filled: true,
                                       ),
                                       onChanged: (val) {
@@ -107,8 +108,10 @@ class MealItem extends StatelessWidget {
                                             Row(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                const Text("Extra Carbs: "),
-                                                const Text("15"),
+                                                Text(AppLocalizations.of(
+                                                        context)!
+                                                    .extra_carbs),
+                                                const Text("50"),
                                                 Text(
                                                     "g/KD ${Get.find<PlanController>().planDetail!.carbPrice}   "),
                                                 const Spacer(),
@@ -173,8 +176,10 @@ class MealItem extends StatelessWidget {
                                             Row(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                const Text("Extra Protein: "),
-                                                const Text("15"),
+                                                Text(AppLocalizations.of(
+                                                        context)!
+                                                    .extra_protein),
+                                                const Text("50"),
                                                 Text(
                                                     "g/KD ${Get.find<PlanController>().planDetail!.proteinPrice}"),
                                                 const Spacer(),
@@ -259,7 +264,7 @@ class MealItem extends StatelessWidget {
                                         );
                                       },
                                       enabled: true,
-                                      title: "Save",
+                                      title: AppLocalizations.of(context)!.save,
                                       height: 50,
                                     ),
                                     sizedBoxHeight30,

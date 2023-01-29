@@ -43,9 +43,13 @@ class PlanController extends GetxController {
   }
 
   void getPlanDetail(String id, {bool navigate = true}) async {
-    Utility.showLoadingDialog();
+    if (navigate) {
+      Utility.showLoadingDialog();
+    }
     Map<String, dynamic> response = await getRequest("plan/$id");
-    Utility.closeDialog();
+    if (navigate) {
+      Utility.closeDialog();
+    }
     if (response["error"] != 0) {
       planDetail = null;
       update();

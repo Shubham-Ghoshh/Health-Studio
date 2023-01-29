@@ -3,8 +3,12 @@ import 'package:get/get.dart';
 import 'package:health_studio_user/core/models/address.dart';
 import 'package:health_studio_user/core/request.dart';
 import 'package:health_studio_user/ui/widgets/loader.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddressController extends GetxController {
+  final BuildContext context;
+  AddressController(this.context);
+
   List<AddressListing> addresses = [];
   List<Details> details = [];
   String? name;
@@ -16,7 +20,13 @@ class AddressController extends GetxController {
   String? avenue;
   String? floornumber;
   String? housenumber;
-  String initialvalue = "Area/city";
+  String get initialvalue => AppLocalizations.of(context)!.area_city;
+  set setInitailValue(String value) {
+    setInitailValue = value;
+  }
+
+  AddressListing? selectedAddress;
+
   GlobalKey<FormState> addressKey = GlobalKey<FormState>();
   bool isValid = false;
 
@@ -39,7 +49,7 @@ class AddressController extends GetxController {
       "house": housenumber,
       "avenue": avenue,
       "block": block,
-      "detail": detailaddress,
+      "detail": detailaddress ?? "",
       "city": city,
       "paci": paci,
     };
@@ -78,7 +88,7 @@ class AddressController extends GetxController {
 
     if (back) {
       Get.back();
-      Get.rawSnackbar(message: "Successfully added address");
+      Get.rawSnackbar(message: AppLocalizations.of(context)!.added_address);
     }
   }
 
@@ -108,7 +118,28 @@ class AddressController extends GetxController {
       Get.rawSnackbar(message: response["message"] ?? "");
     } else {
       addresses.removeWhere((item) => item.id.toString() == id.toString());
-      Get.rawSnackbar(message: "Successfully address deleted");
+      Get.rawSnackbar(message: AppLocalizations.of(context)!.deleted_address);
+
+      update();
+    }
+  }
+
+  void setAsDefault() async {
+    Utility.showLoadingDialog();
+    Map<String, dynamic> body = {};
+    Map<String, dynamic> response = await postRequest(
+        "address/defaultAddress/${selectedAddress!.id}", body);
+    Utility.closeDialog();
+    if (response["error"] != 0) {
+      Get.rawSnackbar(message: response["message"] ?? "");
+    } else {
+      int idx = addresses.indexWhere(
+          (item) => item.id.toString() == selectedAddress!.id!.toString());
+      selectedAddress!.isDefaultRequest = "1";
+      addresses[idx].isDefaultRequest = "1";
+
+      Get.rawSnackbar(
+          message: AppLocalizations.of(context)!.default_address_request);
 
       update();
     }

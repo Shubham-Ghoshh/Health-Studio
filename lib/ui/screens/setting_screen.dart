@@ -180,7 +180,7 @@ class SettingPage extends StatelessWidget {
                                   SettingOptionItem(
                                     optionalText: settingsController
                                             .userDetails?.orderFrom ??
-                                        "No Info",
+                                        AppLocalizations.of(context)!.no_info,
                                     settingIconImage: "account_start_icon",
                                     settingName: AppLocalizations.of(context)!
                                         .account_start,
@@ -190,7 +190,7 @@ class SettingPage extends StatelessWidget {
                                   SettingOptionItem(
                                     optionalText: settingsController
                                             .userDetails?.orderTo ??
-                                        "No Info",
+                                        AppLocalizations.of(context)!.no_info,
                                     settingIconImage: "account_expiry_icon",
                                     settingName: AppLocalizations.of(context)!
                                         .account_expiry,

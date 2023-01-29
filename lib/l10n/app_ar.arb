@@ -82,6 +82,7 @@
     "failed_payment": "غير قادر على الدفع في هذا الوقت",
     "added_address": "تمت إضافة العنوان بنجاح",
     "deleted_address": "تم حذف العنوان بنجاح",
+    "default_address_request": "العنوان تم إرسال الطلب الافتراضي",
     "payment_faied": "عملية الدفع فشلت",
     "payment_successful": "تم الدفع بنجاح",
     "set_random": "تعيين عشوائي حسب النظام",

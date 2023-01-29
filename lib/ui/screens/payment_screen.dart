@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/utils/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PaymentScreen extends StatefulWidget {
   final Function? onFinish;
@@ -112,7 +113,9 @@ class PaymentScreenState extends State<PaymentScreen> {
                       Get.back();
                       print(widget.onFinish != null);
                       widget.onFinish != null ? widget.onFinish!() : null;
-                      Get.rawSnackbar(message: "Payment Successful");
+                      Get.rawSnackbar(
+                          message:
+                              AppLocalizations.of(context)!.payment_successful);
                     } else {
                       Get.find<OrderController>().getOrderDetails(status: html);
                     }
@@ -123,7 +126,8 @@ class PaymentScreenState extends State<PaymentScreen> {
                     if (widget.isMeal) {
                       Get.back();
                       Get.back();
-                      Get.rawSnackbar(message: "Payment Failed");
+                      Get.rawSnackbar(
+                          message: AppLocalizations.of(context)!.payment_faied);
                     } else {
                       Get.find<OrderController>()
                           .getOrderDetails(status: "REQUESTED");
@@ -136,7 +140,8 @@ class PaymentScreenState extends State<PaymentScreen> {
           onLoadError: (controller, url, code, message) {
             print("ERROR!! $url $code  $message");
             Get.back();
-            Get.rawSnackbar(message: "Unable to make payment at this time");
+            Get.rawSnackbar(
+                message: AppLocalizations.of(context)!.failed_payment);
           },
           onProgressChanged: (controller, progress) {
             if (progress == 100 && firstTimeLoad) {

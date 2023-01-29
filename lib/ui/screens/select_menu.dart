@@ -7,6 +7,7 @@ import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SelectMenuPage extends StatelessWidget {
   final bool allowEdit;
@@ -53,7 +54,7 @@ class SelectMenuPage extends StatelessWidget {
                       children: [
                         sizedBoxHeight6,
                         Text(
-                          "Choose a meal",
+                          AppLocalizations.of(context)!.choose_meal,
                           style: TextStyle(
                             fontSize: 28.sp,
                             fontWeight: FontWeight.w600,
@@ -63,7 +64,7 @@ class SelectMenuPage extends StatelessWidget {
                         sizedBoxHeight12,
                         selectMealBox(
                           loginButtonColor,
-                          "Meal",
+                          AppLocalizations.of(context)!.meal,
                           userDashboardController.packageDetail!.meal,
                           List.generate(
                             int.tryParse(userDashboardController
@@ -83,17 +84,21 @@ class SelectMenuPage extends StatelessWidget {
                                           ?.meal
                                           ?.nameEn) ??
                                       (!allowEdit
-                                          ? "Meal Selected"
-                                          : "Choose a meal")
+                                          ? AppLocalizations.of(context)!
+                                              .meal_selected
+                                          : AppLocalizations.of(context)!
+                                              .choose_meal)
                                   : !allowEdit
-                                      ? "Meal Selected"
-                                      : "Choose a meal";
+                                      ? AppLocalizations.of(context)!
+                                          .meal_selected
+                                      : AppLocalizations.of(context)!
+                                          .choose_meal;
 
                               return Column(
                                 key: Key(index.toString()),
                                 children: [
                                   selectMealBoxText(
-                                    "Meal ${index + 1}",
+                                    "${AppLocalizations.of(context)!.meal} ${index + 1}",
                                     title,
                                     "meal",
                                     date,
@@ -112,7 +117,7 @@ class SelectMenuPage extends StatelessWidget {
                         sizedBoxHeight25,
                         selectMealBox(
                           activeIconColor,
-                          "Snack",
+                          AppLocalizations.of(context)!.snack,
                           userDashboardController.packageDetail!.snack,
                           List.generate(
                               int.tryParse(userDashboardController
@@ -128,15 +133,18 @@ class SelectMenuPage extends StatelessWidget {
                                 ? (userDashboardController.mealItems[snackIndex]
                                         ?.items[index]?.meal?.nameEn) ??
                                     (!allowEdit
-                                        ? "Meal Selected"
-                                        : "Choose a meal")
+                                        ? AppLocalizations.of(context)!
+                                            .meal_selected
+                                        : AppLocalizations.of(context)!
+                                            .choose_meal)
                                 : !allowEdit
-                                    ? "Meal Selected"
-                                    : "Choose a meal";
+                                    ? AppLocalizations.of(context)!
+                                        .meal_selected
+                                    : AppLocalizations.of(context)!.choose_meal;
                             return Column(
                               children: [
                                 selectMealBoxText(
-                                  "Snack ${index + 1}",
+                                  "${AppLocalizations.of(context)!.snack} ${index + 1}",
                                   title,
                                   "snack",
                                   date,
@@ -154,7 +162,7 @@ class SelectMenuPage extends StatelessWidget {
                         sizedBoxHeight25,
                         selectMealBox(
                           itemsbackground,
-                          "Breakfast",
+                          AppLocalizations.of(context)!.breakfast,
                           userDashboardController.packageDetail!.breakfast,
                           List.generate(
                             int.tryParse(userDashboardController
@@ -177,15 +185,19 @@ class SelectMenuPage extends StatelessWidget {
                                           ?.meal
                                           ?.nameEn) ??
                                       (!allowEdit
-                                          ? "Meal Selected"
-                                          : "Choose a meal")
+                                          ? AppLocalizations.of(context)!
+                                              .meal_selected
+                                          : AppLocalizations.of(context)!
+                                              .choose_meal)
                                   : !allowEdit
-                                      ? "Meal Selected"
-                                      : "Choose a meal";
+                                      ? AppLocalizations.of(context)!
+                                          .meal_selected
+                                      : AppLocalizations.of(context)!
+                                          .choose_meal;
                               return Column(
                                 children: [
                                   selectMealBoxText(
-                                    "Breakfast ${index + 1}",
+                                    "${AppLocalizations.of(context)!.breakfast} ${index + 1}",
                                     title,
                                     "breakfast",
                                     date,
@@ -212,7 +224,7 @@ class SelectMenuPage extends StatelessWidget {
                                         .packageDetail?.categoryId ==
                                     "1",
                                 child: Text(
-                                    "Amount to be paid: ${userDashboardController.tempPrice} KD"),
+                                    "${AppLocalizations.of(context)!.amount_paid}: ${userDashboardController.tempPrice} KD"),
                               ),
                               sizedBoxHeight12,
                               LoginButton(
@@ -221,7 +233,9 @@ class SelectMenuPage extends StatelessWidget {
                                       .getMealPaymentLink(item);
                                 },
                                 enabled: userDashboardController.allMealsAdded,
-                                title: isUpdate ? "Update Meals" : "Save All",
+                                title: isUpdate
+                                    ? AppLocalizations.of(context)!.update_meals
+                                    : AppLocalizations.of(context)!.save_all,
                                 height: 50,
                               ),
                             ],

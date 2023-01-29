@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 class AddressListing {
   String? id;
   String? areaEn;
@@ -14,23 +16,26 @@ class AddressListing {
   String? governorateEn;
   String? governorateAr;
   String? isDefault;
+  String? isDefaultRequest;
 
-  AddressListing(
-      {this.id,
-      this.areaEn,
-      this.areaAr,
-      this.block,
-      this.street,
-      this.avenue,
-      this.building,
-      this.floor,
-      this.apartementNumber,
-      this.additionalDirection,
-      this.cityEn,
-      this.cityAr,
-      this.governorateEn,
-      this.governorateAr,
-      this.isDefault});
+  AddressListing({
+    this.id,
+    this.areaEn,
+    this.areaAr,
+    this.block,
+    this.street,
+    this.avenue,
+    this.building,
+    this.floor,
+    this.apartementNumber,
+    this.additionalDirection,
+    this.cityEn,
+    this.cityAr,
+    this.governorateEn,
+    this.governorateAr,
+    this.isDefault,
+    this.isDefaultRequest,
+  });
 
   AddressListing.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -48,10 +53,9 @@ class AddressListing {
     governorateEn = json['governorate_en'];
     governorateAr = json['governorate_ar'];
     isDefault = json['is_default'];
+    isDefaultRequest = json["is_default_request"];
   }
 }
-
-
 
 class GetCities {
   int? error;
@@ -66,7 +70,7 @@ class GetCities {
     if (json['details'] != null) {
       details = <Details>[];
       json['details'].forEach((v) {
-        details!.add( Details.fromJson(v));
+        details!.add(Details.fromJson(v));
       });
     }
   }
@@ -132,4 +136,3 @@ class Cities {
     return data;
   }
 }
-

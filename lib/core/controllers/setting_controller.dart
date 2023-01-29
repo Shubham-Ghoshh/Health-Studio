@@ -54,9 +54,8 @@ class SettingsController extends GetxController {
   List<NotificationsListing> notifications = [];
 
   void getUserSubscription() async {
-    Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest("user/subscribe");
-    Utility.closeDialog();
+
     if (response["error"] != 0) {
       // Get.rawSnackbar(message: response["message"] ?? "");
       accountStart = "";
@@ -109,10 +108,11 @@ class SettingsController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     authkey = prefs.getString('auth_key');
 
-    (userDetails != null) ? surveyname = userDetails!.firstName : "";
+    surveyname = userDetails?.firstName?.split(" ").first;
     surveylink =
-        "https://healthstudiokw.com/api/survey.php?name=$surveyname&auth=$authkey";
+        "https://healthstudiokw.com/api/survey2.php?${surveyname != null ? "name=$surveyname&auth=$authkey" : ""}";
     update();
+    print("SURVEY LINK $surveylink");
     try {
       await launchUrlString(surveylink ?? "", mode: LaunchMode.platformDefault);
     } catch (e) {
@@ -121,10 +121,7 @@ class SettingsController extends GetxController {
   }
 
   Future<void> getUserDetails() async {
-    print("GET USER DETAILS");
-    Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest("user/detail");
-    Utility.closeDialog();
     if (response["error"] != 0) {
       Get.rawSnackbar(message: response["message"] ?? "");
     } else {

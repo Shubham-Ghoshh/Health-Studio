@@ -21,13 +21,13 @@ class APNController extends GetxController {
         if (connector.token.value != null) {
           Get.find<AuthController>().addDevice(connector.token.value ?? "");
         }
-        connector.token.addListener(() {
-          print("TOKEN LISTENER");
-          if (connector.token.value != null) {
-            print("APN TOKEN =====  ${connector.token.value}");
-            Get.find<AuthController>().addDevice(connector.token.value ?? "");
-          }
-        });
+        // connector.token.addListener(() {
+        //   print("TOKEN LISTENER");
+        //   if (connector.token.value != null) {
+        //     print("APN TOKEN =====  ${connector.token.value}");
+        //     Get.find<AuthController>().addDevice(connector.token.value ?? "");
+        //   }
+        // });
       }
     });
   }

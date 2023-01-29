@@ -17,20 +17,22 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Address extends StatefulWidget {
   final bool check;
-  const Address({Key? key, required this.check}) : super(key: key);
+  final bool setAsDefault;
+  const Address({
+    Key? key,
+    required this.check,
+    this.setAsDefault = false,
+  }) : super(key: key);
 
   @override
   State<Address> createState() => _AddressState();
 }
 
 class _AddressState extends State<Address> {
-  bool home = true;
-  bool office = false;
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AddressController>(
-        init: AddressController(),
+        init: AddressController(context),
         builder: (addressController) {
           return Scaffold(
             // bottomNavigationBar: bottomNavigationBar(),
@@ -53,30 +55,48 @@ class _AddressState extends State<Address> {
                 ),
               ),
               child: SafeArea(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      appBar(),
-                      Padding(
-                        padding: edgeInsetsleft16,
-                        child: Text(
-                          AppLocalizations.of(context)!.address,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                                  fontSize: 28.sp, fontWeight: FontWeight.w600),
-                        ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    appBar(),
+                    Padding(
+                      padding: edgeInsetsleft16,
+                      child: Text(
+                        AppLocalizations.of(context)!.address,
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            fontSize: 28.sp, fontWeight: FontWeight.w600),
                       ),
-                      ...addressController.addresses
-                          .map((e) => addressContainer(
-                                e,
-                                home,
-                                widget.check,
-                              )),
-                    ],
-                  ),
+                    ),
+                    Expanded(
+                      child: ListView(
+                        semanticChildCount: addressController.addresses.length,
+                        children: addressController.addresses
+                            .map((e) => addressContainer(
+                                  e,
+                                  e.isDefault == "1",
+                                  widget.check,
+                                ))
+                            .toList(),
+                      ),
+                    ),
+                    const Spacer(),
+                    Visibility(
+                      visible: !widget.check,
+                      child: LoginButton(
+                        onTap: () {
+                          addressController.setAsDefault();
+                        },
+                        enabled: addressController.selectedAddress != null &&
+                            addressController
+                                    .selectedAddress!.isDefaultRequest ==
+                                "0",
+                        title: "Set as Default",
+                        height: 50,
+                        width: 200.w,
+                      ),
+                    ),
+                    sizedBoxHeight52,
+                  ],
                 ),
               ),
             ),
@@ -86,13 +106,16 @@ class _AddressState extends State<Address> {
 
   Widget addressContainer(AddressListing a, bool isVisible, check) {
     return GetBuilder<AddressController>(
-        init: AddressController(),
+        init: AddressController(context),
         builder: (addressController) {
           return GestureDetector(
             onTap: () {
               if (check) {
                 Get.find<OrderController>().order.addressId = a.id;
                 Get.to(() => const ConfirmationPage());
+              } else {
+                addressController.selectedAddress = a;
+                addressController.update();
               }
             },
             child: Column(
@@ -122,7 +145,11 @@ class _AddressState extends State<Address> {
                                     fontWeight: FontWeight.w600),
                               ),
                             ),
-                            isVisible && check
+                            (check && a.isDefault == "1") ||
+                                    (!check &&
+                                        a.id ==
+                                            addressController
+                                                .selectedAddress?.id)
                                 ? Padding(
                                     padding: const EdgeInsets.only(right: 16),
                                     child: SvgPicture.asset(

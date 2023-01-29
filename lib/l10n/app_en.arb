@@ -84,6 +84,7 @@
     "failed_payment": "Unable to make payment at this time", 
     "added_address": "Successfully added address",
     "deleted_address": "Successfully address deleted",
+    "default_address_request": "Address Default request sent",
     "payment_faied": "Payment Failed",
     "payment_successful": "Payment Successful",  
     "set_random": "Set Random By System",

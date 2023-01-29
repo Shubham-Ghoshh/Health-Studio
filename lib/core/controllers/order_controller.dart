@@ -75,10 +75,14 @@ class OrderController extends GetxController {
 
   Future<void> getOrderDetails(
       {String status = "", bool navigate = true}) async {
-    Utility.showLoadingDialog();
+    if (navigate) {
+      Utility.showLoadingDialog();
+    }
     Map<String, dynamic> response =
         await getRequest("order/check/$orderReference");
-    Utility.closeDialog();
+    if (navigate) {
+      Utility.closeDialog();
+    }
     if (response["error"] != 0) {
       if (navigate) {
         Get.back();

@@ -21,7 +21,7 @@ class _AddressFormState extends State<AddressForm> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
-        init: AddressController(),
+        init: AddressController(context),
         builder: (addressController) {
           return Scaffold(
             resizeToAvoidBottomInset: true,
@@ -85,7 +85,8 @@ class _AddressFormState extends State<AddressForm> {
                                 ),
                                 validator: (value) =>
                                     (value == null || value.isEmpty)
-                                        ? "Name is required"
+                                        ? AppLocalizations.of(context)!
+                                            .name_required
                                         : null,
                               ),
                             ),
@@ -96,7 +97,8 @@ class _AddressFormState extends State<AddressForm> {
                               child: TextFormField(
                                 validator: (value) =>
                                     (value == null || value.isEmpty)
-                                        ? "Block number is required"
+                                        ? AppLocalizations.of(context)!
+                                            .block_required
                                         : null,
                                 onChanged: (value) {
                                   addressController.block = value;
@@ -117,7 +119,8 @@ class _AddressFormState extends State<AddressForm> {
                               child: TextFormField(
                                 validator: (value) =>
                                     (value == null || value.isEmpty)
-                                        ? "Street number is required"
+                                        ? AppLocalizations.of(context)!
+                                            .street_required
                                         : null,
                                 onChanged: (value) {
                                   addressController.street = value;
@@ -138,7 +141,8 @@ class _AddressFormState extends State<AddressForm> {
                               child: TextFormField(
                                 validator: (value) =>
                                     (value == null || value.isEmpty)
-                                        ? "House number is required"
+                                        ? AppLocalizations.of(context)!
+                                            .house_required
                                         : null,
                                 onChanged: (value) {
                                   addressController.housenumber = value;
@@ -214,10 +218,11 @@ class _AddressFormState extends State<AddressForm> {
                                   const EdgeInsets.symmetric(horizontal: 14),
                               child: TextFormField(
                                 textInputAction: TextInputAction.done,
-                                validator: (value) =>
-                                    (value == null || value.isEmpty)
-                                        ? "Detailed Address is required"
-                                        : null,
+                                // validator: (value) =>
+                                //     (value == null || value.isEmpty)
+                                //         ? AppLocalizations.of(context)!
+                                //             .address_required
+                                //         : null,
                                 onChanged: (value) {
                                   addressController.detailaddress = value;
                                 },
@@ -236,7 +241,7 @@ class _AddressFormState extends State<AddressForm> {
                               height: 50.h,
                               onTap: () {
                                 addressController.addAddress();
-                                addressController.initialvalue = "Area/city";
+                                addressController.setInitailValue = "Area/city";
                               },
                               enabled: addressController.city != null &&
                                   (addressController.addressKey.currentState
@@ -258,7 +263,7 @@ class _AddressFormState extends State<AddressForm> {
 
   Widget bottomwidget(context) {
     return GetBuilder<AddressController>(
-        init: AddressController(),
+        init: AddressController(context),
         builder: (addressController) {
           return GestureDetector(
             onTap: () {
@@ -296,7 +301,7 @@ class _AddressFormState extends State<AddressForm> {
                                 (BuildContext context, int contentindex) {
                               return GestureDetector(
                                 onTap: () {
-                                  addressController.initialvalue =
+                                  addressController.setInitailValue =
                                       addressController.details[index]
                                           .cities![contentindex].nameEn
                                           .toString();
