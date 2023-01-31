@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/core/controllers/setting_controller.dart';
 import 'package:health_studio_user/ui/screens/home_screen.dart';
@@ -90,66 +91,74 @@ class PaymentConfirmationPage extends StatelessWidget {
               ),
             ),
             SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    sizedBoxHeight6,
-                    appBar(canGoBack: false),
-                    sizedBoxHeight20,
-                    status == "captured" || status == "paid"
-                        ? paymentSuccessful(context)
-                        : paymentUnsuccessful(context),
-                    sizedBoxHeight16,
-                    PaymentFeatures(
+              child: GetBuilder<LanguageTogglerController>(
+                builder: (languageController) => SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      sizedBoxHeight6,
+                      appBar(canGoBack: false),
+                      sizedBoxHeight20,
+                      status == AppLocalizations.of(context)!.captured ||
+                              status == AppLocalizations.of(context)!.paid
+                          ? paymentSuccessful(context)
+                          : paymentUnsuccessful(context),
+                      sizedBoxHeight16,
+                      PaymentFeatures(
                         (AppLocalizations.of(context)!.subscription),
-                        orderController.orderDetails!.categoryEn),
-                    PaymentFeatures(
-                        AppLocalizations.of(context)!.subscription_start,
-                        orderController.order.startDate!),
-                    // PaymentFeatures("End Date", orderController.order.endDate!),
-                    PaymentFeatures(AppLocalizations.of(context)!.amount,
-                        "KD ${orderController.order.amount!}"),
-                    PaymentFeatures(
-                      AppLocalizations.of(context)!.package,
-                      orderController.orderDetails!.packageEn == ""
-                          ? AppLocalizations.of(context)!.custom_package
-                          : orderController.orderDetails!.packageEn,
-                    ),
-                    PaymentFeatures(
-                        AppLocalizations.of(context)!.order_reference_ID,
-                        orderController.orderDetails!.orderReference),
-                    sizedBoxHeight40,
-                    GestureDetector(
-                      onTap: () {
-                        Get.offAll(() => const HomePage());
-                        Get.find<SettingsController>().getUserDetails();
-                        Get.find<SettingsController>().getUserSubscription();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 16.0, right: 16, top: 8, bottom: 25),
-                        child: Container(
-                          width: 380.w,
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: const Color(0xffFAAF4A),
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Center(
-                            child: Text(
-                              AppLocalizations.of(context)!.done,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18.sp,
+                        languageController.isEnglish
+                            ? orderController.orderDetails!.categoryEn
+                            : orderController.orderDetails!.categoryAr,
+                      ),
+                      PaymentFeatures(
+                          AppLocalizations.of(context)!.subscription_start,
+                          orderController.order.startDate!),
+                      // PaymentFeatures("End Date", orderController.order.endDate!),
+                      PaymentFeatures(AppLocalizations.of(context)!.amount,
+                          "KD ${orderController.order.amount!}"),
+                      PaymentFeatures(
+                        AppLocalizations.of(context)!.package,
+                        orderController.orderDetails!.packageEn == ""
+                            ? AppLocalizations.of(context)!.custom_package
+                            : (languageController.isEnglish
+                                ? orderController.orderDetails!.packageEn
+                                : orderController.orderDetails!.packageAr),
+                      ),
+                      PaymentFeatures(
+                          AppLocalizations.of(context)!.order_reference_ID,
+                          orderController.orderDetails!.orderReference),
+                      sizedBoxHeight40,
+                      GestureDetector(
+                        onTap: () {
+                          Get.offAll(() => const HomePage());
+                          Get.find<SettingsController>().getUserDetails();
+                          Get.find<SettingsController>().getUserSubscription();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 16.0, right: 16, top: 8, bottom: 25),
+                          child: Container(
+                            width: 380.w,
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: const Color(0xffFAAF4A),
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: Text(
+                                AppLocalizations.of(context)!.done,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 18.sp,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
