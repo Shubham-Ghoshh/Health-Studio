@@ -173,9 +173,8 @@ class UserDashboardController extends GetxController {
     int index = mealItems.indexWhere((m) => m?.key == mealType);
     if (index != -1) {
       if (meal.menuType != "No Special" &&
-          mealItems[index]
-                  ?.items
-                  .indexWhere((i) => i.meal.menuType == meal.menuType) !=
+          mealItems[index]?.items.indexWhere((i) =>
+                  i == null ? false : i.meal.menuType == meal.menuType) !=
               -1) {
         Get.rawSnackbar(
           message:
@@ -216,9 +215,11 @@ class UserDashboardController extends GetxController {
         if (mealItems[i]?.items[j] == null) {
           tempAdded = false;
         }
-        tempPrice += int.tryParse(mealItems[i]?.items[j].price) ?? 0;
-        tempCarbValue += int.tryParse(mealItems[i]?.items[j].carb) ?? 0;
-        tempProteinValue += int.tryParse(mealItems[i]?.items[j].protein) ?? 0;
+        tempPrice += (int.tryParse(mealItems[i]?.items[j]?.price ?? "") ?? 0);
+        tempCarbValue +=
+            (int.tryParse(mealItems[i]?.items[j]?.carb ?? "") ?? 0);
+        tempProteinValue +=
+            (int.tryParse(mealItems[i]?.items[j]?.protein ?? "") ?? 0);
       }
     }
     allMealsAdded = tempAdded;

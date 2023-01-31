@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
-import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/models/menu.dart';
 import 'package:health_studio_user/core/request.dart';
 import 'package:health_studio_user/ui/screens/food_detail_screen.dart';
 import 'package:health_studio_user/ui/widgets/loader.dart';
+import 'package:health_studio_user/utils/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MenuController extends GetxController {
   Menu? selectedMenu;
@@ -20,6 +23,15 @@ class MenuController extends GetxController {
       menuDetail = MenuDetail.fromJson(response["details"]);
       update();
       Get.to(() => const FoodDetailPage());
+    }
+  }
+
+  launchDietLink() async {
+    try {
+      await launchUrl(Uri.parse(dietReferenceLink),
+          mode: LaunchMode.platformDefault);
+    } catch (e) {
+      log(e.toString());
     }
   }
 }
