@@ -1,5 +1,6 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/apn_controller.dart';
 import 'dart:io' show Platform;
@@ -27,6 +28,7 @@ class AuthController extends GetxController {
   GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
   bool isValid = false;
   bool isLoggedIn = false;
+  bool falogin = false;
   GoogleSignIn googleSignIn = GoogleSignIn(
     scopes: [
       'https://www.googleapis.com/auth/userinfo.email',
@@ -176,6 +178,24 @@ class AuthController extends GetxController {
               Get.to(() => RegistrationPage(onSuccess: onSuccess));
             }
           }
+          break;
+        }
+      case "facebook":
+        {
+          FacebookAuth.instance
+              .login(permissions: ["public_profile", "email"]).then((value) => {
+                    FacebookAuth.instance
+                        .getUserData()
+                        .then((userData) async => {
+                              email = userData["email"],
+                              name = userData["name"],
+                              socialid = userData["id"],
+                              type = "FACEBOOK",
+                              falogin = true,
+                              Utility.closeDialog(),
+                              update(),
+                            })
+                  });
           break;
         }
       case "apple":
