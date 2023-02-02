@@ -166,7 +166,7 @@ class SettingsController extends GetxController {
     var webUrl = "https://www.facebook.com/healthstudiokw";
 
     try {
-      await launchUrl(Uri.parse(webUrl), mode: LaunchMode.platformDefault);
+      await launchUrl(Uri.parse(webUrl), mode: LaunchMode.externalApplication);
     } catch (e) {
       log(e.toString());
     }

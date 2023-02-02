@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
+import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
 import 'package:health_studio_user/core/controllers/setting_controller.dart';
@@ -112,19 +113,29 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                        Text(
-                                                          (planController
-                                                                      .planDetail
-                                                                      ?.descriptionEn ??
-                                                                  "")
-                                                              .trimRight(),
-                                                          style:
-                                                              const TextStyle(
-                                                            color: Color(
-                                                                0xff0A0909),
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            fontSize: 14.4,
+                                                        GetBuilder<
+                                                            LanguageTogglerController>(
+                                                          builder:
+                                                              (languageontroller) =>
+                                                                  Text(
+                                                            (languageontroller
+                                                                        .isEnglish
+                                                                    ? planController
+                                                                        .planDetail
+                                                                        ?.descriptionEn
+                                                                    : planController
+                                                                        .planDetail
+                                                                        ?.descriptionAr)!
+                                                                .trimRight(),
+                                                            style:
+                                                                const TextStyle(
+                                                              color: Color(
+                                                                  0xff0A0909),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              fontSize: 14.4,
+                                                            ),
                                                           ),
                                                         ),
                                                       ],

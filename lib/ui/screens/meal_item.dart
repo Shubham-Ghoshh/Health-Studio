@@ -251,7 +251,7 @@ class MealItem extends StatelessWidget {
                                                   ?.categoryId ==
                                               "1",
                                       child: Text(
-                                          "Price: ${userDashboardController.price} KD"),
+                                          "${AppLocalizations.of(context)!.price}: ${userDashboardController.price} KD"),
                                     ),
                                     LoginButton(
                                       width: 200,
