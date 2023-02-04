@@ -284,19 +284,24 @@ class UserDashboardController extends GetxController {
           allMealsAdded = true;
           isUpdate = true;
         }
-        if (mealItems[1]!.items.isEmpty) {
+        if (mealItems.length > 1 ? mealItems[1]!.items.isEmpty : true) {
           allMealsAdded = false;
-          mealItems.firstWhere((e) => e?.key == "snack")?.items = List.generate(
-              int.tryParse(packageDetail!.snack) ?? 0, (idx) => null);
+          int idx = mealItems.indexWhere((e) => e?.key == "snack");
+          if (idx != -1) {
+            mealItems[idx]?.items = List.generate(
+                int.tryParse(packageDetail!.snack) ?? 0, (idx) => null);
+          }
         } else {
           allMealsAdded = true;
           isUpdate = true;
         }
-        if (mealItems[2]!.items.isEmpty) {
+        if (mealItems.length > 2 ? mealItems[2]!.items.isEmpty : true) {
           allMealsAdded = false;
-          mealItems.firstWhere((e) => e?.key == "breakfast")?.items =
-              List.generate(
-                  int.tryParse(packageDetail!.breakfast) ?? 0, (idx) => null);
+          int idx = mealItems.indexWhere((e) => e?.key == "breakfast");
+          if (idx != -1) {
+            mealItems[idx]?.items = List.generate(
+                int.tryParse(packageDetail!.breakfast) ?? 0, (idx) => null);
+          }
         } else {
           allMealsAdded = true;
           isUpdate = true;

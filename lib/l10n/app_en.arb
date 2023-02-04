@@ -151,5 +151,8 @@
     "apply" : "Apply",
     "total" : "TOTAL",
     "pay_now" : "Pay Now",
-    "payment" : "Payment"
+    "payment" : "Payment",
+    "error": "Error!",
+    "off_day": "Sorry, we don't serve on Friday. Please try another day!",
+    "okay": "Okay"
    }

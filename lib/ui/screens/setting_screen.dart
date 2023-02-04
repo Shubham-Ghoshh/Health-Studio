@@ -112,8 +112,7 @@ class SettingPage extends StatelessWidget {
                                   children: [
                                     const LanguageToggler(
                                       language: "عربي",
-                                      languageImage:
-                                          "united_arab_emirates_icon",
+                                      languageImage: "kuwait_icon",
                                     ),
                                     Transform.scale(
                                       scale: 1.4,
