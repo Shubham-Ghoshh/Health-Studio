@@ -200,10 +200,13 @@ class SettingPage extends StatelessWidget {
                                   divider(),
                                   SettingOptionItem(
                                     settingIconImage: "change_password_icon",
-                                    settingName: "Calorie Calculator",
+                                    settingName: AppLocalizations.of(context)!
+                                        .calorie_calculator,
                                     onTap: () {
                                       Get.to(() => const BMRCalculatorPage());
                                     },
+                                    optionalText:
+                                        "${(settingsController.userDetails?.totalCalories ?? "")} ${AppLocalizations.of(context)!.kcal_per_day}",
                                   ),
                                   divider(),
                                   SettingOptionItem(
