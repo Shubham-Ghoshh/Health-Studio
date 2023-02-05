@@ -16,6 +16,7 @@ class SplashController extends GetxController {
   late Timer timer = Timer(const Duration(seconds: 3), goHome);
   bool languageSelected = true;
   bool loggedIn = false;
+  double calorieValue = 0;
   VideoPlayerController controller =
       VideoPlayerController.asset("assets/videos/intro_video.mp4");
   @override
@@ -40,6 +41,7 @@ class SplashController extends GetxController {
     checkIsUserLoggedIn();
     timer;
   }
+
 
   void checkIsUserLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

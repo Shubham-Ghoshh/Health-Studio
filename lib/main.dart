@@ -6,6 +6,7 @@ import 'dart:io' show Platform;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:health_studio_user/firebase_options.dart';
 import 'package:health_studio_user/ui/screens/bmr_calculator_screen.dart';
+import 'package:health_studio_user/ui/screens/home_screen.dart';
 import 'package:health_studio_user/ui/screens/setting_screen.dart';
 import 'package:health_studio_user/ui/widgets/setting_option_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,7 +66,7 @@ class MyApp extends StatelessWidget {
       locale: lang ? const Locale('en', '') : const Locale('ar', ''),
       debugShowCheckedModeBanner: false,
       title: 'Health Studio',
-      home: const SettingPage(),
+      home: const SplashScreen(),
       initialBinding: AllBinder(),
     );
   }

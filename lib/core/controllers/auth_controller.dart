@@ -1,5 +1,6 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/apn_controller.dart';
 import 'dart:io' show Platform;
@@ -8,6 +9,7 @@ import 'package:health_studio_user/core/controllers/setting_controller.dart';
 import 'package:health_studio_user/core/request.dart';
 import 'package:health_studio_user/ui/screens/authentication/login_screen.dart';
 import 'package:health_studio_user/ui/screens/authentication/sign_up_screen.dart';
+import 'package:health_studio_user/ui/screens/bmr_calculator_screen.dart';
 import 'package:health_studio_user/ui/screens/home_screen.dart';
 import 'package:health_studio_user/ui/widgets/loader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -94,7 +96,9 @@ class AuthController extends GetxController {
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString("auth_key", response["details"]?[0]?["auth_key"]);
+     
       onSuccess == null ? Get.offAll(() => const HomePage()) : onSuccess();
+     
       isLoggedIn = true;
       update();
 
