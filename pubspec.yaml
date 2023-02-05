@@ -55,6 +55,8 @@ dependencies:
   sign_in_with_apple: ^4.3.0
   # The following package is added to compare version number
   version: ^3.0.2
+  # The following package is used to generate pie charts
+  syncfusion_flutter_charts: ^20.4.48
   
 # dependency_overrides:
 #   firebase_core_platform_interface: 4.5.1
