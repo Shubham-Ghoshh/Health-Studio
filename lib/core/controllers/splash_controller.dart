@@ -44,6 +44,7 @@ class SplashController extends GetxController {
   void checkIsUserLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? value = prefs.getString("auth_key");
+
     if (value != null) {
       loggedIn = true;
       update();
