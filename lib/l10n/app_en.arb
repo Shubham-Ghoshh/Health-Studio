@@ -185,5 +185,8 @@
     "carbs_label":"Carbs:",
     "fats_label":"Fats:",
     "proteins_label": "Proteins:",
-    "kcal_per_day":"kcal/day"
+    "kcal_per_day":"kcal/day",
+    "error": "Error!",
+    "off_day": "Sorry, we don't serve on Friday. Please try another day!",
+    "okay": "Okay"
    }

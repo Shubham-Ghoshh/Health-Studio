@@ -34,9 +34,12 @@ class PackageDetail {
       descriptionEn: json["description_en"],
       image: json["image"],
       categoryId: json["category_id"],
-      breakfast: json["breakfast"],
-      meal: json["meal"],
-      snack: json["snack"],
+      breakfast: (json["breakfast"] == '' || json["breakfast"] == null)
+          ? '0'
+          : json["breakfast"],
+      meal: (json["meal"] == '' || json["meal"] == null) ? '0' : json["meal"],
+      snack:
+          (json["snack"] == '' || json["snack"] == null) ? '0' : json["snack"],
       price: json["price"],
     );
   }
