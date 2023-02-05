@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/ui/screens/address_screen.dart';
 import 'package:health_studio_user/ui/screens/authentication/login_screen.dart';
+import 'package:health_studio_user/ui/screens/bmr_calculator_screen.dart';
 import 'package:health_studio_user/ui/screens/termsandconditions.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -112,8 +113,7 @@ class SettingPage extends StatelessWidget {
                                   children: [
                                     const LanguageToggler(
                                       language: "عربي",
-                                      languageImage:
-                                          "united_arab_emirates_icon",
+                                      languageImage: "kuwait_icon",
                                     ),
                                     Transform.scale(
                                       scale: 1.4,
@@ -195,6 +195,17 @@ class SettingPage extends StatelessWidget {
                                     settingName: AppLocalizations.of(context)!
                                         .account_expiry,
                                     onTap: () {},
+                                  ),
+                                  divider(),
+                                  SettingOptionItem(
+                                    settingIconImage: "change_password_icon",
+                                    settingName: AppLocalizations.of(context)!
+                                        .calorie_calculator,
+                                    onTap: () {
+                                      Get.to(() => const BMRCalculatorPage());
+                                    },
+                                    optionalText:
+                                        "${(settingsController.userDetails?.totalCalories ?? "")} ${AppLocalizations.of(context)!.kcal_per_day}",
                                   ),
                                   divider(),
                                   SettingOptionItem(

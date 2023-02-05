@@ -63,6 +63,60 @@ class SelectMenuPage extends StatelessWidget {
                         ),
                         sizedBoxHeight12,
                         selectMealBox(
+                          activeIconColor,
+                          AppLocalizations.of(context)!.breakfast,
+                          userDashboardController.packageDetail!.breakfast,
+                          List.generate(
+                            int.tryParse(userDashboardController
+                                    .packageDetail!.breakfast) ??
+                                0,
+                            (index) {
+                              int breakfastIndex = userDashboardController
+                                  .mealItems
+                                  .indexWhere((e) => e?.key == "breakfast");
+                              int length = userDashboardController
+                                      .mealItems[breakfastIndex]
+                                      ?.items
+                                      .length ??
+                                  0;
+
+                              String title = length > index
+                                  ? (userDashboardController
+                                          .mealItems[breakfastIndex]
+                                          ?.items[index]
+                                          ?.meal
+                                          ?.nameEn) ??
+                                      (!allowEdit
+                                          ? AppLocalizations.of(context)!
+                                              .meal_selected
+                                          : AppLocalizations.of(context)!
+                                              .choose_meal)
+                                  : !allowEdit
+                                      ? AppLocalizations.of(context)!
+                                          .meal_selected
+                                      : AppLocalizations.of(context)!
+                                          .choose_meal;
+                              return Column(
+                                children: [
+                                  selectMealBoxText(
+                                    "${AppLocalizations.of(context)!.breakfast} ${index + 1}",
+                                    title,
+                                    "breakfast",
+                                    date,
+                                    item,
+                                    allowEdit: allowEdit,
+                                    itemIndex: index,
+                                  ),
+                                  const Divider(
+                                    color: Color.fromARGB(95, 0, 0, 0),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                        sizedBoxHeight25,
+                        selectMealBox(
                           loginButtonColor,
                           AppLocalizations.of(context)!.meal,
                           userDashboardController.packageDetail!.meal,
@@ -116,7 +170,7 @@ class SelectMenuPage extends StatelessWidget {
                         ),
                         sizedBoxHeight25,
                         selectMealBox(
-                          activeIconColor,
+                          itemsbackground,
                           AppLocalizations.of(context)!.snack,
                           userDashboardController.packageDetail!.snack,
                           List.generate(
@@ -158,60 +212,6 @@ class SelectMenuPage extends StatelessWidget {
                               ],
                             );
                           }),
-                        ),
-                        sizedBoxHeight25,
-                        selectMealBox(
-                          itemsbackground,
-                          AppLocalizations.of(context)!.breakfast,
-                          userDashboardController.packageDetail!.breakfast,
-                          List.generate(
-                            int.tryParse(userDashboardController
-                                    .packageDetail!.breakfast) ??
-                                0,
-                            (index) {
-                              int breakfastIndex = userDashboardController
-                                  .mealItems
-                                  .indexWhere((e) => e?.key == "breakfast");
-                              int length = userDashboardController
-                                      .mealItems[breakfastIndex]
-                                      ?.items
-                                      .length ??
-                                  0;
-
-                              String title = length > index
-                                  ? (userDashboardController
-                                          .mealItems[breakfastIndex]
-                                          ?.items[index]
-                                          ?.meal
-                                          ?.nameEn) ??
-                                      (!allowEdit
-                                          ? AppLocalizations.of(context)!
-                                              .meal_selected
-                                          : AppLocalizations.of(context)!
-                                              .choose_meal)
-                                  : !allowEdit
-                                      ? AppLocalizations.of(context)!
-                                          .meal_selected
-                                      : AppLocalizations.of(context)!
-                                          .choose_meal;
-                              return Column(
-                                children: [
-                                  selectMealBoxText(
-                                    "${AppLocalizations.of(context)!.breakfast} ${index + 1}",
-                                    title,
-                                    "breakfast",
-                                    date,
-                                    item,
-                                    allowEdit: allowEdit,
-                                    itemIndex: index,
-                                  ),
-                                  const Divider(
-                                    color: Color.fromARGB(95, 0, 0, 0),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
                         ),
                         // sizedBoxHeight8,
                         Visibility(
@@ -276,7 +276,27 @@ class SelectMenuPage extends StatelessWidget {
                   children: [
                     sizedBoxHeight30,
                     Column(
-                      children: selectTextWidgets,
+                      children: selectTextWidgets.isEmpty
+                          ? [
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 5.0, bottom: 14),
+                                      child: Text(
+                                        "No Items",
+                                        style: TextStyle(
+                                          color: inactiveDayFontColor,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 15.sp,
+                                        ),
+                                      ),
+                                    ),
+                                  ])
+                            ]
+                          : selectTextWidgets,
                     ),
                     sizedBoxHeight8,
                   ],

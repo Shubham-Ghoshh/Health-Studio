@@ -98,7 +98,8 @@ class PaymentScreenState extends State<PaymentScreen> {
                     "http://148.66.142.197/~healthstudioking/api/survey2.php?path=/knet" &&
                 widget.amount == 0) {
               if (!widget.isMeal) {
-                Get.find<OrderController>().getOrderDetails(status: "captured");
+                Get.find<OrderController>().getOrderDetails(
+                    status: AppLocalizations.of(context)!.captured);
               }
             }
             if (uri.toString() ==
@@ -129,8 +130,8 @@ class PaymentScreenState extends State<PaymentScreen> {
                       Get.rawSnackbar(
                           message: AppLocalizations.of(context)!.payment_faied);
                     } else {
-                      Get.find<OrderController>()
-                          .getOrderDetails(status: "REQUESTED");
+                      Get.find<OrderController>().getOrderDetails(
+                          status: AppLocalizations.of(context)!.requested);
                       break;
                     }
                   }

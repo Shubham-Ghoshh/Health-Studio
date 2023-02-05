@@ -40,27 +40,44 @@ class UserDetails {
   String? categoryId;
   String? packageId;
   String? addressId;
+  String? carbs;
+  String? fats;
+  String? proteins;
+  String? totalCalories;
+  String? height;
+  String? weight;
+  String? activityLevel;
+  String? age;
 
-  UserDetails(
-      {this.id,
-      this.firstName,
-      this.email,
-      this.mobilePhone,
-      this.gender,
-      this.regType,
-      this.socialId,
-      this.authKey,
-      this.orderReference,
-      this.orderFrom,
-      this.orderTo,
-      this.orderStatus,
-      this.categoryEn,
-      this.categoryAr,
-      this.packageEn,
-      this.packageAr,
-      this.categoryId,
-      this.packageId,
-      this.addressId});
+  UserDetails({
+    this.id,
+    this.firstName,
+    this.email,
+    this.mobilePhone,
+    this.gender,
+    this.regType,
+    this.socialId,
+    this.authKey,
+    this.orderReference,
+    this.orderFrom,
+    this.orderTo,
+    this.orderStatus,
+    this.categoryEn,
+    this.categoryAr,
+    this.packageEn,
+    this.packageAr,
+    this.categoryId,
+    this.packageId,
+    this.addressId,
+    this.carbs,
+    this.fats,
+    this.proteins,
+    this.totalCalories,
+    this.height,
+    this.weight,
+    this.activityLevel,
+    this.age,
+  });
 
   UserDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -82,6 +99,14 @@ class UserDetails {
     categoryId = json['category_id'];
     packageId = json['package_id'];
     addressId = json['address_id'];
+    carbs = json["carbs"];
+    fats = json["fats"];
+    proteins = json["proteins"];
+    totalCalories = json["total_calories"];
+    height = json["height"];
+    weight = json["weight"];
+    activityLevel = json["activity_level"];
+    age = json["age"];
   }
 
   Map<String, dynamic> toJson() {
@@ -105,6 +130,15 @@ class UserDetails {
     data['category_id'] = categoryId;
     data['package_id'] = packageId;
     data['address_id'] = addressId;
+    data["carbs"] = carbs;
+    data["fats"] = fats;
+    data["proteins"] = proteins;
+    data["total_calories"] = totalCalories;
+    data["height"] = height;
+    data["weight"] = weight;
+    data["activity_level"] = activityLevel;
+    data["age"] = age;
+
     return data;
   }
 }
