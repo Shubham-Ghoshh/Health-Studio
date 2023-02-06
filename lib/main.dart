@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'dart:io' show Platform;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:health_studio_user/firebase_options.dart';
 import 'package:health_studio_user/ui/screens/bmr_calculator_screen.dart';
