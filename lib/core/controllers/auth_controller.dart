@@ -35,6 +35,7 @@ class AuthController extends GetxController {
       'openid',
     ],
   );
+  FacebookAuth instance = FacebookAuth.instance;
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
   @override
@@ -179,20 +180,25 @@ class AuthController extends GetxController {
         }
       case "facebook":
         {
-          FacebookAuth.instance
-              .login(permissions: ["public_profile", "email"]).then((value) => {
-                    FacebookAuth.instance
-                        .getUserData()
-                        .then((userData) async => {
-                              email = userData["email"],
-                              name = userData["name"],
-                              socialid = userData["id"],
-                              type = "FACEBOOK",
-                              falogin = true,
-                              Utility.closeDialog(),
-                              update(),
-                            })
-                  });
+          LoginResult result =
+              await instance.login(permissions: ["public_profile", "email"]);
+          if (result.accessToken != null) {
+            Map<String, dynamic> fbData =
+                await FacebookAuth.instance.getUserData(fields: "name, email");
+            email = fbData["email"];
+            name = fbData["name"];
+            socialid = result.accessToken!.token;
+            type = "FACEBOOK";
+            bool accountExists = await loginSocialAPI();
+            if (!accountExists) {
+              Utility.closeDialog();
+              Get.to(() => RegistrationPage(onSuccess: onSuccess));
+            }
+          } else {
+            Utility.closeDialog();
+            Get.rawSnackbar(message: "Facebook Sign In Failed");
+          }
+
           break;
         }
       case "apple":
