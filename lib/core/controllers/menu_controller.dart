@@ -34,4 +34,13 @@ class MenuController extends GetxController {
       log(e.toString());
     }
   }
+
+  launchCalorieLink() async {
+    try {
+      await launchUrl(Uri.parse(calorieReferenceLink),
+          mode: LaunchMode.platformDefault);
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 }

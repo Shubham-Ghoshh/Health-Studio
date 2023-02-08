@@ -10,3 +10,4 @@ const androidLink =
     "https://play.google.com/store/apps/details?id=com.healthstudio.app&gl=US&pli=1";
 const dietReferenceLink =
     "https://www.kydiabetes.net/images/files/Carbcountingandmealplanning_NovoNordisk.PDF";
+const calorieReferenceLink = "https://www.omnicalculator.com/health/calorie";
