@@ -193,16 +193,6 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                                       .fat,
                                                             ),
                                                             sizedBoxWidth12,
-                                                            // NutritionContent(
-                                                            //     image:
-                                                            //         SvgPicture.asset(
-                                                            //       'assets/images/fat.svg',
-                                                            //       color:
-                                                            //           plantextColor,
-                                                            //     ),
-                                                            //     nutritionContent:
-                                                            //         "10",
-                                                            //     nutritionName: "Fat"),
                                                             NutritionContent(
                                                               image: SvgPicture
                                                                   .asset(

@@ -371,6 +371,7 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                                       Icons.arrow_drop_down,
                                       color: Color(0xff0A0909),
                                     ),
+                                    iconSize: 35,
                                     onSelected: (String value) {
                                       bmrController.genderController.text =
                                           value;
@@ -428,6 +429,7 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                                           ));
                                     }).toList();
                                   },
+                                  iconSize: 35,
                                   icon: const Padding(
                                     padding: EdgeInsets.only(top: 8.0),
                                     child: Icon(

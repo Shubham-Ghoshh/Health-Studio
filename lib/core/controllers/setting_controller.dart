@@ -135,15 +135,10 @@ class SettingsController extends GetxController {
         BMRController bmrController = Get.put(BMRController());
         bmrController.weight = userDetails?.weight ?? "";
         bmrController.height = userDetails?.height ?? "";
-        bmrController.age = userDetails?.age ?? "";
         bmrController.carbs = double.parse(userDetails?.carbs ?? "0.0");
         bmrController.proteins = double.parse(userDetails?.proteins ?? "0.0");
         bmrController.fats = double.parse(userDetails?.fats ?? "0.0");
         bmrController.bmr = double.parse(userDetails?.totalCalories ?? "0.0");
-
-        bmrController.genderController.text = userDetails?.gender ?? "";
-        bmrController.activityLevelController.text =
-            userDetails?.activityLevel ?? "";
       }
 
       update();
