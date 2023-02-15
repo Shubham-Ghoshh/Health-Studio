@@ -49,6 +49,8 @@ class SettingsController extends GetxController {
   String? surveylink;
   String? changePasswordLink;
   String? authkey;
+  String termsEn = "";
+  String termsAr = "";
 
   List<Subscription> subscription = [];
   UserDetails? userDetails;
@@ -231,6 +233,10 @@ class SettingsController extends GetxController {
     String version = Platform.isIOS
         ? response["details"][9]["common_value"]
         : response["details"][10]["common_value"];
+    termsEn = response["details"][11]["common_value"];
+    termsAr = response["details"][13]["common_value"];
+    print("VERSION $version");
+
     if (Version.parse(version) > Version.parse(packageInfo?.version ?? "")) {
       showDialog(
           context: navigatorKey.currentContext!,

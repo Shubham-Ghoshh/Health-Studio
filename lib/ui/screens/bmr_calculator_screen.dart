@@ -14,7 +14,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BMRCalculatorPage extends StatefulWidget {
-  const BMRCalculatorPage({super.key});
+  Widget? nextButton;
+  BMRCalculatorPage({super.key, this.nextButton});
 
   @override
   State<BMRCalculatorPage> createState() => _BMRCalculatorPageState();
@@ -461,6 +462,8 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                                 }
                                 bmrController.calculateBMR(context);
                               }),
+                          sizedBoxHeight14,
+                          widget.nextButton ?? const SizedBox(),
                           sizedBoxHeight14,
                           Visibility(
                             visible: isVisible && !(bmrController.bmr > 0),
