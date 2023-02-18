@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
 import 'package:health_studio_user/core/controllers/bmr_calculator_controller.dart';
+import 'package:health_studio_user/ui/screens/bmr_calculations_screen.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
@@ -22,6 +24,7 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
   final TextEditingController _genderController = TextEditingController();
   final TextEditingController _activityLevelController =
       TextEditingController();
+  final TextEditingController _weightPlanController = TextEditingController();
   bool isVisible = false;
   bool isEnabled = false;
   List<String> get genderItems => [
@@ -35,6 +38,11 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
         "Exercise 3-5 times/week",
         "Exercise 6-7 times/week",
         "Professional Athlete"
+      ];
+  List<String> get weightPlanItems => [
+        "Weight Gain",
+        "Weight Loss",
+        "Maintain Weight",
       ];
   final formKey = GlobalKey<FormState>();
 
@@ -410,6 +418,66 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                                   },
                                 )),
                           ),
+                          sizedBoxHeight16,
+                          TextFormField(
+                            textAlign: TextAlign.start,
+                            validator: ((value) {
+                              if (value?.isEmpty ?? true) {
+                                isVisible = false;
+                                return "Weight plan cannot be empty";
+                              } else {
+                                return null;
+                              }
+                            }),
+                            readOnly: true,
+                            controller: _weightPlanController,
+                            cursorColor: Colors.black,
+                            style: const TextStyle(
+                              color: Color(0xff0A0909),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            decoration: InputDecoration(
+                                labelText: "WEIGHT PLAN :",
+                                labelStyle: const TextStyle(
+                                  color: Color.fromARGB(160, 10, 9, 9),
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                ),
+                                suffixIcon: PopupMenuButton<String>(
+                                  itemBuilder: (BuildContext context) {
+                                    return weightPlanItems
+                                        .map<PopupMenuItem<String>>(
+                                            (String value) {
+                                      return PopupMenuItem(
+                                          value: value,
+                                          child: Text(
+                                            value,
+                                            style: const TextStyle(
+                                              color: Color(0xff0A0909),
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 15,
+                                            ),
+                                          ));
+                                    }).toList();
+                                  },
+                                  icon: const Padding(
+                                    padding: EdgeInsets.only(top: 8.0),
+                                    child: Icon(
+                                      Icons.arrow_drop_down,
+                                      color: Color(0xff0A0909),
+                                    ),
+                                  ),
+                                  onSelected: (String value) {
+                                    _weightPlanController.text = value;
+                                    if (formKey.currentState!.validate()) {
+                                      setState(() {
+                                        isEnabled = true;
+                                      });
+                                    }
+                                  },
+                                )),
+                          ),
                           sizedBoxHeight40,
                           LoginButton(
                               height: 52,
@@ -420,6 +488,27 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                                   setState(() {
                                     isVisible = true;
                                   });
+                                  bmrController.bmi = (double.parse(
+                                              bmrController.weight) /
+                                          (double.parse(bmrController.height) *
+                                              double.parse(
+                                                  bmrController.height))) *
+                                      10000;
+                                  bmrController.update();
+                                  if (bmrController.bmi < 18.5) {
+                                    bmrController.bmiMessage =
+                                        "Your BMI is lower than normal.\nPlease visit your doctor.";
+                                  }
+                                  if (bmrController.bmi > 18.5 &&
+                                      bmrController.bmi < 25) {
+                                    bmrController.bmiMessage =
+                                        "Great, you have a normal BMI.";
+                                  }
+                                  if (bmrController.bmi > 25) {
+                                    bmrController.bmiMessage =
+                                        "Your BMI is greater than normal.\nPlease visit your doctor.";
+                                  }
+
                                   if (_genderController.text ==
                                       AppLocalizations.of(context)!.male) {
                                     bmrController.bmr = (10 *
@@ -465,132 +554,49 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                                   }
                                   bmrController.update();
 
-                                  bmrController.carbs =
-                                      (bmrController.bmr * 0.60)
-                                          .roundToDouble();
-                                  bmrController.fats =
-                                      (bmrController.bmr * 0.275)
-                                          .roundToDouble();
-                                  bmrController.proteins =
-                                      (bmrController.bmr * 0.125)
-                                          .roundToDouble();
+                                  if (_weightPlanController.text ==
+                                      "Weight Gain") {
+                                    bmrController.bmr += 300;
+                                    bmrController.carbs =
+                                        (bmrController.bmr * 0.45)
+                                            .roundToDouble();
+                                    bmrController.proteins =
+                                        (bmrController.bmr * 0.45)
+                                            .roundToDouble();
+                                    bmrController.fats =
+                                        (bmrController.bmr * 0.10)
+                                            .roundToDouble();
+                                  }
+                                  if (_weightPlanController.text ==
+                                      "Maintain Weight") {
+                                    bmrController.carbs =
+                                        (bmrController.bmr * 0.50)
+                                            .roundToDouble();
+                                    bmrController.proteins =
+                                        (bmrController.bmr * 0.30)
+                                            .roundToDouble();
+                                    bmrController.fats =
+                                        (bmrController.bmr * 0.20)
+                                            .roundToDouble();
+                                  }
+                                  if (_weightPlanController.text ==
+                                      "Weight Loss") {
+                                    bmrController.bmr -= 300;
+                                    bmrController.carbs =
+                                        (bmrController.bmr * 0.50)
+                                            .roundToDouble();
+                                    bmrController.proteins =
+                                        (bmrController.bmr * 0.35)
+                                            .roundToDouble();
+                                    bmrController.fats =
+                                        (bmrController.bmr * 0.15)
+                                            .roundToDouble();
+                                  }
                                   bmrController.update();
+                                  Get.to(() => const BMRCalculationsPage());
                                 }
                               }),
                           sizedBoxHeight14,
-                          Visibility(
-                            visible: isVisible && !(bmrController.bmr > 0),
-                            child: const Text(
-                              "Unrealistic Values Provided",
-                              style: TextStyle(
-                                color: Color(0xffFFFDFD),
-                                fontWeight: FontWeight.w600,
-                                fontFamily: "Poppins",
-                                fontSize: 19,
-                              ),
-                            ),
-                          ),
-                          Visibility(
-                            visible: isVisible && (bmrController.bmr > 0),
-                            child: SfCircularChart(
-                              title: ChartTitle(
-                                text: "Your Daily Calorie Intake",
-                                textStyle: const TextStyle(
-                                  color: Color(0xffFFFDFD),
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: "Poppins",
-                                  fontSize: 19,
-                                ),
-                              ),
-                              legend: Legend(
-                                // backgroundColor: Colors.blue.wit,
-                                textStyle: const TextStyle(
-                                  color: Color(0xffFFFDFD),
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: "Poppins",
-                                  fontSize: 16,
-                                ),
-                                isVisible: true,
-                                overflowMode: LegendItemOverflowMode.wrap,
-                              ),
-                              series: <CircularSeries>[
-                                PieSeries<BMRData, String>(
-                                  pointColorMapper: (BMRData data, index) =>
-                                      data.color,
-                                  dataSource: [
-                                    BMRData(
-                                      "Carbs",
-                                      bmrController.carbs.toInt(),
-                                      const Color(0xff74ADD1),
-                                    ),
-                                    BMRData(
-                                      "Proteins",
-                                      bmrController.proteins.toInt(),
-                                      const Color(0xff4575B4),
-                                    ),
-                                    BMRData(
-                                      "Fats",
-                                      bmrController.fats.toInt(),
-                                      const Color(0xff2D4D76),
-                                    ),
-                                  ],
-                                  xValueMapper: (BMRData data, _) =>
-                                      data.nutrient,
-                                  yValueMapper: (BMRData data, _) =>
-                                      data.nutrientValue,
-                                ),
-                              ],
-                            ),
-                          ),
-                          sizedBoxHeight8,
-                          Visibility(
-                            visible: isVisible && (bmrController.bmr > 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Carbs: ${bmrController.carbs.round()} |",
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    color: Color(0xffFFFDFD),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                Text(
-                                  " Fats: ${bmrController.fats.round()} |",
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    color: Color(0xffFFFDFD),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                Text(
-                                  " Proteins: ${bmrController.proteins.round()}",
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    color: Color(0xffFFFDFD),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Visibility(
-                            visible: isVisible && (bmrController.bmr > 0),
-                            child: Text(
-                              "${bmrController.bmr.toStringAsFixed(2)} kcal/day",
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: Color(0xffFFFDFD),
-                                fontWeight: FontWeight.w800,
-                                fontSize: 28,
-                              ),
-                            ),
-                          ),
-                          sizedBoxHeight16,
                         ],
                       ),
                     ),

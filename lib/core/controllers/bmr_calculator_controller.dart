@@ -9,6 +9,8 @@ class BMRController extends GetxController {
   double carbs = 0;
   double proteins = 0;
   double fats = 0;
+  double bmi = 0;
+  String bmiMessage = "";
 }
 
 class BMRData {
