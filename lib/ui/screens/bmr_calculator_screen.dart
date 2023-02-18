@@ -35,9 +35,9 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
         AppLocalizations.of(context)!.proessional_athelete,
       ];
   List<String> get weightPlanItems => [
-        "Weight Gain",
-        "Weight Loss",
-        "Maintain Weight",
+        AppLocalizations.of(context)!.weight_gain,
+        AppLocalizations.of(context)!.weight_loss,
+        AppLocalizations.of(context)!.maintain_weight,
       ];
   final formKey = GlobalKey<FormState>();
 
@@ -437,13 +437,14 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                             validator: ((value) {
                               if (value?.isEmpty ?? true) {
                                 isVisible = false;
-                                return "Weight plan cannot be empty";
+                                return AppLocalizations.of(context)!
+                                    .weight_error;
                               } else {
                                 return null;
                               }
                             }),
                             readOnly: true,
-                            controller: _weightPlanController,
+                            controller: bmrController.weightPlanController,
                             cursorColor: Colors.black,
                             style: const TextStyle(
                               color: Color(0xff0A0909),
@@ -451,7 +452,8 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                               fontWeight: FontWeight.w600,
                             ),
                             decoration: InputDecoration(
-                                labelText: "WEIGHT PLAN :",
+                                labelText:
+                                    AppLocalizations.of(context)!.weight_plan,
                                 labelStyle: const TextStyle(
                                   color: Color.fromARGB(160, 10, 9, 9),
                                   fontWeight: FontWeight.w600,
@@ -482,7 +484,8 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                                     ),
                                   ),
                                   onSelected: (String value) {
-                                    _weightPlanController.text = value;
+                                    bmrController.weightPlanController.text =
+                                        value;
                                     if (formKey.currentState!.validate()) {
                                       setState(() {
                                         isEnabled = true;
@@ -503,119 +506,8 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                                   });
                                 }
                                 bmrController.calculateBMR(context);
+                                Get.to(() => const BMRCalculationsPage());
                               }),
-                          sizedBoxHeight14,
-                          Visibility(
-                            visible: isVisible && !(bmrController.bmr > 0),
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .unrealistic_values_error,
-                              style: const TextStyle(
-                                color: Color(0xffFFFDFD),
-                                fontWeight: FontWeight.w600,
-                                fontSize: 19,
-                              ),
-                            ),
-                          ),
-                          Visibility(
-                            visible: isVisible && (bmrController.bmr > 0),
-                            child: SfCircularChart(
-                              title: ChartTitle(
-                                text: AppLocalizations.of(context)!
-                                    .your_daily_calorie_intake,
-                                textStyle: const TextStyle(
-                                  color: Color(0xffFFFDFD),
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 19,
-                                ),
-                              ),
-                              legend: Legend(
-                                // backgroundColor: Colors.blue.wit,
-                                textStyle: const TextStyle(
-                                  color: Color(0xffFFFDFD),
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16,
-                                ),
-                                isVisible: true,
-                                overflowMode: LegendItemOverflowMode.wrap,
-                              ),
-                              series: <CircularSeries>[
-                                PieSeries<BMRData, String>(
-                                  pointColorMapper: (BMRData data, index) =>
-                                      data.color,
-                                  dataSource: [
-                                    BMRData(
-                                      AppLocalizations.of(context)!.carbs,
-                                      bmrController.carbs.toInt(),
-                                      const Color(0xff74ADD1),
-                                    ),
-                                    BMRData(
-                                      AppLocalizations.of(context)!.proteins,
-                                      bmrController.proteins.toInt(),
-                                      const Color(0xff4575B4),
-                                    ),
-                                    BMRData(
-                                      AppLocalizations.of(context)!.fats,
-                                      bmrController.fats.toInt(),
-                                      const Color(0xff2D4D76),
-                                    ),
-                                  ],
-                                  xValueMapper: (BMRData data, _) =>
-                                      data.nutrient,
-                                  yValueMapper: (BMRData data, _) =>
-                                      data.nutrientValue,
-                                ),
-                              ],
-                            ),
-                          ),
-                          sizedBoxHeight8,
-                          Visibility(
-                            visible: isVisible && (bmrController.bmr > 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "${AppLocalizations.of(context)!.carbs_label} ${bmrController.carbs.round()} |",
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    color: Color(0xffFFFDFD),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                Text(
-                                  " ${AppLocalizations.of(context)!.fats_label} ${bmrController.fats.round()} |",
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    color: Color(0xffFFFDFD),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                Text(
-                                  " ${AppLocalizations.of(context)!.proteins_label} ${bmrController.proteins.round()}",
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    color: Color(0xffFFFDFD),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Visibility(
-                            visible: isVisible && (bmrController.bmr > 0),
-                            child: Text(
-                              "${bmrController.bmr.toStringAsFixed(0)} ${AppLocalizations.of(context)!.kcal_per_day}",
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: Color(0xffFFFDFD),
-                                fontWeight: FontWeight.w800,
-                                fontSize: 28,
-                              ),
-                            ),
-                          ),
                           sizedBoxHeight16,
                         ],
                       ),

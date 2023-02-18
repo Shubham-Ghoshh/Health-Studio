@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:health_studio_user/core/controllers/setting_controller.dart';
 import 'package:health_studio_user/core/request.dart';
+import 'package:health_studio_user/ui/screens/bmr_calculations_screen.dart';
 
 class BMRController extends GetxController {
   String height = "";
@@ -16,6 +17,7 @@ class BMRController extends GetxController {
   String bmiMessage = "";
   final TextEditingController genderController = TextEditingController();
   final TextEditingController activityLevelController = TextEditingController();
+  final TextEditingController weightPlanController = TextEditingController();
 
   calculateBMR(BuildContext context) async {
     if (genderController.text == AppLocalizations.of(context)!.male) {
@@ -34,130 +36,61 @@ class BMRController extends GetxController {
       update();
     }
 
-    if (activityLevelController.text == "Little/No Exercise") {
+    if (activityLevelController.text ==
+        AppLocalizations.of(context)!.exercise_0) {
       bmr *= 1.2;
-    } else if (activityLevelController.text == "Exercise 1-2 times/week") {
+    } else if (activityLevelController.text ==
+        AppLocalizations.of(context)!.exercise_1_2) {
       bmr *= 1.4;
-    } else if (activityLevelController.text == "Exercise 2-3 times/week") {
+    } else if (activityLevelController.text ==
+        AppLocalizations.of(context)!.exercise_2_3) {
       bmr *= 1.6;
-    } else if (activityLevelController.text == "Exercise 3-5 times/week") {
+    } else if (activityLevelController.text ==
+        AppLocalizations.of(context)!.exercise_3_5) {
       bmr *= 1.75;
-    } else if (activityLevelController.text == "Exercise 6-7 times/week") {
+    } else if (activityLevelController.text ==
+        AppLocalizations.of(context)!.exercise_6_7) {
       bmr *= 2;
     } else {
       bmr *= 2.3;
     }
-    // bmrController.bmi = (double.parse(
-    //                                           bmrController.weight) /
-    //                                       (double.parse(bmrController.height) *
-    //                                           double.parse(
-    //                                               bmrController.height))) *
-    //                                   10000;
-    //                               bmrController.update();
-    //                               if (bmrController.bmi < 18.5) {
-    //                                 bmrController.bmiMessage =
-    //                                     "Your BMI is lower than normal.\nPlease visit your doctor.";
-    //                               }
-    //                               if (bmrController.bmi > 18.5 &&
-    //                                   bmrController.bmi < 25) {
-    //                                 bmrController.bmiMessage =
-    //                                     "Great, you have a normal BMI.";
-    //                               }
-    //                               if (bmrController.bmi > 25) {
-    //                                 bmrController.bmiMessage =
-    //                                     "Your BMI is greater than normal.\nPlease visit your doctor.";
-    //                               }
-
-    //                               if (_genderController.text ==
-    //                                   AppLocalizations.of(context)!.male) {
-    //                                 bmrController.bmr = (10 *
-    //                                         double.parse(
-    //                                             bmrController.weight)) +
-    //                                     (6.25 *
-    //                                         double.parse(
-    //                                             bmrController.height)) -
-    //                                     (5 * double.parse(bmrController.age)) +
-    //                                     5;
-
-    //                                 bmrController.update();
-    //                               } else {
-    //                                 bmrController.bmr = (10 *
-    //                                         double.parse(
-    //                                             bmrController.weight)) +
-    //                                     (6.25 *
-    //                                         double.parse(
-    //                                             bmrController.height)) -
-    //                                     (5 * double.parse(bmrController.age)) -
-    //                                     161;
-
-    //                                 bmrController.update();
-    //                               }
-
-    //                               if (_activityLevelController.text ==
-    //                                   "Little/No Exercise") {
-    //                                 bmrController.bmr *= 1.2;
-    //                               } else if (_activityLevelController.text ==
-    //                                   "Exercise 1-2 times/week") {
-    //                                 bmrController.bmr *= 1.4;
-    //                               } else if (_activityLevelController.text ==
-    //                                   "Exercise 2-3 times/week") {
-    //                                 bmrController.bmr *= 1.6;
-    //                               } else if (_activityLevelController.text ==
-    //                                   "Exercise 3-5 times/week") {
-    //                                 bmrController.bmr *= 1.75;
-    //                               } else if (_activityLevelController.text ==
-    //                                   "Exercise 6-7 times/week") {
-    //                                 bmrController.bmr *= 2;
-    //                               } else {
-    //                                 bmrController.bmr *= 2.3;
-    //                               }
-    //                               bmrController.update();
-
-    //                               if (_weightPlanController.text ==
-    //                                   "Weight Gain") {
-    //                                 bmrController.bmr += 300;
-    //                                 bmrController.carbs =
-    //                                     (bmrController.bmr * 0.45)
-    //                                         .roundToDouble();
-    //                                 bmrController.proteins =
-    //                                     (bmrController.bmr * 0.45)
-    //                                         .roundToDouble();
-    //                                 bmrController.fats =
-    //                                     (bmrController.bmr * 0.10)
-    //                                         .roundToDouble();
-    //                               }
-    //                               if (_weightPlanController.text ==
-    //                                   "Maintain Weight") {
-    //                                 bmrController.carbs =
-    //                                     (bmrController.bmr * 0.50)
-    //                                         .roundToDouble();
-    //                                 bmrController.proteins =
-    //                                     (bmrController.bmr * 0.30)
-    //                                         .roundToDouble();
-    //                                 bmrController.fats =
-    //                                     (bmrController.bmr * 0.20)
-    //                                         .roundToDouble();
-    //                               }
-    //                               if (_weightPlanController.text ==
-    //                                   "Weight Loss") {
-    //                                 bmrController.bmr -= 300;
-    //                                 bmrController.carbs =
-    //                                     (bmrController.bmr * 0.50)
-    //                                         .roundToDouble();
-    //                                 bmrController.proteins =
-    //                                     (bmrController.bmr * 0.35)
-    //                                         .roundToDouble();
-    //                                 bmrController.fats =
-    //                                     (bmrController.bmr * 0.15)
-    //                                         .roundToDouble();
-    //                               }
-    //                               bmrController.update();
-    //                               Get.to(() => const BMRCalculationsPage());
     update();
-
-    carbs = (bmr * 0.60).roundToDouble();
-    fats = (bmr * 0.275).roundToDouble();
-    proteins = (bmr * 0.125).roundToDouble();
+    bmi =
+        (double.parse(weight) / (double.parse(height) * double.parse(height))) *
+            10000;
+    update();
+    if (bmi < 18.5) {
+      bmiMessage =
+          "${AppLocalizations.of(context)!.bmi_lower}\n${AppLocalizations.of(context)!.visit_doctor}";
+    }
+    if (bmi > 18.5 && bmi < 25) {
+      bmiMessage = AppLocalizations.of(context)!.bmi_normal;
+    }
+    if (bmi > 25) {
+      bmiMessage =
+          "${AppLocalizations.of(context)!.bmi_greater}\n${AppLocalizations.of(context)!.visit_doctor}";
+    }
+    update();
+    if (weightPlanController.text ==
+        AppLocalizations.of(context)!.weight_gain) {
+      bmr += 300;
+      carbs = (bmr * 0.45).roundToDouble();
+      proteins = (bmr * 0.45).roundToDouble();
+      fats = (bmr * 0.10).roundToDouble();
+    }
+    if (weightPlanController.text ==
+        AppLocalizations.of(context)!.maintain_weight) {
+      carbs = (bmr * 0.50).roundToDouble();
+      proteins = (bmr * 0.30).roundToDouble();
+      fats = (bmr * 0.20).roundToDouble();
+    }
+    if (weightPlanController.text ==
+        AppLocalizations.of(context)!.weight_loss) {
+      bmr -= 300;
+      carbs = (bmr * 0.50).roundToDouble();
+      proteins = (bmr * 0.35).roundToDouble();
+      fats = (bmr * 0.15).roundToDouble();
+    }
     update();
 
     Map<String, dynamic> body = {

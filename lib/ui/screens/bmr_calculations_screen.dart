@@ -6,6 +6,7 @@ import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BMRCalculationsPage extends StatefulWidget {
   const BMRCalculationsPage({super.key});
@@ -51,16 +52,15 @@ class _BMRCalculationsPageState extends State<BMRCalculationsPage> {
                         ),
                       ),
                       sizedBoxWidth25,
-                      const Center(
+                      Center(
                         child: SizedBox(
                           width: 235,
                           child: Center(
                             child: Text(
-                              "Results",
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.results,
+                              style: const TextStyle(
                                 color: Color(0xffFFFDFD),
                                 fontWeight: FontWeight.w600,
-                                fontFamily: "Poppins",
                                 fontSize: 34,
                               ),
                             ),
@@ -72,17 +72,16 @@ class _BMRCalculationsPageState extends State<BMRCalculationsPage> {
                   sizedBoxHeight10,
                   Visibility(
                     visible: !(bmrController.bmr > 0),
-                    child: const Padding(
-                      padding: EdgeInsets.only(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
                           left: 30, right: 30, top: 200, bottom: 200),
                       child: Center(
                         child: Text(
-                          "Unrealistic values provided.\nPlease check the values and try again.",
+                          "${AppLocalizations.of(context)!.unrealistic_values_error}\n${AppLocalizations.of(context)!.try_again}",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Color(0xffFFFDFD),
                             fontWeight: FontWeight.w600,
-                            fontFamily: "Poppins",
                             fontSize: 21,
                           ),
                         ),
@@ -93,11 +92,11 @@ class _BMRCalculationsPageState extends State<BMRCalculationsPage> {
                     visible: (bmrController.bmr > 0),
                     child: SfCircularChart(
                       title: ChartTitle(
-                        text: "Your Daily Calorie Intake",
+                        text: AppLocalizations.of(context)!
+                            .your_daily_calorie_intake,
                         textStyle: const TextStyle(
                           color: Color(0xffFFFDFD),
                           fontWeight: FontWeight.w600,
-                          fontFamily: "Poppins",
                           fontSize: 19,
                         ),
                       ),
@@ -106,7 +105,6 @@ class _BMRCalculationsPageState extends State<BMRCalculationsPage> {
                         textStyle: const TextStyle(
                           color: Color(0xffFFFDFD),
                           fontWeight: FontWeight.w600,
-                          fontFamily: "Poppins",
                           fontSize: 16,
                         ),
                         isVisible: true,
@@ -117,17 +115,17 @@ class _BMRCalculationsPageState extends State<BMRCalculationsPage> {
                           pointColorMapper: (BMRData data, index) => data.color,
                           dataSource: [
                             BMRData(
-                              "Carbs",
+                              AppLocalizations.of(context)!.carbs,
                               bmrController.carbs.toInt(),
                               const Color(0xff74ADD1),
                             ),
                             BMRData(
-                              "Proteins",
+                              AppLocalizations.of(context)!.proteins,
                               bmrController.proteins.toInt(),
                               const Color(0xff4575B4),
                             ),
                             BMRData(
-                              "Fats",
+                              AppLocalizations.of(context)!.fats,
                               bmrController.fats.toInt(),
                               const Color(0xff2D4D76),
                             ),
@@ -147,7 +145,7 @@ class _BMRCalculationsPageState extends State<BMRCalculationsPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Carbs: ${(bmrController.carbs / 4).round()}g |",
+                              "${AppLocalizations.of(context)!.carbs}: ${(bmrController.carbs / 4).round()}g |",
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 color: Color(0xffFFFDFD),
@@ -156,7 +154,7 @@ class _BMRCalculationsPageState extends State<BMRCalculationsPage> {
                               ),
                             ),
                             Text(
-                              " Fats: ${(bmrController.fats / 9).round()}g |",
+                              " ${AppLocalizations.of(context)!.fats}: ${(bmrController.fats / 9).round()}g |",
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 color: Color(0xffFFFDFD),
@@ -165,7 +163,7 @@ class _BMRCalculationsPageState extends State<BMRCalculationsPage> {
                               ),
                             ),
                             Text(
-                              " Proteins: ${(bmrController.proteins / 4).round()}g",
+                              " ${AppLocalizations.of(context)!.proteins}: ${(bmrController.proteins / 4).round()}g",
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 color: Color(0xffFFFDFD),
@@ -218,11 +216,17 @@ class _BMRCalculationsPageState extends State<BMRCalculationsPage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   bmiStrip(
-                                      "Underweight", Colors.blueAccent, "18.5"),
-                                  bmiStrip("Normal", Colors.green, "25.0"),
-                                  bmiStrip("Overweight", Colors.orangeAccent,
+                                      AppLocalizations.of(context)!.underweight,
+                                      Colors.blueAccent,
+                                      "18.5"),
+                                  bmiStrip(AppLocalizations.of(context)!.normal,
+                                      Colors.green, "25.0"),
+                                  bmiStrip(
+                                      AppLocalizations.of(context)!.overweight,
+                                      Colors.orangeAccent,
                                       "30.0"),
-                                  bmiStrip("Obese", Colors.red, ""),
+                                  bmiStrip(AppLocalizations.of(context)!.obese,
+                                      Colors.red, ""),
                                 ],
                               ),
                               sizedBoxHeight14,
@@ -252,7 +256,7 @@ class _BMRCalculationsPageState extends State<BMRCalculationsPage> {
                       Get.to(() => const BMRCalculatorPage());
                     },
                     enabled: true,
-                    title: "RE-CALCUALTE",
+                    title: AppLocalizations.of(context)!.re_calculate,
                     height: 52,
                   ),
                   sizedBoxHeight16,
