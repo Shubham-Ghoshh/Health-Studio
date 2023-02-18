@@ -100,9 +100,11 @@ class MealItem extends StatelessWidget {
                                     Visibility(
                                         visible:
                                             Get.find<UserDashboardController>()
-                                                    .packageDetail
-                                                    ?.categoryId ==
-                                                "1",
+                                                        .packageDetail
+                                                        ?.categoryId ==
+                                                    "1" &&
+                                                type != "snack" &&
+                                                type != "breakfast",
                                         child: Column(
                                           children: [
                                             Row(

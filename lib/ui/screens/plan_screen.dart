@@ -845,8 +845,8 @@ class MealWidget extends StatefulWidget {
 
 class _MealWidgetState extends State<MealWidget> {
   List<String> meals = ['1', '2', '3', '4', '5'];
-  List<String> snacks = ['1', '2', '3', '4', '5'];
-  List<String> breakfast = ['1', '2', '3', '4', '5'];
+  List<String> snacks = ['0', '1', '2', '3', '4', '5'];
+  List<String> breakfast = ['0', '1', '2', '3', '4', '5'];
   @override
   Widget build(BuildContext context) {
     return GetBuilder<OrderController>(builder: (orderController) {
@@ -923,7 +923,7 @@ class _MealWidgetState extends State<MealWidget> {
                           child: DropdownButton<String>(
                             underline: Container(),
                             value: planController.snack,
-                            items: meals
+                            items: snacks
                                 .map((item) => DropdownMenuItem<String>(
                                       value: item,
                                       child: Center(
@@ -970,7 +970,7 @@ class _MealWidgetState extends State<MealWidget> {
                       child: DropdownButton<String>(
                         underline: Container(),
                         value: planController.breakfast,
-                        items: meals
+                        items: breakfast
                             .map((item) => DropdownMenuItem<String>(
                                   value: item,
                                   child: Center(

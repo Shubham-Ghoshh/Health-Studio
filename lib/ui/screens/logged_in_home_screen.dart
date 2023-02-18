@@ -9,12 +9,12 @@ import 'package:health_studio_user/core/controllers/plan_controller.dart';
 import 'package:health_studio_user/core/controllers/setting_controller.dart';
 import 'package:health_studio_user/core/controllers/userDashboardController.dart';
 import 'package:health_studio_user/core/models/order.dart';
-import 'package:health_studio_user/ui/screens/address_screen.dart';
-import 'package:health_studio_user/ui/screens/confirmation_screen.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/ui/widgets/date.dart';
 import 'package:health_studio_user/ui/widgets/food_detail_card.dart';
+import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
+import 'package:health_studio_user/utils/constants.dart';
 import 'package:health_studio_user/utils/formatters.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:intl/intl.dart';
@@ -446,7 +446,15 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                                   .dateRequested)
                                                               .weekday ==
                                                           5
-                                                      ? const SizedBox()
+                                                      ? calenderWidget(
+                                                          context,
+                                                          userDashboardController
+                                                              .userDashboard!
+                                                              .thisweek[index]
+                                                              .dateText,
+                                                          true, () {
+                                                          offDayDialog();
+                                                        })
                                                       : calenderWidget(
                                                           context,
                                                           userDashboardController
@@ -557,7 +565,15 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                                   .dateRequested)
                                                               .weekday ==
                                                           5
-                                                      ? const SizedBox()
+                                                      ? calenderWidget(
+                                                          context,
+                                                          userDashboardController
+                                                              .userDashboard!
+                                                              .nextweek[index]
+                                                              .dateText,
+                                                          true, () {
+                                                          offDayDialog();
+                                                        })
                                                       : calenderWidget(
                                                           context,
                                                           userDashboardController
@@ -609,5 +625,32 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                 });
               });
             }));
+  }
+
+  Future offDayDialog() {
+    return showDialog(
+        context: navigatorKey.currentContext!,
+        builder: (context) {
+          return AlertDialog(
+            icon: const Icon(
+              Icons.error,
+              color: loginButtonColor,
+            ),
+            title: Text(AppLocalizations.of(context)!.error),
+            content: Text(AppLocalizations.of(context)!.off_day),
+            actionsAlignment: MainAxisAlignment.center,
+            actions: <Widget>[
+              LoginButton(
+                onTap: () {
+                  Get.back();
+                },
+                enabled: true,
+                title: AppLocalizations.of(context)!.okay,
+                height: 50,
+                width: 100,
+              ),
+            ],
+          );
+        });
   }
 }

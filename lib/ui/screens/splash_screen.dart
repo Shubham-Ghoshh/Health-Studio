@@ -75,7 +75,7 @@ class SplashScreen extends StatelessWidget {
                                       },
                                       buttontitle: 'عربي',
                                       imagepath:
-                                          'assets/images/arabicbtnlogo.png',
+                                          'assets/images/kuwait_icon.png',
                                       buttonColor: splashbuttonColor2,
                                     )),
                                   ],

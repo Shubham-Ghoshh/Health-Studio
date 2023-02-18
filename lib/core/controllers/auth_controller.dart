@@ -104,11 +104,7 @@ class AuthController extends GetxController {
 
       Get.put(SettingsController()).getUserDetails();
       Get.put(SettingsController()).getUserSubscription();
-      // if (Platform.isIOS) {
-      //   Get.put(APNController()).getToken();
-      // } else {
       Get.put(FirebaseController(), permanent: true).getToken();
-      // }
     }
   }
 

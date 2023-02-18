@@ -113,8 +113,7 @@ class SettingPage extends StatelessWidget {
                                   children: [
                                     const LanguageToggler(
                                       language: "عربي",
-                                      languageImage:
-                                          "united_arab_emirates_icon",
+                                      languageImage: "kuwait_icon",
                                     ),
                                     Transform.scale(
                                       scale: 1.4,
@@ -200,10 +199,13 @@ class SettingPage extends StatelessWidget {
                                   divider(),
                                   SettingOptionItem(
                                     settingIconImage: "change_password_icon",
-                                    settingName: "Calorie Calculator",
+                                    settingName: AppLocalizations.of(context)!
+                                        .calorie_calculator,
                                     onTap: () {
                                       Get.to(() => const BMRCalculatorPage());
                                     },
+                                    optionalText:
+                                        "${(settingsController.userDetails?.totalCalories ?? "")} ${AppLocalizations.of(context)!.kcal_per_day}",
                                   ),
                                   divider(),
                                   SettingOptionItem(

@@ -6,7 +6,6 @@ import 'package:health_studio_user/core/controllers/auth_controller.dart';
 import 'package:health_studio_user/core/controllers/bmr_calculator_controller.dart';
 import 'package:health_studio_user/ui/screens/bmr_calculations_screen.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
-import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -21,10 +20,6 @@ class BMRCalculatorPage extends StatefulWidget {
 }
 
 class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
-  final TextEditingController _genderController = TextEditingController();
-  final TextEditingController _activityLevelController =
-      TextEditingController();
-  final TextEditingController _weightPlanController = TextEditingController();
   bool isVisible = false;
   bool isEnabled = false;
   List<String> get genderItems => [
@@ -32,12 +27,12 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
         AppLocalizations.of(context)!.female
       ];
   List<String> get activityLevelItems => [
-        "Little/No Exercise",
-        "Exercise 1-2 times/week",
-        "Exercise 2-3 times/week",
-        "Exercise 3-5 times/week",
-        "Exercise 6-7 times/week",
-        "Professional Athlete"
+        AppLocalizations.of(context)!.exercise_0,
+        AppLocalizations.of(context)!.exercise_1_2,
+        AppLocalizations.of(context)!.exercise_2_3,
+        AppLocalizations.of(context)!.exercise_3_5,
+        AppLocalizations.of(context)!.exercise_6_7,
+        AppLocalizations.of(context)!.proessional_athelete,
       ];
   List<String> get weightPlanItems => [
         "Weight Gain",
@@ -76,10 +71,10 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                       init: BMRController(),
                       builder: (bmrController) => Column(
                         children: [
-                          const Text(
-                            "Calorie Calculator",
+                          Text(
+                            AppLocalizations.of(context)!.calorie_calculator,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color(0xffFFFDFD),
                               fontWeight: FontWeight.w600,
                               fontSize: 30,
@@ -87,6 +82,7 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                           ),
                           sizedBoxHeight25,
                           TextFormField(
+                            initialValue: bmrController.weight,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
                                   RegExp(r"[0-9.]")),
@@ -105,18 +101,21 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                               if (value?.isEmpty ?? true) {
                                 isVisible = false;
                                 isEnabled = false;
-                                return "Weight cannot be empty";
+                                return AppLocalizations.of(context)!
+                                    .weight_error;
                               }
                               if (double.parse(value!) <= 0) {
                                 isVisible = false;
                                 isEnabled = false;
-                                return "Weight should be greater than 0 kg";
+                                return AppLocalizations.of(context)!
+                                    .weight_greater_than_zero;
                               }
                               if (double.parse(value) > 450 ||
                                   double.parse(value) <= 2) {
                                 isVisible = false;
                                 isEnabled = false;
-                                return "Please provide a realistic weight";
+                                return AppLocalizations.of(context)!
+                                    .weight_error_realistic;
                               } else {
                                 return null;
                               }
@@ -137,21 +136,21 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                               fontSize: 20,
                               fontWeight: FontWeight.w600,
                             ),
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               suffix: Text(
-                                "kg",
-                                style: TextStyle(
+                                AppLocalizations.of(context)!.kg,
+                                style: const TextStyle(
                                   color: Color(0xff0A0909),
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
                               prefixIcon: Padding(
-                                padding: EdgeInsets.only(
+                                padding: const EdgeInsets.only(
                                     top: 11, left: 10, right: 10),
                                 child: Text(
-                                  "WEIGHT :",
-                                  style: TextStyle(
+                                  AppLocalizations.of(context)!.weight_label,
+                                  style: const TextStyle(
                                     color: Color.fromARGB(160, 10, 9, 9),
                                     fontWeight: FontWeight.w600,
                                     fontSize: 18,
@@ -162,23 +161,27 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                           ),
                           sizedBoxHeight16,
                           TextFormField(
+                            initialValue: bmrController.height,
                             textAlign: TextAlign.end,
                             validator: ((value) {
                               if (value?.isEmpty ?? true) {
                                 isVisible = false;
                                 isEnabled = false;
-                                return "Height cannot be empty";
+                                return AppLocalizations.of(context)!
+                                    .height_empty_error;
                               }
                               if (double.parse(value!) <= 0) {
                                 isVisible = false;
                                 isEnabled = false;
-                                return "Height should be greater than 0 cm";
+                                return AppLocalizations.of(context)!
+                                    .height_error_greater_than_zero;
                               }
-                              if (double.parse(value!) > 280 ||
-                                  double.parse(value!) < 60) {
+                              if (double.parse(value) > 280 ||
+                                  double.parse(value) < 60) {
                                 isVisible = false;
                                 isEnabled = false;
-                                return "Please provide a realistic height";
+                                return AppLocalizations.of(context)!
+                                    .height_error_realistic;
                               } else {
                                 return null;
                               }
@@ -212,21 +215,21 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                               fontSize: 20,
                               fontWeight: FontWeight.w600,
                             ),
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               suffix: Text(
-                                "cm",
-                                style: TextStyle(
+                                AppLocalizations.of(context)!.cm,
+                                style: const TextStyle(
                                   color: Color(0xff0A0909),
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
                               prefixIcon: Padding(
-                                padding: EdgeInsets.only(
+                                padding: const EdgeInsets.only(
                                     top: 11, left: 10, right: 10),
                                 child: Text(
-                                  "HEIGHT :",
-                                  style: TextStyle(
+                                  AppLocalizations.of(context)!.height_label,
+                                  style: const TextStyle(
                                     color: Color.fromARGB(160, 10, 9, 9),
                                     fontWeight: FontWeight.w600,
                                     fontSize: 18,
@@ -238,6 +241,7 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                           sizedBoxHeight16,
                           GetBuilder<AuthController>(
                             builder: (authController) => TextFormField(
+                              initialValue: bmrController.age,
                               inputFormatters: [
                                 FilteringTextInputFormatter.allow(
                                     RegExp(r"[0-9]")),
@@ -247,15 +251,18 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                               validator: ((value) {
                                 if (value?.isEmpty ?? true) {
                                   isVisible = false;
-                                  return "Age cannot be empty";
+                                  return AppLocalizations.of(context)!
+                                      .age_empty_error;
                                 } else if (int.parse(value!) < 18) {
                                   isVisible = false;
                                   isEnabled = false;
-                                  return "Not applicable for children(under 18 years)";
-                                } else if (int.parse(value!) > 150) {
+                                  return AppLocalizations.of(context)!
+                                      .age_value_error;
+                                } else if (int.parse(value) > 150) {
                                   isVisible = false;
                                   isEnabled = false;
-                                  return "Please provide a realistic age";
+                                  return AppLocalizations.of(context)!
+                                      .age_realistic_error;
                                 } else {
                                   return null;
                                 }
@@ -276,13 +283,13 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
                               ),
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 prefixIcon: Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       top: 11, left: 10, right: 10),
                                   child: Text(
-                                    "AGE :",
-                                    style: TextStyle(
+                                    AppLocalizations.of(context)!.age_label,
+                                    style: const TextStyle(
                                       color: Color.fromARGB(160, 10, 9, 9),
                                       fontWeight: FontWeight.w600,
                                       fontSize: 18,
@@ -300,13 +307,14 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                               validator: ((value) {
                                 if (value?.isEmpty ?? true) {
                                   isVisible = false;
-                                  return "Gender cannot be empty";
+                                  return AppLocalizations.of(context)!
+                                      .gender_empty_error;
                                 } else {
                                   return null;
                                 }
                               }),
                               readOnly: true,
-                              controller: _genderController,
+                              controller: bmrController.genderController,
                               cursorColor: Colors.black,
                               style: const TextStyle(
                                 color: Color(0xff0A0909),
@@ -314,12 +322,13 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                                 fontWeight: FontWeight.w600,
                               ),
                               decoration: InputDecoration(
-                                  prefixIcon: const Padding(
-                                    padding: EdgeInsets.only(
+                                  prefixIcon: Padding(
+                                    padding: const EdgeInsets.only(
                                         top: 11, left: 10, right: 10),
                                     child: Text(
-                                      "GENDER :",
-                                      style: TextStyle(
+                                      AppLocalizations.of(context)!
+                                          .gender_label,
+                                      style: const TextStyle(
                                         color: Color.fromARGB(160, 10, 9, 9),
                                         fontWeight: FontWeight.w600,
                                         fontSize: 18,
@@ -348,7 +357,8 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                                       color: Color(0xff0A0909),
                                     ),
                                     onSelected: (String value) {
-                                      _genderController.text = value;
+                                      bmrController.genderController.text =
+                                          value;
                                       if (formKey.currentState!.validate()) {
                                         setState(() {
                                           isEnabled = true;
@@ -364,13 +374,14 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                             validator: ((value) {
                               if (value?.isEmpty ?? true) {
                                 isVisible = false;
-                                return "Activity Level cannot be empty";
+                                return AppLocalizations.of(context)!
+                                    .activity_error_empty;
                               } else {
                                 return null;
                               }
                             }),
                             readOnly: true,
-                            controller: _activityLevelController,
+                            controller: bmrController.activityLevelController,
                             cursorColor: Colors.black,
                             style: const TextStyle(
                               color: Color(0xff0A0909),
@@ -378,7 +389,8 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                               fontWeight: FontWeight.w600,
                             ),
                             decoration: InputDecoration(
-                                labelText: "ACTIVITY LEVEL :",
+                                labelText: AppLocalizations.of(context)!
+                                    .activity_label,
                                 labelStyle: const TextStyle(
                                   color: Color.fromARGB(160, 10, 9, 9),
                                   fontWeight: FontWeight.w600,
@@ -409,7 +421,8 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                                     ),
                                   ),
                                   onSelected: (String value) {
-                                    _activityLevelController.text = value;
+                                    bmrController.activityLevelController.text =
+                                        value;
                                     if (formKey.currentState!.validate()) {
                                       setState(() {
                                         isEnabled = true;
@@ -481,122 +494,129 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                           sizedBoxHeight40,
                           LoginButton(
                               height: 52,
-                              title: "CALCULATE",
+                              title: AppLocalizations.of(context)!.calculate,
                               enabled: isEnabled,
                               onTap: () async {
                                 if (formKey.currentState!.validate()) {
                                   setState(() {
                                     isVisible = true;
                                   });
-                                  bmrController.bmi = (double.parse(
-                                              bmrController.weight) /
-                                          (double.parse(bmrController.height) *
-                                              double.parse(
-                                                  bmrController.height))) *
-                                      10000;
-                                  bmrController.update();
-                                  if (bmrController.bmi < 18.5) {
-                                    bmrController.bmiMessage =
-                                        "Your BMI is lower than normal.\nPlease visit your doctor.";
-                                  }
-                                  if (bmrController.bmi > 18.5 &&
-                                      bmrController.bmi < 25) {
-                                    bmrController.bmiMessage =
-                                        "Great, you have a normal BMI.";
-                                  }
-                                  if (bmrController.bmi > 25) {
-                                    bmrController.bmiMessage =
-                                        "Your BMI is greater than normal.\nPlease visit your doctor.";
-                                  }
-
-                                  if (_genderController.text ==
-                                      AppLocalizations.of(context)!.male) {
-                                    bmrController.bmr = (10 *
-                                            double.parse(
-                                                bmrController.weight)) +
-                                        (6.25 *
-                                            double.parse(
-                                                bmrController.height)) -
-                                        (5 * double.parse(bmrController.age)) +
-                                        5;
-
-                                    bmrController.update();
-                                  } else {
-                                    bmrController.bmr = (10 *
-                                            double.parse(
-                                                bmrController.weight)) +
-                                        (6.25 *
-                                            double.parse(
-                                                bmrController.height)) -
-                                        (5 * double.parse(bmrController.age)) -
-                                        161;
-
-                                    bmrController.update();
-                                  }
-
-                                  if (_activityLevelController.text ==
-                                      "Little/No Exercise") {
-                                    bmrController.bmr *= 1.2;
-                                  } else if (_activityLevelController.text ==
-                                      "Exercise 1-2 times/week") {
-                                    bmrController.bmr *= 1.4;
-                                  } else if (_activityLevelController.text ==
-                                      "Exercise 2-3 times/week") {
-                                    bmrController.bmr *= 1.6;
-                                  } else if (_activityLevelController.text ==
-                                      "Exercise 3-5 times/week") {
-                                    bmrController.bmr *= 1.75;
-                                  } else if (_activityLevelController.text ==
-                                      "Exercise 6-7 times/week") {
-                                    bmrController.bmr *= 2;
-                                  } else {
-                                    bmrController.bmr *= 2.3;
-                                  }
-                                  bmrController.update();
-
-                                  if (_weightPlanController.text ==
-                                      "Weight Gain") {
-                                    bmrController.bmr += 300;
-                                    bmrController.carbs =
-                                        (bmrController.bmr * 0.45)
-                                            .roundToDouble();
-                                    bmrController.proteins =
-                                        (bmrController.bmr * 0.45)
-                                            .roundToDouble();
-                                    bmrController.fats =
-                                        (bmrController.bmr * 0.10)
-                                            .roundToDouble();
-                                  }
-                                  if (_weightPlanController.text ==
-                                      "Maintain Weight") {
-                                    bmrController.carbs =
-                                        (bmrController.bmr * 0.50)
-                                            .roundToDouble();
-                                    bmrController.proteins =
-                                        (bmrController.bmr * 0.30)
-                                            .roundToDouble();
-                                    bmrController.fats =
-                                        (bmrController.bmr * 0.20)
-                                            .roundToDouble();
-                                  }
-                                  if (_weightPlanController.text ==
-                                      "Weight Loss") {
-                                    bmrController.bmr -= 300;
-                                    bmrController.carbs =
-                                        (bmrController.bmr * 0.50)
-                                            .roundToDouble();
-                                    bmrController.proteins =
-                                        (bmrController.bmr * 0.35)
-                                            .roundToDouble();
-                                    bmrController.fats =
-                                        (bmrController.bmr * 0.15)
-                                            .roundToDouble();
-                                  }
-                                  bmrController.update();
-                                  Get.to(() => const BMRCalculationsPage());
                                 }
+                                bmrController.calculateBMR(context);
                               }),
                           sizedBoxHeight14,
+                          Visibility(
+                            visible: isVisible && !(bmrController.bmr > 0),
+                            child: Text(
+                              AppLocalizations.of(context)!
+                                  .unrealistic_values_error,
+                              style: const TextStyle(
+                                color: Color(0xffFFFDFD),
+                                fontWeight: FontWeight.w600,
+                                fontSize: 19,
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                            visible: isVisible && (bmrController.bmr > 0),
+                            child: SfCircularChart(
+                              title: ChartTitle(
+                                text: AppLocalizations.of(context)!
+                                    .your_daily_calorie_intake,
+                                textStyle: const TextStyle(
+                                  color: Color(0xffFFFDFD),
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 19,
+                                ),
+                              ),
+                              legend: Legend(
+                                // backgroundColor: Colors.blue.wit,
+                                textStyle: const TextStyle(
+                                  color: Color(0xffFFFDFD),
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                ),
+                                isVisible: true,
+                                overflowMode: LegendItemOverflowMode.wrap,
+                              ),
+                              series: <CircularSeries>[
+                                PieSeries<BMRData, String>(
+                                  pointColorMapper: (BMRData data, index) =>
+                                      data.color,
+                                  dataSource: [
+                                    BMRData(
+                                      AppLocalizations.of(context)!.carbs,
+                                      bmrController.carbs.toInt(),
+                                      const Color(0xff74ADD1),
+                                    ),
+                                    BMRData(
+                                      AppLocalizations.of(context)!.proteins,
+                                      bmrController.proteins.toInt(),
+                                      const Color(0xff4575B4),
+                                    ),
+                                    BMRData(
+                                      AppLocalizations.of(context)!.fats,
+                                      bmrController.fats.toInt(),
+                                      const Color(0xff2D4D76),
+                                    ),
+                                  ],
+                                  xValueMapper: (BMRData data, _) =>
+                                      data.nutrient,
+                                  yValueMapper: (BMRData data, _) =>
+                                      data.nutrientValue,
+                                ),
+                              ],
+                            ),
+                          ),
+                          sizedBoxHeight8,
+                          Visibility(
+                            visible: isVisible && (bmrController.bmr > 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "${AppLocalizations.of(context)!.carbs_label} ${bmrController.carbs.round()} |",
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    color: Color(0xffFFFDFD),
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                Text(
+                                  " ${AppLocalizations.of(context)!.fats_label} ${bmrController.fats.round()} |",
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    color: Color(0xffFFFDFD),
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                Text(
+                                  " ${AppLocalizations.of(context)!.proteins_label} ${bmrController.proteins.round()}",
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    color: Color(0xffFFFDFD),
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Visibility(
+                            visible: isVisible && (bmrController.bmr > 0),
+                            child: Text(
+                              "${bmrController.bmr.toStringAsFixed(0)} ${AppLocalizations.of(context)!.kcal_per_day}",
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Color(0xffFFFDFD),
+                                fontWeight: FontWeight.w800,
+                                fontSize: 28,
+                              ),
+                            ),
+                          ),
+                          sizedBoxHeight16,
                         ],
                       ),
                     ),

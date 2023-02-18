@@ -4,6 +4,7 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
+import 'package:health_studio_user/core/controllers/bmr_calculator_controller.dart';
 import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
 import 'package:health_studio_user/core/models/notificationlisting.dart';
@@ -128,6 +129,22 @@ class SettingsController extends GetxController {
       userDetails = response["details"].isNotEmpty
           ? UserDetails.fromJson(response["details"].first)
           : null;
+
+      if (userDetails?.totalCalories != "" &&
+          userDetails?.totalCalories != null) {
+        BMRController bmrController = Get.put(BMRController());
+        bmrController.weight = userDetails?.weight ?? "";
+        bmrController.height = userDetails?.height ?? "";
+        bmrController.age = userDetails?.age ?? "";
+        bmrController.carbs = double.parse(userDetails?.carbs ?? "0.0");
+        bmrController.proteins = double.parse(userDetails?.proteins ?? "0.0");
+        bmrController.fats = double.parse(userDetails?.fats ?? "0.0");
+        bmrController.bmr = double.parse(userDetails?.totalCalories ?? "0.0");
+
+        bmrController.genderController.text = userDetails?.gender ?? "";
+        bmrController.activityLevelController.text =
+            userDetails?.activityLevel ?? "";
+      }
 
       update();
     }
