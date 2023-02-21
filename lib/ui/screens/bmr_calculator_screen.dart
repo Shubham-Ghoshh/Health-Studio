@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
 import 'package:health_studio_user/core/controllers/bmr_calculator_controller.dart';
+import 'package:health_studio_user/core/controllers/menu_controller.dart';
 import 'package:health_studio_user/ui/screens/bmr_calculations_screen.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
+import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -13,7 +15,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BMRCalculatorPage extends StatefulWidget {
-  const BMRCalculatorPage({super.key});
+  Widget? nextButton;
+  BMRCalculatorPage({super.key, this.nextButton});
 
   @override
   State<BMRCalculatorPage> createState() => _BMRCalculatorPageState();
@@ -78,6 +81,25 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                               color: Color(0xffFFFDFD),
                               fontWeight: FontWeight.w600,
                               fontSize: 30,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.put(MenuController()).launchCalorieLink();
+                            },
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                "Reference link",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle2!
+                                    .copyWith(
+                                      color: whiteColor,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                textAlign: TextAlign.right,
+                              ),
                             ),
                           ),
                           sizedBoxHeight25,
@@ -356,6 +378,7 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                                       Icons.arrow_drop_down,
                                       color: Color(0xff0A0909),
                                     ),
+                                    iconSize: 35,
                                     onSelected: (String value) {
                                       bmrController.genderController.text =
                                           value;
@@ -413,6 +436,7 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                                           ));
                                     }).toList();
                                   },
+                                  iconSize: 35,
                                   icon: const Padding(
                                     padding: EdgeInsets.only(top: 8.0),
                                     child: Icon(

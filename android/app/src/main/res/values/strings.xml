@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="facebook_app_id">1365719610250300</string>
-    <string name="facebook_client_token">YOUR_CLIENT_TOKEN</string>
+    <string name="app_name">Health Studio</string>
+    <string name="facebook_app_id">520134609988499</string>
+    <string name="fb_login_protocol_scheme">fb520134609988499</string>
+    <string name="facebook_client_token">29e8df9bb62da1c68afe479e0bcd3ff1</string>
 </resources>
