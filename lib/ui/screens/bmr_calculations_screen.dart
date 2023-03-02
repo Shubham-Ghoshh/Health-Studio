@@ -253,7 +253,7 @@ class _BMRCalculationsPageState extends State<BMRCalculationsPage> {
                   sizedBoxHeight40,
                   LoginButton(
                     onTap: () {
-                      Get.to(() => const BMRCalculatorPage());
+                      Get.to(() =>  BMRCalculatorPage());
                     },
                     enabled: true,
                     title: AppLocalizations.of(context)!.re_calculate,
