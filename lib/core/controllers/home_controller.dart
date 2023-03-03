@@ -12,7 +12,8 @@ class HomeController extends GetxController {
   DateTime selectedDate = DateTime.now().weekday == 5
       ? DateTime.now().add(const Duration(days: 1))
       : DateTime.now();
-
+  int activeIndex = 0;
+  int index = 0;
   @override
   void onInit() {
     super.onInit();
@@ -58,5 +59,10 @@ class HomeController extends GetxController {
     selectedDate = date;
     update();
     getMenuForDate();
+  }
+
+  void scrollPlans(index) {
+    activeIndex = index;
+    update();
   }
 }

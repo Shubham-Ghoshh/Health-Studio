@@ -55,6 +55,7 @@ dependencies:
   sign_in_with_apple: ^4.3.0
   # The following package is added to compare version number
   version: ^3.0.2
+  smooth_page_indicator: ^1.0.1
   
 # dependency_overrides:
 #   firebase_core_platform_interface: 4.5.1

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
@@ -8,13 +9,13 @@ import 'package:health_studio_user/ui/screens/setting_screen.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
 import 'package:health_studio_user/core/models/plan.dart';
-
 import 'package:health_studio_user/ui/widgets/date.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/formatters.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/ui/widgets/home_page_widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -117,20 +118,32 @@ class _HomePageState extends State<HomePage> {
                         sizedBoxHeight14,
                       ],
                     ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        // crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: homeController.plans
-                            .asMap()
-                            .map((index, plan) =>
-                                MapEntry(featuresPlanItem(plan, index), index))
-                            .keys
-                            .toList(),
-                      ),
+                    Column(
+                      children: [
+                        CarouselSlider.builder(
+                            itemCount: homeController.plans.length,
+                            itemBuilder: ((context, index, realIndex) {
+                              final plan = homeController.plans[index];
+                              return featuresPlanItem(plan, index);
+                            }),
+                            options: CarouselOptions(
+                                // height: 400,
+                                // height: 315,
+                                height: 270,
+                                // autoPlay: true,
+                                enableInfiniteScroll: false,
+                                viewportFraction: 0.6,
+                                enlargeCenterPage: true,
+                                onPageChanged: (index, reason) {
+                                  homeController.scrollPlans(index);
+                                },
+                                enlargeStrategy:
+                                    CenterPageEnlargeStrategy.height)),
+                        buildIndicator(homeController),
+                        sizedBoxHeight12,
+                      ],
                     ),
+
                     Column(
                       children: [
                         Row(
@@ -240,30 +253,33 @@ class _HomePageState extends State<HomePage> {
               Get.put(OrderController()).order.planId = plan.id;
               Get.put(PlanController()).getPackages(plan);
             }),
-            child: Container(
-              height: 148,
-              width: 148,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-                child: SizedBox(
-                  height: 35,
-                  width: 36,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: CachedNetworkImage(
-                      imageUrl: plan.image,
-                      height: 108,
-                      width: 75,
-                      fit: BoxFit.fitWidth,
-                      placeholder: (context, url) =>
-                          Image.asset("assets/images/feature$index.png"),
-                      errorWidget: (context, url, error) =>
-                          Image.asset("assets/images/feature$index.png"),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 168,
+                width: 168,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                  child: SizedBox(
+                    height: 35,
+                    width: 36,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: CachedNetworkImage(
+                        imageUrl: plan.image,
+                        height: 108,
+                        width: 75,
+                        fit: BoxFit.fitWidth,
+                        placeholder: (context, url) =>
+                            Image.asset("assets/images/feature$index.png"),
+                        errorWidget: (context, url, error) =>
+                            Image.asset("assets/images/feature$index.png"),
+                      ),
                     ),
                   ),
                 ),
@@ -292,4 +308,15 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  Widget buildIndicator(HomeController homeController) =>
+      AnimatedSmoothIndicator(
+        activeIndex: homeController.activeIndex,
+        count: homeController.plans.length,
+        effect: const SlideEffect(
+            activeDotColor: activeDateBgColor,
+            dotColor: whiteColor,
+            dotHeight: 10,
+            dotWidth: 10),
+      );
 }
