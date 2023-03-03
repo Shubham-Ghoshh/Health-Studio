@@ -68,7 +68,7 @@ class OrderController extends GetxController {
       print("URL $url");
       Get.to(() => PaymentScreen(
             url: url,
-            amount: int.parse(order.amount!),
+            amount: num.parse(order.amount!),
           ));
     }
   }

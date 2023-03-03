@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'dart:io' show Platform;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -176,9 +177,12 @@ class LoginPage extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              // FacebookLoginButton(
-                              //   onTap: () {},
-                              // ),
+                              FacebookLoginButton(
+                                onTap: () async {
+                                  authController
+                                      .loginWithSocialAccount("facebook");
+                                },
+                              ),
                               GoogleLoginButton(
                                 onTap: () async {
                                   authController

@@ -4,6 +4,7 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
+import 'package:health_studio_user/core/controllers/bmr_calculator_controller.dart';
 import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
 import 'package:health_studio_user/core/models/notificationlisting.dart';
@@ -48,6 +49,8 @@ class SettingsController extends GetxController {
   String? surveylink;
   String? changePasswordLink;
   String? authkey;
+  String termsEn = "";
+  String termsAr = "";
 
   List<Subscription> subscription = [];
   UserDetails? userDetails;
@@ -129,6 +132,17 @@ class SettingsController extends GetxController {
           ? UserDetails.fromJson(response["details"].first)
           : null;
 
+      if (userDetails?.totalCalories != "" &&
+          userDetails?.totalCalories != null) {
+        BMRController bmrController = Get.put(BMRController());
+        bmrController.weight = userDetails?.weight ?? "";
+        bmrController.height = userDetails?.height ?? "";
+        bmrController.carbs = double.parse(userDetails?.carbs ?? "0.0");
+        bmrController.proteins = double.parse(userDetails?.proteins ?? "0.0");
+        bmrController.fats = double.parse(userDetails?.fats ?? "0.0");
+        bmrController.bmr = double.parse(userDetails?.totalCalories ?? "0.0");
+      }
+
       update();
     }
   }
@@ -166,7 +180,7 @@ class SettingsController extends GetxController {
     var webUrl = "https://www.facebook.com/healthstudiokw";
 
     try {
-      await launchUrl(Uri.parse(webUrl), mode: LaunchMode.platformDefault);
+      await launchUrl(Uri.parse(webUrl), mode: LaunchMode.externalApplication);
     } catch (e) {
       log(e.toString());
     }
@@ -219,6 +233,10 @@ class SettingsController extends GetxController {
     String version = Platform.isIOS
         ? response["details"][9]["common_value"]
         : response["details"][10]["common_value"];
+    termsEn = response["details"][11]["common_value"];
+    termsAr = response["details"][13]["common_value"];
+    print("VERSION $version");
+
     if (Version.parse(version) > Version.parse(packageInfo?.version ?? "")) {
       showDialog(
           context: navigatorKey.currentContext!,

@@ -69,13 +69,15 @@ class NotificationScreen extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         return GetBuilder<LanguageTogglerController>(
                             builder: (languageController) {
-                          return languageController.isEnglish
-                              ? textcontainer(settingsController
+                          return
+                              // languageController.isEnglish
+                              //     ?
+                              textcontainer(settingsController
                                   .notifications[index].messageEn
-                                  .toString())
-                              : textcontainer(settingsController
-                                  .notifications[index].messageAr
                                   .toString());
+                          // : textcontainer(settingsController
+                          //     .notifications[index].messageAr
+                          //     .toString());
                         });
                       },
                     ),
@@ -90,7 +92,8 @@ class NotificationScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        height: 40.h,
+        padding: edgeInsets4.copyWith(top: 8.h, bottom: 8.h),
+        // height: 40.h,
         width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.white,

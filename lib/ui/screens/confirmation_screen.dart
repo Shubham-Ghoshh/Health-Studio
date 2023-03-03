@@ -187,7 +187,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                             hintText: DateFormat("dd-MM-yyyy").format(
                               getDateFormat(orderController.order.startDate)
                                   .add(
-                                Duration(days: orderController.duration),
+                                Duration(days: (orderController.duration - 1)),
                               ),
                             ),
                             contentPadding: const EdgeInsets.symmetric(
@@ -212,6 +212,9 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                                 onChanged: (value) {
                                   orderController.code = value;
                                   orderController.update();
+                                  if (value.isEmpty) {
+                                    orderController.checkVoucherAPI();
+                                  }
                                 },
                                 keyboardType: TextInputType.text,
                                 cursorColor: Colors.black,
@@ -341,7 +344,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                 Get.find<OrderController>().order.endDate =
                     DateFormat("dd-MM-yyyy").format(
                   pickedDate.add(
-                    Duration(days: Get.find<OrderController>().duration),
+                    Duration(days: (Get.find<OrderController>().duration - 1)),
                   ),
                 );
                 setState(() {

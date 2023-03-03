@@ -349,7 +349,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           sizedBoxHeight40,
                           LoginButton(
                             height: 52,
-                            title: "SIGN UP",
+                            title: AppLocalizations.of(context)!.sign_up,
                             enabled: authController.isValid && passwordsMatch,
                             onTap: () {
                               if (widget.isSocial) {

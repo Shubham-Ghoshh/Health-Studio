@@ -3,17 +3,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
+import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
 import 'package:health_studio_user/core/controllers/setting_controller.dart';
 import 'package:health_studio_user/core/controllers/userDashboardController.dart';
 import 'package:health_studio_user/core/models/order.dart';
-import 'package:health_studio_user/ui/screens/address_screen.dart';
-import 'package:health_studio_user/ui/screens/confirmation_screen.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/ui/widgets/date.dart';
 import 'package:health_studio_user/ui/widgets/food_detail_card.dart';
+import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
+import 'package:health_studio_user/utils/constants.dart';
 import 'package:health_studio_user/utils/formatters.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:intl/intl.dart';
@@ -112,19 +113,29 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                        Text(
-                                                          (planController
-                                                                      .planDetail
-                                                                      ?.descriptionEn ??
-                                                                  "")
-                                                              .trimRight(),
-                                                          style:
-                                                              const TextStyle(
-                                                            color: Color(
-                                                                0xff0A0909),
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            fontSize: 14.4,
+                                                        GetBuilder<
+                                                            LanguageTogglerController>(
+                                                          builder:
+                                                              (languageontroller) =>
+                                                                  Text(
+                                                            (languageontroller
+                                                                        .isEnglish
+                                                                    ? planController
+                                                                        .planDetail
+                                                                        ?.descriptionEn
+                                                                    : planController
+                                                                        .planDetail
+                                                                        ?.descriptionAr)!
+                                                                .trimRight(),
+                                                            style:
+                                                                const TextStyle(
+                                                              color: Color(
+                                                                  0xff0A0909),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              fontSize: 14.4,
+                                                            ),
                                                           ),
                                                         ),
                                                       ],
@@ -137,7 +148,7 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                       AppLocalizations.of(
                                                               context)!
                                                           .every_meal,
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                         color:
                                                             Color(0xff0A0909),
                                                         fontWeight:
@@ -151,19 +162,8 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                         Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
-                                                                  .center,
+                                                                  .spaceEvenly,
                                                           children: [
-                                                            // NutritionContent(
-                                                            //     image:
-                                                            //         SvgPicture.asset(
-                                                            //       'assets/images/calorie.svg',
-                                                            //       color:
-                                                            //           plantextColor,
-                                                            //     ),
-                                                            //     nutritionContent:
-                                                            //         "250",
-                                                            //     nutritionName:
-                                                            //         "Calorie"),
                                                             NutritionContent(
                                                               image: SvgPicture
                                                                   .asset(
@@ -174,28 +174,34 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                               nutritionContent:
                                                                   planController
                                                                           .planDetail
-                                                                          ?.fat ??
+                                                                          ?.protein ??
                                                                       "0",
                                                               nutritionName:
                                                                   AppLocalizations.of(
                                                                           context)!
-                                                                      .fat,
+                                                                      .protein,
                                                             ),
-                                                            sizedBoxWidth12,
-                                                            // NutritionContent(
-                                                            //     image:
-                                                            //         SvgPicture.asset(
-                                                            //       'assets/images/fat.svg',
-                                                            //       color:
-                                                            //           plantextColor,
-                                                            //     ),
-                                                            //     nutritionContent:
-                                                            //         "10",
-                                                            //     nutritionName: "Fat"),
                                                             NutritionContent(
                                                               image: SvgPicture
                                                                   .asset(
                                                                 'assets/images/carbs.svg',
+                                                                color:
+                                                                    plantextColor,
+                                                              ),
+                                                              nutritionContent:
+                                                                  planController
+                                                                          .planDetail
+                                                                          ?.carb ??
+                                                                      "0",
+                                                              nutritionName:
+                                                                  AppLocalizations.of(
+                                                                          context)!
+                                                                      .carbs,
+                                                            ),
+                                                            NutritionContent(
+                                                              image: SvgPicture
+                                                                  .asset(
+                                                                'assets/images/calorie.svg',
                                                                 color:
                                                                     plantextColor,
                                                               ),
@@ -299,7 +305,7 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                       DateTime endDate =
                                                           startDate.add(
                                                         Duration(
-                                                          days: (duration),
+                                                          days: (duration - 1),
                                                         ),
                                                       );
 
@@ -435,7 +441,15 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                                   .dateRequested)
                                                               .weekday ==
                                                           5
-                                                      ? const SizedBox()
+                                                      ? calenderWidget(
+                                                          context,
+                                                          userDashboardController
+                                                              .userDashboard!
+                                                              .thisweek[index]
+                                                              .dateText,
+                                                          true, () {
+                                                          offDayDialog();
+                                                        })
                                                       : calenderWidget(
                                                           context,
                                                           userDashboardController
@@ -546,7 +560,15 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                                   .dateRequested)
                                                               .weekday ==
                                                           5
-                                                      ? const SizedBox()
+                                                      ? calenderWidget(
+                                                          context,
+                                                          userDashboardController
+                                                              .userDashboard!
+                                                              .nextweek[index]
+                                                              .dateText,
+                                                          true, () {
+                                                          offDayDialog();
+                                                        })
                                                       : calenderWidget(
                                                           context,
                                                           userDashboardController
@@ -598,5 +620,32 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                 });
               });
             }));
+  }
+
+  Future offDayDialog() {
+    return showDialog(
+        context: navigatorKey.currentContext!,
+        builder: (context) {
+          return AlertDialog(
+            icon: const Icon(
+              Icons.error,
+              color: loginButtonColor,
+            ),
+            title: Text(AppLocalizations.of(context)!.error),
+            content: Text(AppLocalizations.of(context)!.off_day),
+            actionsAlignment: MainAxisAlignment.center,
+            actions: <Widget>[
+              LoginButton(
+                onTap: () {
+                  Get.back();
+                },
+                enabled: true,
+                title: AppLocalizations.of(context)!.okay,
+                height: 50,
+                width: 100,
+              ),
+            ],
+          );
+        });
   }
 }

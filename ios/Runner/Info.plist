@@ -30,11 +30,18 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.367018665293-mnlk9hj8qm5jncscfcrinu9rliejs0up</string>
+				<string>fb520134609988499</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FacebookAppID</key>
+	<string>520134609988499</string>
+	<key>FacebookClientToken</key>
+	<string>29e8df9bb62da1c68afe479e0bcd3ff1</string>
+	<key>FacebookDisplayName</key>
+	<string>Health Studio</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>https</string>

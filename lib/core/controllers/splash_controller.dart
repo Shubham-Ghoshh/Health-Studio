@@ -8,6 +8,7 @@ import 'package:health_studio_user/core/controllers/firebase_controller.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/controllers/setting_controller.dart';
+import 'package:health_studio_user/ui/screens/bmr_calculator_screen.dart';
 import 'package:health_studio_user/ui/screens/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
@@ -16,6 +17,7 @@ class SplashController extends GetxController {
   late Timer timer = Timer(const Duration(seconds: 3), goHome);
   bool languageSelected = true;
   bool loggedIn = false;
+  double calorieValue = 0;
   VideoPlayerController controller =
       VideoPlayerController.asset("assets/videos/intro_video.mp4");
   @override
@@ -44,6 +46,7 @@ class SplashController extends GetxController {
   void checkIsUserLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? value = prefs.getString("auth_key");
+
     if (value != null) {
       loggedIn = true;
       update();
@@ -63,6 +66,11 @@ class SplashController extends GetxController {
       transition: Transition.rightToLeftWithFade,
       duration: const Duration(milliseconds: 800),
     );
+    // if (loggedIn &&
+    //     (Get.find<SettingsController>().userDetails?.totalCalories == null ||
+    //         Get.find<SettingsController>().userDetails?.totalCalories == "")) {
+    //   Get.to(() => const BMRCalculatorPage());
+    // }
   }
 
   void changeLanguage(bool isEnglish) async {
