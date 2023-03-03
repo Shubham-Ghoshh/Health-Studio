@@ -131,8 +131,6 @@ class _PlanScreenState extends State<PlanScreen> {
             top: 0,
             right: 0,
             child: Container(
-              height: 1000,
-              width: 1000,
               decoration: BoxDecoration(
                 color: whiteColor,
                 borderRadius: BorderRadius.circular(6),
@@ -140,7 +138,7 @@ class _PlanScreenState extends State<PlanScreen> {
             ),
           ),
           Container(
-            height: 240.h,
+            height: 255.h,
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
@@ -447,7 +445,7 @@ class _PlanScreenState extends State<PlanScreen> {
                       )
                     : Container(
                         width: 80,
-                        height: 230.h,
+                        height: 240.h,
                         decoration: const BoxDecoration(
                           color: itemsbackground,
                           borderRadius: BorderRadius.only(
@@ -561,10 +559,12 @@ class _PlanScreenState extends State<PlanScreen> {
                                 Text(
                                   AppLocalizations.of(context)!.carbs,
                                   style: TextStyle(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w300,
-                                      color: whiteColor),
-                                )
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.w300,
+                                    color: whiteColor,
+                                  ),
+                                ),
+                                sizedBoxHeight25,
                               ],
                             ),
                           ],
@@ -573,143 +573,151 @@ class _PlanScreenState extends State<PlanScreen> {
               ],
             ),
           ),
-          Container(
-            padding: edgeInsets8.copyWith(left: 16.w, right: 16.w),
-            margin: edgeInsets16.copyWith(top: 0, bottom: 0),
-            // height: 42.h,
-            // width: 207.w,
-            decoration: BoxDecoration(
-              color: loginButtonColor,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Center(
-                  child: Text(
-                    getText(package),
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14.sp,
-                        color: Colors.white),
-                  ),
+          Column(
+            children: [
+              Container(
+                padding: edgeInsets8.copyWith(
+                  left: 16.w,
+                  right: 16.w,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    if (Get.find<AuthController>().isLoggedIn) {
-                      OrderController orderController =
-                          Get.find<OrderController>();
-                      SettingsController settingsController =
-                          Get.find<SettingsController>();
-                      PlanController planController =
-                          Get.find<PlanController>();
-                      planController.selectVariant(
-                        package,
-                        planController.days,
-                        planController.meal,
-                        planController.breakfast,
-                        planController.snack,
-                      );
+                margin: edgeInsets16.copyWith(top: 0, bottom: 0),
+                // height: 42.h,
+                // width: 207.w,
+                decoration: BoxDecoration(
+                  color: loginButtonColor,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Center(
+                      child: Text(
+                        getText(package),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14.sp,
+                            color: Colors.white),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if (Get.find<AuthController>().isLoggedIn) {
+                          OrderController orderController =
+                              Get.find<OrderController>();
+                          SettingsController settingsController =
+                              Get.find<SettingsController>();
+                          PlanController planController =
+                              Get.find<PlanController>();
+                          planController.selectVariant(
+                            package,
+                            planController.days,
+                            planController.meal,
+                            planController.breakfast,
+                            planController.snack,
+                          );
 
-                      if (settingsController.userDetails != null) {
-                        print(
-                            "ORDER TO ${settingsController.userDetails!.orderTo}");
-                        if (settingsController.userDetails!.orderTo != null &&
-                            settingsController.userDetails!.orderTo != "") {
-                          orderController.order.startDate =
-                              DateFormat("dd-MM-yyyy").format(getDateFormat(
+                          if (settingsController.userDetails != null) {
+                            print(
+                                "ORDER TO ${settingsController.userDetails!.orderTo}");
+                            if (settingsController.userDetails!.orderTo !=
+                                    null &&
+                                settingsController.userDetails!.orderTo != "") {
+                              orderController.order.startDate =
+                                  DateFormat("dd-MM-yyyy").format(getDateFormat(
+                                      settingsController.userDetails!.orderTo,
+                                      split: false));
+                              orderController.firstDate = getDateFormat(
                                   settingsController.userDetails!.orderTo,
-                                  split: false));
-                          orderController.firstDate = getDateFormat(
-                              settingsController.userDetails!.orderTo,
-                              split: false);
-                        } else {
-                          orderController.order.startDate =
-                              DateFormat("dd-MM-yyyy").format(
-                            DateTime.now().add(
+                                  split: false);
+                            } else {
+                              orderController.order.startDate =
+                                  DateFormat("dd-MM-yyyy").format(
+                                DateTime.now().add(
+                                  const Duration(days: 2),
+                                ),
+                              );
+                              orderController.firstDate = DateTime.now().add(
+                                const Duration(days: 2),
+                              );
+                            }
+                          } else {
+                            orderController.order.startDate =
+                                DateFormat("dd-MM-yyyy").format(
+                              DateTime.now().add(
+                                const Duration(days: 2),
+                              ),
+                            );
+                            orderController.firstDate = DateTime.now().add(
                               const Duration(days: 2),
+                            );
+                          }
+                          orderController.price =
+                              orderController.order.amount ?? package.sevenDays;
+
+                          orderController.order.amount =
+                              orderController.order.amount ?? package.sevenDays;
+                          if (package.selected == 7) {
+                            orderController.order.amount = package.sevenDays;
+                            orderController.price = package.sevenDays;
+                          } else if (package.selected == 15) {
+                            orderController.order.amount = package.fifteenDays;
+                            orderController.price = package.fifteenDays;
+                          } else if (package.selected == 30) {
+                            orderController.price = package.thirtyDays;
+
+                            orderController.order.amount = package.thirtyDays;
+                          }
+                          orderController.order.packageId = package.id;
+
+                          orderController.order.endDate =
+                              DateFormat("dd-MM-yyyy").format(
+                            getDateFormat(orderController.order.startDate!).add(
+                              Duration(
+                                days: (orderController.duration - 1),
+                              ),
                             ),
                           );
-                          orderController.firstDate = DateTime.now().add(
-                            const Duration(days: 2),
-                          );
+                          orderController.order.meal = orderController.meal;
+                          orderController.order.breakfast =
+                              orderController.breakfast;
+                          orderController.order.snack = orderController.snack;
+                          orderController.order.isCustom =
+                              Get.find<PlanController>()
+                                      .selectedPackage
+                                      ?.isCustom ??
+                                  false;
+
+                          Get.to(() => const TermsandConditions(
+                                showAddress: true,
+                              ));
+                        } else {
+                          Get.to(() => LoginPage(
+                                onSuccess: () {
+                                  Get.back();
+                                  Get.to(() => const TermsandConditions(
+                                        showAddress: true,
+                                      ));
+                                },
+                              ));
                         }
-                      } else {
-                        orderController.order.startDate =
-                            DateFormat("dd-MM-yyyy").format(
-                          DateTime.now().add(
-                            const Duration(days: 2),
-                          ),
-                        );
-                        orderController.firstDate = DateTime.now().add(
-                          const Duration(days: 2),
-                        );
-                      }
-                      orderController.price =
-                          orderController.order.amount ?? package.sevenDays;
-
-                      orderController.order.amount =
-                          orderController.order.amount ?? package.sevenDays;
-                      if (package.selected == 7) {
-                        orderController.order.amount = package.sevenDays;
-                        orderController.price = package.sevenDays;
-                      } else if (package.selected == 15) {
-                        orderController.order.amount = package.fifteenDays;
-                        orderController.price = package.fifteenDays;
-                      } else if (package.selected == 30) {
-                        orderController.price = package.thirtyDays;
-
-                        orderController.order.amount = package.thirtyDays;
-                      }
-                      orderController.order.packageId = package.id;
-
-                      orderController.order.endDate =
-                          DateFormat("dd-MM-yyyy").format(
-                        getDateFormat(orderController.order.startDate!).add(
-                          Duration(
-                            days: (orderController.duration - 1),
-                          ),
+                      },
+                      child: Container(
+                        padding: edgeInsets16.copyWith(top: 10, bottom: 8),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: whiteColor)),
+                        child: Text(
+                          Get.find<AuthController>().isLoggedIn
+                              ? AppLocalizations.of(context)!.order_now
+                              : AppLocalizations.of(context)!.login_to_order,
+                          style: Theme.of(context).textTheme.bodyText2,
                         ),
-                      );
-                      orderController.order.meal = orderController.meal;
-                      orderController.order.breakfast =
-                          orderController.breakfast;
-                      orderController.order.snack = orderController.snack;
-                      orderController.order.isCustom =
-                          Get.find<PlanController>()
-                                  .selectedPackage
-                                  ?.isCustom ??
-                              false;
-
-                      Get.to(() => const TermsandConditions(
-                            showAddress: true,
-                          ));
-                    } else {
-                      Get.to(() => LoginPage(
-                            onSuccess: () {
-                              Get.back();
-                              Get.to(() => const TermsandConditions(
-                                    showAddress: true,
-                                  ));
-                            },
-                          ));
-                    }
-                  },
-                  child: Container(
-                    padding: edgeInsets16.copyWith(top: 8, bottom: 8),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: whiteColor)),
-                    child: Text(
-                      Get.find<AuthController>().isLoggedIn
-                          ? AppLocalizations.of(context)!.order_now
-                          : AppLocalizations.of(context)!.login_to_order,
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                  ),
-                )
-              ],
-            ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
           )
         ],
       ),
