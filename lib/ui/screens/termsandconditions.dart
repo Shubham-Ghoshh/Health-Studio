@@ -108,18 +108,13 @@ class TermsandConditions extends StatelessWidget {
                               onTap: () {
                                 Get.to(
                                   () => BMRCalculatorPage(
-                                    nextButton: LoginButton(
-                                      height: 52,
-                                      title: AppLocalizations.of(context)!.next,
-                                      enabled: true,
-                                      onTap: () {
-                                        Get.to(
-                                          () => const Address(
-                                            check: true,
-                                          ),
-                                        );
-                                      },
-                                    ),
+                                    onNext: () {
+                                      Get.to(
+                                        () => const Address(
+                                          check: true,
+                                        ),
+                                      );
+                                    },
                                   ),
                                 );
                               },

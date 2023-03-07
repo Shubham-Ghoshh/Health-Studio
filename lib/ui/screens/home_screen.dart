@@ -264,7 +264,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                      const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0),
                   child: SizedBox(
                     height: 35,
                     width: 36,
@@ -275,10 +275,29 @@ class _HomePageState extends State<HomePage> {
                         height: 108,
                         width: 75,
                         fit: BoxFit.fitWidth,
-                        placeholder: (context, url) =>
-                            Image.asset("assets/images/feature$index.png"),
-                        errorWidget: (context, url, error) =>
-                            Image.asset("assets/images/feature$index.png"),
+                        placeholder: (context, url) => Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Center(
+                            child: CircularProgressIndicator(
+                              color: activeIconColor,
+                            ),
+                          ),
+                        ),
+                        errorWidget: (context, url, error) => Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Center(
+                            child: Icon(
+                              Icons.error,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),

@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
 import 'package:health_studio_user/core/controllers/bmr_calculator_controller.dart';
 import 'package:health_studio_user/ui/screens/bmr_calculations_screen.dart';
 import 'package:health_studio_user/core/controllers/menu_controller.dart';
-import 'package:health_studio_user/ui/screens/bmr_calculations_screen.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class BMRCalculatorPage extends StatefulWidget {
-  Widget? nextButton;
-  BMRCalculatorPage({super.key, this.nextButton});
+  final Function()? onNext;
+  const BMRCalculatorPage({super.key, this.onNext});
 
   @override
   State<BMRCalculatorPage> createState() => _BMRCalculatorPageState();
@@ -520,7 +516,7 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                                   },
                                 )),
                           ),
-                          sizedBoxHeight40,
+                          sizedBoxHeight20,
                           LoginButton(
                               height: 52,
                               title: AppLocalizations.of(context)!.calculate,
@@ -532,8 +528,19 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                                   });
                                 }
                                 bmrController.calculateBMR(context);
-                                Get.to(() => const BMRCalculationsPage());
+                                Get.to(
+                                  () => BMRCalculationsPage(
+                                    onNext: widget.onNext,
+                                  ),
+                                );
                               }),
+                          sizedBoxHeight10,
+                          GestureDetector(
+                            onTap: widget.onNext,
+                            child: Text(
+                              AppLocalizations.of(context)!.skip,
+                            ),
+                          ),
                           sizedBoxHeight16,
                         ],
                       ),

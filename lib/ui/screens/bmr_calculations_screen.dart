@@ -11,7 +11,9 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BMRCalculationsPage extends StatefulWidget {
-  const BMRCalculationsPage({super.key});
+  final Function()? onNext;
+
+  const BMRCalculationsPage({super.key, this.onNext});
 
   @override
   State<BMRCalculationsPage> createState() => _BMRCalculationsPageState();
@@ -20,6 +22,7 @@ class BMRCalculationsPage extends StatefulWidget {
 class _BMRCalculationsPageState extends State<BMRCalculationsPage> {
   @override
   Widget build(BuildContext context) {
+    print("ON NEXT ${widget.onNext}");
     return Scaffold(
       body: Stack(
         children: [
@@ -252,14 +255,22 @@ class _BMRCalculationsPageState extends State<BMRCalculationsPage> {
                       ),
                     ),
                   ),
-                  sizedBoxHeight40,
-                  LoginButton(
+                  sizedBoxHeight10,
+                  widget.onNext != null
+                      ? LoginButton(
+                          onTap: widget.onNext!,
+                          enabled: true,
+                          title:
+                              AppLocalizations.of(context)!.next.toUpperCase(),
+                          height: 52,
+                        )
+                      : const SizedBox(),
+                  sizedBoxHeight10,
+                  GestureDetector(
                     onTap: () {
-                      Get.to(() =>  BMRCalculatorPage());
+                      Get.back();
                     },
-                    enabled: true,
-                    title: AppLocalizations.of(context)!.re_calculate,
-                    height: 52,
+                    child: Text(AppLocalizations.of(context)!.re_calculate),
                   ),
                   sizedBoxHeight16,
                 ],

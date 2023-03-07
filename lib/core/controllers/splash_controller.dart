@@ -66,11 +66,6 @@ class SplashController extends GetxController {
       transition: Transition.rightToLeftWithFade,
       duration: const Duration(milliseconds: 800),
     );
-    // if (loggedIn &&
-    //     (Get.find<SettingsController>().userDetails?.totalCalories == null ||
-    //         Get.find<SettingsController>().userDetails?.totalCalories == "")) {
-    //   Get.to(() => const BMRCalculatorPage());
-    // }
   }
 
   void changeLanguage(bool isEnglish) async {
