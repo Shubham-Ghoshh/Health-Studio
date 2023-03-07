@@ -21,7 +21,7 @@ class FoodDetailPage extends StatefulWidget {
 class _FoodDetailPageState extends State<FoodDetailPage> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MenuController>(builder: (menuController) {
+    return GetBuilder<CustomMenuController>(builder: (menuController) {
       return Scaffold(
         // bottomNavigationBar: bottomNavigationBar(),
         backgroundColor: Colors.blueAccent.shade400,

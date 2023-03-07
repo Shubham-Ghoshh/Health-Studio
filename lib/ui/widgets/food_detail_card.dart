@@ -51,7 +51,7 @@ class FoodDetailCard extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.find<MenuController>().launchDietLink();
+                  Get.find<CustomMenuController>().launchDietLink();
                 },
                 child: Text(
                   AppLocalizations.of(context)!.diet_reference,
