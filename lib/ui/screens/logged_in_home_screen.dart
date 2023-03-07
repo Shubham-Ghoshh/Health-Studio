@@ -631,7 +631,7 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
               Icons.error,
               color: loginButtonColor,
             ),
-            title: Text(AppLocalizations.of(context)!.error),
+            title: Text(AppLocalizations.of(context)!.info),
             content: Text(AppLocalizations.of(context)!.off_day),
             actionsAlignment: MainAxisAlignment.center,
             actions: <Widget>[

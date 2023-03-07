@@ -6,6 +6,7 @@ import 'package:health_studio_user/core/controllers/auth_controller.dart';
 import 'package:health_studio_user/core/controllers/bmr_calculator_controller.dart';
 import 'package:health_studio_user/ui/screens/bmr_calculations_screen.dart';
 import 'package:health_studio_user/core/controllers/menu_controller.dart';
+import 'package:health_studio_user/ui/screens/bmr_calculations_screen.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
