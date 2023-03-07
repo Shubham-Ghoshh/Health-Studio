@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
 import 'package:health_studio_user/core/controllers/bmr_calculator_controller.dart';
+import 'package:health_studio_user/ui/screens/bmr_calculations_screen.dart';
 import 'package:health_studio_user/core/controllers/menu_controller.dart';
 import 'package:health_studio_user/ui/screens/bmr_calculations_screen.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
@@ -85,7 +86,8 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.put(MenuController()).launchCalorieLink();
+                              Get.put(CustomMenuController())
+                                  .launchCalorieLink();
                             },
                             child: Align(
                               alignment: Alignment.centerRight,

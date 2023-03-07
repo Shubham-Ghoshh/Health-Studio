@@ -35,7 +35,7 @@ class MealItem extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            Get.put(MenuController()).getMenuDetail(meal.id);
+            Get.put(CustomMenuController()).getMenuDetail(meal.id);
           },
           child: Padding(
             padding: const EdgeInsets.only(right: 16.0),
