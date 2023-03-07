@@ -37,6 +37,7 @@ class _PlanScreenState extends State<PlanScreen> {
             resizeToAvoidBottomInset: true,
             // bottomNavigationBar: bottomNavigationBar(),
             body: Container(
+              height: double.infinity,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/images/background.png"),
