@@ -535,12 +535,14 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                                 );
                               }),
                           sizedBoxHeight10,
-                          GestureDetector(
-                            onTap: widget.onNext,
-                            child: Text(
-                              AppLocalizations.of(context)!.skip,
-                            ),
-                          ),
+                          widget.onNext == null
+                              ? const SizedBox()
+                              : GestureDetector(
+                                  onTap: widget.onNext,
+                                  child: Text(
+                                    AppLocalizations.of(context)!.skip,
+                                  ),
+                                ),
                           sizedBoxHeight16,
                         ],
                       ),
