@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 EdgeInsets edgeInsets0 = const EdgeInsets.all(0);
+SizedBox sizedBoxHeight4 = SizedBox(
+  height: 4.h,
+);
 SizedBox sizedBoxHeight6 = SizedBox(
   height: 6.h,
 );

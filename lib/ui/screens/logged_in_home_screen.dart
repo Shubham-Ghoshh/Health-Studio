@@ -148,7 +148,7 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                       AppLocalizations.of(
                                                               context)!
                                                           .every_meal,
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                         color:
                                                             Color(0xff0A0909),
                                                         fontWeight:
@@ -162,19 +162,8 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                         Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
-                                                                  .center,
+                                                                  .spaceEvenly,
                                                           children: [
-                                                            // NutritionContent(
-                                                            //     image:
-                                                            //         SvgPicture.asset(
-                                                            //       'assets/images/calorie.svg',
-                                                            //       color:
-                                                            //           plantextColor,
-                                                            //     ),
-                                                            //     nutritionContent:
-                                                            //         "250",
-                                                            //     nutritionName:
-                                                            //         "Calorie"),
                                                             NutritionContent(
                                                               image: SvgPicture
                                                                   .asset(
@@ -185,28 +174,34 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                               nutritionContent:
                                                                   planController
                                                                           .planDetail
-                                                                          ?.fat ??
+                                                                          ?.protein ??
                                                                       "0",
                                                               nutritionName:
                                                                   AppLocalizations.of(
                                                                           context)!
-                                                                      .fat,
+                                                                      .protein,
                                                             ),
-                                                            sizedBoxWidth12,
-                                                            // NutritionContent(
-                                                            //     image:
-                                                            //         SvgPicture.asset(
-                                                            //       'assets/images/fat.svg',
-                                                            //       color:
-                                                            //           plantextColor,
-                                                            //     ),
-                                                            //     nutritionContent:
-                                                            //         "10",
-                                                            //     nutritionName: "Fat"),
                                                             NutritionContent(
                                                               image: SvgPicture
                                                                   .asset(
                                                                 'assets/images/carbs.svg',
+                                                                color:
+                                                                    plantextColor,
+                                                              ),
+                                                              nutritionContent:
+                                                                  planController
+                                                                          .planDetail
+                                                                          ?.carb ??
+                                                                      "0",
+                                                              nutritionName:
+                                                                  AppLocalizations.of(
+                                                                          context)!
+                                                                      .carbs,
+                                                            ),
+                                                            NutritionContent(
+                                                              image: SvgPicture
+                                                                  .asset(
+                                                                'assets/images/calorie.svg',
                                                                 color:
                                                                     plantextColor,
                                                               ),
@@ -310,7 +305,7 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                       DateTime endDate =
                                                           startDate.add(
                                                         Duration(
-                                                          days: (duration),
+                                                          days: (duration - 1),
                                                         ),
                                                       );
 

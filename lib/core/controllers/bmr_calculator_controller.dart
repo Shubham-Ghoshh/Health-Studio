@@ -21,16 +21,16 @@ class BMRController extends GetxController {
 
   calculateBMR(BuildContext context) async {
     if (genderController.text == AppLocalizations.of(context)!.male) {
-      bmr = (10 * double.parse(weight)) +
-          (6.25 * double.parse(height)) -
-          (5 * double.parse(age)) +
+      bmr = 10 * double.parse(weight) +
+          6.25 * double.parse(height) -
+          5 * int.parse(age) +
           5;
 
       update();
     } else {
-      bmr = (10 * double.parse(weight)) +
-          (6.25 * double.parse(height)) -
-          (5 * double.parse(age)) -
+      bmr = 10 * double.parse(weight) +
+          6.25 * double.parse(height) -
+          5 * int.parse(age) -
           161;
 
       update();

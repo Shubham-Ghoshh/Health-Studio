@@ -202,7 +202,7 @@ class SettingPage extends StatelessWidget {
                                     settingName: AppLocalizations.of(context)!
                                         .calorie_calculator,
                                     onTap: () {
-                                      Get.to(() => const BMRCalculatorPage());
+                                      Get.to(() => BMRCalculatorPage());
                                     },
                                     optionalText:
                                         "${(settingsController.userDetails?.totalCalories ?? "")} ${AppLocalizations.of(context)!.kcal_per_day}",

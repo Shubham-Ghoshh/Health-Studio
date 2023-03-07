@@ -446,7 +446,7 @@ class _PlanScreenState extends State<PlanScreen> {
                         ),
                       )
                     : Container(
-                        width: 56.w,
+                        width: 80,
                         height: 230.h,
                         decoration: const BoxDecoration(
                           color: itemsbackground,
@@ -457,35 +457,49 @@ class _PlanScreenState extends State<PlanScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            sizedBoxHeight12,
-                            // Column(
-                            //   children: [
-                            //     SvgPicture.asset('assets/images/calorie.svg'),
-                            //     sizedBoxHeight6,
-                            //     Text(
-                            //       '250',
-                            //       style: TextStyle(
-                            //           fontSize: 12.sp,
-                            //           fontWeight: FontWeight.w900,
-                            //           color: whiteColor),
-                            //     ),
-                            //     Text(
-                            //       'Calorie',
-                            //       style: TextStyle(
-                            //           fontSize: 8.sp,
-                            //           fontWeight: FontWeight.w300,
-                            //           color: whiteColor),
-                            //     )
-                            //   ],
-                            // ),
-
+                            sizedBoxHeight6,
+                            Column(
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/images/calorie.svg',
+                                  height: 24,
+                                ),
+                                Text(
+                                  package.attributes
+                                          ?.firstWhere((element) =>
+                                              element.titleEn == "Calorie")
+                                          .value ??
+                                      "-",
+                                  style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w900,
+                                      color: whiteColor),
+                                ),
+                                Text(
+                                  AppLocalizations.of(context)!.approx,
+                                  style: TextStyle(
+                                    fontSize: 8.sp,
+                                    fontWeight: FontWeight.w300,
+                                    color: whiteColor,
+                                  ),
+                                ),
+                                Text(
+                                  AppLocalizations.of(context)!.calorie,
+                                  style: TextStyle(
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.w300,
+                                    color: whiteColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            sizedBoxHeight4,
                             Column(
                               children: [
                                 SvgPicture.asset(
                                   'assets/images/protein.svg',
-                                  height: 25.h,
+                                  height: 24,
                                 ),
-                                sizedBoxHeight6,
                                 Text(
                                   package.attributes
                                           ?.firstWhere((element) =>
@@ -515,14 +529,16 @@ class _PlanScreenState extends State<PlanScreen> {
                                 )
                               ],
                             ),
-                            sizedBoxHeight20,
-
+                            sizedBoxHeight4,
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SvgPicture.asset('assets/images/fat.svg'),
-                                sizedBoxHeight6,
+                                SvgPicture.asset(
+                                  'assets/images/carbs.svg',
+                                  color: Colors.white,
+                                  height: 24,
+                                ),
                                 Text(
                                   package.attributes
                                           ?.firstWhere((element) =>
@@ -647,10 +663,14 @@ class _PlanScreenState extends State<PlanScreen> {
                       }
                       orderController.order.packageId = package.id;
 
-                      orderController.order.endDate = DateFormat("dd-MM-yyyy")
-                          .format(getDateFormat(
-                                  orderController.order.startDate!)
-                              .add(Duration(days: orderController.duration)));
+                      orderController.order.endDate =
+                          DateFormat("dd-MM-yyyy").format(
+                        getDateFormat(orderController.order.startDate!).add(
+                          Duration(
+                            days: (orderController.duration - 1),
+                          ),
+                        ),
+                      );
                       orderController.order.meal = orderController.meal;
                       orderController.order.breakfast =
                           orderController.breakfast;
