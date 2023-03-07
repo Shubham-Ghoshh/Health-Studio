@@ -8,7 +8,7 @@ import 'package:health_studio_user/ui/widgets/loader.dart';
 import 'package:health_studio_user/utils/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class MenuController extends GetxController {
+class CustomMenuController extends GetxController {
   Menu? selectedMenu;
   MenuDetail? menuDetail;
   void getMenuDetail(String menuId) async {

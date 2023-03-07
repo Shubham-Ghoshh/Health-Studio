@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/bmr_calculator_controller.dart';
 import 'package:health_studio_user/ui/screens/bmr_calculator_screen.dart';
 import 'package:health_studio_user/ui/widgets/app_bar.dart';
 import 'package:health_studio_user/utils/buttons.dart';
+import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/spacing.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -236,10 +238,10 @@ class _BMRCalculationsPageState extends State<BMRCalculationsPage> {
                                 child: Text(
                                   bmrController.bmiMessage,
                                   textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    color: Color(0xffFFFDFD),
+                                  style: TextStyle(
+                                    color: whiteColor,
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 20,
+                                    fontSize: 18.sp,
                                   ),
                                 ),
                               ),
@@ -253,7 +255,7 @@ class _BMRCalculationsPageState extends State<BMRCalculationsPage> {
                   sizedBoxHeight40,
                   LoginButton(
                     onTap: () {
-                      Get.to(() => const BMRCalculatorPage());
+                      Get.to(() => BMRCalculatorPage());
                     },
                     enabled: true,
                     title: AppLocalizations.of(context)!.re_calculate,
@@ -273,7 +275,10 @@ class _BMRCalculationsPageState extends State<BMRCalculationsPage> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 62.0, bottom: 4),
+          padding: const EdgeInsets.only(
+            left: 62.0,
+            bottom: 4,
+          ),
           child: Text(
             bmiValue,
             textAlign: TextAlign.right,
@@ -285,7 +290,7 @@ class _BMRCalculationsPageState extends State<BMRCalculationsPage> {
           ),
         ),
         Container(
-          width: 87.5,
+          width: 50.w,
           height: 8,
           color: color,
         ),

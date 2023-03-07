@@ -85,7 +85,8 @@ class _BMRCalculatorPageState extends State<BMRCalculatorPage> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.put(MenuController()).launchCalorieLink();
+                              Get.put(CustomMenuController())
+                                  .launchCalorieLink();
                             },
                             child: Align(
                               alignment: Alignment.centerRight,
