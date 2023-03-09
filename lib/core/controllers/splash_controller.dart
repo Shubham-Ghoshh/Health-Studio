@@ -14,7 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 
 class SplashController extends GetxController {
-  late Timer timer = Timer(const Duration(seconds: 3), goHome);
+  late Timer timer = Timer(const Duration(seconds: 9), goHome);
   bool languageSelected = true;
   bool loggedIn = false;
   double calorieValue = 0;
