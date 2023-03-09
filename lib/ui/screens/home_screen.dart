@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/controllers/order_controller.dart';
+import 'package:health_studio_user/core/controllers/setting_controller.dart';
 import 'package:health_studio_user/ui/screens/logged_in_home_screen.dart';
 import 'package:health_studio_user/ui/screens/setting_screen.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
@@ -25,6 +26,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   checkLoopBack();
+  // }
+
+  // void checkLoopBack() async {
+  //   SettingsController settingController = SettingsController();
+  //   bool loopBack = await settingController.getVersion();
+  //   if (loopBack) {
+  //     settingController.rateApp();
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (homeController) {
