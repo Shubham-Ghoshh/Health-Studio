@@ -12,6 +12,7 @@ import 'package:health_studio_user/core/models/plan.dart';
 import 'package:health_studio_user/ui/screens/address_screen.dart';
 import 'package:health_studio_user/ui/screens/authentication/login_screen.dart';
 import 'package:health_studio_user/ui/screens/termsandconditions.dart';
+import 'package:health_studio_user/ui/widgets/fridayalert.dart';
 import 'package:health_studio_user/utils/buttons.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:health_studio_user/utils/formatters.dart';
@@ -687,10 +688,11 @@ class _PlanScreenState extends State<PlanScreen> {
                                       .selectedPackage
                                       ?.isCustom ??
                                   false;
-
+                          
                           Get.to(() => const TermsandConditions(
                                 showAddress: true,
                               ));
+                              fridayAlertDialog();
                         } else {
                           Get.to(() => LoginPage(
                                 onSuccess: () {
@@ -698,6 +700,7 @@ class _PlanScreenState extends State<PlanScreen> {
                                   Get.to(() => const TermsandConditions(
                                         showAddress: true,
                                       ));
+                                  fridayAlertDialog();
                                 },
                               ));
                         }

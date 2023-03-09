@@ -10,6 +10,7 @@ import 'package:health_studio_user/ui/screens/address_screen.dart';
 import 'package:health_studio_user/ui/screens/authentication/login_screen.dart';
 import 'package:health_studio_user/ui/screens/bmr_calculator_screen.dart';
 import 'package:health_studio_user/ui/screens/termsandconditions.dart';
+import 'package:health_studio_user/ui/widgets/fridayalert.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
@@ -285,7 +286,9 @@ class SettingPage extends StatelessWidget {
                           settingName:
                               AppLocalizations.of(context)!.terms_conditions,
                           onTap: () {
+                            
                             Get.to(() => const TermsandConditions());
+                            fridayAlertDialog();
                           },
                         ),
                         divider(),
