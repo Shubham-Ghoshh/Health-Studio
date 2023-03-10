@@ -81,12 +81,17 @@ class PlanController extends GetxController {
   }
 
   String calculatePrice(int days) {
-    OrderController controller = Get.find<OrderController>();
+    int mealCount = (int.tryParse(meal) ?? 1);
 
     switch (days) {
       case 7:
-        String val = (((int.tryParse(meal) ?? 1) *
-                    int.parse(planDetail!.mealSevenDays!)) +
+        int mealPrice = mealCount > 1
+            ? ((1 * int.parse(planDetail!.mealSevenDays!)) +
+                ((int.tryParse(meal) ?? 1) - 1) *
+                    int.parse(planDetail!.mealSevenDaysTwo!))
+            : ((int.tryParse(meal) ?? 1) *
+                int.parse(planDetail!.mealSevenDays!));
+        String val = (mealPrice +
                 ((int.tryParse(breakfast) ?? 1) *
                     int.parse(planDetail!.breakfastSevenDays!)) +
                 (int.tryParse(snack) ?? 1) *
@@ -97,8 +102,13 @@ class PlanController extends GetxController {
         return val;
 
       case 15:
-        String val = (((int.tryParse(meal) ?? 1) *
-                    int.parse(planDetail!.mealFifteenDays!)) +
+        int mealPrice = mealCount > 1
+            ? ((1 * int.parse(planDetail!.mealFifteenDays!)) +
+                ((int.tryParse(meal) ?? 1) - 1) *
+                    int.parse(planDetail!.mealFifteenDaysTwo!))
+            : ((int.tryParse(meal) ?? 1) *
+                int.parse(planDetail!.mealFifteenDays!));
+        String val = (mealPrice +
                 ((int.tryParse(breakfast) ?? 1) *
                     int.parse(planDetail!.breakfastFifteenDays!)) +
                 (int.tryParse(snack) ?? 1) *
@@ -108,8 +118,13 @@ class PlanController extends GetxController {
         return val;
 
       case 30:
-        String val = (((int.tryParse(meal) ?? 1) *
-                    int.parse(planDetail!.mealThirtyDays!)) +
+        int mealPrice = mealCount > 1
+            ? ((1 * int.parse(planDetail!.mealThirtyDays!)) +
+                ((int.tryParse(meal) ?? 1) - 1) *
+                    int.parse(planDetail!.mealThirtyDaysTwo!))
+            : ((int.tryParse(meal) ?? 1) *
+                int.parse(planDetail!.mealThirtyDays!));
+        String val = (mealPrice +
                 ((int.tryParse(breakfast) ?? 1) *
                     int.parse(planDetail!.breakfastThirtyDays!)) +
                 (int.tryParse(snack) ?? 1) *

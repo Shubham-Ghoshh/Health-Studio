@@ -13,8 +13,11 @@ class PlanDetail {
   String? proteinPrice;
   String? carbPrice;
   String? mealSevenDays;
+  String? mealSevenDaysTwo;
   String? mealFifteenDays;
+  String? mealFifteenDaysTwo;
   String? mealThirtyDays;
+  String? mealThirtyDaysTwo;
   String? breakfastSevenDays;
   String? breakfastFifteenDays;
   String? breakfastThirtyDays;
@@ -37,8 +40,11 @@ class PlanDetail {
     this.proteinPrice,
     this.carbPrice,
     this.mealSevenDays,
+    this.mealSevenDaysTwo,
     this.mealFifteenDays,
+    this.mealFifteenDaysTwo,
     this.mealThirtyDays,
+    this.mealThirtyDaysTwo,
     this.breakfastSevenDays,
     this.breakfastFifteenDays,
     this.breakfastThirtyDays,
@@ -61,9 +67,15 @@ class PlanDetail {
         proteinPrice: json["protein_price"],
         carbPrice: json["carb_price"],
         mealSevenDays: json["meal_7_days"] == "" ? "0" : json["meal_7_days"],
+        mealSevenDaysTwo:
+            json["meal_7_days_2"] == "" ? "0" : json["meal_7_days_2"],
         mealFifteenDays:
             json["meal_15_days"] == "" ? "0" : json["meal_15_days"],
+        mealFifteenDaysTwo:
+            json["meal_15_days_2"] == "" ? "0" : json["meal_15_days_2"],
         mealThirtyDays: json["meal_30_days"] == "" ? "0" : json["meal_30_days"],
+        mealThirtyDaysTwo:
+            json["meal_30_days_2"] == "" ? "0" : json["meal_30_days_2"],
         breakfastSevenDays:
             json["breakfast_7_days"] == "" ? "0" : json["breakfast_7_days"],
         breakfastFifteenDays:
