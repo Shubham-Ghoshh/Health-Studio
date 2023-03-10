@@ -25,11 +25,6 @@ class SettingsController extends GetxController {
   void onInit() {
     super.onInit();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // if (Get.find<AuthController>().isLoggedIn) {
-      //   getUserDetails();
-      //   getUserSubscription();
-      // }
-
       getAppVersion();
     });
   }
@@ -39,7 +34,7 @@ class SettingsController extends GetxController {
   void getAppVersion() async {
     packageInfo = await PackageInfo.fromPlatform();
     update();
-    Timer(const Duration(seconds: 4), getVersion);
+    getVersion();
   }
 
   String accountStart = "";
@@ -237,8 +232,6 @@ class SettingsController extends GetxController {
     termsAr = response["details"][13]["common_value"];
 
     String forceUpdate = response["details"][16]["common_value"];
-
-    print("VERSION $version");
 
     if (Version.parse(version) > Version.parse(packageInfo?.version ?? "")) {
       showDialog(
