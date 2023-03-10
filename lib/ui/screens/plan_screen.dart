@@ -273,14 +273,14 @@ class _PlanScreenState extends State<PlanScreen> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        '07',
+                                        '1',
                                         style: TextStyle(
                                             color: pureblackColor,
                                             fontWeight: FontWeight.w900,
                                             fontSize: 18.sp),
                                       ),
                                       Text(
-                                        AppLocalizations.of(context)!.days,
+                                        AppLocalizations.of(context)!.week,
                                         style: TextStyle(
                                             color: pureblackColor,
                                             fontWeight: FontWeight.w300,
@@ -330,14 +330,14 @@ class _PlanScreenState extends State<PlanScreen> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        '15',
+                                        '2',
                                         style: TextStyle(
                                             color: pureblackColor,
                                             fontWeight: FontWeight.w900,
                                             fontSize: 18.sp),
                                       ),
                                       Text(
-                                        AppLocalizations.of(context)!.days,
+                                        AppLocalizations.of(context)!.weeks,
                                         style: TextStyle(
                                             color: pureblackColor,
                                             fontWeight: FontWeight.w300,
@@ -386,14 +386,14 @@ class _PlanScreenState extends State<PlanScreen> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        '30',
+                                        '1',
                                         style: TextStyle(
                                             color: pureblackColor,
                                             fontWeight: FontWeight.w900,
                                             fontSize: 18.sp),
                                       ),
                                       Text(
-                                        AppLocalizations.of(context)!.days,
+                                        AppLocalizations.of(context)!.month,
                                         style: TextStyle(
                                             color: pureblackColor,
                                             fontWeight: FontWeight.w300,
@@ -731,13 +731,13 @@ class _PlanScreenState extends State<PlanScreen> {
   String getText(Package package) {
     switch (package.selected) {
       case 7:
-        return "KD ${package.sevenDays} / 07 ${AppLocalizations.of(context)!.days}";
+        return "KD ${package.sevenDays} / 1 ${AppLocalizations.of(context)!.week}";
       case 15:
-        return "KD ${package.fifteenDays} / 15 ${AppLocalizations.of(context)!.days}";
+        return "KD ${package.fifteenDays} / 2 ${AppLocalizations.of(context)!.weeks}";
       case 30:
-        return "KD ${package.thirtyDays} / 30 ${AppLocalizations.of(context)!.days}";
+        return "KD ${package.thirtyDays} / 1 ${AppLocalizations.of(context)!.month}";
       default:
-        return "KD ${package.sevenDays} / 07 ${AppLocalizations.of(context)!.days}";
+        return "KD ${package.sevenDays} / 1 ${AppLocalizations.of(context)!.week}";
     }
   }
 
@@ -1062,14 +1062,14 @@ class PricingRow extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    "07",
+                    "1",
                     style: TextStyle(
                         color: pureblackColor,
                         fontWeight: FontWeight.w900,
                         fontSize: 18.sp),
                   ),
                   Text(
-                    AppLocalizations.of(context)!.days,
+                    AppLocalizations.of(context)!.week,
                     style: TextStyle(
                         color: pureblackColor,
                         fontWeight: FontWeight.w300,
@@ -1092,14 +1092,14 @@ class PricingRow extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  '15',
+                  '2',
                   style: TextStyle(
                       color: pureblackColor,
                       fontWeight: FontWeight.w900,
                       fontSize: 18.sp),
                 ),
                 Text(
-                  AppLocalizations.of(context)!.days,
+                  AppLocalizations.of(context)!.weeks,
                   style: TextStyle(
                       color: pureblackColor,
                       fontWeight: FontWeight.w300,
@@ -1121,14 +1121,14 @@ class PricingRow extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  '30',
+                  '1',
                   style: TextStyle(
                       color: pureblackColor,
                       fontWeight: FontWeight.w900,
                       fontSize: 18.sp),
                 ),
                 Text(
-                  AppLocalizations.of(context)!.days,
+                  AppLocalizations.of(context)!.month,
                   style: TextStyle(
                       color: pureblackColor,
                       fontWeight: FontWeight.w300,
