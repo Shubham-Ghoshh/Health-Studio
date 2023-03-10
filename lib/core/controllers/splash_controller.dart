@@ -66,6 +66,7 @@ class SplashController extends GetxController {
       transition: Transition.rightToLeftWithFade,
       duration: const Duration(milliseconds: 800),
     );
+    Get.put(SettingsController(), permanent: true);
   }
 
   void changeLanguage(bool isEnglish) async {

@@ -25,11 +25,6 @@ class SettingsController extends GetxController {
   void onInit() {
     super.onInit();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // if (Get.find<AuthController>().isLoggedIn) {
-      //   getUserDetails();
-      //   getUserSubscription();
-      // }
-
       getAppVersion();
     });
   }
@@ -39,7 +34,7 @@ class SettingsController extends GetxController {
   void getAppVersion() async {
     packageInfo = await PackageInfo.fromPlatform();
     update();
-    Timer(const Duration(seconds: 4), getVersion);
+    getVersion();
   }
 
   String accountStart = "";
@@ -235,11 +230,13 @@ class SettingsController extends GetxController {
         : response["details"][10]["common_value"];
     termsEn = response["details"][11]["common_value"];
     termsAr = response["details"][13]["common_value"];
-    print("VERSION $version");
+
+    String forceUpdate = response["details"][16]["common_value"];
 
     if (Version.parse(version) > Version.parse(packageInfo?.version ?? "")) {
       showDialog(
           context: navigatorKey.currentContext!,
+          barrierDismissible: forceUpdate == "1" ? false : true,
           builder: (context) {
             return AlertDialog(
               title: const Text("Update Available"),
@@ -252,18 +249,21 @@ class SettingsController extends GetxController {
                   ),
                   child: const Text('Okay'),
                   onPressed: () {
-                    Get.back();
+                    if (forceUpdate == "0") Get.back();
                     rateApp();
                   },
                 ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
+                Visibility(
+                  visible: forceUpdate == "1" ? false : true,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: Theme.of(context).textTheme.labelLarge,
+                    ),
+                    child: const Text('Cancel'),
+                    onPressed: () {
+                      Get.back();
+                    },
                   ),
-                  child: const Text('Cancel'),
-                  onPressed: () {
-                    Get.back();
-                  },
                 ),
               ],
             );
