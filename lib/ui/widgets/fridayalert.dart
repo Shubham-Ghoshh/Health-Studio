@@ -7,28 +7,27 @@ import '../../utils/colors.dart';
 
 Future fridayAlertDialog() {
   return showDialog(
-    context: navigatorKey.currentContext!,
-    builder: (context) {
-      return AlertDialog(
-        icon: const Icon(
-          Icons.error,
-          color: loginButtonColor,
-        ),
-        title: Text(AppLocalizations.of(context)!.info),
-        content: Text(AppLocalizations.of(context)!.friday_alert),
-        actionsAlignment: MainAxisAlignment.center,
-        actions: <Widget>[
-          LoginButton(
-            onTap: () {
-              Get.back();
-            },
-            enabled: true,
-            title: AppLocalizations.of(context)!.okay,
-            height: 50,
-            width: 100,
+      context: navigatorKey.currentContext!,
+      builder: (context) {
+        return AlertDialog(
+          icon: const Icon(
+            Icons.error,
+            color: loginButtonColor,
           ),
-        ],
-      );
-    },
-  );
+          title: Text(AppLocalizations.of(context)!.info),
+          content: Text(AppLocalizations.of(context)!.friday_alert),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: <Widget>[
+            LoginButton(
+              onTap: () {
+                Get.back();
+              },
+              enabled: true,
+              title: AppLocalizations.of(context)!.okay,
+              height: 50,
+              width: 100,
+            ),
+          ],
+        );
+      });
 }
