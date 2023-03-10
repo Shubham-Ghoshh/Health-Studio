@@ -1,7 +1,7 @@
 name: health_studio_user
 description: A new Flutter project.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 3.0.2+3
+version: 3.0.3+1
 
 environment:
   sdk: '>=2.18.2 <3.0.0'

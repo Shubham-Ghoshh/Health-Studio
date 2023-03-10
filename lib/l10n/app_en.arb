@@ -208,5 +208,6 @@
     "error": "Error!",
     "info" : "Info",
     "off_day": "Sorry, we don't serve on Friday. Please try another day!",
-    "okay": "Okay"
+    "okay": "Okay",
+    "friday_alert":"On Friday, orders are not deliverable"
    }

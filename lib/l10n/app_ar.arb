@@ -147,7 +147,7 @@
     "no_items_available" : "لا توجد عناصر متاحة لهذا التاريخ",
     "lang_preferance" : "اختيار اللغه",
     "your_account" : "الحساب الخاص بك",
-    "share_love" : "شارك الحب",
+    "share_love" : "شارك التطبيق",
     "support" : "الدعم",
     "default_address" : "عناوين",
     "notifictaion" : "إشعار",
@@ -156,7 +156,7 @@
     "change_password" : "غير كلمة السر",
     "logout" : "تسجيل خروج",
     "sign_in": "تسجيل الدخول",
-    "share_friends" : "شارك التطبيق",
+    "share_friends" : "شارك مع الاصدقاء",
     "follow_instagram" : "تابعنا على الانستغرام",
     "follow_facebook" : "انظر إلى صفحتنا على",
     "contact_us" : "اتصل بنا",
@@ -208,6 +208,7 @@
     "error": "خطأ!",
     "info" : "معلومات",
     "off_day": "آسف ، نحن لا نخدم يوم الجمعة. يرجى المحاولة في يوم آخر!",
-    "okay": "تمام"
+    "okay": "تمام",
+    "friday_alert":"يوم الجمعة ، الطلبات غير قابلة للتسليم"
 
    }
