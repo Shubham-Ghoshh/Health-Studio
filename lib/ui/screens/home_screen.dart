@@ -269,10 +269,10 @@ class _HomePageState extends State<HomePage> {
               Get.put(PlanController()).getPackages(plan);
             }),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(0.0),
               child: Container(
-                height: 168,
-                width: 168,
+                height: 184.8,
+                width: 184.8,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
@@ -287,8 +287,8 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular(10),
                       child: CachedNetworkImage(
                         imageUrl: plan.image,
-                        height: 108,
-                        width: 75,
+                        // height: 108,
+                        // width: 75,
                         fit: BoxFit.fitWidth,
                         placeholder: (context, url) => Container(
                           decoration: BoxDecoration(
