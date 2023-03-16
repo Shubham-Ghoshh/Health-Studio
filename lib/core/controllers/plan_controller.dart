@@ -85,50 +85,50 @@ class PlanController extends GetxController {
 
     switch (days) {
       case 7:
-        int mealPrice = mealCount > 1
-            ? ((1 * int.parse(planDetail!.mealSevenDays!)) +
-                ((int.tryParse(meal) ?? 1) - 1) *
-                    int.parse(planDetail!.mealSevenDaysTwo!))
-            : ((int.tryParse(meal) ?? 1) *
-                int.parse(planDetail!.mealSevenDays!));
+        num mealPrice = mealCount > 1
+            ? ((1 * num.parse(planDetail!.mealSevenDays!)) +
+                ((num.tryParse(meal) ?? 1) - 1) *
+                    num.parse(planDetail!.mealSevenDaysTwo!))
+            : ((num.tryParse(meal) ?? 1) *
+                num.parse(planDetail!.mealSevenDays!));
         String val = (mealPrice +
-                ((int.tryParse(breakfast) ?? 1) *
-                    int.parse(planDetail!.breakfastSevenDays!)) +
-                (int.tryParse(snack) ?? 1) *
-                    int.parse(planDetail!.snackSevenDays!))
+                ((num.tryParse(breakfast) ?? 1) *
+                    num.parse(planDetail!.breakfastSevenDays!)) +
+                (num.tryParse(snack) ?? 1) *
+                    num.parse(planDetail!.snackSevenDays!))
             .toString();
         sevenDays = val;
         update();
         return val;
 
       case 15:
-        int mealPrice = mealCount > 1
-            ? ((1 * int.parse(planDetail!.mealFifteenDays!)) +
-                ((int.tryParse(meal) ?? 1) - 1) *
-                    int.parse(planDetail!.mealFifteenDaysTwo!))
-            : ((int.tryParse(meal) ?? 1) *
-                int.parse(planDetail!.mealFifteenDays!));
+        num mealPrice = mealCount > 1
+            ? ((1 * num.parse(planDetail!.mealFifteenDays!)) +
+                ((num.tryParse(meal) ?? 1) - 1) *
+                    num.parse(planDetail!.mealFifteenDaysTwo!))
+            : ((num.tryParse(meal) ?? 1) *
+                num.parse(planDetail!.mealFifteenDays!));
         String val = (mealPrice +
-                ((int.tryParse(breakfast) ?? 1) *
-                    int.parse(planDetail!.breakfastFifteenDays!)) +
-                (int.tryParse(snack) ?? 1) *
-                    int.parse(planDetail!.snackFifteenDays!))
+                ((num.tryParse(breakfast) ?? 1) *
+                    num.parse(planDetail!.breakfastFifteenDays!)) +
+                (num.tryParse(snack) ?? 1) *
+                    num.parse(planDetail!.snackFifteenDays!))
             .toString();
         fifteenDays = val;
         return val;
 
       case 30:
-        int mealPrice = mealCount > 1
-            ? ((1 * int.parse(planDetail!.mealThirtyDays!)) +
-                ((int.tryParse(meal) ?? 1) - 1) *
-                    int.parse(planDetail!.mealThirtyDaysTwo!))
-            : ((int.tryParse(meal) ?? 1) *
-                int.parse(planDetail!.mealThirtyDays!));
+        num mealPrice = mealCount > 1
+            ? ((1 * num.parse(planDetail!.mealThirtyDays!)) +
+                ((num.tryParse(meal) ?? 1) - 1) *
+                    num.parse(planDetail!.mealThirtyDaysTwo!))
+            : ((num.tryParse(meal) ?? 1) *
+                num.parse(planDetail!.mealThirtyDays!));
         String val = (mealPrice +
-                ((int.tryParse(breakfast) ?? 1) *
-                    int.parse(planDetail!.breakfastThirtyDays!)) +
-                (int.tryParse(snack) ?? 1) *
-                    int.parse(planDetail!.snackThirtyDays!))
+                ((num.tryParse(breakfast) ?? 1) *
+                    num.parse(planDetail!.breakfastThirtyDays!)) +
+                (num.tryParse(snack) ?? 1) *
+                    num.parse(planDetail!.snackThirtyDays!))
             .toString();
         thirtyDays = val;
         return val;

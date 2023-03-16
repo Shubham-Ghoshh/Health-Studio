@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/auth_controller.dart';
 import 'package:health_studio_user/core/controllers/bmr_calculator_controller.dart';
+import 'package:health_studio_user/core/controllers/firebase_controller.dart';
 import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
 import 'package:health_studio_user/core/models/notificationlisting.dart';
@@ -21,20 +22,15 @@ import 'package:url_launcher/url_launcher_string.dart';
 import 'package:version/version.dart';
 
 class SettingsController extends GetxController {
-  @override
-  void onInit() {
-    super.onInit();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      getAppVersion();
-    });
-  }
-
   PackageInfo? packageInfo;
 
   void getAppVersion() async {
     packageInfo = await PackageInfo.fromPlatform();
     update();
+    Get.put(FirebaseController(), permanent: true).getToken();
+
     getVersion();
+    getUserDetails();
   }
 
   String accountStart = "";

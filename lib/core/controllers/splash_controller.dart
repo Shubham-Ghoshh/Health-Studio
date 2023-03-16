@@ -1,14 +1,10 @@
 import 'dart:async';
-import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:health_studio_user/core/controllers/apn_controller.dart';
-import 'package:health_studio_user/core/controllers/auth_controller.dart';
 import 'package:health_studio_user/core/controllers/firebase_controller.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/controllers/setting_controller.dart';
-import 'package:health_studio_user/ui/screens/bmr_calculator_screen.dart';
 import 'package:health_studio_user/ui/screens/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
@@ -50,12 +46,11 @@ class SplashController extends GetxController {
     if (value != null) {
       loggedIn = true;
       update();
-      Get.find<SettingsController>().getUserSubscription();
+      Get.put(SettingsController()).getUserSubscription();
       Get.put(SettingsController()).getUserDetails();
       // if (Platform.isIOS) {
       //   Get.put(APNController()).getToken();
       // } else {
-      Get.put(FirebaseController(), permanent: true).getToken();
       // }
     }
   }
@@ -66,10 +61,11 @@ class SplashController extends GetxController {
       transition: Transition.rightToLeftWithFade,
       duration: const Duration(milliseconds: 800),
     );
-    Get.put(SettingsController(), permanent: true);
+    Get.put(SettingsController(), permanent: true).getAppVersion();
   }
 
   void changeLanguage(bool isEnglish) async {
+    Get.find<SplashController>().timer.cancel();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('language', isEnglish);
     prefs.setBool("languageSelected", true);

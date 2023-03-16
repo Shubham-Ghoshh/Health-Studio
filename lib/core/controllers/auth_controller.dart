@@ -53,7 +53,7 @@ class AuthController extends GetxController {
       body = {
         "token": token,
         "model": iosInfo.model,
-        "version": Get.find<SettingsController>().packageInfo?.version ?? "",
+        "version": Get.put(SettingsController()).packageInfo?.version ?? "",
         "identifier": "com.healthstudio.app",
         "platform": "iOS",
         "timezone": DateTime.now().timeZoneName,
