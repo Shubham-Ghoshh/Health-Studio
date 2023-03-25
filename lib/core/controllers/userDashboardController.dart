@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
@@ -28,9 +30,9 @@ class UserDashboardController extends GetxController {
   String carbValue = "0";
   String proteinValue = "0";
   List<MealItem?> mealItems = [];
-  int tempPrice = 0;
-  int tempCarbValue = 0;
-  int tempProteinValue = 0;
+  num tempPrice = 0;
+  num tempCarbValue = 0;
+  num tempProteinValue = 0;
   bool allMealsAdded = false;
 
   @override
@@ -92,11 +94,11 @@ class UserDashboardController extends GetxController {
         //     check: true,
         //   ),
         // );
-        
+
         Get.to(() => const TermsandConditions(
               showAddress: true,
             ));
-            fridayAlertDialog();
+        fridayAlertDialog();
       }
       update();
     }
@@ -164,9 +166,9 @@ class UserDashboardController extends GetxController {
 
   void calculateMealPrice(String carbPerUnit, String proteinPerUnit) async {
     price =
-        (((int.tryParse(carbValue) ?? 0) * (int.tryParse(carbPerUnit) ?? 0)) +
-                ((int.tryParse(proteinValue) ?? 0) *
-                    (int.tryParse(proteinPerUnit) ?? 0)))
+        (((num.tryParse(carbValue) ?? 0) * (num.tryParse(carbPerUnit) ?? 0)) +
+                ((num.tryParse(proteinValue) ?? 0) *
+                    (num.tryParse(proteinPerUnit) ?? 0)))
             .toString();
     update();
   }
@@ -218,11 +220,11 @@ class UserDashboardController extends GetxController {
         if (mealItems[i]?.items[j] == null) {
           tempAdded = false;
         }
-        tempPrice += (int.tryParse(mealItems[i]?.items[j]?.price ?? "") ?? 0);
+        tempPrice += (num.tryParse(mealItems[i]?.items[j]?.price ?? "") ?? 0);
         tempCarbValue +=
-            (int.tryParse(mealItems[i]?.items[j]?.carb ?? "") ?? 0);
+            (num.tryParse(mealItems[i]?.items[j]?.carb ?? "") ?? 0);
         tempProteinValue +=
-            (int.tryParse(mealItems[i]?.items[j]?.protein ?? "") ?? 0);
+            (num.tryParse(mealItems[i]?.items[j]?.protein ?? "") ?? 0);
       }
     }
     allMealsAdded = tempAdded;
@@ -236,7 +238,7 @@ class UserDashboardController extends GetxController {
   ) async {
     Utility.showLoadingDialog();
 
-    if (tempPrice.toString() == "0") {
+    if (tempPrice.toString() == "0" || tempPrice.toString() == "0.0") {
       submitMeals();
     } else {
       Map<String, dynamic> body = {

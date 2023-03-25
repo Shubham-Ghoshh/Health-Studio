@@ -260,6 +260,15 @@ class MealItem extends StatelessWidget {
                                     LoginButton(
                                       width: 200,
                                       onTap: () {
+                                        userDashboardController
+                                            .calculateMealPrice(
+                                          Get.find<PlanController>()
+                                              .planDetail!
+                                              .carbPrice!,
+                                          Get.find<PlanController>()
+                                              .planDetail!
+                                              .proteinPrice!,
+                                        );
                                         userDashboardController.saveMeal(
                                           meal,
                                           item,

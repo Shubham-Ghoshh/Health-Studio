@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
+import 'package:health_studio_user/core/controllers/setting_controller.dart';
 import 'package:health_studio_user/core/controllers/splash_controller.dart';
 import 'package:health_studio_user/ui/screens/authentication/login_screen.dart';
 import 'package:health_studio_user/ui/screens/home_screen.dart';
@@ -97,6 +98,9 @@ class SplashScreen extends StatelessWidget {
                                     onTap: () {
                                       splashController.timer.cancel();
                                       Get.to(() => const LoginPage());
+                                      Get.put(SettingsController(),
+                                              permanent: true)
+                                          .getAppVersion();
                                     },
                                     child: Text(
                                       AppLocalizations.of(context)!.login_now,

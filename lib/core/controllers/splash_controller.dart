@@ -74,5 +74,13 @@ class SplashController extends GetxController {
     Get.find<LanguageTogglerController>().update();
     Get.off(() => const HomePage());
     Get.updateLocale(Locale(isEnglish ? 'en' : 'ar'));
+    Get.put(SettingsController(), permanent: true).getAppVersion();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    print("SPLASH CLOSE");
+    controller.dispose();
   }
 }

@@ -152,7 +152,6 @@ class _PlanScreenState extends State<PlanScreen> {
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       sizedBoxHeight8,
                       Padding(
@@ -466,9 +465,12 @@ class _PlanScreenState extends State<PlanScreen> {
                                 ),
                                 Text(
                                   package.attributes
-                                          ?.firstWhere((element) =>
-                                              element.titleEn == "Calorie")
-                                          .value ??
+                                          ?.firstWhere(
+                                            (element) =>
+                                                element.titleEn == "Calorie",
+                                            orElse: () => null,
+                                          )
+                                          ?.value ??
                                       "-",
                                   style: TextStyle(
                                       fontSize: 12.sp,
@@ -502,9 +504,11 @@ class _PlanScreenState extends State<PlanScreen> {
                                 ),
                                 Text(
                                   package.attributes
-                                          ?.firstWhere((element) =>
-                                              element.titleEn == "Protein")
-                                          .value ??
+                                          ?.firstWhere(
+                                              (element) =>
+                                                  element.titleEn == "Protein",
+                                              orElse: () => null)
+                                          ?.value ??
                                       "-",
                                   style: TextStyle(
                                       fontSize: 12.sp,
@@ -541,9 +545,11 @@ class _PlanScreenState extends State<PlanScreen> {
                                 ),
                                 Text(
                                   package.attributes
-                                          ?.firstWhere((element) =>
-                                              element.titleEn == "Carbs")
-                                          .value ??
+                                          ?.firstWhere(
+                                              (element) =>
+                                                  element.titleEn == "Carbs",
+                                              orElse: () => null)
+                                          ?.value ??
                                       "-",
                                   style: TextStyle(
                                       fontSize: 12.sp,
@@ -626,8 +632,10 @@ class _PlanScreenState extends State<PlanScreen> {
                                 settingsController.userDetails!.orderTo != "") {
                               orderController.order.startDate =
                                   DateFormat("dd-MM-yyyy").format(getDateFormat(
-                                      settingsController.userDetails!.orderTo,
-                                      split: false));
+                                          settingsController
+                                              .userDetails!.orderTo,
+                                          split: false)
+                                      .add(const Duration(days: 1)));
                               orderController.firstDate = getDateFormat(
                                   settingsController.userDetails!.orderTo,
                                   split: false);
@@ -688,11 +696,11 @@ class _PlanScreenState extends State<PlanScreen> {
                                       .selectedPackage
                                       ?.isCustom ??
                                   false;
-                          
+
                           Get.to(() => const TermsandConditions(
                                 showAddress: true,
                               ));
-                              fridayAlertDialog();
+                          fridayAlertDialog();
                         } else {
                           Get.to(() => LoginPage(
                                 onSuccess: () {

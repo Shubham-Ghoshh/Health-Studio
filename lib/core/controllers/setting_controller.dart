@@ -222,12 +222,28 @@ class SettingsController extends GetxController {
     Map<String, dynamic> response = await getRequest("commons");
 
     String version = Platform.isIOS
-        ? response["details"][9]["common_value"]
-        : response["details"][10]["common_value"];
-    termsEn = response["details"][11]["common_value"];
-    termsAr = response["details"][13]["common_value"];
+        ? (response["details"] as List).firstWhere(
+                (element) => element["common_key"] == "ios_app_version",
+                orElse: () => {})["common_value"] ??
+            ""
+        : (response["details"] as List).firstWhere(
+                (element) => element["common_key"] == "android_app_version",
+                orElse: () => {})["common_value"] ??
+            "";
 
-    String forceUpdate = response["details"][16]["common_value"];
+    termsEn = (response["details"] as List).firstWhere(
+            (element) => element["common_key"] == "term_and_condition",
+            orElse: () => {})["common_value"] ??
+        "";
+    termsAr = (response["details"] as List).firstWhere(
+            (element) => element["common_key"] == "term_and_condition_ar",
+            orElse: () => {})["common_value"] ??
+        "";
+
+    String forceUpdate = (response["details"] as List).firstWhere(
+            (element) => element["common_key"] == "force_update",
+            orElse: () => {})["common_value"] ??
+        "0";
 
     if (Version.parse(version) > Version.parse(packageInfo?.version ?? "")) {
       showDialog(
