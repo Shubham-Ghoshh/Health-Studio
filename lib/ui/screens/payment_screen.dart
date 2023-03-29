@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:core';
+import 'dart:io';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -10,16 +11,23 @@ import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:health_studio_user/utils/constants.dart';
 
 class PaymentScreen extends StatefulWidget {
   final Function? onFinish;
   final String? url;
+  final String? responseURL;
   final num? amount;
   final bool isMeal;
 
-  const PaymentScreen(
-      {Key? key, this.onFinish, this.url, this.isMeal = false, this.amount})
-      : super(key: key);
+  const PaymentScreen({
+    Key? key,
+    this.onFinish,
+    this.url,
+    this.isMeal = false,
+    this.amount,
+    this.responseURL,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -46,6 +54,7 @@ class PaymentScreenState extends State<PaymentScreen> {
   @override
   Widget build(BuildContext context) {
     print("ONFINISH ${widget.onFinish}");
+    print("RESPONSE URL ${widget.responseURL}");
 
     return Scaffold(
         appBar: AppBar(
@@ -94,18 +103,16 @@ class PaymentScreenState extends State<PaymentScreen> {
           },
           onLoadStop: (controller, uri) async {
             print("ON LOAD STOP ${uri.toString()}");
-            if (uri.toString() ==
-                    "http://148.66.142.197/~healthstudioking/api/survey2.php?path=/knet" &&
-                widget.amount == 0) {
+            if (uri.toString() == widget.responseURL && widget.amount == 0) {
               if (!widget.isMeal) {
                 Get.find<OrderController>().getOrderDetails(
                     status: AppLocalizations.of(context)!.captured);
               }
             }
-            if (uri.toString() ==
-                "http://148.66.142.197/~healthstudioking/api/index.php?path=/knet") {
+            if (uri.toString() == widget.responseURL) {
               var html = await controller.evaluateJavascript(
                   source: "window.document.body.innerText;");
+              print("HTML $html");
               switch (html) {
                 case "captured":
                   {
@@ -132,8 +139,13 @@ class PaymentScreenState extends State<PaymentScreen> {
                     } else {
                       Get.find<OrderController>().getOrderDetails(
                           status: AppLocalizations.of(context)!.requested);
-                      break;
                     }
+                    break;
+                  }
+                case "canceled":
+                  {
+                    Get.back();
+                    break;
                   }
               }
             }

@@ -124,7 +124,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                                         planController.selectedPlan!.image,
                                     height: 125,
                                     width: 140,
-                                    fit: BoxFit.fitWidth,
+                                    fit: BoxFit.contain,
                                     placeholder: (context, url) => Image.asset(
                                         "assets/images/feature1.png"),
                                     errorWidget: (context, url, error) =>

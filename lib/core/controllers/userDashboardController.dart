@@ -255,6 +255,10 @@ class UserDashboardController extends GetxController {
       if (response["error"] != 0) {
         Get.rawSnackbar(message: response["message"]);
       } else {
+        String? responseURL = response["details"]["url"]
+            ?.split("responseURL=")[1]
+            .split("&errorURL")[0];
+
         Get.to(() => PaymentScreen(
               url: response["details"]["url"],
               amount: tempPrice,
@@ -262,6 +266,7 @@ class UserDashboardController extends GetxController {
               onFinish: () {
                 submitMeals();
               },
+              responseURL: responseURL,
             ));
       }
     }

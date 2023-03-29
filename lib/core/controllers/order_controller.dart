@@ -66,9 +66,11 @@ class OrderController extends GetxController {
       orderReference = response["details"]["order_reference"];
       update();
       print("URL $url");
+      String? responseURL = url?.split("responseURL=")[1].split("&errorURL")[0];
       Get.to(() => PaymentScreen(
             url: url,
             amount: num.parse(order.amount!),
+            responseURL: responseURL,
           ));
     }
   }
