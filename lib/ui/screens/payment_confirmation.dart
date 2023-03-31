@@ -98,8 +98,7 @@ class PaymentConfirmationPage extends StatelessWidget {
                       sizedBoxHeight6,
                       appBar(canGoBack: false),
                       sizedBoxHeight20,
-                      status == AppLocalizations.of(context)!.captured ||
-                              status == AppLocalizations.of(context)!.paid
+                      status == "captured" || status == "paid"
                           ? paymentSuccessful(context)
                           : paymentUnsuccessful(context),
                       sizedBoxHeight16,

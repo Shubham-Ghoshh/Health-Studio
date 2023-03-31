@@ -75,8 +75,10 @@ class OrderController extends GetxController {
     }
   }
 
-  Future<void> getOrderDetails(
-      {String status = "", bool navigate = true}) async {
+  Future<void> getOrderDetails({
+    String status = "",
+    bool navigate = true,
+  }) async {
     if (navigate) {
       Utility.showLoadingDialog();
     }
