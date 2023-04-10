@@ -10,12 +10,10 @@ import 'package:get/get.dart';
 class FoodMenuItem extends StatefulWidget {
   const FoodMenuItem({
     required this.menu,
-    required this.height,
     Key? key,
   }) : super(key: key);
 
   final Menu menu;
-  final double height;
 
   @override
   State<FoodMenuItem> createState() => _FoodMenuItemState();
@@ -34,31 +32,38 @@ class _FoodMenuItemState extends State<FoodMenuItem> {
           child: Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: SizedBox(
-              // height: 280,
-              // width: 180,
               child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Hero(
-                    tag: "food-image-${widget.menu.image}",
-                    child: CachedNetworkImage(
-                      imageUrl: widget.menu.image,
-                      height: widget.height,
-                      width: 150,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => const Center(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  widget.menu.image,
+                  height: 240,
+                  width: 160,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    }
+                    return const SizedBox(
+                      height: 240,
+                      width: 160,
+                      child: Center(
                         child: CircularProgressIndicator(
                           color: activeDateBgColor,
                         ),
                       ),
-                      errorWidget: (context, url, error) => Container(
-                        height: 280,
-                        decoration: BoxDecoration(
-                            color: whiteColor,
-                            borderRadius: BorderRadius.circular(8)),
-                        child: const Icon(Icons.error),
-                      ),
-                    ),
-                  )),
+                    );
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Colors.transparent,
+                      height: 240,
+                      width: 160,
+                    );
+                  },
+                  cacheHeight: 576,
+                  cacheWidth: 384,
+                ),
+              ),
             ),
           ),
         ),
@@ -66,7 +71,6 @@ class _FoodMenuItemState extends State<FoodMenuItem> {
           padding: const EdgeInsets.symmetric(vertical: 12.5),
           child: SizedBox(
             width: 150,
-            height: 20,
             child: GetBuilder<LanguageTogglerController>(
               builder: (languageController) => Text(
                 languageController.isEnglish

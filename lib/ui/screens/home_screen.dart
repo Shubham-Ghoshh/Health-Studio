@@ -217,7 +217,7 @@ class _HomePageState extends State<HomePage> {
                     Padding(
                       padding: const EdgeInsets.only(right: 6.0),
                       child: SizedBox(
-                        height: 280,
+                        height: 365,
                         child: homeController.menu.isEmpty
                             ? Center(
                                 child: Text(
@@ -235,7 +235,6 @@ class _HomePageState extends State<HomePage> {
                                 itemCount: homeController.menu.length,
                                 itemBuilder: (context, index) {
                                   return FoodMenuItem(
-                                    height: 228,
                                     menu: homeController.menu[index],
                                   );
                                 },
@@ -281,38 +280,33 @@ class _HomePageState extends State<HomePage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0),
                   child: SizedBox(
-                    // height: 35,
-                    // width: 36,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: CachedNetworkImage(
-                        imageUrl: plan.image,
+                      child: Image.network(
+                        plan.image,
                         height: 35,
                         width: 36,
                         fit: BoxFit.contain,
-                        placeholder: (context, url) => Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Center(
-                            child: CircularProgressIndicator(
-                              color: activeIconColor,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
+                          return const SizedBox(
+                            height: 35,
+                            width: 36,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: activeIconColor,
+                              ),
                             ),
-                          ),
-                        ),
-                        errorWidget: (context, url, error) => Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Center(
-                            child: Icon(
-                              Icons.error,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
+                          );
+                        },
+                        errorBuilder: (context, error, stackTrace) {
+                          return const SizedBox(
+                            height: 35,
+                            width: 36,
+                          );
+                        },
                       ),
                     ),
                   ),

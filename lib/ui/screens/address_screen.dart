@@ -79,6 +79,7 @@ class _AddressState extends State<Address> {
                             .toList(),
                       ),
                     ),
+                    sizedBoxHeight16,
                     Visibility(
                       visible: !widget.check,
                       child: LoginButton(

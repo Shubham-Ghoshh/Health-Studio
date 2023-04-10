@@ -23,108 +23,116 @@ class SplashScreen extends StatelessWidget {
         init: SplashController(),
         builder: (splashController) {
           return Scaffold(
-            body: Stack(
-              fit: StackFit.expand,
-              children: [
-                splashController.controller.value.isInitialized
-                    ? AspectRatio(
-                        aspectRatio:
-                            splashController.controller.value.aspectRatio,
-                        child: VideoPlayer(splashController.controller),
-                      )
-                    : Image.asset(
-                        "assets/images/splashimg.png",
-                        height: MediaQuery.of(context).size.height,
-                        fit: BoxFit.fitWidth,
-                        width: MediaQuery.of(context).size.width,
-                      ),
-                splashController.controller.value.isInitialized
-                    ? const SizedBox()
-                    : Container(height: Get.height, color: splashthemeColor),
-                Padding(
-                  padding: edgeInsets8,
-                  child: SafeArea(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Image.asset('assets/images/apptitle.png'),
-                        Column(
-                          children: [
-                            Visibility(
-                              visible: !splashController.languageSelected,
-                              child: Padding(
-                                padding: edgeInsets16,
+            body: GestureDetector(
+              onTap: () {
+                Get.find<SplashController>().timer.cancel();
+                Get.off(() => const HomePage());
+                Get.put(SettingsController(), permanent: true).getAppVersion();
+              },
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  splashController.controller.value.isInitialized
+                      ? AspectRatio(
+                          aspectRatio:
+                              splashController.controller.value.aspectRatio,
+                          child: VideoPlayer(splashController.controller),
+                        )
+                      : Image.asset(
+                          "assets/images/splashimg.png",
+                          height: MediaQuery.of(context).size.height,
+                          fit: BoxFit.fitWidth,
+                          width: MediaQuery.of(context).size.width,
+                        ),
+                  splashController.controller.value.isInitialized
+                      ? const SizedBox()
+                      : Container(height: Get.height, color: splashthemeColor),
+                  Padding(
+                    padding: edgeInsets8,
+                    child: SafeArea(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Image.asset('assets/images/apptitle.png'),
+                          Column(
+                            children: [
+                              Visibility(
+                                visible: !splashController.languageSelected,
+                                child: Padding(
+                                  padding: edgeInsets16,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Expanded(
+                                          child: SplashButton(
+                                              onTap: () {
+                                                splashController
+                                                    .changeLanguage(true);
+                                              },
+                                              buttontitle: 'English',
+                                              imagepath:
+                                                  'assets/images/englishbuttonlogo.png',
+                                              buttonColor: splashbuttonColor1)),
+                                      sizedBoxWidth12,
+                                      Expanded(
+                                          child: SplashButton(
+                                        onTap: () {
+                                          splashController
+                                              .changeLanguage(false);
+                                        },
+                                        buttontitle: 'عربي',
+                                        imagepath:
+                                            'assets/images/kuwait_icon.png',
+                                        buttonColor: splashbuttonColor2,
+                                      )),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Visibility(
+                                visible: !splashController.loggedIn,
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Expanded(
-                                        child: SplashButton(
-                                            onTap: () {
-                                              splashController
-                                                  .changeLanguage(true);
-                                            },
-                                            buttontitle: 'English',
-                                            imagepath:
-                                                'assets/images/englishbuttonlogo.png',
-                                            buttonColor: splashbuttonColor1)),
-                                    sizedBoxWidth12,
-                                    Expanded(
-                                        child: SplashButton(
+                                    Text(
+                                        "${AppLocalizations.of(context)!.already_user} ",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1!
+                                            .copyWith(color: whiteColor)),
+                                    GestureDetector(
                                       onTap: () {
-                                        splashController.changeLanguage(false);
+                                        splashController.timer.cancel();
+                                        Get.to(() => const LoginPage());
+                                        Get.put(SettingsController(),
+                                                permanent: true)
+                                            .getAppVersion();
                                       },
-                                      buttontitle: 'عربي',
-                                      imagepath:
-                                          'assets/images/kuwait_icon.png',
-                                      buttonColor: splashbuttonColor2,
-                                    )),
+                                      child: Text(
+                                        AppLocalizations.of(context)!.login_now,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1!
+                                            .copyWith(
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              color: whiteColor,
+                                            ),
+                                      ),
+                                    )
                                   ],
                                 ),
                               ),
-                            ),
-                            Visibility(
-                              visible: !splashController.loggedIn,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      "${AppLocalizations.of(context)!.already_user} ",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .copyWith(color: whiteColor)),
-                                  GestureDetector(
-                                    onTap: () {
-                                      splashController.timer.cancel();
-                                      Get.to(() => const LoginPage());
-                                      Get.put(SettingsController(),
-                                              permanent: true)
-                                          .getAppVersion();
-                                    },
-                                    child: Text(
-                                      AppLocalizations.of(context)!.login_now,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .copyWith(
-                                            decoration:
-                                                TextDecoration.underline,
-                                            color: whiteColor,
-                                          ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            sizedBoxHeight10,
-                          ],
-                        ),
-                      ],
+                              sizedBoxHeight10,
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           );
         });

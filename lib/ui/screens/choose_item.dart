@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:health_studio_user/core/controllers/userDashboardController.dart';
@@ -10,7 +11,7 @@ import 'package:health_studio_user/utils/spacing.dart';
 
 class ChooseMeal extends StatelessWidget {
   final int itemIndex;
-  final DashboardItem item;
+  final DashboardItem? item;
   final String type;
   const ChooseMeal(
       {Key? key, required this.item, required this.type, this.itemIndex = 0})
@@ -27,6 +28,8 @@ class ChooseMeal extends StatelessWidget {
       body: GetBuilder<UserDashboardController>(
           builder: (userDashboardController) {
         return Container(
+          height: 1.sh,
+          width: 1.sw,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/images/background.png"),
@@ -34,37 +37,58 @@ class ChooseMeal extends StatelessWidget {
             ),
           ),
           child: SafeArea(
-            child: userDashboardController.meals.isEmpty
-                ? Center(
-                    child: Text(
-                      AppLocalizations.of(context)!.no_items_available,
-                      style: const TextStyle(
-                        color: Color(0xffFFFDFD),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
+              child: userDashboardController.meals.isEmpty
+                  ? Center(
+                      child: Text(
+                        AppLocalizations.of(context)!.no_items_available,
+                        style: const TextStyle(
+                          color: Color(0xffFFFDFD),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20,
+                        ),
                       ),
-                    ),
-                  )
-                : Padding(
-                    padding: edgeInsetsleft16,
-                    child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
+                    )
+                  : SingleChildScrollView(
+                      child: Center(
+                        child: SizedBox(
+                          width: 1.sw,
+                          child: Wrap(
+                            alignment: WrapAlignment.center,
+                            // runAlignment: WrapAlignment.center,
+                            // crossAxisAlignment: WrapCrossAlignment.center,
+                            children: userDashboardController.meals.map((meal) {
+                              return MealItem(
+                                meal: meal,
+                                item: item,
+                                type: type,
+                                itemIndex: itemIndex,
+                              );
+                            }).toList(),
+                          ),
+                        ),
                       ),
-                      itemCount: userDashboardController.meals.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return MealItem(
-                          meal: userDashboardController.meals[index],
-                          height: 125,
-                          item: item,
-                          type: type,
-                          itemIndex: itemIndex,
-                        );
-                      },
-                    ),
-                  ),
-          ),
+                    )
+
+              // Padding(
+              //     padding: edgeInsetsleft16,
+              //     child: GridView.builder(
+              //       gridDelegate:
+              //           const SliverGridDelegateWithFixedCrossAxisCount(
+              //         crossAxisCount: 2,
+              //       ),
+              //       itemCount: userDashboardController.meals.length,
+              //       itemBuilder: (BuildContext context, int index) {
+              //         return MealItem(
+              //           meal: userDashboardController.meals[index],
+              //           height: 125,
+              //           item: item,
+              //           type: type,
+              //           itemIndex: itemIndex,
+              //         );
+              //       },
+              //     ),
+              //   ),
+              ),
         );
       }),
     );

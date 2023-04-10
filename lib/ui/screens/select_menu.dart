@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -13,15 +15,15 @@ class SelectMenuPage extends StatelessWidget {
   final bool allowEdit;
   final bool showSaveButton;
   final String date;
-  final DashboardItem item;
+  final String readableDate;
   final bool isUpdate;
   const SelectMenuPage({
     super.key,
     required this.date,
-    required this.item,
     this.showSaveButton = true,
     this.allowEdit = true,
     this.isUpdate = false,
+    required this.readableDate,
   });
 
   @override
@@ -53,32 +55,52 @@ class SelectMenuPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         sizedBoxHeight6,
-                        Text(
-                          AppLocalizations.of(context)!.choose_meal,
-                          style: TextStyle(
-                            fontSize: 28.sp,
-                            fontWeight: FontWeight.w600,
-                            shadows: textShadow,
-                          ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "${AppLocalizations.of(context)!.choose_meal} ",
+                              style: TextStyle(
+                                fontSize: 22.sp,
+                                fontWeight: FontWeight.w600,
+                                shadows: textShadow,
+                              ),
+                            ),
+                            Text(
+                              readableDate,
+                              style: TextStyle(
+                                fontSize: 22.sp,
+                                fontWeight: FontWeight.w600,
+                                shadows: textShadow,
+                              ),
+                            ),
+                          ],
                         ),
+
                         sizedBoxHeight12,
                         selectMealBox(
                           activeIconColor,
                           AppLocalizations.of(context)!.breakfast,
-                          userDashboardController.packageDetail!.breakfast,
+                          userDashboardController.packageDetail?.breakfast ??
+                              "0",
                           List.generate(
                             int.tryParse(userDashboardController
-                                    .packageDetail!.breakfast) ??
+                                        .packageDetail?.breakfast ??
+                                    "0") ??
                                 0,
                             (index) {
+                              log("INDEX breakfast $index");
                               int breakfastIndex = userDashboardController
                                   .mealItems
                                   .indexWhere((e) => e?.key == "breakfast");
-                              int length = userDashboardController
-                                      .mealItems[breakfastIndex]
-                                      ?.items
-                                      .length ??
-                                  0;
+                              int length = breakfastIndex == -1
+                                  ? 0
+                                  : userDashboardController
+                                          .mealItems[breakfastIndex]
+                                          ?.items
+                                          .length ??
+                                      0;
 
                               String title = length > index
                                   ? (userDashboardController
@@ -103,7 +125,8 @@ class SelectMenuPage extends StatelessWidget {
                                     title,
                                     "breakfast",
                                     date,
-                                    item,
+                                    userDashboardController
+                                        .selectedDashboardItem,
                                     allowEdit: allowEdit,
                                     itemIndex: index,
                                   ),
@@ -119,17 +142,22 @@ class SelectMenuPage extends StatelessWidget {
                         selectMealBox(
                           loginButtonColor,
                           AppLocalizations.of(context)!.meal,
-                          userDashboardController.packageDetail!.meal,
+                          userDashboardController.packageDetail?.meal ?? "0",
                           List.generate(
                             int.tryParse(userDashboardController
-                                    .packageDetail!.meal) ??
+                                        .packageDetail?.meal ??
+                                    "0") ??
                                 0,
                             (index) {
+                              log("INDEX meal $index");
+
                               int mealIndex = userDashboardController.mealItems
                                   .indexWhere((e) => e?.key == "meal");
-                              int length = userDashboardController
-                                      .mealItems[mealIndex]?.items.length ??
-                                  0;
+                              int length = mealIndex == -1
+                                  ? 0
+                                  : userDashboardController
+                                          .mealItems[mealIndex]?.items.length ??
+                                      0;
 
                               String title = length > index
                                   ? (userDashboardController
@@ -156,7 +184,8 @@ class SelectMenuPage extends StatelessWidget {
                                     title,
                                     "meal",
                                     date,
-                                    item,
+                                    userDashboardController
+                                        .selectedDashboardItem,
                                     allowEdit: allowEdit,
                                     itemIndex: index,
                                   ),
@@ -172,16 +201,21 @@ class SelectMenuPage extends StatelessWidget {
                         selectMealBox(
                           itemsbackground,
                           AppLocalizations.of(context)!.snack,
-                          userDashboardController.packageDetail!.snack,
+                          userDashboardController.packageDetail?.snack ?? "0",
                           List.generate(
                               int.tryParse(userDashboardController
-                                      .packageDetail!.snack) ??
+                                          .packageDetail?.snack ??
+                                      "0") ??
                                   0, (index) {
+                            log("INDEX snack $index");
+
                             int snackIndex = userDashboardController.mealItems
                                 .indexWhere((e) => e?.key == "snack");
-                            int length = userDashboardController
-                                    .mealItems[snackIndex]?.items.length ??
-                                0;
+                            int length = snackIndex == -1
+                                ? 0
+                                : userDashboardController
+                                        .mealItems[snackIndex]?.items.length ??
+                                    0;
 
                             String title = length > index
                                 ? (userDashboardController.mealItems[snackIndex]
@@ -202,7 +236,7 @@ class SelectMenuPage extends StatelessWidget {
                                   title,
                                   "snack",
                                   date,
-                                  item,
+                                  userDashboardController.selectedDashboardItem,
                                   allowEdit: allowEdit,
                                   itemIndex: index,
                                 ),
@@ -229,8 +263,10 @@ class SelectMenuPage extends StatelessWidget {
                               sizedBoxHeight12,
                               LoginButton(
                                 onTap: () {
-                                  userDashboardController
-                                      .getMealPaymentLink(item);
+                                  userDashboardController.getMealPaymentLink(
+                                    userDashboardController
+                                        .selectedDashboardItem,
+                                  );
                                 },
                                 enabled: userDashboardController.allMealsAdded,
                                 title: isUpdate
@@ -369,7 +405,7 @@ class SelectMenuPage extends StatelessWidget {
   }
 
   Widget selectMealBoxText(String mealNumber, String mealName, String type,
-      String date, DashboardItem item,
+      String date, DashboardItem? item,
       {bool allowEdit = true, int itemIndex = 0}) {
     return GestureDetector(
       onTap: allowEdit

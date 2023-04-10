@@ -119,17 +119,32 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                               children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
-                                  child: CachedNetworkImage(
-                                    imageUrl:
-                                        planController.selectedPlan!.image,
+                                  child: Image.network(
+                                    planController.selectedPlan!.image,
                                     height: 125,
                                     width: 140,
                                     fit: BoxFit.contain,
-                                    placeholder: (context, url) => Image.asset(
-                                        "assets/images/feature1.png"),
-                                    errorWidget: (context, url, error) =>
-                                        Image.asset(
-                                            "assets/images/feature1.png"),
+                                    loadingBuilder:
+                                        (context, child, loadingProgress) {
+                                      if (loadingProgress == null) {
+                                        return child;
+                                      }
+                                      return const SizedBox(
+                                        height: 125,
+                                        width: 140,
+                                        child: Center(
+                                          child: CircularProgressIndicator(
+                                            color: activeIconColor,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return const SizedBox(
+                                        height: 125,
+                                        width: 140,
+                                      );
+                                    },
                                   ),
                                 ),
                                 sizedBoxWidth12,
@@ -185,10 +200,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                           ),
                           decoration: InputDecoration(
                             hintText: DateFormat("dd-MM-yyyy").format(
-                              getDateFormat(orderController.order.startDate)
-                                  .add(
-                                Duration(days: (orderController.duration - 1)),
-                              ),
+                              getDateFormat(orderController.order.endDate),
                             ),
                             contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 18, vertical: 16),
@@ -341,12 +353,14 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                     DateFormat("dd-MM-yyyy").format(pickedDate);
                 Get.find<OrderController>().order.startDate =
                     DateFormat("dd-MM-yyyy").format(pickedDate);
+
                 Get.find<OrderController>().order.endDate =
                     DateFormat("dd-MM-yyyy").format(
                   pickedDate.add(
                     Duration(days: (Get.find<OrderController>().duration - 1)),
                   ),
                 );
+                Get.find<OrderController>().update();
                 setState(() {
                   dateController.text = formattedDate.toString();
                 });

@@ -24,6 +24,8 @@ class PlanController extends GetxController {
   void getPackages(Plan plan) async {
     selectedPlan = plan;
     customPlanCreated = false;
+    update();
+    Get.to(() => const PlanScreen());
     Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest("package/${plan.id}");
     Utility.closeDialog();
@@ -39,7 +41,7 @@ class PlanController extends GetxController {
               response["details"].map((e) => Package.fromJson(e)).toList());
       update();
     }
-    getPlanDetail(plan.id);
+    getPlanDetail(plan.id, navigate: false);
   }
 
   void getPlanDetail(String id, {bool navigate = true}) async {

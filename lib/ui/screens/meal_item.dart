@@ -1,5 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/controllers/menu_controller.dart';
 import 'package:health_studio_user/core/controllers/plan_controller.dart';
@@ -15,7 +16,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class MealItem extends StatelessWidget {
   const MealItem({
     required this.meal,
-    required this.height,
     required this.item,
     required this.type,
     this.itemIndex = 0,
@@ -23,13 +23,13 @@ class MealItem extends StatelessWidget {
   }) : super(key: key);
 
   final Meal meal;
-  final double height;
-  final DashboardItem item;
+  final DashboardItem? item;
   final String type;
   final int itemIndex;
 
   @override
   Widget build(BuildContext context) {
+    print(meal.image);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -38,32 +38,42 @@ class MealItem extends StatelessWidget {
             Get.put(CustomMenuController()).getMenuDetail(meal.id);
           },
           child: Padding(
-            padding: const EdgeInsets.only(right: 16.0),
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
             child: SizedBox(
               child: Stack(children: [
                 ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Hero(
-                      tag: "food-image-${meal.image}",
-                      child: CachedNetworkImage(
-                        imageUrl: meal.image,
-                        height: height,
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.network(
+                    meal.image,
+                    height: 125,
+                    width: 150,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      }
+                      return Container(
+                        color: Colors.transparent,
+                        height: 125,
                         width: 150,
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) => const Center(
+                        child: const Center(
                           child: CircularProgressIndicator(
                             color: activeDateBgColor,
                           ),
                         ),
-                        errorWidget: (context, url, error) => Container(
-                          height: 280,
-                          decoration: BoxDecoration(
-                              color: whiteColor,
-                              borderRadius: BorderRadius.circular(8)),
-                          child: const Icon(Icons.error),
-                        ),
-                      ),
-                    )),
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      return const SizedBox(
+                        height: 125,
+                        width: 160,
+                      );
+                    },
+                    // cacheHeight: 576,
+                    // cacheWidth: 384,
+                    // scale: 1.5,
+                  ),
+                ),
                 Positioned(
                   top: 4,
                   right: 4,
@@ -300,10 +310,10 @@ class MealItem extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.5),
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
           child: SizedBox(
             width: 150,
-            height: 20,
+            // height: 20,
             child: GetBuilder<LanguageTogglerController>(
               builder: (languageController) => Text(
                 languageController.isEnglish ? meal.nameEn : meal.nameAr,

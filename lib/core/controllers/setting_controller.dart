@@ -139,6 +139,8 @@ class SettingsController extends GetxController {
   }
 
   Future getnotifications() async {
+    Get.to(() => const NotificationScreen());
+
     Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest("messages");
     Utility.closeDialog();
@@ -151,7 +153,6 @@ class SettingsController extends GetxController {
               .map((e) => NotificationsListing.fromJson(e))
               .toList());
       update();
-      Get.to(() => const NotificationScreen());
       return notifications;
     }
   }

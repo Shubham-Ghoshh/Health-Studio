@@ -12,6 +12,9 @@ class CustomMenuController extends GetxController {
   Menu? selectedMenu;
   MenuDetail? menuDetail;
   void getMenuDetail(String menuId) async {
+    menuDetail = null;
+    update();
+    Get.to(() => const FoodDetailPage());
     Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest("menu/$menuId");
     Utility.closeDialog();
@@ -22,7 +25,6 @@ class CustomMenuController extends GetxController {
     } else {
       menuDetail = MenuDetail.fromJson(response["details"]);
       update();
-      Get.to(() => const FoodDetailPage());
     }
   }
 

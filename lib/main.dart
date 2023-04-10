@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ import 'package:health_studio_user/core/bindings.dart';
 import 'package:health_studio_user/ui/screens/splash_screen.dart';
 import 'package:health_studio_user/utils/constants.dart';
 import 'package:health_studio_user/utils/theme.dart';
+import 'package:device_preview/device_preview.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,8 +33,11 @@ void main() async {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MyApp(
-          lang: lang,
+        return DevicePreview(
+          enabled: !kReleaseMode,
+          builder: (context) => MyApp(
+            lang: lang,
+          ), // Wrap your app
         );
       },
     ),
@@ -46,6 +51,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      builder: DevicePreview.appBuilder,
       supportedLocales: const [
         Locale('en', ''), // English, no country code
         Locale('ar', ''), // Arabic, no country code

@@ -303,7 +303,7 @@ class _PlanScreenState extends State<PlanScreen> {
                           GetBuilder<PlanController>(builder: (planController) {
                             return GestureDetector(
                               onTap: () {
-                                Get.find<OrderController>().duration = 15;
+                                Get.find<OrderController>().duration = 14;
                                 Get.find<OrderController>().price =
                                     package.fifteenDays;
 

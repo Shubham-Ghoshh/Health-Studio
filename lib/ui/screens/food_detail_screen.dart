@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,84 +23,107 @@ class FoodDetailPage extends StatefulWidget {
 class _FoodDetailPageState extends State<FoodDetailPage> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CustomMenuController>(builder: (menuController) {
-      return Scaffold(
-        // bottomNavigationBar: bottomNavigationBar(),
-        backgroundColor: Colors.blueAccent.shade400,
-        body: Stack(
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/background.png"),
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: CachedNetworkImage(
-                imageUrl: menuController.menuDetail!.menu.image,
-                height: 0.42.sh,
-                width: 1.sw,
-                fit: BoxFit.fitWidth,
-                placeholder: (context, url) => const Center(
-                  child: CircularProgressIndicator(
-                    color: activeDateBgColor,
+    return GetBuilder<CustomMenuController>(
+        init: CustomMenuController(),
+        builder: (menuController) {
+          return Scaffold(
+            // bottomNavigationBar: bottomNavigationBar(),
+            backgroundColor: Colors.blueAccent.shade400,
+            body: Stack(
+              children: [
+                Container(
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/background.png"),
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
-                errorWidget: (context, url, error) => Container(
-                  height: 0.45.sh,
-                  width: 1.sw,
-                  decoration: BoxDecoration(
-                      color: whiteColor,
-                      borderRadius: BorderRadius.circular(8)),
-                  child: const Icon(Icons.error),
-                ),
-              ),
-            ),
-            SingleChildScrollView(
-              child: SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    sizedBoxHeight6,
-                    appBar(),
-                    sizedBoxHeight16,
-                    Center(
-                      child: GetBuilder<LanguageTogglerController>(
-                        builder: (languageController) => FoodDetailCard(
-                          nutritionContent: menuController.menuDetail!.attribute
-                              .map(
-                                (e) => Padding(
-                                  padding: const EdgeInsets.only(top: 12.0),
-                                  child: NutritionContent(
-                                    image: SvgPicture.asset(
-                                        "assets/images/menu/${e.titleEn}_icon.svg"),
-                                    nutritionContent: e.value,
-                                    nutritionName: languageController.isEnglish
-                                        ? e.titleEn
-                                        : e.titleAr!,
-                                  ),
+                menuController.menuDetail == null
+                    ? const SizedBox()
+                    : Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Image.network(
+                          menuController.menuDetail!.menu.image,
+                          height: 0.42.sh,
+                          width: 1.sw,
+                          fit: BoxFit.fitWidth,
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            }
+                            return SizedBox(
+                              height: 0.42.sh,
+                              width: 1.sw,
+                              child: const Center(
+                                child: CircularProgressIndicator(
+                                  color: activeDateBgColor,
                                 ),
-                              )
-                              .toList(),
-                          foodName: languageController.isEnglish
-                              ? menuController.menuDetail!.menu.titleEn
-                              : menuController.menuDetail!.menu.titleAr,
-                          foodDescription: languageController.isEnglish
-                              ? menuController.menuDetail!.menu.descriptionEn
-                              : menuController.menuDetail!.menu.descriptionAr,
+                              ),
+                            );
+                          },
+                          errorBuilder: (context, error, stackTrace) {
+                            log("ERROR BUILDER $error");
+                            return SizedBox(
+                              height: 0.42.sh,
+                              width: 1.sw,
+                            );
+                          },
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                menuController.menuDetail == null
+                    ? const SizedBox()
+                    : SingleChildScrollView(
+                        child: SafeArea(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              sizedBoxHeight6,
+                              appBar(),
+                              sizedBoxHeight16,
+                              Center(
+                                child: GetBuilder<LanguageTogglerController>(
+                                  builder: (languageController) =>
+                                      FoodDetailCard(
+                                    nutritionContent: menuController
+                                        .menuDetail!.attribute
+                                        .map(
+                                          (e) => Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 12.0),
+                                            child: NutritionContent(
+                                              image: SvgPicture.asset(
+                                                  "assets/images/menu/${e.titleEn}_icon.svg"),
+                                              nutritionContent: e.value,
+                                              nutritionName:
+                                                  languageController.isEnglish
+                                                      ? e.titleEn
+                                                      : e.titleAr!,
+                                            ),
+                                          ),
+                                        )
+                                        .toList(),
+                                    foodName: languageController.isEnglish
+                                        ? menuController
+                                            .menuDetail!.menu.titleEn
+                                        : menuController
+                                            .menuDetail!.menu.titleAr,
+                                    foodDescription:
+                                        languageController.isEnglish
+                                            ? menuController
+                                                .menuDetail!.menu.descriptionEn
+                                            : menuController
+                                                .menuDetail!.menu.descriptionAr,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+              ],
             ),
-          ],
-        ),
-      );
-    });
+          );
+        });
   }
 }

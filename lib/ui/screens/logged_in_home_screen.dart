@@ -273,19 +273,18 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                                     .white)),
                                                     onPressed: () {
                                                       int duration = getDateFormat(
-                                                                  Get.find<
-                                                                          SettingsController>()
-                                                                      .userDetails
-                                                                      ?.orderTo,
-                                                                  split: false)
-                                                              .difference(getDateFormat(
-                                                                  Get.find<
-                                                                          SettingsController>()
-                                                                      .userDetails
-                                                                      ?.orderFrom,
-                                                                  split: false))
-                                                              .inDays -
-                                                          1;
+                                                              Get.find<
+                                                                      SettingsController>()
+                                                                  .userDetails
+                                                                  ?.orderTo,
+                                                              split: false)
+                                                          .difference(getDateFormat(
+                                                              Get.find<
+                                                                      SettingsController>()
+                                                                  .userDetails
+                                                                  ?.orderFrom,
+                                                              split: false))
+                                                          .inDays;
 
                                                       DateTime startDate =
                                                           getDateFormat(
@@ -299,8 +298,6 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                           days: 1,
                                                         ),
                                                       );
-                                                      print("DURATION---");
-                                                      print(duration);
 
                                                       DateTime endDate =
                                                           startDate.add(
@@ -463,25 +460,31 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                                   .status ==
                                                               "0", () {
                                                           userDashboardController.getPackageDetails(
-                                                              orderController
+                                                              planId: orderController
                                                                   .orderDetails!
                                                                   .categoryId,
-                                                              orderController
-                                                                  .orderDetails!
-                                                                  .packageId,
-                                                              userDashboardController
+                                                              packageId:
+                                                                  orderController
+                                                                      .orderDetails!
+                                                                      .packageId,
+                                                              date: userDashboardController
                                                                   .userDashboard!
                                                                   .thisweek[
                                                                       index]
                                                                   .dateRequested,
-                                                              userDashboardController
+                                                              item: userDashboardController
                                                                       .userDashboard!
                                                                       .thisweek[
                                                                   index],
-                                                              allowEdit: userDashboardController
+                                                              readableDate:
+                                                                  userDashboardController
                                                                       .userDashboard!
                                                                       .thisweek[
                                                                           index]
+                                                                      .dateText,
+                                                              allowEdit: userDashboardController
+                                                                      .userDashboard!
+                                                                      .thisweek[index]
                                                                       .allowEdit ==
                                                                   "1");
                                                         });
@@ -582,25 +585,31 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                                   .status ==
                                                               "0", () {
                                                           userDashboardController.getPackageDetails(
-                                                              orderController
+                                                              planId: orderController
                                                                   .orderDetails!
                                                                   .categoryId,
-                                                              orderController
-                                                                  .orderDetails!
-                                                                  .packageId,
-                                                              userDashboardController
+                                                              packageId:
+                                                                  orderController
+                                                                      .orderDetails!
+                                                                      .packageId,
+                                                              date: userDashboardController
                                                                   .userDashboard!
                                                                   .nextweek[
                                                                       index]
                                                                   .dateRequested,
-                                                              userDashboardController
+                                                              item: userDashboardController
                                                                       .userDashboard!
                                                                       .nextweek[
                                                                   index],
-                                                              allowEdit: userDashboardController
+                                                              readableDate:
+                                                                  userDashboardController
                                                                       .userDashboard!
                                                                       .nextweek[
                                                                           index]
+                                                                      .dateText,
+                                                              allowEdit: userDashboardController
+                                                                      .userDashboard!
+                                                                      .nextweek[index]
                                                                       .allowEdit ==
                                                                   "1");
                                                         });

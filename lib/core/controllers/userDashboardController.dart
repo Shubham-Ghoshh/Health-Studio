@@ -34,6 +34,7 @@ class UserDashboardController extends GetxController {
   num tempCarbValue = 0;
   num tempProteinValue = 0;
   bool allMealsAdded = false;
+  bool isUpdate = false;
 
   @override
   void onInit() {
@@ -105,14 +106,26 @@ class UserDashboardController extends GetxController {
   }
 
   void getPackageDetails(
-      String planId, String? packageId, String date, DashboardItem item,
-      {bool allowEdit = true}) async {
+      {required String planId,
+      required String? packageId,
+      required String date,
+      required DashboardItem item,
+      required readableDate,
+      bool allowEdit = true}) async {
+    Get.to(() => SelectMenuPage(
+          allowEdit: allowEdit,
+          date: date,
+          showSaveButton: allowEdit,
+          isUpdate: isUpdate,
+          readableDate: readableDate,
+        ));
     Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest(
         "package-detail/$planId/${(packageId == "" || packageId == null) ? "custom_${Get.find<OrderController>().orderReference}" : packageId}");
-    Utility.closeDialog();
     if (response["error"] != 0) {
+      Get.back();
       Get.rawSnackbar(message: response["message"]);
+      Utility.closeDialog();
     } else {
       packageDetail =
           PackageDetail.fromJson(response["details"]["package"].first);
@@ -145,21 +158,25 @@ class UserDashboardController extends GetxController {
     }
   }
 
-  void getMenuByTypeAndDate(String type, String date, DashboardItem item,
+  void getMenuByTypeAndDate(String type, String date, DashboardItem? item,
       {int itemIndex = 0}) async {
+    meals = [];
+    update();
+    Get.to(() => ChooseMeal(
+          item: item,
+          type: type,
+          itemIndex: itemIndex,
+        ));
     Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest("choose/$type/$date");
     Utility.closeDialog();
     if (response["error"] != 0) {
+      Get.back();
       Get.rawSnackbar(message: response["message"]);
     } else {
       meals = List<Meal>.from(
           response["details"].map((e) => Meal.fromJson(e)).toList());
-      Get.to(() => ChooseMeal(
-            item: item,
-            type: type,
-            itemIndex: itemIndex,
-          ));
+
       update();
     }
   }
@@ -173,7 +190,7 @@ class UserDashboardController extends GetxController {
     update();
   }
 
-  void saveMeal(Meal meal, DashboardItem item, String mealType,
+  void saveMeal(Meal meal, DashboardItem? item, String mealType,
       {int itemIndex = 0}) {
     int index = mealItems.indexWhere((m) => m?.key == mealType);
     if (index != -1) {
@@ -233,7 +250,7 @@ class UserDashboardController extends GetxController {
 
   void getMealPaymentLink(
     // Meal meal,
-    DashboardItem item,
+    DashboardItem? item,
     // String mealType,
   ) async {
     Utility.showLoadingDialog();
@@ -243,7 +260,7 @@ class UserDashboardController extends GetxController {
     } else {
       Map<String, dynamic> body = {
         "amount": tempPrice.toString(),
-        "date": item.dateRequested,
+        "date": item?.dateRequested,
         "carbs": tempCarbValue.toString(),
         "proteins": tempProteinValue.toString(),
         "carb_price": Get.find<PlanController>().planDetail!.carbPrice,
@@ -273,10 +290,10 @@ class UserDashboardController extends GetxController {
   }
 
   Future<void> getMealsByDate(String date, {bool allowEdit = true}) async {
-    Utility.showLoadingDialog();
     Map<String, dynamic> response = await getRequest("meals/$date");
     Utility.closeDialog();
     if (response["error"] != 0) {
+      Get.back();
       Get.rawSnackbar(message: response["message"]);
     } else {
       mealItems = List<MealItem>.from(
@@ -284,7 +301,8 @@ class UserDashboardController extends GetxController {
           (e) => MealItem.fromJson(e),
         ),
       );
-      bool isUpdate = false;
+      isUpdate = false;
+      update();
       if (allowEdit) {
         if (mealItems[0]!.items.isEmpty) {
           allMealsAdded = false;
@@ -318,13 +336,6 @@ class UserDashboardController extends GetxController {
         }
       }
       update();
-      Get.to(() => SelectMenuPage(
-            allowEdit: allowEdit,
-            date: date,
-            item: selectedDashboardItem!,
-            showSaveButton: allowEdit,
-            isUpdate: isUpdate,
-          ));
     }
     return;
   }
