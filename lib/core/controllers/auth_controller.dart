@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -134,7 +136,7 @@ class AuthController extends GetxController {
     Utility.showLoadingDialog();
     Map<String, dynamic> body = {
       "mobile": mobile,
-      "password": password,
+      // "password": password,
       "name": name,
       "email": email,
       "age": age,
@@ -154,27 +156,37 @@ class AuthController extends GetxController {
     }
   }
 
-  void loginWithSocialAccount(String type, {Function()? onSuccess}) async {
+  void loginWithSocialAccount(String incomingType,
+      {Function()? onSuccess}) async {
     Utility.showLoadingDialog();
 
-    switch (type) {
+    switch (incomingType) {
       case "google":
         {
-          await disconnectGoogleAccount();
-          final userinfo = await googleSignIn.signIn();
-          if (userinfo == null) {
-            Utility.closeDialog();
-            Get.rawSnackbar(message: "Sign In Failed");
-          } else {
-            email = userinfo.email;
-            name = userinfo.displayName;
-            socialid = userinfo.id;
-            type = "GOOGLE";
-            bool accountExists = await loginSocialAPI();
-            if (!accountExists) {
+          try {
+            await disconnectGoogleAccount();
+            final userinfo = await googleSignIn.signIn();
+            if (userinfo == null) {
               Utility.closeDialog();
-              Get.to(() => RegistrationPage(onSuccess: onSuccess));
+              Get.rawSnackbar(message: "Sign In Failed");
+            } else {
+              email = userinfo.email;
+              name = userinfo.displayName;
+              socialid = userinfo.id;
+              type = "GOOGLE";
+              bool accountExists = await loginSocialAPI();
+              if (!accountExists) {
+                Utility.closeDialog();
+                Get.to(() => RegistrationPage(
+                      onSuccess: onSuccess,
+                      isSocial: true,
+                    ));
+              }
             }
+          } catch (e) {
+            print("GOOGLE SIGN IN ERROR $e");
+            Utility.closeDialog();
+            Get.rawSnackbar(message: "Google Sign In Failed");
           }
           break;
         }
@@ -192,7 +204,10 @@ class AuthController extends GetxController {
             bool accountExists = await loginSocialAPI();
             if (!accountExists) {
               Utility.closeDialog();
-              Get.to(() => RegistrationPage(onSuccess: onSuccess));
+              Get.to(() => RegistrationPage(
+                    onSuccess: onSuccess,
+                    isSocial: true,
+                  ));
             }
           } else {
             Utility.closeDialog();
@@ -213,12 +228,8 @@ class AuthController extends GetxController {
                 AppleIDAuthorizationScopes.fullName,
               ],
             );
-            print("CREDENTIAL!!! $credential");
-            print("EMAIL");
-            print(credential.email);
 
             if (credential.email != null) {
-              print("EMAIL IS NOT NULL");
               prefs.setString("apple-id", credential.authorizationCode);
               prefs.setString("apple-email", credential.email ?? "");
               prefs.setString("apple-name",
@@ -231,19 +242,20 @@ class AuthController extends GetxController {
               name = prefs.getString("apple-name");
             }
 
-            print("EMAIL=== $email");
-            print("NAME=== $name");
-
-            socialid = credential.authorizationCode;
+            socialid = credential.userIdentifier;
             type = "APPLE";
+            update();
             bool accountExists = await loginSocialAPI();
             if (!accountExists) {
               Utility.closeDialog();
-              Get.to(() => RegistrationPage(onSuccess: onSuccess));
+              Get.to(() => RegistrationPage(
+                    onSuccess: onSuccess,
+                    isSocial: true,
+                  ));
             }
           } catch (e) {
             Utility.closeDialog();
-            Get.rawSnackbar(message: "Apple Sign In Failed $e");
+            Get.rawSnackbar(message: "Apple Sign In Failed");
           }
           break;
         }
@@ -254,18 +266,22 @@ class AuthController extends GetxController {
   }
 
   Future<bool> loginSocialAPI({Function()? onSuccess}) async {
-    Map<String, dynamic> body = {"email": email};
+    Map<String, dynamic> body = {"email": socialid};
     Map<String, dynamic> response = await postRequest("login/social", body);
-    if (response["details"][0]["continue_register"] == "0") {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString("auth_key", response["details"]?[0]?["auth_key"]);
-      onSuccess == null ? Get.offAll(() => const HomePage()) : onSuccess();
-      isLoggedIn = true;
-      update();
+    if (response["details"]?.length > 0) {
+      if (response["details"][0]["continue_register"] == "0") {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("auth_key", response["details"]?[0]?["auth_key"]);
+        onSuccess == null ? Get.offAll(() => const HomePage()) : onSuccess();
+        isLoggedIn = true;
+        update();
 
-      Get.put(SettingsController()).getUserDetails();
-      Get.put(SettingsController()).getUserSubscription();
-      return true;
+        Get.put(SettingsController()).getUserDetails();
+        Get.put(SettingsController()).getUserSubscription();
+        return true;
+      } else {
+        return false;
+      }
     } else {
       return false;
     }

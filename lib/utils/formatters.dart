@@ -20,7 +20,6 @@ String getWeekday(int day) {
 }
 
 DateTime getDateFormat(String? date, {bool split = true}) {
-  print("DATE $date");
   if (date == null) {
     return DateTime.now();
   }

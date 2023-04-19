@@ -61,11 +61,9 @@ class OrderController extends GetxController {
     if (response["error"] != 0) {
       Get.rawSnackbar(message: response["message"]);
     } else {
-      print("REFERENCE ${response["details"]["order_reference"]}");
       url = response["details"]["url"];
       orderReference = response["details"]["order_reference"];
       update();
-      print("URL $url");
       String? responseURL = url?.split("responseURL=")[1].split("&errorURL")[0];
       Get.to(() => PaymentScreen(
             url: url,

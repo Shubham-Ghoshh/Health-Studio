@@ -44,7 +44,8 @@ class PlanController extends GetxController {
     getPlanDetail(plan.id, navigate: false);
   }
 
-  void getPlanDetail(String id, {bool navigate = true}) async {
+  void getPlanDetail(String id,
+      {bool navigate = true, bool setSelectedPlan = false}) async {
     if (navigate) {
       Utility.showLoadingDialog();
     }
@@ -58,6 +59,9 @@ class PlanController extends GetxController {
       Get.rawSnackbar(message: response["message"] ?? "");
     } else {
       planDetail = PlanDetail.fromJson(response["details"][0]);
+      if (setSelectedPlan) {
+        selectedPlan = Plan.fromJson(response["details"][0]);
+      }
       calculatePrice(7);
       calculatePrice(15);
       calculatePrice(30);

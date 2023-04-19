@@ -20,11 +20,8 @@ class FirebaseController extends GetxController {
 
   void getToken() async {
     // if (!Platform.isIOS) {
-    print("GET FCM TOKEN ");
     await messaging.requestPermission();
     String? fcmToken = await messaging.getToken();
-    print("FCM ===");
-    print(fcmToken);
     Get.find<AuthController>().addDevice(fcmToken ?? "");
     // }
   }
@@ -44,7 +41,5 @@ class FirebaseController extends GetxController {
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
   }
 
-  void _handleMessage(RemoteMessage message, {bool terminateState = false}) {
-    print("MESSAGE $message");
-  }
+  void _handleMessage(RemoteMessage message, {bool terminateState = false}) {}
 }

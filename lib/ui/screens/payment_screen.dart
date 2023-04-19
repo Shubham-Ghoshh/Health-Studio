@@ -53,9 +53,6 @@ class PaymentScreenState extends State<PaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("ONFINISH ${widget.onFinish}");
-    print("RESPONSE URL ${widget.responseURL}");
-
     return Scaffold(
         appBar: AppBar(
             leading: IconButton(
@@ -96,13 +93,9 @@ class PaymentScreenState extends State<PaymentScreen> {
           },
           shouldOverrideUrlLoading: (controller, navigationAction) async {
             var uri = navigationAction.request.url!;
-            print("URI ===${uri.toString()}");
-            print(uri.queryParameters);
-
             return NavigationActionPolicy.ALLOW;
           },
           onLoadStop: (controller, uri) async {
-            print("ON LOAD STOP ${uri.toString()}");
             if (uri.toString() == widget.responseURL && widget.amount == 0) {
               if (!widget.isMeal) {
                 Get.find<OrderController>().getOrderDetails(
@@ -112,14 +105,12 @@ class PaymentScreenState extends State<PaymentScreen> {
             if (uri.toString() == widget.responseURL) {
               var html = await controller.evaluateJavascript(
                   source: "window.document.body.innerText;");
-              print("HTML $html");
               switch (html) {
                 case "captured":
                   {
                     if (widget.isMeal) {
                       Get.back();
                       Get.back();
-                      print(widget.onFinish != null);
                       widget.onFinish != null ? widget.onFinish!() : null;
                       Get.rawSnackbar(
                           message:
@@ -151,7 +142,6 @@ class PaymentScreenState extends State<PaymentScreen> {
             }
           },
           onLoadError: (controller, url, code, message) {
-            print("ERROR!! $url $code  $message");
             Get.back();
             Get.rawSnackbar(
                 message: AppLocalizations.of(context)!.failed_payment);

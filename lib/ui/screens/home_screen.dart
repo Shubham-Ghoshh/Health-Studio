@@ -46,6 +46,7 @@ class _HomePageState extends State<HomePage> {
       return Scaffold(
         // bottomNavigationBar: bottomNavigationBar(),
         body: Container(
+          height: double.infinity,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/images/background.png"),

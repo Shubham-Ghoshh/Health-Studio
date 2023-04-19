@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -286,6 +288,8 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                               split: false))
                                                           .inDays;
 
+                                                      log("DURATION IN DAYS $duration");
+
                                                       DateTime startDate =
                                                           getDateFormat(
                                                                   Get.find<
@@ -299,12 +303,16 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                         ),
                                                       );
 
+                                                      log("START DATE $startDate");
+
                                                       DateTime endDate =
                                                           startDate.add(
                                                         Duration(
                                                           days: (duration - 1),
                                                         ),
                                                       );
+
+                                                      log("END DATE $endDate");
 
                                                       orderController.order =
                                                           Order(
@@ -325,6 +333,7 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                                 "dd-MM-yyyy")
                                                             .format(endDate),
                                                       );
+                                                      log("ORDER ${orderController.order.toString()}");
                                                       orderController.duration =
                                                           duration;
                                                       orderController
@@ -336,16 +345,28 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                                   .orderTo,
                                                               split: false);
                                                       orderController.update();
-
+                                                      log("ORDER ${orderController.order.toString()}");
+                                                      log("CATEGORY ID ${orderController.orderDetails!.categoryId}");
                                                       Get.put(PlanController())
-                                                          .selectedPlan = Get.find<
-                                                              HomeController>()
-                                                          .plans
-                                                          .firstWhere((plan) =>
-                                                              plan.id ==
-                                                              orderController
-                                                                  .orderDetails!
-                                                                  .categoryId);
+                                                          .getPlanDetail(
+                                                        orderController
+                                                            .orderDetails!
+                                                            .categoryId,
+                                                        setSelectedPlan: true,
+                                                      );
+                                                      // Get.put(PlanController())
+                                                      //     .selectedPlan = Get.find<
+                                                      //         HomeController>()
+                                                      //     .plans
+                                                      //     .firstWhere((plan) {
+                                                      //   log("PLAN ID ${plan.id}");
+                                                      //   return plan.id ==
+                                                      //       orderController
+                                                      //           .orderDetails!
+                                                      //           .categoryId;
+                                                      // });
+
+                                                      log("SELECTED PLAN ${Get.put(PlanController()).selectedPlan}");
                                                       userDashboardController
                                                           .getPackageData(
                                                         orderController

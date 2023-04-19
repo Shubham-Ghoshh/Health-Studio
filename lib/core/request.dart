@@ -19,6 +19,7 @@ Future<Map<String, dynamic>> postRequest(url, body) async {
     data: formData,
     options: Options(
       headers: await getHeaders(),
+      // contentType: Headers.formUrlEncodedContentType,
     ),
   )
       .timeout(timeout, onTimeout: () {
@@ -46,6 +47,7 @@ Future<Map<String, dynamic>> putRequest(url, body) async {
           data: formData,
           options: Options(
             headers: await getHeaders(),
+            contentType: Headers.formUrlEncodedContentType,
           ))
       .timeout(timeout, onTimeout: () {
     return Future.value(Response(
@@ -74,6 +76,7 @@ Future<Map<String, dynamic>> getRequest(url) async {
       .get(baseURL + url,
           options: Options(
             headers: await getHeaders(),
+            contentType: Headers.formUrlEncodedContentType,
           ))
       .timeout(timeout, onTimeout: () {
     return Future.value(
@@ -100,6 +103,7 @@ Future<Map<String, dynamic>> deleteRequest(url) async {
       .delete(baseURL + url,
           options: Options(
             headers: await getHeaders(),
+            contentType: Headers.formUrlEncodedContentType,
           ))
       .timeout(timeout, onTimeout: () {
     return Future.value(

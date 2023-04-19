@@ -341,7 +341,6 @@ class UserDashboardController extends GetxController {
   }
 
   void submitMeals() async {
-    print("SUBMIT MEALS");
     Utility.showLoadingDialog();
     Map<String, dynamic> body = {};
     for (int i = 0; i < mealItems.length; i++) {
@@ -361,7 +360,6 @@ class UserDashboardController extends GetxController {
     mealItems.map((e) => body.addAll({
           e?.key ?? "": e?.items.map((e) => e.id).join(","),
         }));
-    print(body);
     Map<String, dynamic> response = await postRequest(
         "meals/${selectedDashboardItem!.dateRequested}", body);
     Utility.closeDialog();

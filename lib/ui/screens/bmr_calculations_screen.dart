@@ -22,7 +22,6 @@ class BMRCalculationsPage extends StatefulWidget {
 class _BMRCalculationsPageState extends State<BMRCalculationsPage> {
   @override
   Widget build(BuildContext context) {
-    print("ON NEXT ${widget.onNext}");
     return Scaffold(
       body: Stack(
         children: [

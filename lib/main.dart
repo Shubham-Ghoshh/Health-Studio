@@ -34,7 +34,7 @@ void main() async {
       splitScreenMode: true,
       builder: (context, child) {
         return DevicePreview(
-          enabled: !kReleaseMode,
+          enabled: false,
           builder: (context) => MyApp(
             lang: lang,
           ), // Wrap your app

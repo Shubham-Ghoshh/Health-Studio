@@ -29,7 +29,6 @@ class MealItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(meal.image);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

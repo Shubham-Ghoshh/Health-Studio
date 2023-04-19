@@ -106,7 +106,6 @@ class SettingsController extends GetxController {
     surveylink =
         "https://healthstudiokw.com/api/survey2.php?${surveyname != null ? "name=$surveyname&auth=$authkey" : ""}";
     update();
-    print("SURVEY LINK $surveylink");
     try {
       await launchUrlString(surveylink ?? "", mode: LaunchMode.platformDefault);
     } catch (e) {

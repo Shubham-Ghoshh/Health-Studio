@@ -20,7 +20,7 @@ class AddressForm extends StatefulWidget {
 class _AddressFormState extends State<AddressForm> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
+    return GetBuilder<AddressController>(
         init: AddressController(context),
         builder: (addressController) {
           return Scaffold(

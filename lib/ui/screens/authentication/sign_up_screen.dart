@@ -27,9 +27,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController _pass = TextEditingController();
   bool passwordsMatch = false;
 
-  List<String> get items => [
-        AppLocalizations.of(context)!.male,
-        AppLocalizations.of(context)!.female
+  List<Map<String, String>> get items => [
+        {"M": AppLocalizations.of(context)!.male},
+        {"F": AppLocalizations.of(context)!.female}
       ];
 
   _calculateAge(DateTime birthDate) {
@@ -71,308 +71,340 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget build(BuildContext context) {
     return GetBuilder<AuthController>(
       init: AuthController(),
-      builder: (authController) => Scaffold(
+      builder: (authController) {
+        return Scaffold(
           body: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/background.png"),
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-          SingleChildScrollView(
-            child: SafeArea(
-              child: Form(
-                key: authController.signUpFormKey,
-                onChanged: () {
-                  if (authController.signUpFormKey.currentState?.validate() ??
-                      false) {
-                    authController.isValid = true;
-                    authController.update();
-                  } else {
-                    authController.isValid = false;
-                    authController.update();
-                  }
-                },
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    sizedBoxHeight6,
-                    appBar(),
-                    sizedBoxHeight20,
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Column(
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.register,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Color(0xffFFFDFD),
-                              fontWeight: FontWeight.w600,
-                              fontSize: 28,
-                            ),
-                          ),
-                          sizedBoxHeight16,
-                          TextFormField(
-                            initialValue: authController.mobile,
-                            validator: ((value) {
-                              if (value?.isEmpty ?? true) {
-                                return AppLocalizations.of(context)!
-                                    .valid_mobile_no;
-                              } else if (value?.length != 8) {
-                                return AppLocalizations.of(context)!
-                                    .mobile_no_format;
-                              } else {
-                                return null;
-                              }
-                            }),
-                            onChanged: (value) {
-                              authController.mobile = value;
-                              authController.update();
-                            },
-                            keyboardType: TextInputType.number,
-                            cursorColor: Colors.black,
-                            style: const TextStyle(
-                              color: Color(0xff0A0909),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            decoration: InputDecoration(
-                              hintText:
-                                  AppLocalizations.of(context)!.enter_phone_no,
-                            ),
-                          ),
-                          sizedBoxHeight10,
-                          TextFormField(
-                            controller: _pass,
-                            validator: ((value) {
-                              if (value?.isEmpty ?? true) {
-                                return AppLocalizations.of(context)!
-                                    .valid_password;
-                              } else if ((value?.length ?? 0) < 5) {
-                                return AppLocalizations.of(context)!
-                                    .password_format;
-                              } else {
-                                return null;
-                              }
-                            }),
-                            onChanged: (value) {},
-                            obscureText: true,
-                            cursorColor: Colors.black,
-                            style: const TextStyle(
-                              color: Color(0xff0A0909),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            decoration: InputDecoration(
-                              hintText:
-                                  AppLocalizations.of(context)!.enter_password,
-                            ),
-                          ),
-                          sizedBoxHeight10,
-                          TextFormField(
-                            validator: ((value) {
-                              if (value != _pass.text) {
-                                return AppLocalizations.of(context)!
-                                    .passwords_mismatch;
-                              } else {
-                                passwordsMatch = true;
-                              }
-                            }),
-                            onChanged: (value) {
-                              if (passwordsMatch == true) {
-                                authController.password = value;
-                                authController.update();
-                              }
-                            },
-                            obscureText: true,
-                            cursorColor: Colors.black,
-                            style: const TextStyle(
-                              color: Color(0xff0A0909),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: AppLocalizations.of(context)!
-                                  .enter_password_again,
-                            ),
-                          ),
-                          sizedBoxHeight10,
-                          TextFormField(
-                            initialValue: authController.name,
-                            validator: (value) => (value == null ||
-                                    value.isEmpty)
-                                ? AppLocalizations.of(context)!.name_required
-                                : null,
-                            onChanged: (value) {
-                              authController.name = value;
-                              authController.update();
-                            },
-                            keyboardType: TextInputType.name,
-                            cursorColor: Colors.black,
-                            style: const TextStyle(
-                              color: Color(0xff0A0909),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            decoration: InputDecoration(
-                              hintText:
-                                  AppLocalizations.of(context)!.enter_fullname,
-                            ),
-                          ),
-                          sizedBoxHeight10,
-                          TextFormField(
-                            initialValue: authController.email,
-                            validator: validateEmail,
-                            onChanged: (value) {
-                              authController.email = value;
-                              authController.update();
-                            },
-                            keyboardType: TextInputType.emailAddress,
-                            cursorColor: Colors.black,
-                            style: const TextStyle(
-                              color: Color(0xff0A0909),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            decoration: InputDecoration(
-                              hintText:
-                                  AppLocalizations.of(context)!.enter_email,
-                            ),
-                          ),
-                          sizedBoxHeight10,
-                          TextFormField(
-                            validator: (value) =>
-                                (value == null || value.isEmpty)
-                                    ? AppLocalizations.of(context)!.dob_required
-                                    : null,
-                            controller: _dobController,
-                            readOnly: true,
-                            onChanged: (value) {},
-                            onTap: () async {
-                              DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now()
-                                    .subtract(const Duration(days: 5475)),
-                                firstDate: DateTime.now()
-                                    .subtract(const Duration(days: 29200)),
-                                lastDate: DateTime.now()
-                                    .subtract(const Duration(days: 5475)),
-                                builder: (context, child) => Theme(
-                                    data: Theme.of(context).copyWith(
-                                        colorScheme: const ColorScheme.light(
-                                            primary: Color(0xffFAAF4A))),
-                                    child: child!),
-                              );
-                              if (pickedDate != null) {
-                                String formattedDate =
-                                    DateFormat("dd/MM/yyyy").format(pickedDate);
-
-                                setState(() {
-                                  _dobController.text =
-                                      formattedDate.toString();
-                                  authController.age =
-                                      _calculateAge(pickedDate).toString();
-
-                                  authController.update();
-                                });
-                              }
-                            },
-                            keyboardType: TextInputType.datetime,
-                            cursorColor: Colors.black,
-                            style: const TextStyle(
-                              color: Color(0xff0A0909),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: AppLocalizations.of(context)!.dob,
-                              suffixIcon: Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: SizedBox(
-                                  child: SvgPicture.asset(
-                                      "assets/images/calender_icon.svg"),
-                                ),
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 16),
-                            ),
-                          ),
-                          sizedBoxHeight10,
-                          TextFormField(
-                            validator: (value) => (value == null ||
-                                    value.isEmpty)
-                                ? AppLocalizations.of(context)!.gender_required
-                                : null,
-                            readOnly: true,
-                            onChanged: (value) {},
-                            controller: _genderController,
-                            keyboardType: TextInputType.emailAddress,
-                            cursorColor: Colors.black,
-                            style: const TextStyle(
-                              color: Color(0xff0A0909),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            decoration: InputDecoration(
-                                hintText: AppLocalizations.of(context)!.gender,
-                                suffixIcon: PopupMenuButton<String>(
-                                  itemBuilder: (BuildContext context) {
-                                    return items.map<PopupMenuItem<String>>(
-                                        (String value) {
-                                      return PopupMenuItem(
-                                          value: value,
-                                          child: Text(
-                                            value,
-                                            style: const TextStyle(
-                                              color: Color(0xff0A0909),
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 15,
-                                            ),
-                                          ));
-                                    }).toList();
-                                  },
-                                  icon: const Icon(
-                                    Icons.arrow_drop_down,
-                                  ),
-                                  onSelected: (String value) {
-                                    _genderController.text = value;
-                                    authController.gender = value;
-                                    authController.update();
-                                  },
-                                )),
-                          ),
-                          sizedBoxHeight40,
-                          LoginButton(
-                            height: 52,
-                            title: AppLocalizations.of(context)!.sign_up,
-                            enabled: authController.isValid && passwordsMatch,
-                            onTap: () {
-                              if (widget.isSocial) {
-                                authController.registersocial(
-                                  onSuccess: widget.onSuccess,
-                                );
-                              } else {
-                                authController.signUp(
-                                  onSuccess: widget.onSuccess,
-                                );
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/background.png"),
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
-            ),
+              SingleChildScrollView(
+                child: SafeArea(
+                  child: Form(
+                    key: authController.signUpFormKey,
+                    onChanged: () {
+                      if (authController.signUpFormKey.currentState
+                              ?.validate() ??
+                          false) {
+                        authController.isValid = true;
+                        authController.update();
+                      } else {
+                        authController.isValid = false;
+                        authController.update();
+                      }
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        sizedBoxHeight6,
+                        appBar(),
+                        sizedBoxHeight20,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Column(
+                            children: [
+                              Text(
+                                widget.isSocial
+                                    ? AppLocalizations.of(context)!
+                                        .profile_details
+                                    : AppLocalizations.of(context)!.register,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  color: Color(0xffFFFDFD),
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 28,
+                                ),
+                              ),
+                              sizedBoxHeight16,
+                              TextFormField(
+                                initialValue: authController.mobile,
+                                validator: ((value) {
+                                  if (value?.isEmpty ?? true) {
+                                    return AppLocalizations.of(context)!
+                                        .valid_mobile_no;
+                                  } else if (value?.length != 8) {
+                                    return AppLocalizations.of(context)!
+                                        .mobile_no_format;
+                                  } else {
+                                    return null;
+                                  }
+                                }),
+                                onChanged: (value) {
+                                  authController.mobile = value;
+                                  authController.update();
+                                },
+                                keyboardType: TextInputType.number,
+                                cursorColor: Colors.black,
+                                style: const TextStyle(
+                                  color: Color(0xff0A0909),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                decoration: InputDecoration(
+                                  hintText: AppLocalizations.of(context)!
+                                      .enter_phone_no,
+                                ),
+                              ),
+                              sizedBoxHeight10,
+                              Visibility(
+                                visible: !widget.isSocial,
+                                child: Column(
+                                  children: [
+                                    TextFormField(
+                                      controller: _pass,
+                                      validator: ((value) {
+                                        if (value?.isEmpty ?? true) {
+                                          return AppLocalizations.of(context)!
+                                              .valid_password;
+                                        } else if ((value?.length ?? 0) < 5) {
+                                          return AppLocalizations.of(context)!
+                                              .password_format;
+                                        } else {
+                                          return null;
+                                        }
+                                      }),
+                                      onChanged: (value) {},
+                                      obscureText: true,
+                                      cursorColor: Colors.black,
+                                      style: const TextStyle(
+                                        color: Color(0xff0A0909),
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      decoration: InputDecoration(
+                                        hintText: AppLocalizations.of(context)!
+                                            .enter_password,
+                                      ),
+                                    ),
+                                    sizedBoxHeight10,
+                                  ],
+                                ),
+                              ),
+                              Visibility(
+                                visible: !widget.isSocial,
+                                child: Column(
+                                  children: [
+                                    TextFormField(
+                                      validator: ((value) {
+                                        if (value != _pass.text) {
+                                          return AppLocalizations.of(context)!
+                                              .passwords_mismatch;
+                                        } else {
+                                          passwordsMatch = true;
+                                        }
+                                      }),
+                                      onChanged: (value) {
+                                        if (passwordsMatch == true) {
+                                          authController.password = value;
+                                          authController.update();
+                                        }
+                                      },
+                                      obscureText: true,
+                                      cursorColor: Colors.black,
+                                      style: const TextStyle(
+                                        color: Color(0xff0A0909),
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      decoration: InputDecoration(
+                                        hintText: AppLocalizations.of(context)!
+                                            .enter_password_again,
+                                      ),
+                                    ),
+                                    sizedBoxHeight10,
+                                  ],
+                                ),
+                              ),
+                              TextFormField(
+                                initialValue: authController.name,
+                                validator: (value) =>
+                                    (value == null || value.isEmpty)
+                                        ? AppLocalizations.of(context)!
+                                            .name_required
+                                        : null,
+                                onChanged: (value) {
+                                  authController.name = value;
+                                  authController.update();
+                                },
+                                keyboardType: TextInputType.name,
+                                cursorColor: Colors.black,
+                                style: const TextStyle(
+                                  color: Color(0xff0A0909),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                decoration: InputDecoration(
+                                  hintText: AppLocalizations.of(context)!
+                                      .enter_fullname,
+                                ),
+                              ),
+                              sizedBoxHeight10,
+                              TextFormField(
+                                initialValue: authController.email,
+                                validator: validateEmail,
+                                onChanged: (value) {
+                                  authController.email = value;
+                                  authController.update();
+                                },
+                                keyboardType: TextInputType.emailAddress,
+                                cursorColor: Colors.black,
+                                style: const TextStyle(
+                                  color: Color(0xff0A0909),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                decoration: InputDecoration(
+                                  hintText:
+                                      AppLocalizations.of(context)!.enter_email,
+                                ),
+                              ),
+                              sizedBoxHeight10,
+                              TextFormField(
+                                validator: (value) => (value == null ||
+                                        value.isEmpty)
+                                    ? AppLocalizations.of(context)!.dob_required
+                                    : null,
+                                controller: _dobController,
+                                readOnly: true,
+                                onChanged: (value) {},
+                                onTap: () async {
+                                  DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now()
+                                        .subtract(const Duration(days: 5475)),
+                                    firstDate: DateTime.now()
+                                        .subtract(const Duration(days: 29200)),
+                                    lastDate: DateTime.now()
+                                        .subtract(const Duration(days: 5475)),
+                                    builder: (context, child) => Theme(
+                                        data: Theme.of(context).copyWith(
+                                            colorScheme:
+                                                const ColorScheme.light(
+                                                    primary:
+                                                        Color(0xffFAAF4A))),
+                                        child: child!),
+                                  );
+                                  if (pickedDate != null) {
+                                    String formattedDate =
+                                        DateFormat("yyyy-MM-dd")
+                                            .format(pickedDate);
+
+                                    setState(() {
+                                      _dobController.text =
+                                          formattedDate.toString();
+                                      authController.age = formattedDate;
+
+                                      authController.update();
+                                    });
+                                  }
+                                },
+                                keyboardType: TextInputType.datetime,
+                                cursorColor: Colors.black,
+                                style: const TextStyle(
+                                  color: Color(0xff0A0909),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                decoration: InputDecoration(
+                                  hintText: AppLocalizations.of(context)!.dob,
+                                  suffixIcon: Padding(
+                                    padding: const EdgeInsets.only(right: 20),
+                                    child: SizedBox(
+                                      child: SvgPicture.asset(
+                                          "assets/images/calender_icon.svg"),
+                                    ),
+                                  ),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 16),
+                                ),
+                              ),
+                              sizedBoxHeight10,
+                              TextFormField(
+                                validator: (value) =>
+                                    (value == null || value.isEmpty)
+                                        ? AppLocalizations.of(context)!
+                                            .gender_required
+                                        : null,
+                                readOnly: true,
+                                onChanged: (value) {},
+                                controller: _genderController,
+                                keyboardType: TextInputType.emailAddress,
+                                cursorColor: Colors.black,
+                                style: const TextStyle(
+                                  color: Color(0xff0A0909),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                decoration: InputDecoration(
+                                    hintText:
+                                        AppLocalizations.of(context)!.gender,
+                                    suffixIcon: PopupMenuButton<String>(
+                                      itemBuilder: (BuildContext context) {
+                                        return items.map<PopupMenuItem<String>>(
+                                            (Map<String, String> value) {
+                                          return PopupMenuItem(
+                                              value: value.keys.first,
+                                              child: Text(
+                                                value.values.first,
+                                                style: const TextStyle(
+                                                  color: Color(0xff0A0909),
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 15,
+                                                ),
+                                              ));
+                                        }).toList();
+                                      },
+                                      icon: const Icon(
+                                        Icons.arrow_drop_down,
+                                      ),
+                                      onSelected: (String value) {
+                                        _genderController.text = items
+                                            .firstWhere((element) =>
+                                                element.keys.first == value)
+                                            .values
+                                            .first;
+                                        authController.gender = value;
+                                        authController.update();
+                                      },
+                                    )),
+                              ),
+                              sizedBoxHeight40,
+                              LoginButton(
+                                height: 52,
+                                title: AppLocalizations.of(context)!.sign_up,
+                                enabled: widget.isSocial
+                                    ? authController.isValid
+                                    : authController.isValid && passwordsMatch,
+                                onTap: () {
+                                  if (widget.isSocial) {
+                                    authController.registersocial(
+                                      onSuccess: widget.onSuccess,
+                                    );
+                                  } else {
+                                    authController.signUp(
+                                      onSuccess: widget.onSuccess,
+                                    );
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      )),
+        );
+      },
     );
   }
 }
