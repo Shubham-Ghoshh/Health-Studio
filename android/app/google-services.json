@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "367018665293-ccmkfddlbj3leor8323e3fpl9pv4r3gm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.healthstudio.app",
+            "certificate_hash": "03071a8ba480f42d57617bb29e765549a47a61ed"
+          }
+        },
+        {
           "client_id": "367018665293-vp2kha03tjp7b27nhuio260pqdqdcc79.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
