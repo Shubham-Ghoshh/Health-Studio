@@ -1,9 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/controllers/menu_controller.dart';
 import 'package:health_studio_user/core/models/menu.dart';
-import 'package:health_studio_user/ui/screens/food_detail_screen.dart';
 import 'package:health_studio_user/utils/colors.dart';
 import 'package:get/get.dart';
 
@@ -60,8 +58,6 @@ class _FoodMenuItemState extends State<FoodMenuItem> {
                       width: 160,
                     );
                   },
-                  cacheHeight: 576,
-                  cacheWidth: 384,
                 ),
               ),
             ),

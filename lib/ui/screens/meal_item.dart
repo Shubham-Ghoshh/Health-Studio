@@ -44,6 +44,11 @@ class MealItem extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   child: Image.network(
                     meal.image,
+                    cacheHeight: 576,
+                    cacheWidth: 384,
+                    // cacheHeight: 192,
+                    // cacheWidth: 128,
+                    scale: 1.5,
                     height: 125,
                     width: 150,
                     fit: BoxFit.cover,
@@ -68,9 +73,6 @@ class MealItem extends StatelessWidget {
                         width: 160,
                       );
                     },
-                    // cacheHeight: 576,
-                    // cacheWidth: 384,
-                    // scale: 1.5,
                   ),
                 ),
                 Positioned(

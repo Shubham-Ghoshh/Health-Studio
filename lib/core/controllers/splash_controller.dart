@@ -79,6 +79,7 @@ class SplashController extends GetxController {
 
   @override
   void onClose() {
+    print("controller disposed");
     super.onClose();
     controller.dispose();
   }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>367018665293-b7lrtldno3dr62ifqnb09f4e24pnmsc4.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.367018665293-b7lrtldno3dr62ifqnb09f4e24pnmsc4</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>367018665293-ccmkfddlbj3leor8323e3fpl9pv4r3gm.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAJvnYvDbvZNzbq7mA_C-mHXM8PAb9Fylc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>367018665293</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.healthstudio.app</string>
+	<key>PROJECT_ID</key>
+	<string>health-studio-5f0b9</string>
+	<key>STORAGE_BUCKET</key>
+	<string>health-studio-5f0b9.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:367018665293:ios:aa54745da980d63cdb4304</string>
+</dict>
+</plist>

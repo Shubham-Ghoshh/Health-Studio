@@ -54,8 +54,6 @@ class ChooseMeal extends StatelessWidget {
                           width: 1.sw,
                           child: Wrap(
                             alignment: WrapAlignment.center,
-                            // runAlignment: WrapAlignment.center,
-                            // crossAxisAlignment: WrapCrossAlignment.center,
                             children: userDashboardController.meals.map((meal) {
                               return MealItem(
                                 meal: meal,
@@ -67,28 +65,7 @@ class ChooseMeal extends StatelessWidget {
                           ),
                         ),
                       ),
-                    )
-
-              // Padding(
-              //     padding: edgeInsetsleft16,
-              //     child: GridView.builder(
-              //       gridDelegate:
-              //           const SliverGridDelegateWithFixedCrossAxisCount(
-              //         crossAxisCount: 2,
-              //       ),
-              //       itemCount: userDashboardController.meals.length,
-              //       itemBuilder: (BuildContext context, int index) {
-              //         return MealItem(
-              //           meal: userDashboardController.meals[index],
-              //           height: 125,
-              //           item: item,
-              //           type: type,
-              //           itemIndex: itemIndex,
-              //         );
-              //       },
-              //     ),
-              //   ),
-              ),
+                    )),
         );
       }),
     );

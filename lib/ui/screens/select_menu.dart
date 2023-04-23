@@ -85,10 +85,10 @@ class SelectMenuPage extends StatelessWidget {
                           userDashboardController.packageDetail?.breakfast ??
                               "0",
                           List.generate(
-                            int.tryParse(userDashboardController
-                                        .packageDetail?.breakfast ??
-                                    "0") ??
-                                0,
+                            // int.tryParse(userDashboardController
+                            //             .packageDetail?.breakfast ??
+                            //         "0") ??
+                            0,
                             (index) {
                               log("INDEX breakfast $index");
                               int breakfastIndex = userDashboardController
@@ -261,6 +261,10 @@ class SelectMenuPage extends StatelessWidget {
                                     "${AppLocalizations.of(context)!.amount_paid}: ${userDashboardController.tempPrice} KD"),
                               ),
                               sizedBoxHeight12,
+                              TextButton(
+                                onPressed: () => throw Exception(),
+                                child: const Text("Throw Test Exception"),
+                              ),
                               LoginButton(
                                 onTap: () {
                                   userDashboardController.getMealPaymentLink(

@@ -32,6 +32,16 @@ class DefaultFirebaseOptions {
           'DefaultFirebaseOptions have not been configured for macos - '
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
+      case TargetPlatform.windows:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.linux:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for linux - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
@@ -49,12 +59,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAJvnYvDbvZNzbq7mA_C-mHXM8PAb9Fylc',
-    appId: '1:367018665293:ios:1f08038d81b7178cdb4304',
+    appId: '1:367018665293:ios:aa54745da980d63cdb4304',
     messagingSenderId: '367018665293',
     projectId: 'health-studio-5f0b9',
     storageBucket: 'health-studio-5f0b9.appspot.com',
-    androidClientId: '367018665293-q9qp7r9e2a5i8nl45kglabgn2j5tjoh9.apps.googleusercontent.com',
-    iosClientId: '367018665293-f67l8pslcogk2sncsmh3dbg9c2fcf2ol.apps.googleusercontent.com',
-    iosBundleId: 'com.example.healthStudioUser',
+    androidClientId: '367018665293-ccmkfddlbj3leor8323e3fpl9pv4r3gm.apps.googleusercontent.com',
+    iosClientId: '367018665293-b7lrtldno3dr62ifqnb09f4e24pnmsc4.apps.googleusercontent.com',
+    iosBundleId: 'com.healthstudio.app',
   );
 }

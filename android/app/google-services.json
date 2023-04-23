@@ -14,7 +14,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "367018665293-ccmkfddlbj3leor8323e3fpl9pv4r3gm.apps.googleusercontent.com",
+          "client_id": "367018665293-6cs19rq0l5nl378km4aomlkn34vs80r1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.healthstudio.app",
@@ -22,7 +22,7 @@
           }
         },
         {
-          "client_id": "367018665293-vp2kha03tjp7b27nhuio260pqdqdcc79.apps.googleusercontent.com",
+          "client_id": "367018665293-spc6qb8piangs6qthqi61dcmnn325hq6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.healthstudio.app",
@@ -30,7 +30,7 @@
           }
         },
         {
-          "client_id": "367018665293-531g8uasgs5pv3dsu4t62k78phu0jcjt.apps.googleusercontent.com",
+          "client_id": "367018665293-2sigssuhod35ht6nif04sc276rdurfka.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -43,7 +43,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "367018665293-531g8uasgs5pv3dsu4t62k78phu0jcjt.apps.googleusercontent.com",
+              "client_id": "367018665293-2sigssuhod35ht6nif04sc276rdurfka.apps.googleusercontent.com",
               "client_type": 3
             },
             {

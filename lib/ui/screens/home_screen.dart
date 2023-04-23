@@ -1,10 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/language_controller.dart';
 import 'package:health_studio_user/core/controllers/order_controller.dart';
-import 'package:health_studio_user/core/controllers/setting_controller.dart';
 import 'package:health_studio_user/ui/screens/logged_in_home_screen.dart';
 import 'package:health_studio_user/ui/screens/setting_screen.dart';
 import 'package:health_studio_user/core/controllers/home_controller.dart';
