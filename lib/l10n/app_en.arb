@@ -121,7 +121,7 @@
     "order_now" : "Order Now",
     "create" : "Create",
     "login_to_order" : "Login to Order",
-    "no_items_available" : "No Items available for this date",
+    "no_items_available" : "Preparing items for this date",
     "address" : "Address",
     "home" : "Home",
     "building" : "Building",

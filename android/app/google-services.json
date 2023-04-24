@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "367018665293-h712d4h2r67jn0i6ivk51akc6t5haphv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.healthstudio.app",
+            "certificate_hash": "0b6530da2a51c844839be56f4bf01315c5bed63b"
+          }
+        },
+        {
           "client_id": "367018665293-spc6qb8piangs6qthqi61dcmnn325hq6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -32,6 +32,24 @@ class SelectMenuPage extends StatelessWidget {
         // bottomNavigationBar: bottomNavigationBar(),
         body: GetBuilder<UserDashboardController>(
             builder: (userDashboardController) {
+      int breakfastIndex = userDashboardController.mealItems
+          .indexWhere((e) => e?.key == "breakfast");
+      int breakfastLength = breakfastIndex == -1
+          ? 0
+          : int.parse(
+              userDashboardController.mealItems[breakfastIndex]?.number ?? "0");
+      int mealIndex =
+          userDashboardController.mealItems.indexWhere((e) => e?.key == "meal");
+      int mealLength = mealIndex == -1
+          ? 0
+          : int.parse(
+              userDashboardController.mealItems[mealIndex]?.number ?? "0");
+      int snackIndex = userDashboardController.mealItems
+          .indexWhere((e) => e?.key == "snack");
+      int snackLength = snackIndex == -1
+          ? 0
+          : int.parse(
+              userDashboardController.mealItems[snackIndex]?.number ?? "0");
       return Stack(
         children: [
           Container(
@@ -82,18 +100,10 @@ class SelectMenuPage extends StatelessWidget {
                         selectMealBox(
                           activeIconColor,
                           AppLocalizations.of(context)!.breakfast,
-                          userDashboardController.packageDetail?.breakfast ??
-                              "0",
+                          breakfastLength.toString(),
                           List.generate(
-                            // int.tryParse(userDashboardController
-                            //             .packageDetail?.breakfast ??
-                            //         "0") ??
-                            0,
+                            breakfastLength,
                             (index) {
-                              log("INDEX breakfast $index");
-                              int breakfastIndex = userDashboardController
-                                  .mealItems
-                                  .indexWhere((e) => e?.key == "breakfast");
                               int length = breakfastIndex == -1
                                   ? 0
                                   : userDashboardController
@@ -101,7 +111,6 @@ class SelectMenuPage extends StatelessWidget {
                                           ?.items
                                           .length ??
                                       0;
-
                               String title = length > index
                                   ? (userDashboardController
                                           .mealItems[breakfastIndex]
@@ -142,23 +151,15 @@ class SelectMenuPage extends StatelessWidget {
                         selectMealBox(
                           loginButtonColor,
                           AppLocalizations.of(context)!.meal,
-                          userDashboardController.packageDetail?.meal ?? "0",
+                          mealLength.toString(),
                           List.generate(
-                            int.tryParse(userDashboardController
-                                        .packageDetail?.meal ??
-                                    "0") ??
-                                0,
+                            mealLength,
                             (index) {
-                              log("INDEX meal $index");
-
-                              int mealIndex = userDashboardController.mealItems
-                                  .indexWhere((e) => e?.key == "meal");
                               int length = mealIndex == -1
                                   ? 0
                                   : userDashboardController
                                           .mealItems[mealIndex]?.items.length ??
                                       0;
-
                               String title = length > index
                                   ? (userDashboardController
                                           .mealItems[mealIndex]
@@ -201,22 +202,13 @@ class SelectMenuPage extends StatelessWidget {
                         selectMealBox(
                           itemsbackground,
                           AppLocalizations.of(context)!.snack,
-                          userDashboardController.packageDetail?.snack ?? "0",
-                          List.generate(
-                              int.tryParse(userDashboardController
-                                          .packageDetail?.snack ??
-                                      "0") ??
-                                  0, (index) {
-                            log("INDEX snack $index");
-
-                            int snackIndex = userDashboardController.mealItems
-                                .indexWhere((e) => e?.key == "snack");
+                          snackLength.toString(),
+                          List.generate(snackLength, (index) {
                             int length = snackIndex == -1
                                 ? 0
                                 : userDashboardController
                                         .mealItems[snackIndex]?.items.length ??
                                     0;
-
                             String title = length > index
                                 ? (userDashboardController.mealItems[snackIndex]
                                         ?.items[index]?.meal?.nameEn) ??
