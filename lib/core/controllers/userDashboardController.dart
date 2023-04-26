@@ -305,30 +305,43 @@ class UserDashboardController extends GetxController {
       update();
       if (allowEdit) {
         if (mealItems[0]!.items.isEmpty) {
+          int mealIndex = mealItems.indexWhere((e) => e?.key == "meal");
+          int mealLength = mealIndex == -1
+              ? 0
+              : int.parse(mealItems[mealIndex]?.number ?? "0");
           allMealsAdded = false;
-          mealItems.firstWhere((e) => e?.key == "meal")?.items = List.generate(
-              int.tryParse(packageDetail!.meal) ?? 0, (idx) => null);
+          mealItems.firstWhere((e) => e?.key == "meal")?.items =
+              List.generate(mealLength, (idx) => null);
         } else {
           allMealsAdded = true;
           isUpdate = true;
         }
         if (mealItems.length > 1 ? mealItems[1]!.items.isEmpty : true) {
+          int snackIndex = mealItems.indexWhere((e) => e?.key == "snack");
+          int snackLength = snackIndex == -1
+              ? 0
+              : int.parse(mealItems[snackIndex]?.number ?? "0");
           allMealsAdded = false;
           int idx = mealItems.indexWhere((e) => e?.key == "snack");
           if (idx != -1) {
-            mealItems[idx]?.items = List.generate(
-                int.tryParse(packageDetail!.snack) ?? 0, (idx) => null);
+            mealItems[idx]?.items = List.generate(snackLength, (idx) => null);
           }
         } else {
           allMealsAdded = true;
           isUpdate = true;
         }
         if (mealItems.length > 2 ? mealItems[2]!.items.isEmpty : true) {
+          int breakfastIndex =
+              mealItems.indexWhere((e) => e?.key == "breakfast");
+          int breakfastLength = breakfastIndex == -1
+              ? 0
+              : int.parse(mealItems[breakfastIndex]?.number ?? "0");
+
           allMealsAdded = false;
           int idx = mealItems.indexWhere((e) => e?.key == "breakfast");
           if (idx != -1) {
-            mealItems[idx]?.items = List.generate(
-                int.tryParse(packageDetail!.breakfast) ?? 0, (idx) => null);
+            mealItems[idx]?.items =
+                List.generate(breakfastLength, (idx) => null);
           }
         } else {
           allMealsAdded = true;

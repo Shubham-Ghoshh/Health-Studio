@@ -641,22 +641,22 @@ class _PlanScreenState extends State<PlanScreen> {
                               orderController.order.startDate =
                                   DateFormat("dd-MM-yyyy").format(
                                 DateTime.now().add(
-                                  const Duration(days: 2),
+                                  const Duration(days: 3),
                                 ),
                               );
                               orderController.firstDate = DateTime.now().add(
-                                const Duration(days: 2),
+                                const Duration(days: 3),
                               );
                             }
                           } else {
                             orderController.order.startDate =
                                 DateFormat("dd-MM-yyyy").format(
                               DateTime.now().add(
-                                const Duration(days: 2),
+                                const Duration(days: 3),
                               ),
                             );
                             orderController.firstDate = DateTime.now().add(
-                              const Duration(days: 2),
+                              const Duration(days: 3),
                             );
                           }
                           orderController.price =

@@ -253,10 +253,10 @@ class SelectMenuPage extends StatelessWidget {
                                     "${AppLocalizations.of(context)!.amount_paid}: ${userDashboardController.tempPrice} KD"),
                               ),
                               sizedBoxHeight12,
-                              TextButton(
-                                onPressed: () => throw Exception(),
-                                child: const Text("Throw Test Exception"),
-                              ),
+                              // TextButton(
+                              //   onPressed: () => throw Exception(),
+                              //   child: const Text("Throw Test Exception"),
+                              // ),
                               LoginButton(
                                 onTap: () {
                                   userDashboardController.getMealPaymentLink(
