@@ -174,7 +174,7 @@ class AuthController extends GetxController {
               name = userinfo.displayName;
               socialid = userinfo.id;
               type = "GOOGLE";
-              bool accountExists = await loginSocialAPI();
+              bool accountExists = await loginSocialAPI(onSuccess: onSuccess);
               if (!accountExists) {
                 Utility.closeDialog();
                 Get.to(() => RegistrationPage(
@@ -270,6 +270,7 @@ class AuthController extends GetxController {
     Map<String, dynamic> response = await postRequest("login/social", body);
     if (response["details"]?.length > 0) {
       if (response["details"][0]["continue_register"] == "0") {
+        Utility.closeDialog();
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString("auth_key", response["details"]?[0]?["auth_key"]);
         onSuccess == null ? Get.offAll(() => const HomePage()) : onSuccess();

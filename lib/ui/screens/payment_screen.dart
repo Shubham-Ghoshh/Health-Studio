@@ -1,7 +1,6 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:core';
-import 'dart:io';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +9,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:health_studio_user/core/controllers/order_controller.dart';
 import 'package:health_studio_user/utils/colors.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:health_studio_user/utils/constants.dart';
 
 class PaymentScreen extends StatefulWidget {
   final Function? onFinish;

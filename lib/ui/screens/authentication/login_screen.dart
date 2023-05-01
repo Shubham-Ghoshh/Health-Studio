@@ -179,21 +179,24 @@ class LoginPage extends StatelessWidget {
                             children: [
                               FacebookLoginButton(
                                 onTap: () async {
-                                  authController
-                                      .loginWithSocialAccount("facebook");
+                                  authController.loginWithSocialAccount(
+                                      "facebook",
+                                      onSuccess: onSuccess);
                                 },
                               ),
                               GoogleLoginButton(
                                 onTap: () async {
-                                  authController
-                                      .loginWithSocialAccount("google");
+                                  authController.loginWithSocialAccount(
+                                      "google",
+                                      onSuccess: onSuccess);
                                 },
                               ),
                               Platform.isIOS
                                   ? AppleLoginButton(
                                       onTap: () async {
-                                        authController
-                                            .loginWithSocialAccount("apple");
+                                        authController.loginWithSocialAccount(
+                                            "apple",
+                                            onSuccess: onSuccess);
                                       },
                                     )
                                   : const SizedBox(),
