@@ -44,8 +44,12 @@ class PlanController extends GetxController {
     getPlanDetail(plan.id, navigate: false);
   }
 
-  void getPlanDetail(String id,
-      {bool navigate = true, bool setSelectedPlan = false}) async {
+  void getPlanDetail(
+    String id, {
+    bool navigate = true,
+    bool setSelectedPlan = false,
+    bool callGetPackages = false,
+  }) async {
     if (navigate) {
       Utility.showLoadingDialog();
     }
@@ -68,6 +72,9 @@ class PlanController extends GetxController {
       update();
       if (navigate) {
         Get.to(() => const PlanScreen());
+      }
+      if (callGetPackages) {
+        getPackages(selectedPlan!);
       }
     }
   }

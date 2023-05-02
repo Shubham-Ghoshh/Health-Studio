@@ -37,6 +37,9 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
         body: GetBuilder<UserDashboardController>(
             init: UserDashboardController(),
             builder: (userDashboardController) {
+              print("DATE!!!");
+              print(
+                  "${DateFormat("MMM dd, yyyy").format(getDateFormat(Get.find<SettingsController>().userDetails?.orderTo, split: false))}");
               return GetBuilder<OrderController>(builder: (orderController) {
                 return GetBuilder<PlanController>(builder: (planController) {
                   return Stack(
@@ -273,108 +276,22 @@ class _LoggedInHomePageState extends State<LoggedInHomePage> {
                                                                 width: 2.0,
                                                                 color: Colors
                                                                     .white)),
-                                                    onPressed: () {
-                                                      int duration = getDateFormat(
-                                                              Get.find<
-                                                                      SettingsController>()
-                                                                  .userDetails
-                                                                  ?.orderTo,
-                                                              split: false)
-                                                          .difference(getDateFormat(
-                                                              Get.find<
-                                                                      SettingsController>()
-                                                                  .userDetails
-                                                                  ?.orderFrom,
-                                                              split: false))
-                                                          .inDays;
+                                                    onPressed: () async {
+                                                      Get.put(OrderController())
+                                                              .order
+                                                              .planId =
+                                                          orderController
+                                                              .orderDetails!
+                                                              .categoryId;
 
-                                                      log("DURATION IN DAYS $duration");
-
-                                                      DateTime startDate =
-                                                          getDateFormat(
-                                                                  Get.find<
-                                                                          SettingsController>()
-                                                                      .userDetails
-                                                                      ?.orderTo,
-                                                                  split: false)
-                                                              .add(
-                                                        const Duration(
-                                                          days: 1,
-                                                        ),
-                                                      );
-
-                                                      log("START DATE $startDate");
-
-                                                      DateTime endDate =
-                                                          startDate.add(
-                                                        Duration(
-                                                          days: (duration - 1),
-                                                        ),
-                                                      );
-
-                                                      log("END DATE $endDate");
-
-                                                      orderController.order =
-                                                          Order(
-                                                        planId: orderController
-                                                            .orderDetails!
-                                                            .categoryId,
-                                                        packageId:
-                                                            orderController
-                                                                .orderDetails!
-                                                                .packageId,
-                                                        amount: orderController
-                                                            .orderDetails!
-                                                            .amount,
-                                                        startDate: DateFormat(
-                                                                "dd-MM-yyyy")
-                                                            .format(startDate),
-                                                        endDate: DateFormat(
-                                                                "dd-MM-yyyy")
-                                                            .format(endDate),
-                                                      );
-                                                      log("ORDER ${orderController.order.toString()}");
-                                                      orderController.duration =
-                                                          duration;
-                                                      orderController
-                                                              .firstDate =
-                                                          getDateFormat(
-                                                              Get.find<
-                                                                      SettingsController>()
-                                                                  .userDetails!
-                                                                  .orderTo,
-                                                              split: false);
-                                                      orderController.update();
-                                                      log("ORDER ${orderController.order.toString()}");
-                                                      log("CATEGORY ID ${orderController.orderDetails!.categoryId}");
                                                       Get.put(PlanController())
                                                           .getPlanDetail(
                                                         orderController
                                                             .orderDetails!
                                                             .categoryId,
                                                         setSelectedPlan: true,
-                                                      );
-                                                      // Get.put(PlanController())
-                                                      //     .selectedPlan = Get.find<
-                                                      //         HomeController>()
-                                                      //     .plans
-                                                      //     .firstWhere((plan) {
-                                                      //   log("PLAN ID ${plan.id}");
-                                                      //   return plan.id ==
-                                                      //       orderController
-                                                      //           .orderDetails!
-                                                      //           .categoryId;
-                                                      // });
-
-                                                      log("SELECTED PLAN ${Get.put(PlanController()).selectedPlan}");
-                                                      userDashboardController
-                                                          .getPackageData(
-                                                        orderController
-                                                            .orderDetails!
-                                                            .categoryId,
-                                                        orderController
-                                                            .orderDetails!
-                                                            .packageId,
+                                                        navigate: false,
+                                                        callGetPackages: true,
                                                       );
                                                     },
                                                     child: Text(

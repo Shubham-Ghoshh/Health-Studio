@@ -30,6 +30,9 @@ class SettingPage extends StatelessWidget {
     return GetBuilder<SettingsController>(
         init: SettingsController(),
         builder: (settingsController) {
+          print("DATE!!!");
+
+          print(settingsController.userDetails?.orderTo);
           return Scaffold(
             backgroundColor: Colors.blueAccent.shade400,
             body: Stack(
@@ -286,7 +289,6 @@ class SettingPage extends StatelessWidget {
                           settingName:
                               AppLocalizations.of(context)!.terms_conditions,
                           onTap: () {
-                            
                             Get.to(() => const TermsandConditions());
                             fridayAlertDialog();
                           },
