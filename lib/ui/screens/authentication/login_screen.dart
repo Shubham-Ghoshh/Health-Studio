@@ -22,6 +22,7 @@ class LoginPage extends StatelessWidget {
           return GestureDetector(
             onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
             child: Scaffold(
+              resizeToAvoidBottomInset: false,
               body: Stack(
                 children: [
                   Container(
@@ -156,7 +157,7 @@ class LoginPage extends StatelessWidget {
                           ),
                           sizedBoxHeight12,
                           LoginButton(
-                            height: 52,
+                            height: 50,
                             title: AppLocalizations.of(context)!.login,
                             enabled: authController.isValid,
                             onTap: () {

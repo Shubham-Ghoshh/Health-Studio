@@ -245,41 +245,40 @@ class SettingsController extends GetxController {
             orElse: () => {})["common_value"] ??
         "0";
 
-    if (Version.parse(version) > Version.parse(packageInfo?.version ?? "")) {
-      showDialog(
-          context: navigatorKey.currentContext!,
-          barrierDismissible: forceUpdate == "1" ? false : true,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text("Update Available"),
-              content: const Text(
-                  "New update is available! Please update for better experience."),
-              actions: <Widget>[
-                TextButton(
-                  style: TextButton.styleFrom(
-                    textStyle: Theme.of(context).textTheme.labelLarge,
-                  ),
-                  child: const Text('Okay'),
-                  onPressed: () {
-                    if (forceUpdate == "0") Get.back();
-                    rateApp();
-                  },
-                ),
-                Visibility(
-                  visible: forceUpdate == "1" ? false : true,
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      textStyle: Theme.of(context).textTheme.labelLarge,
-                    ),
-                    child: const Text('Cancel'),
-                    onPressed: () {
-                      Get.back();
-                    },
-                  ),
-                ),
-              ],
-            );
-          });
-    }
+    // if (Version.parse(version) > Version.parse(packageInfo?.version ?? "")) {
+    //   showDialog(
+    //       context: navigatorKey.currentContext!,
+    //       barrierDismissible: forceUpdate == "1" ? false : false,
+    //       builder: (context) {
+    //         return AlertDialog(
+    //           title: const Text("Update Available"),
+    //           content: const Text(
+    //               "New update is available! Please update for better experience."),
+    //           actions: <Widget>[
+    //             TextButton(
+    //               style: TextButton.styleFrom(
+    //                 textStyle: Theme.of(context).textTheme.labelLarge,
+    //               ),
+    //               child: const Text('Okay'),
+    //               onPressed: () {
+    //                 Get.back();
+    //               },
+    //             ),
+    //             Visibility(
+    //               visible: forceUpdate == "1" ? false : false,
+    //               child: TextButton(
+    //                 style: TextButton.styleFrom(
+    //                   textStyle: Theme.of(context).textTheme.labelLarge,
+    //                 ),
+    //                 child: const Text('Cancel'),
+    //                 onPressed: () {
+    //                   Get.back();
+    //                 },
+    //               ),
+    //             ),
+    //           ],
+    //         );
+    //       });
+    // }
   }
 }
